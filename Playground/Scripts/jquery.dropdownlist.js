@@ -4,15 +4,19 @@
 
         return $(this).each(function () {
             let element = $(this);
-            let selectBox = $('<div>', { class: "dropdownlist" });
-
-            $(element).before(selectBox);
-            selectBox.append($('<div>', { class: "dropdownlist-selector" }).append(
-                $('<div>', { class: "dropdownlist-selector-text" }).text(options.emptyText),
+            let list = $('<div>', { class: "dropdownlist" });
+            let listSelector = $('<div>', { class: "dropdownlist-selector" }).append(
+                $('<div>', { class: "dropdownlist-selector-text" }).text(options.getEmptyText()),
                 $('<div>', { class: "dropdownlist-selector-toggle" })
-            ));
-            selectBox.append($('<div>', { class: "dropdownlist-list" }).append(element));
+            );
 
+            $(element).before(list);
+            list.append(listSelector);
+
+            let listList = $('<div>', { class: "dropdownlist-list" }).append(element);
+            listList.hide();
+            list.append(listList);
+            
             options.initialization.getItems(this).each(function () {
                 console.log("- " + options.getItemValue(this));
             });
@@ -20,8 +24,6 @@
     };
 
     $.fn.dropdownlist.defaults = {
-        multiselect: false,
-        emptyText: '(Click to select...)',
         initialization: {
             getItems: function (element) {
                 return $(element).children();
@@ -32,6 +34,10 @@
         },
         getItemValue: function (item) {
             return $(item).data("value") || $(item).text()
-        }
+        },
+        getEmptyText: function () {
+            return '(Select...)'
+        },
+        multiselect: false
     }
 }(jQuery));
