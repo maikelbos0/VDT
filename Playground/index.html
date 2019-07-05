@@ -5,6 +5,7 @@
     <title>VDT-Playground</title>
     <link rel="stylesheet" href="Content/bootstrap.min.css" />
     <script type="text/javascript" src="Scripts/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="Scripts/jquery.dropdown.js"></script>
 </head>
 <body>
     <p>Test with a change</p>
@@ -27,7 +28,12 @@
 
     <script type="text/javascript">
         $(function () {
-            console.log($('#my-dropdown').find('li').length);
+            console.log($('#my-dropdown').dropdown().find('li').first().text());
+            console.log($('#my-dropdown').dropdown({
+                multiselect: true,
+
+            }).find('li').first().text());
+
         });
     </script>
 </body>
