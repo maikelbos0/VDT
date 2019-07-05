@@ -5,7 +5,7 @@
     <title>VDT-Playground</title>
     <link rel="stylesheet" href="Content/bootstrap.min.css" />
     <script type="text/javascript" src="Scripts/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="Scripts/jquery.dropdown.js"></script>
+    <script type="text/javascript" src="Scripts/jquery.dropdownlist.js"></script>
 </head>
 <body>
     <p>Test with a change</p>
@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="col-3">This could be a dropdown:</div>
                 <div class="col-9">
-                    <ul id="my-dropdown">
+                    <ul id="my-dropdown" class="my-dropdown">
                         <li data-value="1">This could be an option</li>
                         <li data-value="2" data-selected="true">And this</li>
                         <li data-value="3">Number three</li>
@@ -24,16 +24,43 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-4">
+            <div class="row">
+                <div class="col-3">Another dropdown:</div>
+                <div class="col-9">
+                    <ol id="my-dropdown-2" class="my-dropdown">
+                        <li data-value="1">This could be an option</li>
+                        <li data-value="2" data-selected="true">And this</li>
+                        <li data-value="3">Number three</li>
+                        <li>No value option</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="row">
+                <div class="col-3">A div is now a dropdown?</div>
+                <div class="col-9">
+                    <div id="my-dropdown-3" class="my-dropdown">
+                        <p data-value="1">This could be an option</p>
+                        <p data-value="2" data-selected="true">And this</p>
+                        <div data-value="3">How does even the child type not matter</div>
+                        <div>No value option</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script type="text/javascript">
         $(function () {
-            console.log($('#my-dropdown').dropdown().find('li').first().text());
-            console.log($('#my-dropdown').dropdown({
-                multiselect: true,
-
-            }).find('li').first().text());
-
+            $('.my-dropdown').dropdownlist({
+                multiselect: true
+            }).each(function () {
+                console.log(this.id);
+            });
         });
     </script>
 </body>
