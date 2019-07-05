@@ -1,0 +1,22 @@
+﻿.dropdownlist {
+}
+
+.dropdownlist .dropdownlist-selector {
+    height: 1em;
+}
+
+.dropdownlist .dropdownlist-selector .dropdownlist-selector.text {
+
+}
+
+.dropdownlist .dropdownlist-selector .dropdownlist-selector-toggle {
+    display: inline-block;
+    width: 0;
+    border-top: .3em solid;
+    border-right: .3em solid transparent;
+    border-bottom: 0;
+    border-left: .3em solid transparent;
+}
+
+.dropdownlist .dropdownlist-list {
+}
