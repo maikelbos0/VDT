@@ -1,31 +1,36 @@
 ﻿(function ($) {
     // Keep track of existing dropdownlists
-    let dropdownlists = [];
+    let dropdownlists = {
+        items: [],
+        get: function (element) {
+            return this.items.find(function (item) {
+                return item.element.is($(element));
+            });
+        },
+        contains: function (element) {
+            return !!this.get(element);
+        },
+        add: function (dropdownlist) {
+            this.items.push(dropdownlist);
+        },
+        remove: function (dropdownlist) {
+            this.items = this.items.filter(function (item) {
+                return item !== dropdownlist;
+            });
+        }
+    };
 
-    // Create extension
+    // Extension for creating dropdownlists; supports multiple creations in one call
     $.fn.dropdownlist = function (settings) {
         return $(this).each(function () {
-            let existingLists = dropdownlists.filter(function (list) {
-                return list.element.is($(this));
-            });
-
-            if (existingLists.length > 0) {
-                debugger;
-                let dropdownlist = existingLists[0];
-
-                if (typeof settings === 'string' && settings in dropdownlist) {
-                    // We can't return a value here but we want to.
-                }
-            }
-            else {
-                let options = $.extend({}, $.fn.dropdownlist.defaults, settings);
+            if (!dropdownlists.contains(this)) {
+                let options = $.extend(true, {}, $.fn.dropdownlist.defaults, settings);
                 let dropdownlist = new Dropdownlist($(this), options);
 
-                dropdownlist.initialize();
-                dropdownlists.push(dropdownlist);
+                dropdownlists.add(dropdownlist);
             }
         });
-    };
+    }
 
     // Set defaults for extension
     $.fn.dropdownlist.defaults = {
@@ -35,6 +40,11 @@
             },
             isItemSelected: function (item) {
                 return $(item).data('selected') !== undefined && $(item).data('selected') !== 'false';
+            },
+            fieldName: null,
+            getFieldName: function (element) {
+                return $(element).data('field-name');
+
             }
         },
         getItemValue: function (item) {
@@ -46,27 +56,17 @@
         multiselect: false
     }
 
+    // Extension for getting a dropdownlist object for access; only supports retrieving 1
+    $.fn.getDropdownlist = function () {
+        return dropdownlists.get(this);
+    }
+
     // Dropdownlist implementation
     function Dropdownlist(element, options) {
+        let base = this;
+
         this.element = element;
         this.options = options;
-        this.list = null;
-        this.container = null;
-        this.selector = null;
-    }
-
-    Dropdownlist.prototype.destroy = function () {
-        this.container.before(this.element);
-        this.container.destroy();
-    }
-
-    Dropdownlist.prototype.test = function () {
-        return 'test';
-    }
-
-    Dropdownlist.prototype.initialize = function () {
-        // Alias for event handlers
-        let base = this;
 
         // Add container early so can move the element after without issues
         this.container = $('<div>', { class: 'dropdownlist' });
@@ -77,20 +77,53 @@
             $('<div>', { class: 'dropdownlist-selector-text' }).text(this.options.getEmptyText()),
             $('<div>', { class: 'dropdownlist-selector-toggle' })
         );
-        this.selector.click(function () {
-            base.toggle();
-        });
 
         // List container
         this.list = $('<div>', { class: 'dropdownlist-list' }).append(this.element).hide();
 
+        // Add input fields
+        let fieldName = this.options.initialization.fieldName || this.options.initialization.getFieldName(this.element) || "dropdownlist-" + dropdownlists.items.length;
+        console.log(fieldName);
+
         // Final assembly
         this.container.append(this.selector);
         this.container.append(this.list);
+
+        // Event handlers
+        this.selector.click(function (e) {
+            base.toggle();
+        });
+
+        this.options.initialization.getItems(this.element).click(function (e) {
+            console.log('Chose an item: ' + base.options.getItemValue(e.target));
+        });
+
+        $(document).click(function (e) {
+            if ($(e.target).closest(".dropdownlist") && $(e.target).closest(".dropdownlist").is(base.container)) {
+                return;
+            }
+
+            base.hide();
+        })
+    }
+
+    Dropdownlist.prototype.remove = function () {
+        this.container.before(this.element);
+        this.container.remove();
+
+        dropdownlists.remove(this);
     }
 
     Dropdownlist.prototype.toggle = function () {
         this.list.toggle();
+    }
+
+    Dropdownlist.prototype.hide = function () {
+        this.list.hide();
+    }
+
+    Dropdownlist.prototype.show = function () {
+        this.list.hide();
     }
 
     /*

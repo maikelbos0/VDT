@@ -12,25 +12,25 @@
     <p>Test with a change</p>
 
     <div class="row">
-        <div class="col-4">
+        <div class="col-3">
             <div class="row">
                 <div class="col-3">This could be a dropdown:</div>
                 <div class="col-9">
-                    <ul id="my-dropdown" class="my-dropdown">
+                    <ul id="my-dropdown-1" class="my-dropdown" data-field-name="my-dropdown-1">
                         <li data-value="1">This could be an option</li>
                         <li data-value="2" data-selected="true">And this</li>
                         <li data-value="3">Number three</li>
-                        <li>No value option</li>
+                        <li><strong>No value option</strong></li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <div class="col-4">
+        <div class="col-3">
             <div class="row">
                 <div class="col-3">A div is now a dropdown?</div>
                 <div class="col-9">
-                    <div id="my-dropdown-3" class="my-dropdown">
+                    <div id="my-dropdown-2" class="my-dropdown">
                         <p data-value="1">This could be an option</p>
                         <p data-value="2" data-selected="true">And this</p>
                         <div data-value="3">How does even the child type not matter</div>
@@ -40,15 +40,29 @@
             </div>
         </div>
 
-        <div class="col-4">
+        <div class="col-3">
             <div class="row">
                 <div class="col-3">Another dropdown:</div>
                 <div class="col-9">
-                    <ol id="my-dropdown-2" class="my-dropdown">
+                    <ol id="my-dropdown-3" class="my-dropdown">
                         <li data-value="1">This could be an option</li>
                         <li data-value="2" data-selected="true">And this</li>
                         <li data-value="3">Number three</li>
-                        <li>No value option</li>
+                        <li><strong>No value option</strong></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="row">
+                <div class="col-3">Another dropdown:</div>
+                <div class="col-9">
+                    <ol id="my-dropdown-4" class="my-dropdown">
+                        <li data-value-test="1">This could be an option</li>
+                        <li data-value-test="2" data-selected="true">And this</li>
+                        <li data-value-test="3">Number three</li>
+                        <li><strong>No value option</strong></li>
                     </ol>
                 </div>
             </div>
@@ -87,19 +101,38 @@
 
     <script type="text/javascript">
         $(function () {
-            $('.my-dropdown').dropdownlist({
+            $('#my-dropdown-1').dropdownlist({
                 multiselect: true
-            }).each(function () {
-                console.log(this.id);
             });
 
-            var test = $('#my-dropdown-2').dropdownlist('test');
+            $('#my-dropdown-1').getDropdownlist().remove();
 
-            console.log(test);
+            $('#my-dropdown-1').dropdownlist({
+                multiselect: true
+            });
 
-            var test2 = $('div');
+            $('#my-dropdown-2').dropdownlist({
+                multiselect: false,
+                initialization: {
+                    fieldName: 'my-field'
+                }
+            });
 
-            console.log(test2);
+            $('#my-dropdown-3').dropdownlist({
+                multiselect: true,
+                initialization: {
+                    getFieldName: function () {
+                        return 'a-field';
+                    }
+                }
+            });
+
+            $('#my-dropdown-4').dropdownlist({
+                multiselect: true,
+                getItemValue: function (item) {
+                    return $(item).data('value-test')
+                }
+            });
         });
     </script>
 </body>
