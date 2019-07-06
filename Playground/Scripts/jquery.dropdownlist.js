@@ -204,8 +204,12 @@
 
     /*
      * TODO
-     * - Event handlers
-     * - Implement set of selected items
-     * - ?
+     * - Extract event implementation
+     * - Event for selection changed
+     * - Set of selected items
+     * - Tests?
+     * - Figure out NuGet package?
+     * - Create examples/documentation?
+     * - Project for server-side MVC implementation?
      */
 }(jQuery));
