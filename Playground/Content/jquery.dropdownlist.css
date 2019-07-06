@@ -11,6 +11,9 @@
 
 .dropdownlist .dropdownlist-selector .dropdownlist-selector-text {
     flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .dropdownlist .dropdownlist-selector .dropdownlist-selector-toggle {
@@ -32,4 +35,8 @@
     width: 100%;
     z-index: 1;
     background: #eeeeee;
+}
+
+.dropdownlist-field-hidden {
+    display: none;
 }
