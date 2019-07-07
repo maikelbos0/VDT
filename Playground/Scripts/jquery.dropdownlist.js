@@ -142,10 +142,12 @@
         $(document).click(this, this.documentClick);
     }
 
+    // Click handler for selector
     Dropdownlist.prototype.selectorClick = function (e) {
         e.data.list.toggle();
     }
 
+    // Click handler for list
     Dropdownlist.prototype.listClick = function (e) {
         let item = $(e.target).closest('.dropdownlist-list > * > *');
 
@@ -191,6 +193,7 @@
         }
     }
 
+    // Click handler for anywhere outside the dropdownlist
     Dropdownlist.prototype.documentClick = function (e) {
         if ($(e.target).closest('.dropdownlist') && $(e.target).closest('.dropdownlist').is(e.data.container)) {
             return;
@@ -199,6 +202,7 @@
         e.data.list.hide();
     }
 
+    // Remove the entire dropdownlist; resets the base element to its former state
     Dropdownlist.prototype.remove = function () {
         this.container.before(this.element);
         this.container.remove();
@@ -207,6 +211,7 @@
         dropdownlists.remove(this);
     }
 
+    // Set the text of the selector based on current list selection
     Dropdownlist.prototype.setSelectorText = function () {
         let items = this.getSelectedItems();
         let text = this.options.getEmptyText();
@@ -218,14 +223,18 @@
         this.container.find('.dropdownlist-selector-text').text(text);
     }
 
+    // Get a jQuery-object with all currently selected items
     Dropdownlist.prototype.getSelectedItems = function () {
         return this.options.getItems(this.element).has('input.dropdownlist-field:checked').not(this.options.getSelectAllItem(this.element));
     }
 
+    // Get an array of values from all currently selected items
     Dropdownlist.prototype.getSelectedValues = function () {
         return $.map(this.getSelectedItems(), this.options.getItemValue);
     }
 
+    // Set selected items based on a jQuery-selector or selection
+    // Multiple selected items for a single-select dropdownlist can have unexpected side effects
     Dropdownlist.prototype.setSelectedItems = function (selector) {
         let items = this.options.getItems(this.element);
 
@@ -237,14 +246,17 @@
         this.setSelectorText();
     }
 
+    // Select all items
     Dropdownlist.prototype.selectAllItems = function () {
         this.setSelectedItems('*');
     }
 
+    // Deselect all items
     Dropdownlist.prototype.clearSelectedItems = function () {
         this.setSelectedItems(false);
     }
 
+    // Check if all items are currently selected
     Dropdownlist.prototype.areAllItemsSelected = function () {
         return this.options.getItems(this.element).has('input.dropdownlist-field:not(:checked)').not(this.options.getSelectAllItem(this.element)).length === 0;
     }
