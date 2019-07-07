@@ -126,41 +126,45 @@
         this.setSelectorText();
 
         // Event handlers
-        this.selector.click(function (e) {
-            base.toggle();
-        });
+        this.selector.click(this, this.selectorClick);
+        this.list.click(this, this.listClick);
+        $(document).click(this, this.documentClick);
+    }
 
-        this.list.click(function (e) {
-            let item = $(e.target).closest('.dropdownlist-list > * > *');
+    Dropdownlist.prototype.selectorClick = function (e) {
+        e.data.list.toggle();
+    }
 
-            // Only bother selecting/unselecting when clicking an item
-            if (item.length === 0) {
-                return;
+    Dropdownlist.prototype.listClick = function (e) {
+        let item = $(e.target).closest('.dropdownlist-list > * > *');
+
+        // Only bother selecting/unselecting when clicking an item
+        if (item.length === 0) {
+            return;
+        }
+
+        let input = item.find('input.dropdownlist-field');
+
+        // Let the input field handle the actual click
+        if (!input.is(e.target)) {
+            input.click();
+        }
+        else {
+            // Actual click handling
+            e.data.setSelectorText();
+
+            if (!e.data.options.isMultiselect(e.data.element)) {
+                e.data.list.hide();
             }
+        }
+    }
 
-            let input = item.find('input.dropdownlist-field');
+    Dropdownlist.prototype.documentClick = function (e) {
+        if ($(e.target).closest(".dropdownlist") && $(e.target).closest(".dropdownlist").is(e.data.container)) {
+            return;
+        }
 
-            // Let the input field handle the actual click
-            if (!input.is(e.target)) {
-                input.click();
-            }
-            else {
-                // Actual click handling
-                base.setSelectorText();
-
-                if (!base.options.isMultiselect(base.element)) {
-                    base.hide();
-                }
-            }
-        });
-
-        $(document).click(function (e) {
-            if ($(e.target).closest(".dropdownlist") && $(e.target).closest(".dropdownlist").is(base.container)) {
-                return;
-            }
-
-            base.hide();
-        })
+        e.data.list.hide();
     }
 
     Dropdownlist.prototype.remove = function () {
@@ -169,18 +173,6 @@
         this.options.getItems(this.element).find("input.dropdownlist-field").remove();
 
         dropdownlists.remove(this);
-    }
-
-    Dropdownlist.prototype.toggle = function () {
-        this.list.toggle();
-    }
-
-    Dropdownlist.prototype.hide = function () {
-        this.list.hide();
-    }
-
-    Dropdownlist.prototype.show = function () {
-        this.list.hide();
     }
 
     Dropdownlist.prototype.setSelectorText = function () {
@@ -204,8 +196,9 @@
 
     /*
      * TODO
-     * - Extract event implementation
+     * - Set default selected for singleselect
      * - Event for selection changed
+     * - Select all option
      * - Set of selected items
      * - Tests?
      * - Figure out NuGet package?
