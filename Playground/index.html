@@ -31,10 +31,10 @@
                 <div class="col-3">A div is now a dropdown?</div>
                 <div class="col-9">
                     <div id="my-dropdown-2" class="my-dropdown">
-                        <p data-value="1">This could be an option</p>
+                        <p data-value="1" data-selected="true">This could be an option</p>
                         <p data-value="2" data-selected="true">And this</p>
-                        <div data-value="3">How does even the child type not matter</div>
-                        <div>No value option</div>
+                        <div data-value="3" data-selected="true">How does even the child type not matter</div>
+                        <div data-selected="true">No value option</div>
                     </div>
                 </div>
             </div>
@@ -120,6 +120,12 @@
                     return $(item).data('value-test')
                 }
             });
+
+            $('.my-dropdown').on('dropdownlist.selectedItemsChanged', function () {
+                let d = $(this).getDropdownlist();
+
+                console.log(d.fieldName + ": " + d.getSelectedValues());
+            })
         });
     </script>
 </body>

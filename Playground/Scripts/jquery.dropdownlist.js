@@ -162,6 +162,8 @@
             if (!e.data.options.isMultiselect(e.data.element)) {
                 e.data.list.hide();
             }
+            
+            e.data.element.trigger("dropdownlist.selectedItemsChanged");
         }
     }
 
@@ -217,7 +219,6 @@
 
     /*
      * TODO
-     * - Event for selection changed
      * - Select all option
      * - Minify?
      * - Tests?
