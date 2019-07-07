@@ -263,6 +263,7 @@
 
     /*
      * TODO
+     * - Hover for items
      * - Minify?
      * - Tests?
      * - Figure out NuGet package?
