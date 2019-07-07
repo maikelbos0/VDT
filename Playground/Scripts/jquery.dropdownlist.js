@@ -1,33 +1,13 @@
 ﻿(function ($) {
-    // Keep track of existing dropdownlists
-    let dropdownlists = {
-        items: [],
-        get: function (element) {
-            return this.items.find(function (item) {
-                return item.element.is($(element));
-            });
-        },
-        contains: function (element) {
-            return !!this.get(element);
-        },
-        add: function (dropdownlist) {
-            this.items.push(dropdownlist);
-        },
-        remove: function (dropdownlist) {
-            this.items = this.items.filter(function (item) {
-                return item !== dropdownlist;
-            });
-        }
-    };
-
     // Extension for creating dropdownlists; supports multiple creations in one call
     $.fn.dropdownlist = function (settings) {
         return $(this).each(function () {
-            if (!dropdownlists.contains(this)) {
+            if ($(this).closest('.dropdownlist').length === 0) {
                 let options = $.extend(true, {}, $.fn.dropdownlist.defaults, settings);
                 let dropdownlist = new Dropdownlist($(this), options);
 
-                dropdownlists.add(dropdownlist);
+                // Add object to data
+                $(this).data('dropdownlist', dropdownlist);
             }
         });
     }
@@ -78,7 +58,7 @@
 
     // Extension for getting a dropdownlist object for access; only supports retrieving 1
     $.fn.getDropdownlist = function () {
-        return dropdownlists.get(this);
+        return $(this).data('dropdownlist');
     }
 
     // Dropdownlist implementation
@@ -195,7 +175,7 @@
 
     // Click handler for anywhere outside the dropdownlist
     Dropdownlist.prototype.documentClick = function (e) {
-        if ($(e.target).closest('.dropdownlist') && $(e.target).closest('.dropdownlist').is(e.data.container)) {
+        if ($(e.target).closest('.dropdownlist').is(e.data.container)) {
             return;
         }
 
@@ -208,7 +188,8 @@
         this.container.remove();
         this.options.getItems(this.element).find('input.dropdownlist-field').remove();
 
-        dropdownlists.remove(this);
+        // Remove object from data
+        this.element.removeData('dropdownlist');
     }
 
     // Set the text of the selector based on current list selection
