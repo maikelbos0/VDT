@@ -39,6 +39,11 @@
         getItems: function (element) {
             return $(element).children();
         },
+        // Item that triggers a select all in case of multiselect
+        // Defaults to the first direct child with data-property select-all enabled
+        getSelectAllItem: function (element) {
+            return $(element).children().filter('[data-select-all]').first();
+        },
         // Determine if an item should be selected during initialization
         // Multiple selected items for a single-select dropdownlist can have unexpected side effects
         isItemSelected: function (item) {
@@ -82,7 +87,7 @@
 
         this.element = element;
         this.options = options;
-        this.fieldName = this.options.getFieldName(this.element) || "dropdownlist-" + Math.random().toString().replace('.', '');
+        this.fieldName = this.options.getFieldName(this.element) || 'dropdownlist-' + Math.random().toString().replace('.', '');
 
         // Add container early so can move the element after without issues
         this.container = $('<div>', { class: 'dropdownlist' });
@@ -157,18 +162,37 @@
         }
         else {
             // Actual click handling
+            let selectAllItem = e.data.options.getSelectAllItem(e.data.element);
+            let isMultiselect = e.data.options.isMultiselect(e.data.element);
+
+            if (isMultiselect && selectAllItem.length > 0) {
+                // Handle clicking of the select all
+                if ($(e.target).closest(selectAllItem).length > 0) {
+                    if (selectAllItem.find('input.dropdownlist-field').prop('checked')) {
+                        e.data.selectAllItems();
+                    }
+                    else {
+                        e.data.clearSelectedItems();
+                    }
+                }
+                // Set select all
+                else {
+                    selectAllItem.find('input.dropdownlist-field').prop('checked', e.data.areAllItemsSelected());
+                }
+            }
+
             e.data.setSelectorText();
 
-            if (!e.data.options.isMultiselect(e.data.element)) {
+            if (!isMultiselect) {
                 e.data.list.hide();
             }
-            
-            e.data.element.trigger("dropdownlist.selectedItemsChanged");
+
+            e.data.element.trigger('dropdownlist.selectedItemsChanged');
         }
     }
 
     Dropdownlist.prototype.documentClick = function (e) {
-        if ($(e.target).closest(".dropdownlist") && $(e.target).closest(".dropdownlist").is(e.data.container)) {
+        if ($(e.target).closest('.dropdownlist') && $(e.target).closest('.dropdownlist').is(e.data.container)) {
             return;
         }
 
@@ -178,7 +202,7 @@
     Dropdownlist.prototype.remove = function () {
         this.container.before(this.element);
         this.container.remove();
-        this.options.getItems(this.element).find("input.dropdownlist-field").remove();
+        this.options.getItems(this.element).find('input.dropdownlist-field').remove();
 
         dropdownlists.remove(this);
     }
@@ -195,7 +219,7 @@
     }
 
     Dropdownlist.prototype.getSelectedItems = function () {
-        return this.options.getItems(this.element).has('input.dropdownlist-field:checked');
+        return this.options.getItems(this.element).has('input.dropdownlist-field:checked').not(this.options.getSelectAllItem(this.element));
     }
 
     Dropdownlist.prototype.getSelectedValues = function () {
@@ -213,13 +237,20 @@
         this.setSelectorText();
     }
 
+    Dropdownlist.prototype.selectAllItems = function () {
+        this.setSelectedItems('*');
+    }
+
     Dropdownlist.prototype.clearSelectedItems = function () {
         this.setSelectedItems(false);
     }
 
+    Dropdownlist.prototype.areAllItemsSelected = function () {
+        return this.options.getItems(this.element).has('input.dropdownlist-field:not(:checked)').not(this.options.getSelectAllItem(this.element)).length === 0;
+    }
+
     /*
      * TODO
-     * - Select all option
      * - Minify?
      * - Tests?
      * - Figure out NuGet package?
