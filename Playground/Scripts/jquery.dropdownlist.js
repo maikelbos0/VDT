@@ -120,6 +120,12 @@
             $(this).prepend($('<input>', fieldProperties));
         });
 
+        // For single-select, select the first option if nothing is selected
+        // Having nothing selected is not a user-recoverable state
+        if (!this.options.isMultiselect(this.element) && this.getSelectedItems().length === 0) {
+            this.setSelectedItems(':first');
+        }
+
         // Final assembly
         this.container.append(this.selector);
         this.container.append(this.list);
@@ -187,19 +193,33 @@
     }
 
     Dropdownlist.prototype.getSelectedItems = function () {
-        return this.options.getItems(this.element).has('input:checked');
+        return this.options.getItems(this.element).has('input.dropdownlist-field:checked');
     }
 
     Dropdownlist.prototype.getSelectedValues = function () {
         return $.map(this.getSelectedItems(), this.options.getItemValue);
     }
 
+    Dropdownlist.prototype.setSelectedItems = function (selector) {
+        let items = this.options.getItems(this.element);
+
+        if (this.options.isMultiselect(this.element)) {
+            items.not(selector).find('input.dropdownlist-field:checked').prop('checked', false);
+        }
+
+        items.filter(selector).find('input.dropdownlist-field:not(:checked)').prop('checked', true);
+        this.setSelectorText();
+    }
+
+    Dropdownlist.prototype.clearSelectedItems = function () {
+        this.setSelectedItems(false);
+    }
+
     /*
      * TODO
-     * - Set default selected for singleselect
      * - Event for selection changed
      * - Select all option
-     * - Set of selected items
+     * - Minify?
      * - Tests?
      * - Figure out NuGet package?
      * - Create examples/documentation?
