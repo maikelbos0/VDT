@@ -1,0 +1,20 @@
+[
+  {
+    "outputFileName": "Scripts/jquery.dropdownlist.min.css",
+    "inputFiles": [
+      "Scripts/jquery.dropdownlist.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/jquery.dropdownlist.min.css",
+    "inputFiles": [
+      "Content/jquery.dropdownlist.css"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/jquery.dropdownlist.min.js",
+    "inputFiles": [
+      "Scripts/jquery.dropdownlist.js"
+    ]
+  }
+]

@@ -74,10 +74,6 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\jquery.dropdownlist.css" />
-    <Content Include="Content\jquery.dropdownlist.min.css">
-      <DependentUpon>jquery.dropdownlist.css</DependentUpon>
-    </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -100,16 +96,12 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <None Include="bundleconfig.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="index.html" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
-    <Content Include="Scripts\jquery.dropdownlist.min.js">
-      <DependentUpon>jquery.dropdownlist.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -118,7 +110,6 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Scripts\jquery.dropdownlist.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -166,7 +157,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50124</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/VDT-Playground</IISUrl>
+          <IISUrl>http://localhost/VDT/Playground</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
