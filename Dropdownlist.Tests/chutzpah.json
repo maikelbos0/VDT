@@ -1,7 +1,8 @@
 {
   "Framework": "jasmine",
+  "Engine": "JSDom",
   "References": [
-    { "Path": "../Dropdownlist/Scripts/jquery-dropdownlist.min.js" },
-    { "Path": "../Dropdownlist/Scripts/jquery-3.4.1.min.js" }
+    { "Path": "../Dropdownlist/Scripts/jquery-3.4.1.min.js" },
+    { "Path": "../Dropdownlist/Scripts/jquery-dropdownlist.min.js" }
   ]
 }

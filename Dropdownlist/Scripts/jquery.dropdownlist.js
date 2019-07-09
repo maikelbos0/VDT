@@ -3,7 +3,7 @@
     $.fn.dropdownlist = function (settings) {
         return $(this).each(function () {
             if ($(this).closest('.dropdownlist').length === 0) {
-                let options = $.extend(true, {}, $.fn.dropdownlist.defaults, settings);
+                let options = $.extend({}, $.fn.dropdownlist.defaults, settings);
                 let dropdownlist = new Dropdownlist($(this), options);
 
                 // Add object to data
