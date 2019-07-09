@@ -244,7 +244,9 @@
 
     /*
      * TODO
-     * - Tests?
+     * - Add options for attributes of container, list and selector
+     * - No more recursive / deep merging of settings?
+     * - Tests
      * - Figure out NuGet package?
      * - Create examples/documentation?
      * - Project for server-side MVC implementation?
