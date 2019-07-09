@@ -1,0 +1,6 @@
+{
+  "Framework": "jasmine",
+  "References": [
+    { "Path": "../Dropdownlist/Content/jquery-dropdownlist.js" }
+  ]
+}

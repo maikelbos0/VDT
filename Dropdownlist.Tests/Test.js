@@ -1,5 +1,17 @@
-﻿/// <reference path="../Dropdownlist/Scripts/Code.js" />
-test("will add 5 to number", function () {
-    var res = AddFive(10);
-    equal(res, 15, "should add 5");
+﻿/// <reference path="Test.html" />
+
+describe("This test", function () {
+    it('should be able to create and read an element', function () {
+        const input = document.createElement('input');
+        input.value = "what";
+
+        expect(input.value).toEqual("what");
+        expect(input.tagName).toEqual("INPUT");
+    });
+
+    it('should read the paragraph', function () {
+        const para = document.getElementById('myparagraph');
+
+        expect(para.innerText).toEqual("Can I read this?");
+    });
 });
