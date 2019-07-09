@@ -14,4 +14,10 @@ describe("This test", function () {
 
         expect(para.innerText).toEqual("Can I read this?");
     });
+
+    it('should read the paragraph using jQuery', function () {
+        const para = $('#myparagraph');
+
+        expect(para.text()).toEqual("Can I read this?");
+    });
 });

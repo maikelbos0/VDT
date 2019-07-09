@@ -1,6 +1,7 @@
 {
   "Framework": "jasmine",
   "References": [
-    { "Path": "../Dropdownlist/Content/jquery-dropdownlist.js" }
+    { "Path": "../Dropdownlist/Scripts/jquery-dropdownlist.min.js" },
+    { "Path": "../Dropdownlist/Scripts/jquery-3.4.1.min.js" }
   ]
 }

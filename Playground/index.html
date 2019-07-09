@@ -127,18 +127,6 @@
 
                 console.log(d.fieldName + ": " + d.getSelectedValues());
             });
-
-            // Temporary: so this is how we can have a variable that is a function and also an object with properties
-            var myobject = function (myValue) {
-                return myValue;
-            }
-
-            myobject.ATest = function () {
-                return "TEST";
-            }
-
-            console.log(myobject('test'));
-            console.log(myobject.ATest());
         });
     </script>
 </body>
