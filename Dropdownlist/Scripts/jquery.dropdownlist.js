@@ -245,6 +245,8 @@
     /*
      * TODO
      * - Add options for attributes of container, list and selector
+     * - Add filter textbox
+     * - Add keyboard support?
      * - No more recursive / deep merging of settings?
      * - Tests
      * - Figure out NuGet package?
