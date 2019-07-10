@@ -5,7 +5,6 @@ describe("a basic dropdownlist", function () {
         var dropdown = $('#base-dropdown-1');
 
         expect(dropdown.length).toEqual(1);
-
         expect(function () {
             dropdown.dropdownlist();
         }).not.toThrow();
@@ -14,25 +13,25 @@ describe("a basic dropdownlist", function () {
     it('creates fields with the correct name', function () {
         $('#base-dropdown-1').dropdownlist();
 
-        var fields = $('#base-dropdown-1').find('input.dropdownlist-field[name="dropdown-value"]');
-
-        expect(fields.length).toEqual(3);
+        $('#base-dropdown-1').find('input.dropdownlist-field').each(function () {
+            expect($(this).prop('name')).toEqual('dropdown-value');
+        });
     });
 
     it('is single-select by default', function () {
         $('#base-dropdown-1').dropdownlist();
 
-        var fields = $('#base-dropdown-1').find('input.dropdownlist-field[type="radio"]');
-
-        expect(fields.length).toEqual(3);
+        $('#base-dropdown-1').find('input.dropdownlist-field').each(function () {
+            expect($(this).prop('type')).toEqual('radio');
+        });
     });
 
     it('in single-select mode selects the first option by default', function () {
         $('#base-dropdown-1').dropdownlist();
 
-        var field = $('#base-dropdown-1').find('input.dropdownlist-field').first();
+        var fields = $('#base-dropdown-1').find('input.dropdownlist-field');
 
-        expect(field.prop('checked')).toEqual(true);
+        expect($(fields[0]).prop('checked')).toEqual(true);
     });
 
     it('gets field values from attribute data-value', function () {
@@ -48,9 +47,9 @@ describe("a basic dropdownlist", function () {
     it('in single-select mode selects the right option by attribute data-selected', function () {
         $('#base-dropdown-2').dropdownlist();
 
-        var field = $('#base-dropdown-2').find('input.dropdownlist-field:checked');
+        var fields = $('#base-dropdown-2').find('input.dropdownlist-field');
 
-        expect(field.val()).toEqual('Second choice');
+        expect($(fields[1]).prop('checked')).toEqual(true);
     });
 
     it('gets field values from inner text as fallback', function () {
