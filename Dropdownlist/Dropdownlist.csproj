@@ -65,9 +65,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\jquery.dropdownlist.css" />
-    <Content Include="Content\jquery.dropdownlist.min.css">
-      <DependentUpon>jquery.dropdownlist.css</DependentUpon>
+    <Content Include="Content\jquery-dropdownlist.css" />
+    <Content Include="Content\jquery-dropdownlist.min.css">
+      <DependentUpon>jquery-dropdownlist.css</DependentUpon>
     </Content>
     <Content Include="Scripts\Code.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
@@ -75,9 +75,9 @@
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
-    <Content Include="Scripts\jquery.dropdownlist.js" />
-    <Content Include="Scripts\jquery.dropdownlist.min.js">
-      <DependentUpon>jquery.dropdownlist.js</DependentUpon>
+    <Content Include="Scripts\jquery-dropdownlist.js" />
+    <Content Include="Scripts\jquery-dropdownlist.min.js">
+      <DependentUpon>jquery-dropdownlist.js</DependentUpon>
     </Content>
     <Content Include="Web.config" />
   </ItemGroup>

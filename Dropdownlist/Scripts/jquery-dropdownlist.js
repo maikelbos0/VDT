@@ -246,6 +246,7 @@
      * TODO
      * - Add options for attributes of container, list and selector
      * - Add filter textbox
+     * - Move get to a callback
      * - Add keyboard support?
      * - No more recursive / deep merging of settings?
      * - Tests
