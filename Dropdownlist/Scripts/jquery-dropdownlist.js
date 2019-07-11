@@ -1,13 +1,27 @@
 ﻿(function ($) {
     // Extension for creating dropdownlists; supports multiple creations in one call
-    $.fn.dropdownlist = function (settings) {
+    $.fn.dropdownlist = function (settings, callback) {
+        if ($.isFunction(settings)) {            
+            callback = settings;
+            settings = null;
+        }
+
         return $(this).each(function () {
+            let dropdownlist;
+
             if ($(this).closest('.dropdownlist').length === 0) {
                 let options = $.extend({}, $.fn.dropdownlist.defaults, settings);
-                let dropdownlist = new Dropdownlist($(this), options);
+                dropdownlist = new Dropdownlist($(this), options);
 
                 // Add object to data
                 $(this).data('dropdownlist', dropdownlist);
+            }
+            else {
+                dropdownlist = $(this).data('dropdownlist');
+            }
+
+            if ($.isFunction(callback)) {
+                callback.bind(dropdownlist)(dropdownlist);
             }
         });
     }
@@ -54,11 +68,6 @@
         isMultiselect: function (element) {
             return $(element).data('multiselect') !== undefined && $(element).data('multiselect') != false;
         }
-    }
-
-    // Extension for getting a dropdownlist object for access; only supports retrieving 1
-    $.fn.getDropdownlist = function () {
-        return $(this).data('dropdownlist');
     }
 
     // Dropdownlist implementation

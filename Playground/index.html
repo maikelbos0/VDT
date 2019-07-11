@@ -98,7 +98,9 @@
                 multiselect: true
             });
 
-            $('#my-dropdown-1').getDropdownlist().remove();
+            $('#my-dropdown-1').dropdownlist(function () {
+                this.remove();
+            });
 
             $('#my-dropdown-2').dropdownlist({
                 isMultiselect: function () {
@@ -134,9 +136,9 @@
             $('.my-dropdown').dropdownlist();
 
             $('.my-dropdown').on('dropdownlist.selectedItemsChanged', function () {
-                let d = $(this).getDropdownlist();
-
-                console.log(d.fieldName + ": " + d.getSelectedValues());
+                $(this).dropdownlist(function (d) {
+                    console.log(d.fieldName + ": " + d.getSelectedValues());
+                });
             });
         });
     </script>
