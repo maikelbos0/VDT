@@ -128,8 +128,9 @@ describe('a dropdownlist object', function () {
     /*
      * TODO
      * More test files:
-     * - Selector text values
+     * - Multiselect select-all
      * - Setting options (each)
      * - Changing defaults
+     * - User interaction: open/close/change-selection/select-all/select-none
      * */
 });

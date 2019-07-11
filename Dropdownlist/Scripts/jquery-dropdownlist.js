@@ -236,6 +236,10 @@
 
         if (!this.options.isMultiselect(this.element)) {
             selectedItems = selectedItems.first();
+
+            if (selectedItems.length === 0) {
+                selectedItems = items.first();
+            }
         }
 
         items.not(selectedItems).find('input.dropdownlist-field:checked').prop('checked', false);
