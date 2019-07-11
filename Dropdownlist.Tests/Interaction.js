@@ -59,7 +59,7 @@ describe('a dropdownlist object', function () {
             var selectedItems = this.getSelectedItems();
 
             expect(selectedItems.length).toEqual(1);
-            expect(selectedItems.not('#dropdown-interaction-1 div:first-child').length).toEqual(0);
+            expect(selectedItems.not('div:first-child').length).toEqual(0);
         });
     });
 
@@ -73,19 +73,62 @@ describe('a dropdownlist object', function () {
 
     it('can be used to set the selected item', function () {
         $('#dropdown-interaction-1').dropdownlist(function () {
-            this.setSelectedItems('#dropdown-interaction-1 div:nth-child(2)');
-                       
-            var fields = $('#dropdown-interaction-1').find('input.dropdownlist-field');
-
-            expect($(fields[1]).prop('checked')).toEqual(true);
+            this.setSelectedItems('div:nth-child(2)');
         });
+
+        var fields = $('#dropdown-interaction-1').find('input.dropdownlist-field');
+
+        expect($(fields[1]).prop('checked')).toEqual(true);
+    });
+
+    it('sets only the first selected item when setting select items in single-select', function () {
+        $('#dropdown-interaction-1').dropdownlist(function () {
+            this.setSelectedItems('div');
+        });
+
+        var fields = $('#dropdown-interaction-1').find('input.dropdownlist-field');
+
+        expect($(fields[0]).prop('checked')).toEqual(true);
+        expect($(fields[1]).prop('checked')).toEqual(false);
+        expect($(fields[2]).prop('checked')).toEqual(false);
+    });
+
+    it('can be used to get the selected items in multiselect', function () {
+        $('#dropdown-interaction-2').dropdownlist(function () {
+            var selectedItems = this.getSelectedItems();
+
+            expect(selectedItems.length).toEqual(2);
+            expect(selectedItems.not('div:nth-child(3n)').length).toEqual(0);
+        });
+    });
+
+    it('can be used to get the selected values in multiselect', function () {
+        $('#dropdown-interaction-2').dropdownlist(function () {
+            var selectedValues = this.getSelectedValues();
+
+            expect(selectedValues).toEqual([3, 3]);
+        });
+    });
+
+    it('can be used to set the selected items in multiselect', function () {
+        $('#dropdown-interaction-2').dropdownlist(function () {
+            this.setSelectedItems('div:nth-child(2n)');
+        });
+
+        var fields = $('#dropdown-interaction-2').find('input.dropdownlist-field');
+
+        expect($(fields[0]).prop('checked')).toEqual(false);
+        expect($(fields[1]).prop('checked')).toEqual(true);
+        expect($(fields[2]).prop('checked')).toEqual(false);
+        expect($(fields[3]).prop('checked')).toEqual(true);
+        expect($(fields[4]).prop('checked')).toEqual(false);
+        expect($(fields[5]).prop('checked')).toEqual(true);
     });
 
     /*
      * TODO
-     * Get/set/clear selected items and multiselect
      * More test files:
-     * - Multiselect dropdown setup
+     * - Selector text values
      * - Setting options (each)
      * - Changing defaults
      * */

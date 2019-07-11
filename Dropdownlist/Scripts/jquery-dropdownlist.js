@@ -2,7 +2,7 @@
     // Extension for creating dropdownlists; supports multiple creations in one call
     $.fn.dropdownlist = function (settings, callback) {
         // Allow callback to be the only argument
-        if ($.isFunction(settings)) {            
+        if ($.isFunction(settings)) {
             callback = settings;
             settings = null;
         }
@@ -42,7 +42,7 @@
             return $(element).children().filter('[data-select-all]').first();
         },
         // Determine if an item should be selected during initialization
-        // Multiple selected items for a single-select dropdownlist can have unexpected side effects
+        // Multiple selected items for a single-select dropdownlist selects the first item
         isItemSelected: function (item) {
             return $(item).data('selected') !== undefined && $(item).data('selected') != false;
         },
@@ -76,6 +76,7 @@
     // Dropdownlist implementation
     function Dropdownlist(element, options) {
         let base = this;
+        let isItemSelected = false;
 
         this.element = element;
         this.options = options;
@@ -110,8 +111,9 @@
                 fieldProperties.class = 'dropdownlist-field dropdownlist-field-hidden';
             }
 
-            if (base.options.isItemSelected($(this))) {
+            if (base.options.isItemSelected($(this)) && (base.options.isMultiselect(base.element) || !isItemSelected)) {
                 fieldProperties.checked = 'true';
+                isItemSelected = true;
             }
 
             $(this).prepend($('<input>', fieldProperties));
@@ -227,15 +229,18 @@
     }
 
     // Set selected items based on a jQuery-selector or selection
-    // Multiple selected items for a single-select dropdownlist can have unexpected side effects
+    // Multiple selected items for a single-select dropdownlist selects the first item
     Dropdownlist.prototype.setSelectedItems = function (selector) {
         let items = this.options.getItems(this.element);
+        let selectedItems = items.filter(selector);
 
-        if (this.options.isMultiselect(this.element)) {
-            items.not(selector).find('input.dropdownlist-field:checked').prop('checked', false);
+        if (!this.options.isMultiselect(this.element)) {
+            selectedItems = selectedItems.first();
         }
 
-        items.filter(selector).find('input.dropdownlist-field:not(:checked)').prop('checked', true);
+        items.not(selectedItems).find('input.dropdownlist-field:checked').prop('checked', false);
+        selectedItems.find('input.dropdownlist-field:not(:checked)').prop('checked', true);
+
         this.setSelectorText();
     }
 
