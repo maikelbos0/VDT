@@ -73,6 +73,8 @@
     <Content Include="Basic.js" />
     <Content Include="Interaction.html" />
     <Content Include="Interaction.js" />
+    <Content Include="Options.html" />
+    <Content Include="Options.js" />
     <Content Include="Selector.html" />
     <Content Include="Selector.js" />
   </ItemGroup>

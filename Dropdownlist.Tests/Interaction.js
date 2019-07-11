@@ -76,7 +76,7 @@ describe('a dropdownlist object', function () {
             this.setSelectedItems('div:nth-child(2)');
         });
 
-        var fields = $('#dropdown-interaction-1').find('input.dropdownlist-field');
+        var fields = $('#dropdown-interaction-1 input.dropdownlist-field');
 
         expect($(fields[1]).prop('checked')).toEqual(true);
     });
@@ -86,7 +86,7 @@ describe('a dropdownlist object', function () {
             this.setSelectedItems('div');
         });
 
-        var fields = $('#dropdown-interaction-1').find('input.dropdownlist-field');
+        var fields = $('#dropdown-interaction-1 input.dropdownlist-field');
 
         expect($(fields[0]).prop('checked')).toEqual(true);
         expect($(fields[1]).prop('checked')).toEqual(false);
@@ -115,7 +115,7 @@ describe('a dropdownlist object', function () {
             this.setSelectedItems('div:nth-child(2n)');
         });
 
-        var fields = $('#dropdown-interaction-2').find('input.dropdownlist-field');
+        var fields = $('#dropdown-interaction-2 input.dropdownlist-field');
 
         expect($(fields[0]).prop('checked')).toEqual(false);
         expect($(fields[1]).prop('checked')).toEqual(true);
@@ -124,13 +124,4 @@ describe('a dropdownlist object', function () {
         expect($(fields[4]).prop('checked')).toEqual(false);
         expect($(fields[5]).prop('checked')).toEqual(true);
     });
-
-    /*
-     * TODO
-     * More test files:
-     * - Multiselect select-all
-     * - Setting options (each)
-     * - Changing defaults
-     * - User interaction: open/close/change-selection/select-all/select-none
-     * */
 });

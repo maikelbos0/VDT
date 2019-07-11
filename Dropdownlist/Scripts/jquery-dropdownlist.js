@@ -1,4 +1,21 @@
 ﻿(function ($) {
+    /*
+     * TODO
+     * - Add options for attributes of container, list and selector
+     * - Add filter textbox
+     * - Add keyboard support?
+     * - Tests:
+     *   - Basic: finish
+     *   - Setting options: finish
+     *   - Multiselect select-all
+     *   - Changing defaults
+     *   - User interaction: open/close/change-selection/select-all/select-none
+     * - Figure out licensing
+     * - Figure out NuGet package?
+     * - Create examples/documentation?
+     * - Project for server-side MVC implementation?
+     */
+
     // Extension for creating dropdownlists; supports multiple creations in one call
     $.fn.dropdownlist = function (settings, callback) {
         // Allow callback to be the only argument
@@ -262,16 +279,4 @@
     Dropdownlist.prototype.areAllItemsSelected = function () {
         return this.options.getItems(this.element).has('input.dropdownlist-field:not(:checked)').not(this.options.getSelectAllItem(this.element)).length === 0;
     }
-
-    /*
-     * TODO
-     * - Add options for attributes of container, list and selector
-     * - Add filter textbox
-     * - Add keyboard support?
-     * - No more recursive / deep merging of settings?
-     * - Tests
-     * - Figure out NuGet package?
-     * - Create examples/documentation?
-     * - Project for server-side MVC implementation?
-     */
 }(jQuery));

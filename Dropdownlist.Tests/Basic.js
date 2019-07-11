@@ -14,7 +14,7 @@ describe('a basic dropdownlist', function () {
     it('creates fields with the correct name', function () {
         $('#basic-dropdown-1').dropdownlist();
 
-        $('#basic-dropdown-1').find('input.dropdownlist-field').each(function () {
+        $('#basic-dropdown-1 input.dropdownlist-field').each(function () {
             expect($(this).prop('name')).toEqual('dropdown-value');
         });
     });
@@ -22,7 +22,7 @@ describe('a basic dropdownlist', function () {
     it('is single-select by default', function () {
         $('#basic-dropdown-1').dropdownlist();
 
-        $('#basic-dropdown-1').find('input.dropdownlist-field').each(function () {
+        $('#basic-dropdown-1 input.dropdownlist-field').each(function () {
             expect($(this).prop('type')).toEqual('radio');
         });
     });
@@ -30,7 +30,7 @@ describe('a basic dropdownlist', function () {
     it('in single-select mode selects the first option by default', function () {
         $('#basic-dropdown-1').dropdownlist();
 
-        var fields = $('#basic-dropdown-1').find('input.dropdownlist-field');
+        var fields = $('#basic-dropdown-1 input.dropdownlist-field');
 
         expect($(fields[0]).prop('checked')).toEqual(true);
     });
@@ -38,7 +38,7 @@ describe('a basic dropdownlist', function () {
     it('gets field values from attribute data-value', function () {
         $('#basic-dropdown-1').dropdownlist();
 
-        var fields = $('#basic-dropdown-1').find('input.dropdownlist-field');
+        var fields = $('#basic-dropdown-1 input.dropdownlist-field');
 
         expect($(fields[0]).val()).toEqual('1');
         expect($(fields[1]).val()).toEqual('2');
@@ -48,7 +48,7 @@ describe('a basic dropdownlist', function () {
     it('in single-select mode selects the right option by attribute data-selected', function () {
         $('#basic-dropdown-2').dropdownlist();
 
-        var fields = $('#basic-dropdown-2').find('input.dropdownlist-field');
+        var fields = $('#basic-dropdown-2 input.dropdownlist-field');
 
         expect($(fields[1]).prop('checked')).toEqual(true);
     });
@@ -56,7 +56,7 @@ describe('a basic dropdownlist', function () {
     it('in single-select mode selects at most one option by attribute data-selected', function () {
         $('#basic-dropdown-5').dropdownlist();
 
-        var fields = $('#basic-dropdown-5').find('input.dropdownlist-field:checked');
+        var fields = $('#basic-dropdown-5 input.dropdownlist-field:checked');
 
         expect(fields.length).toEqual(1);
     });
@@ -64,7 +64,7 @@ describe('a basic dropdownlist', function () {
     it('gets field values from inner text as fallback', function () {
         $('#basic-dropdown-2').dropdownlist();
 
-        var fields = $('#basic-dropdown-2').find('input.dropdownlist-field');
+        var fields = $('#basic-dropdown-2 input.dropdownlist-field');
 
         expect($(fields[0]).val()).toEqual('Choice number 1');
         expect($(fields[1]).val()).toEqual('Second choice');
