@@ -1,12 +1,10 @@
 ﻿(function ($) {
     /*
      * TODO
-     * - Add options for attributes of container, list and selector
-     * - Add filter textbox
-     * - Add keyboard support?
+     * - Add options for attributes of container, list and selector + tests
+     * - Add filter textbox + tests
+     * - Add keyboard support? + tests
      * - Tests:
-     *   - Basic: finish
-     *   - Setting options: finish
      *   - Multiselect select-all
      *   - Changing defaults
      *   - User interaction: open/close/change-selection/select-all/select-none

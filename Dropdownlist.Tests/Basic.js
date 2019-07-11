@@ -71,7 +71,29 @@ describe('a basic dropdownlist', function () {
         expect($(fields[2]).val()).toEqual('Final option');
     });
 
-    // is multiselect if data-multiselect is set to true
-    // in multiselect mode selects nothing by default
-    // in multiselect mode selects the right options by attribute data-selected
+    it('is multiselect if data-multiselect is set to true', function () {
+        $('#basic-dropdown-3').dropdownlist();
+
+        $('#basic-dropdown-3 input.dropdownlist-field').each(function () {
+            expect($(this).prop('type')).toEqual('checkbox');
+        });
+    });
+
+    it('in multiselect mode selects nothing by default', function () {
+        $('#basic-dropdown-3').dropdownlist();
+
+        $('#basic-dropdown-3 input.dropdownlist-field').each(function () {
+            expect($(this).prop('checked')).toEqual(false);
+        });
+    });
+
+    it('in multiselect mode selects the right options by attribute data-selected', function () {
+        $('#basic-dropdown-4').dropdownlist();
+
+        var fields = $('#basic-dropdown-4 input.dropdownlist-field');
+
+        expect($(fields[0]).prop('checked')).toEqual(false);
+        expect($(fields[1]).prop('checked')).toEqual(true);
+        expect($(fields[2]).prop('checked')).toEqual(true);
+    });
 });

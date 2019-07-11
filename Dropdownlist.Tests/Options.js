@@ -72,28 +72,32 @@ describe('a dropdownlist option', function () {
             getSelectAllItem: function (element) {
                 return element.find('.select-all');
             }
-        },
-        function () {
+        }, function () {
             this.selectAllItems();
 
             expect(this.getSelectedValues()).toEqual([1, 2, 3]);
         });
     });
+
+    it('can be provided for getItemValue', function () {
+        $('#dropdown-options-item-value').dropdownlist({
+            getItemValue: function (item) {
+                return -1 * $(item).data('value');
+            }
+        }, function () {
+                expect(this.getSelectedValues()).toEqual([-1, -2, -3]);
+        });
+    });
+
+    it('can be provided for isMultiselect', function () {
+        $('#dropdown-options-multiselect').dropdownlist({
+            isMultiselect: function (element) {
+                return element.hasClass('multiselect');
+            }
+        });
+
+        $('#dropdown-options-multiselect input.dropdownlist-field').each(function () {
+            expect($(this).prop('type')).toEqual('checkbox');
+        });
+    });
 });
-
-
-/*
-    // Set defaults for extension
-    $.fn.dropdownlist.defaults = {
-        // The field value to use for the generated input fields based on the item
-        // Defaults to the data-property value of the item
-        getItemValue: function (item) {
-            return $(item).data('value') || $(item).text();
-        },
-        // Multiselect dropdowns use checkboxes, single select uses an invisible radio button
-        // Defaults to false except when the data-property multiselect is provided
-        isMultiselect: function (element) {
-            return $(element).data('multiselect') !== undefined && $(element).data('multiselect') != false;
-        }
-    }
-*/
