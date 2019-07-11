@@ -37,31 +37,58 @@ describe('a dropdownlist option', function () {
             expect($(this).prop('name')).toEqual('my-field-name');
         });
     });
+
+    it('can be provided for getItemText', function () {
+        $('#dropdown-options-item-text').dropdownlist({
+            getItemText: function (item) {
+                return $(item).data('value') + ' - ' + $(item).text();
+            }
+        });
+
+        expect($('#dropdown-options-item-text').closest('.dropdownlist').find('.dropdownlist-selector-text').text()).toEqual('1 - Choice number 1');
+    });
+
+    it('can be provided for getEmptyText', function () {
+        var user = {
+            language: 'NL'
+        };
+
+        $('#dropdown-options-empty-text').dropdownlist({
+            getEmptyText: function () {
+                switch (user.language) {
+                    case 'NL':
+                        return 'Selecteer een optie...';
+                    default:
+                        return 'Select an option...';
+                }
+            }
+        });
+
+        expect($('#dropdown-options-empty-text').closest('.dropdownlist').find('.dropdownlist-selector-text').text()).toEqual('Selecteer een optie...');
+    });
+
+    it('can be provided for getSelectAllItem', function () {
+        $('#dropdown-options-select-all').dropdownlist({
+            getSelectAllItem: function (element) {
+                return element.find('.select-all');
+            }
+        },
+        function () {
+            this.selectAllItems();
+
+            expect(this.getSelectedValues()).toEqual([1, 2, 3]);
+        });
+    });
 });
 
 
 /*
     // Set defaults for extension
     $.fn.dropdownlist.defaults = {
-        // Item that triggers a select all in case of multiselect
-        // Defaults to the first direct child with data-property select-all enabled
-        getSelectAllItem: function (element) {
-            return $(element).children().filter('[data-select-all]').first();
-        },
         // The field value to use for the generated input fields based on the item
         // Defaults to the data-property value of the item
         getItemValue: function (item) {
             return $(item).data('value') || $(item).text();
-        },
-        // The text to get for an item based on the item
-        // Defaults to the text-content of the item
-        getItemText: function (item) {
-            return $(item).text();
-        },
-        // The text to display when no items are selected
-        // Override this implementation to set the text or provide multi-language support
-        getEmptyText: function () {
-            return '(Select...)';
         },
         // Multiselect dropdowns use checkboxes, single select uses an invisible radio button
         // Defaults to false except when the data-property multiselect is provided
