@@ -1,6 +1,6 @@
 ﻿/// <reference path="Basic.html" />
 
-describe("a basic dropdownlist", function () {
+describe('a basic dropdownlist', function () {
     it('can be created', function () {
         var dropdown = $('#basic-dropdown-1');
 
@@ -8,6 +8,7 @@ describe("a basic dropdownlist", function () {
         expect(function () {
             dropdown.dropdownlist();
         }).not.toThrow();
+        expect(dropdown.closest('.dropdownlist').length).toEqual(1);
     });
 
     it('creates fields with the correct name', function () {

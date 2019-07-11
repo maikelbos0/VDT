@@ -71,8 +71,8 @@
   <ItemGroup>
     <Content Include="Basic.html" />
     <Content Include="Basic.js" />
-    <Content Include="Selection.html" />
-    <Content Include="Selection.js" />
+    <Content Include="Interaction.html" />
+    <Content Include="Interaction.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -1,6 +1,7 @@
 ﻿(function ($) {
     // Extension for creating dropdownlists; supports multiple creations in one call
     $.fn.dropdownlist = function (settings, callback) {
+        // Allow callback to be the only argument
         if ($.isFunction(settings)) {            
             callback = settings;
             settings = null;
@@ -17,9 +18,11 @@
                 $(this).data('dropdownlist', dropdownlist);
             }
             else {
+                // Get object from data
                 dropdownlist = $(this).data('dropdownlist');
             }
 
+            // Call the callback, bound to the dropdownlist
             if ($.isFunction(callback)) {
                 callback.bind(dropdownlist)(dropdownlist);
             }
@@ -255,7 +258,6 @@
      * TODO
      * - Add options for attributes of container, list and selector
      * - Add filter textbox
-     * - Move get to a callback
      * - Add keyboard support?
      * - No more recursive / deep merging of settings?
      * - Tests
