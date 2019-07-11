@@ -11,7 +11,7 @@ describe('a dropdownlist object', function () {
         expect(called).toEqual(true);
     });
 
-    it('is returned in the callback if it\'s the first argument of the create function', function () {
+    it('callback is called if it\'s the first argument of the create function', function () {
         var called = false;
 
         $('#dropdown-interaction-1').dropdownlist(function () {
@@ -21,7 +21,7 @@ describe('a dropdownlist object', function () {
         expect(called).toEqual(true);
     });
 
-    it('is given in the callback of the extension function when creating a dropdown', function () {
+    it('callback is called  of the extension function when creating a dropdown', function () {
         $('#dropdown-interaction-1').dropdownlist(null, function () {
             expect(typeof this.areAllItemsSelected).toEqual('function');
         });
@@ -44,7 +44,6 @@ describe('a dropdownlist object', function () {
         });
     });
 
-
     it('can be removed', function () {
         var dropdown = $('#dropdown-interaction-1');
 
@@ -54,4 +53,40 @@ describe('a dropdownlist object', function () {
 
         expect(dropdown.closest('.dropdownlist').length).toEqual(0);
     });
+
+    it('can be used to get the selected item', function () {
+        $('#dropdown-interaction-1').dropdownlist(function () {
+            var selectedItems = this.getSelectedItems();
+
+            expect(selectedItems.length).toEqual(1);
+            expect(selectedItems.not('#dropdown-interaction-1 div:first-child').length).toEqual(0);
+        });
+    });
+
+    it('can be used to get the selected value', function () {
+        $('#dropdown-interaction-1').dropdownlist(function () {
+            var selectedValues = this.getSelectedValues();
+
+            expect(selectedValues).toEqual([1]);
+        });
+    });
+
+    it('can be used to set the selected item', function () {
+        $('#dropdown-interaction-1').dropdownlist(function () {
+            this.setSelectedItems('#dropdown-interaction-1 div:nth-child(2)');
+                       
+            var fields = $('#dropdown-interaction-1').find('input.dropdownlist-field');
+
+            expect($(fields[1]).prop('checked')).toEqual(true);
+        });
+    });
+
+    /*
+     * TODO
+     * Get/set/clear selected items and multiselect
+     * More test files:
+     * - Multiselect dropdown setup
+     * - Setting options (each)
+     * - Changing defaults
+     * */
 });
