@@ -6,7 +6,6 @@
      * - Add keyboard support? + tests
      * - Tests:
      *   - Multiselect select-all
-     *   - Changing defaults
      *   - User interaction: open/close/change-selection/select-all/select-none
      * - Figure out licensing
      * - Figure out NuGet package?

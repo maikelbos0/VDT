@@ -1,10 +1,10 @@
 ﻿/// <reference path="Interaction.html" />
 
 describe('a dropdownlist object', function () {
-    it('is returned in the callback', function () {
+    it('callback is called', function () {
         var called = false;
 
-        $('#dropdown-interaction-1').dropdownlist({}, function () {
+        $('#dropdown-interaction-callback').dropdownlist({}, function () {
             called = true;
         });
 
@@ -14,38 +14,53 @@ describe('a dropdownlist object', function () {
     it('callback is called if it\'s the first argument of the create function', function () {
         var called = false;
 
-        $('#dropdown-interaction-1').dropdownlist(function () {
+        $('#dropdown-interaction-callback-no-options').dropdownlist(function () {
             called = true;
         });
 
         expect(called).toEqual(true);
     });
 
-    it('callback is called  of the extension function when creating a dropdown', function () {
-        $('#dropdown-interaction-1').dropdownlist(null, function () {
+    it('is the function scope in the callback when creating a dropdown', function () {
+        var called = false;
+
+        $('#dropdown-interaction-this').dropdownlist(null, function () {
             expect(typeof this.areAllItemsSelected).toEqual('function');
+            called = true;
         });
+
+        expect(called).toEqual(true);
     });
 
-    it('is given in the callback of the extension function when a dropdown already exists', function () {
-        $('#dropdown-interaction-1').dropdownlist();
+    it('is the function scope in the callback when a dropdown already exists', function () {
+        var called = false;
 
-        $('#dropdown-interaction-1').dropdownlist(null, function () {
+        $('#dropdown-interaction-this-existing').dropdownlist();
+
+        $('#dropdown-interaction-this-existing').dropdownlist(null, function () {
             expect(typeof this.areAllItemsSelected).toEqual('function');
+            called = true;
         });
+
+        expect(called).toEqual(true);
     });
 
-    it('is the first parameter in the callback of the extension function', function () {
-        $('#dropdown-interaction-1').dropdownlist(null, function (d) {
+    it('is the first parameter in the callback', function () {
+        var called = false;
 
+        $('#dropdown-interaction-first-parameter').dropdownlist(null, function (d) {
             expect(d).not.toBeNull();
             expect(d).not.toBeUndefined();
             expect(typeof d.areAllItemsSelected).toEqual('function');
+
+            called = true;
         });
+
+        expect(called).toEqual(true);
     });
 
     it('can be removed', function () {
-        var dropdown = $('#dropdown-interaction-1');
+        var dropdown = $('#dropdown-interaction-remove');
 
         dropdown.dropdownlist(function () {
             this.remove();
@@ -55,46 +70,58 @@ describe('a dropdownlist object', function () {
     });
 
     it('can be used to get the selected item', function () {
-        $('#dropdown-interaction-1').dropdownlist(function () {
+        var called = false;
+
+        $('#dropdown-interaction-get-selected').dropdownlist(function () {
             var selectedItems = this.getSelectedItems();
 
             expect(selectedItems.length).toEqual(1);
             expect(selectedItems.not('div:first-child').length).toEqual(0);
+
+            called = true;
         });
+
+        expect(called).toEqual(true);
     });
 
     it('can be used to get the selected value', function () {
-        $('#dropdown-interaction-1').dropdownlist(function () {
+        var called = false;
+
+        $('#dropdown-interaction-get-selected-value').dropdownlist(function () {
             var selectedValues = this.getSelectedValues();
 
             expect(selectedValues).toEqual([1]);
+
+            called = true;
         });
+
+        expect(called).toEqual(true);
     });
 
     it('can be used to set the selected item', function () {
-        $('#dropdown-interaction-1').dropdownlist(function () {
+        $('#dropdown-interaction-set-selected').dropdownlist(function () {
             this.setSelectedItems('div:nth-child(2)');
         });
 
-        var fields = $('#dropdown-interaction-1 input.dropdownlist-field');
+        var fields = $('#dropdown-interaction-set-selected input.dropdownlist-field');
 
         expect($(fields[1]).prop('checked')).toEqual(true);
     });
 
     it('sets only the first selected item when setting select items in single-select', function () {
-        $('#dropdown-interaction-1').dropdownlist(function () {
+        $('#dropdown-interaction-set-selected-single').dropdownlist(function () {
             this.setSelectedItems('div');
         });
 
-        var fields = $('#dropdown-interaction-1 input.dropdownlist-field');
+        var fields = $('#dropdown-interaction-set-selected-single input.dropdownlist-field');
 
         expect($(fields[0]).prop('checked')).toEqual(true);
         expect($(fields[1]).prop('checked')).toEqual(false);
         expect($(fields[2]).prop('checked')).toEqual(false);
     });
-
+    
     it('can be used to get the selected items in multiselect', function () {
-        $('#dropdown-interaction-2').dropdownlist(function () {
+        $('#dropdown-interaction-multiselect-get-selected').dropdownlist(function () {
             var selectedItems = this.getSelectedItems();
 
             expect(selectedItems.length).toEqual(2);
@@ -103,7 +130,7 @@ describe('a dropdownlist object', function () {
     });
 
     it('can be used to get the selected values in multiselect', function () {
-        $('#dropdown-interaction-2').dropdownlist(function () {
+        $('#dropdown-interaction-multiselect-get-values').dropdownlist(function () {
             var selectedValues = this.getSelectedValues();
 
             expect(selectedValues).toEqual([3, 3]);
@@ -111,11 +138,11 @@ describe('a dropdownlist object', function () {
     });
 
     it('can be used to set the selected items in multiselect', function () {
-        $('#dropdown-interaction-2').dropdownlist(function () {
+        $('#dropdown-interaction-multiselect-set-selected').dropdownlist(function () {
             this.setSelectedItems('div:nth-child(2n)');
         });
 
-        var fields = $('#dropdown-interaction-2 input.dropdownlist-field');
+        var fields = $('#dropdown-interaction-multiselect-set-selected input.dropdownlist-field');
 
         expect($(fields[0]).prop('checked')).toEqual(false);
         expect($(fields[1]).prop('checked')).toEqual(true);
