@@ -69,7 +69,6 @@
     <Content Include="Content\jquery-dropdownlist.min.css">
       <DependentUpon>jquery-dropdownlist.css</DependentUpon>
     </Content>
-    <Content Include="Scripts\Code.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
