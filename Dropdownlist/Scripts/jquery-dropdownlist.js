@@ -5,7 +5,6 @@
      * - Add filter textbox + tests
      * - Add keyboard support? + tests
      * - Tests:
-     *   - Multiselect select-all
      *   - User interaction: open/close/change-selection/select-all/select-none
      * - Figure out licensing
      * - Figure out NuGet package?

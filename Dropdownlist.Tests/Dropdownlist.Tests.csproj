@@ -73,6 +73,8 @@
     <Content Include="Basic.js" />
     <Content Include="Defaults.html" />
     <Content Include="Defaults.js" />
+    <Content Include="Events.html" />
+    <Content Include="Events.js" />
     <Content Include="Interaction.html" />
     <Content Include="Interaction.js" />
     <Content Include="Options.html" />
