@@ -1,6 +1,5 @@
 ﻿/// <reference path="Options.html" />
 
-
 describe('a dropdownlist option', function () {
     it('can be provided for getItems', function () {
         $('#dropdown-options-items').dropdownlist({

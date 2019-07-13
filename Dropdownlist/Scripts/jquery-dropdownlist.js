@@ -3,6 +3,10 @@
      * TODO
      * - Add options for attributes of container, list and selector + tests
      * - Add filter textbox + tests
+     *   - Single select autocomplete and enter for select
+     *   - Test new options
+     *   - Test single: ???
+     *   - Test multi: it clears when opening; it filters; clears filter; doesn't change selection?
      * - Add keyboard support? + tests
      * - Figure out licensing
      * - Figure out NuGet package?
@@ -81,6 +85,16 @@
         // Defaults to false except when the data-property multiselect is provided
         isMultiselect: function (element) {
             return $(element).data('multiselect') !== undefined && $(element).data('multiselect') != false;
+        },
+        // If true, this adds a text box that can be used to search in the dropdownlist
+        // Defaults to false
+        hasTextSearch: function (element) {
+            return $(element).data('text-search') !== undefined && $(element).data('text-search') != false;
+        },
+        // If text search is enabled, this is the filter that is used to determine if an item is valid
+        // Defaults to searching in all the text inside the item
+        itemMatchesTextSearch: function (item, searchText) {
+            return $(item).text().indexOf(searchText) > -1;
         }
     }
 
@@ -92,9 +106,14 @@
         this.element = element;
         this.options = options;
         this.fieldName = this.options.getFieldName(this.element) || 'dropdownlist-' + Math.random().toString().replace('.', '');
+        this.isMultiselect = this.options.isMultiselect(this.element);
+        this.selectAllItem = this.isMultiselect ? this.options.getSelectAllItem(this.element) : $();
+        this.textSearch = $();
+        this.items = this.options.getItems(this.element);
+        this.emptyText = this.options.getEmptyText();
+        this.container = $('<div>', { class: 'dropdownlist' });
 
         // Add container early so can move the element after without issues
-        this.container = $('<div>', { class: 'dropdownlist' });
         this.element.before(this.container);
 
         // Select element
@@ -106,14 +125,31 @@
         // List container
         this.list = $('<div>', { class: 'dropdownlist-list' }).append(this.element).hide();
 
+        // Search text box
+        if (this.options.hasTextSearch(this.element)) {
+            this.textSearch = $('<input>', { type: 'text', class: 'dropdownlist-search' });
+
+            if (this.isMultiselect) {
+                // In multiselect mode it does not replace the selector text but rather searches in the list
+                this.list.prepend(this.textSearch);
+            }
+            else {
+                // In single-select mode it replaces the selector text and acts as an autocomplete
+                this.selector.prepend(this.textSearch);
+                this.textSearch.hide();
+            }
+        }
+
         // Add input fields
-        this.options.getItems(this.element).each(function () {
-            let fieldProperties = {
-                name: base.fieldName,
-                value: base.options.getItemValue($(this))
+        this.items.each(function () {
+            let fieldProperties = {};
+
+            if (!base.isMultiselect || !base.selectAllItem.is(this)) {
+                fieldProperties.name = base.fieldName;
+                fieldProperties.value = base.options.getItemValue($(this));
             };
 
-            if (base.options.isMultiselect(base.element)) {
+            if (base.isMultiselect) {
                 fieldProperties.type = 'checkbox';
                 fieldProperties.class = 'dropdownlist-field';
             }
@@ -122,7 +158,7 @@
                 fieldProperties.class = 'dropdownlist-field dropdownlist-field-hidden';
             }
 
-            if (base.options.isItemSelected($(this)) && (base.options.isMultiselect(base.element) || !isItemSelected)) {
+            if (base.options.isItemSelected($(this)) && (base.isMultiselect || !isItemSelected)) {
                 fieldProperties.checked = 'true';
                 isItemSelected = true;
             }
@@ -132,13 +168,13 @@
 
         // For single-select, select the first option if nothing is selected
         // Having nothing selected is not a user-recoverable state
-        if (!this.options.isMultiselect(this.element) && this.getSelectedItems().length === 0) {
+        if (!this.isMultiselect && this.getSelectedItems().length === 0) {
             this.setSelectedItems(':first');
         }
 
         // For multiselect, set the correct value of the select all item if it exists
-        if (this.options.isMultiselect(this.element) && this.options.getSelectAllItem(element).length > 0) {
-            this.options.getSelectAllItem(element).find('input.dropdownlist-field').prop('checked', this.areAllItemsSelected());
+        if (this.isMultiselect && this.selectAllItem.length > 0) {
+            this.selectAllItem.find('input.dropdownlist-field').prop('checked', this.areAllItemsSelected());
         }
 
         // Final assembly
@@ -149,12 +185,17 @@
         // Event handlers
         this.selector.click(this, this.selectorClick);
         this.list.click(this, this.listClick);
+        this.textSearch.keyup(this, this.textSearchKeyup);
         $(document).click(this, this.documentClick);
     }
 
     // Click handler for selector
     Dropdownlist.prototype.selectorClick = function (e) {
-        e.data.list.toggle();
+        if ($(e.target).is(e.data.textSearch)) {
+            return;
+        }
+
+        e.data.toggle();
     }
 
     // Click handler for list
@@ -174,13 +215,10 @@
         }
         else {
             // Actual click handling
-            let selectAllItem = e.data.options.getSelectAllItem(e.data.element);
-            let isMultiselect = e.data.options.isMultiselect(e.data.element);
-
-            if (isMultiselect && selectAllItem.length > 0) {
+            if (e.data.isMultiselect && e.data.selectAllItem.length > 0) {
                 // Handle clicking of the select all
-                if ($(e.target).closest(selectAllItem).length > 0) {
-                    if (selectAllItem.find('input.dropdownlist-field').prop('checked')) {
+                if ($(e.target).closest(e.data.selectAllItem).length > 0) {
+                    if (e.data.selectAllItem.find('input.dropdownlist-field').prop('checked')) {
                         e.data.selectAllItems();
                     }
                     else {
@@ -189,18 +227,33 @@
                 }
                 // Set select all
                 else {
-                    selectAllItem.find('input.dropdownlist-field').prop('checked', e.data.areAllItemsSelected());
+                    e.data.selectAllItem.find('input.dropdownlist-field').prop('checked', e.data.areAllItemsSelected());
                 }
             }
 
             e.data.setSelectorText();
 
-            if (!isMultiselect) {
-                e.data.list.hide();
+            if (!e.data.isMultiselect) {
+                e.data.toggle();
             }
 
             e.data.element.trigger('dropdownlist.selectedItemsChanged');
         }
+    }
+
+    // Change handler for search 
+    Dropdownlist.prototype.textSearchKeyup = function (e) {
+        var searchText = e.data.textSearch.val();
+        var visibleItems = e.data.items;
+
+        if (searchText) {
+            visibleItems = visibleItems.filter(function () {
+                return e.data.options.itemMatchesTextSearch(this, searchText);
+            });
+        }
+
+        e.data.items.not(visibleItems).hide();
+        visibleItems.show();
     }
 
     // Click handler for anywhere outside the dropdownlist
@@ -209,14 +262,52 @@
             return;
         }
 
-        e.data.list.hide();
+        e.data.hide();
+    }
+
+    // Toggle the list and the text search if needed
+    Dropdownlist.prototype.toggle = function () {
+        if (this.list.css('display') == 'none') {
+            this.show();
+        }
+        else {
+            this.hide();
+        }
+    }
+
+    // Hide the list and the text search if needed
+    Dropdownlist.prototype.hide = function () {
+        this.list.hide();
+
+        if (this.textSearch.length > 0) {
+            if (this.isMultiselect) {
+                this.list.find('.dropdownlist-search').val('');
+                this.textSearch.trigger('keyup');
+            }
+            else {
+                this.selector.find('.dropdownlist-selector-text').show();
+                this.selector.find('.dropdownlist-search').hide();
+            }
+        }
+    }
+
+    // Show the list
+    Dropdownlist.prototype.show = function () {
+        this.list.show();
+
+        if (this.textSearch.length > 0) {
+            if (!this.isMultiselect) {
+                this.selector.find('.dropdownlist-selector-text').hide();
+                this.selector.find('.dropdownlist-search').show();
+            }
+        }
     }
 
     // Remove the entire dropdownlist; resets the base element to its former state
     Dropdownlist.prototype.remove = function () {
         this.container.before(this.element);
         this.container.remove();
-        this.options.getItems(this.element).find('input.dropdownlist-field').remove();
+        this.items.find('input.dropdownlist-field').remove();
 
         // Remove object from data
         this.element.removeData('dropdownlist');
@@ -225,18 +316,22 @@
     // Set the text of the selector based on current list selection
     Dropdownlist.prototype.setSelectorText = function () {
         let items = this.getSelectedItems();
-        let text = this.options.getEmptyText();
+        let text = this.emptyText;
 
         if (items.length > 0) {
             text = $.map(items, this.options.getItemText).join(', ');
         }
 
         this.container.find('.dropdownlist-selector-text').text(text);
+
+        if (!this.isMultiselect && this.textSearch.length > 0) {
+            this.textSearch.val(text);
+        }
     }
 
     // Get a jQuery-object with all currently selected items
     Dropdownlist.prototype.getSelectedItems = function () {
-        return this.options.getItems(this.element).has('input.dropdownlist-field:checked').not(this.options.getSelectAllItem(this.element));
+        return this.items.has('input.dropdownlist-field:checked').not(this.selectAllItem);
     }
 
     // Get an array of values from all currently selected items
@@ -278,4 +373,5 @@
     Dropdownlist.prototype.areAllItemsSelected = function () {
         return this.options.getItems(this.element).has('input.dropdownlist-field:not(:checked)').not(this.options.getSelectAllItem(this.element)).length === 0;
     }
+
 }(jQuery));

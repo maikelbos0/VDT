@@ -112,4 +112,13 @@ describe('a basic dropdownlist', function () {
         expect($(fields[1]).prop('checked')).toEqual(true);
         expect($(fields[2]).prop('checked')).toEqual(true);
     });
+
+    it('in multiselect mode does not set an input name for the select all item', function () {
+        $('#basic-dropdown-multiselect-field-all').dropdownlist();
+
+        var field = $('#basic-dropdown-multiselect-field-all .select-all input.dropdownlist-field');
+
+        expect(field.length).toEqual(1)
+        expect(field.prop('name')).toEqual('');
+    });
 });

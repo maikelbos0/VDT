@@ -9,6 +9,23 @@
     border: 1px solid #888888;
 }
 
+.dropdownlist-selector .dropdownlist-search {
+    flex-grow: 1;
+}
+
+.dropdownlist-search {
+    padding-left: .3em;
+    padding-right: .3em;
+    padding-top: 0;
+    padding-bottom: 0;
+    border: 0;
+}
+
+.dropdownlist-list .dropdownlist-search {
+    width: 100%;
+    border-bottom: 1px solid #888888;
+}
+
 .dropdownlist-selector-text {
     flex-grow: 1;
     margin-left: .3em;
