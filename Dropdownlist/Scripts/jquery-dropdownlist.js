@@ -4,8 +4,6 @@
      * - Add options for attributes of container, list and selector + tests
      * - Add filter textbox + tests
      * - Add keyboard support? + tests
-     * - Tests:
-     *   - User interaction: open/close/change-selection/select-all/select-none
      * - Figure out licensing
      * - Figure out NuGet package?
      * - Create examples/documentation?
@@ -136,6 +134,11 @@
         // Having nothing selected is not a user-recoverable state
         if (!this.options.isMultiselect(this.element) && this.getSelectedItems().length === 0) {
             this.setSelectedItems(':first');
+        }
+
+        // For multiselect, set the correct value of the select all item if it exists
+        if (this.options.isMultiselect(this.element) && this.options.getSelectAllItem(element).length > 0) {
+            this.options.getSelectAllItem(element).find('input.dropdownlist-field').prop('checked', this.areAllItemsSelected());
         }
 
         // Final assembly
