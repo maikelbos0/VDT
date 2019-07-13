@@ -3,7 +3,6 @@
      * TODO
      * - Add options for attributes of container, list and selector + tests
      * - Add filter textbox + tests
-     *   - Single select autocomplete and enter for select
      *   - Test new options
      *   - Test single: ???
      *   - Test multi: it clears when opening; it filters; clears filter; doesn't change selection?
@@ -94,7 +93,7 @@
         // If text search is enabled, this is the filter that is used to determine if an item is valid
         // Defaults to searching in all the text inside the item
         itemMatchesTextSearch: function (item, searchText) {
-            return $(item).text().indexOf(searchText) > -1;
+            return $(item).text().toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1;
         }
     }
 
@@ -275,19 +274,26 @@
         }
     }
 
-    // Hide the list and the text search if needed
+    // Hide the list
     Dropdownlist.prototype.hide = function () {
         this.list.hide();
 
         if (this.textSearch.length > 0) {
             if (this.isMultiselect) {
+                // Clear search text
                 this.list.find('.dropdownlist-search').val('');
-                this.textSearch.trigger('keyup');
             }
             else {
+                // Switch selector text and input
                 this.selector.find('.dropdownlist-selector-text').show();
                 this.selector.find('.dropdownlist-search').hide();
+
+                // Set search text to current selected item text
+                this.textSearch.val(this.container.find('.dropdownlist-selector-text').text());
             }
+
+            // Clear previous searches
+            this.items.show();
         }
     }
 
@@ -295,11 +301,10 @@
     Dropdownlist.prototype.show = function () {
         this.list.show();
 
-        if (this.textSearch.length > 0) {
-            if (!this.isMultiselect) {
-                this.selector.find('.dropdownlist-selector-text').hide();
-                this.selector.find('.dropdownlist-search').show();
-            }
+        if (this.textSearch.length > 0 && !this.isMultiselect) {
+            // Switch selector text and input
+            this.selector.find('.dropdownlist-selector-text').hide();
+            this.selector.find('.dropdownlist-search').show().focus().select();
         }
     }
 
@@ -345,6 +350,7 @@
         let items = this.options.getItems(this.element);
         let selectedItems = items.filter(selector);
 
+        // Make sure we select exactly one element for single-select
         if (!this.options.isMultiselect(this.element)) {
             selectedItems = selectedItems.first();
 
@@ -353,6 +359,7 @@
             }
         }
 
+        // Select and deselect items as required
         items.not(selectedItems).find('input.dropdownlist-field:checked').prop('checked', false);
         selectedItems.find('input.dropdownlist-field:not(:checked)').prop('checked', true);
 
