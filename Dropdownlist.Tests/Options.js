@@ -99,4 +99,12 @@ describe('a dropdownlist option', function () {
             expect($(this).prop('type')).toEqual('checkbox');
         });
     });
+
+    it('can be provided for hasTextSearch', function () {
+        fail();
+    });
+
+    it('can be provided for itemMatchesTextSearch', function () {
+        fail();
+    });
 });
