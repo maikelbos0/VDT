@@ -1,4 +1,4 @@
-﻿/// <reference path="Events.html" />
+﻿/// <reference path="events.html" />
 
 function isVisible(element) {
     var visible = true;

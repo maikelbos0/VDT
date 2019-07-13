@@ -1,4 +1,4 @@
-﻿/// <reference path="Basic.html" />
+﻿/// <reference path="basic.html" />
 
 describe('a basic dropdownlist', function () {
     it('can be created', function () {

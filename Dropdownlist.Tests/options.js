@@ -1,4 +1,4 @@
-﻿/// <reference path="Options.html" />
+﻿/// <reference path="options.html" />
 
 describe('a dropdownlist option', function () {
     it('can be provided for getItems', function () {
@@ -32,7 +32,11 @@ describe('a dropdownlist option', function () {
             }
         });
 
-        $('#dropdown-options-field-name input.dropdownlist-field').each(function () {
+        var fields = $('#dropdown-options-field-name input.dropdownlist-field');
+
+        expect(fields.length).toBe(3);
+
+        fields.each(function () {
             expect($(this).prop('name')).toEqual('my-field-name');
         });
     });
@@ -67,6 +71,8 @@ describe('a dropdownlist option', function () {
     });
 
     it('can be provided for getSelectAllItem', function () {
+        var selectedValues;
+
         $('#dropdown-options-select-all').dropdownlist({
             getSelectAllItem: function (element) {
                 return element.find('.select-all');
@@ -74,18 +80,24 @@ describe('a dropdownlist option', function () {
         }, function () {
             this.selectAllItems();
 
-            expect(this.getSelectedValues()).toEqual([1, 2, 3]);
+            selectedValues = this.getSelectedValues();
         });
+
+        expect(selectedValues).toEqual([1, 2, 3]);
     });
 
     it('can be provided for getItemValue', function () {
+        var selectedValues;
+
         $('#dropdown-options-item-value').dropdownlist({
             getItemValue: function (item) {
                 return -1 * $(item).data('value');
             }
         }, function () {
-                expect(this.getSelectedValues()).toEqual([-1, -2, -3]);
+            selectedValues = this.getSelectedValues();
         });
+
+        expect(selectedValues).toEqual([-1, -2, -3]);
     });
 
     it('can be provided for isMultiselect', function () {
@@ -95,7 +107,11 @@ describe('a dropdownlist option', function () {
             }
         });
 
-        $('#dropdown-options-multiselect input.dropdownlist-field').each(function () {
+        var fields = $('#dropdown-options-multiselect input.dropdownlist-field');
+
+        expect(fields.length).toEqual(3);
+
+        fields.each(function () {
             expect($(this).prop('type')).toEqual('checkbox');
         });
     });

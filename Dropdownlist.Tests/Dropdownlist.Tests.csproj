@@ -69,20 +69,20 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="_basic.html" />
-    <Content Include="_basic.js" />
-    <Content Include="_defaults.html" />
-    <Content Include="_defaults.js" />
-    <Content Include="_events.html" />
-    <Content Include="_events.js" />
-    <Content Include="_interaction.html" />
-    <Content Include="_interaction.js" />
-    <Content Include="_options.html" />
-    <Content Include="_options.js" />
-    <Content Include="_search.html" />
-    <Content Include="_search.js" />
-    <Content Include="_selector.html" />
-    <Content Include="_selector.js" />
+    <Content Include="basic.html" />
+    <Content Include="basic.js" />
+    <Content Include="defaults.html" />
+    <Content Include="defaults.js" />
+    <Content Include="events.html" />
+    <Content Include="events.js" />
+    <Content Include="interaction.html" />
+    <Content Include="interaction.js" />
+    <Content Include="options.html" />
+    <Content Include="options.js" />
+    <Content Include="search.html" />
+    <Content Include="search.js" />
+    <Content Include="selector.html" />
+    <Content Include="selector.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

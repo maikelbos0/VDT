@@ -1,4 +1,4 @@
-﻿/// <reference path="Interaction.html" />
+﻿/// <reference path="interaction.html" />
 
 describe('a dropdownlist object', function () {
     it('callback is called', function () {
@@ -121,20 +121,24 @@ describe('a dropdownlist object', function () {
     });
     
     it('can be used to get the selected items in multiselect', function () {
-        $('#dropdown-interaction-multiselect-get-selected').dropdownlist(function () {
-            var selectedItems = this.getSelectedItems();
+        var selectedItems;
 
-            expect(selectedItems.length).toEqual(2);
-            expect(selectedItems.not('div:nth-child(3n)').length).toEqual(0);
+        $('#dropdown-interaction-multiselect-get-selected').dropdownlist(function () {
+            selectedItems = this.getSelectedItems();
         });
+
+        expect(selectedItems.length).toEqual(2);
+        expect(selectedItems.not('div:nth-child(3n)').length).toEqual(0);
     });
 
     it('can be used to get the selected values in multiselect', function () {
-        $('#dropdown-interaction-multiselect-get-values').dropdownlist(function () {
-            var selectedValues = this.getSelectedValues();
+        var selectedValues;
 
-            expect(selectedValues).toEqual([3, 3]);
+        $('#dropdown-interaction-multiselect-get-values').dropdownlist(function () {
+            selectedValues = this.getSelectedValues();
         });
+
+        expect(selectedValues).toEqual([3, 3]);
     });
 
     it('can be used to set the selected items in multiselect', function () {

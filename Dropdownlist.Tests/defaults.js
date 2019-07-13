@@ -1,4 +1,4 @@
-﻿/// <reference path="Defaults.html" />
+﻿/// <reference path="defaults.html" />
 
 describe('dropdownlist defaults', function () {
     $.fn.dropdownlist.defaults.getFieldName = function () {

@@ -1,4 +1,4 @@
-﻿/// <reference path="Search.html" />
+﻿/// <reference path="search.html" />
 
 describe('the text search', function () {
     it('filter is in the list for a multiselect dropdown', function () {
