@@ -46,6 +46,10 @@ describe('when a user', function () {
         expect(isVisible(dropdown.closest('.dropdownlist-list'))).toEqual(false);
     });
 
+    it('clicks outside the dropdown it does not open the dropdown', function () {
+        fail();
+    });
+
     it('clicks on a item in an open single-select dropdown it selects the item', function () {
         var dropdown = $('#dropdown-events-single-select-item');
 
