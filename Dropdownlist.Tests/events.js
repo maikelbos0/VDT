@@ -1,21 +1,5 @@
 ﻿/// <reference path="events.html" />
 
-function isVisible(element) {
-    var visible = true;
-
-    if (element.css('display') == 'none') {
-        visible = false;
-    }
-
-    element.parents().each(function () {
-        if ($(this).css('display') == 'none') {
-            visible = false;
-        }
-    });
-
-    return visible;
-}
-
 describe('when a user', function () {
     it('clicks on a dropdown-selector it opens', function () {
         var dropdown = $('#dropdown-events-open');
@@ -23,7 +7,7 @@ describe('when a user', function () {
         dropdown.dropdownlist();
         dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
 
-        expect(isVisible(dropdown.closest('.dropdownlist-list'))).toEqual(true);
+        expect(dropdown.closest('.dropdownlist-list').css('display')).not.toEqual('none');
     });
 
     it('clicks on the dropdown-selector it closes the open dropdown', function () {
@@ -33,7 +17,7 @@ describe('when a user', function () {
         dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
         dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
 
-        expect(isVisible(dropdown.closest('.dropdownlist-list'))).toEqual(false);
+        expect(dropdown.closest('.dropdownlist-list').css('display')).toEqual('none');
     });
 
     it('clicks outside the dropdown it closes the open dropdown', function () {
@@ -43,7 +27,7 @@ describe('when a user', function () {
         dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
         $('#alternate-element').click();
 
-        expect(isVisible(dropdown.closest('.dropdownlist-list'))).toEqual(false);
+        expect(dropdown.closest('.dropdownlist-list').css('display')).toEqual('none');
     });
 
     it('clicks outside the dropdown it does not open the dropdown', function () {
@@ -52,7 +36,7 @@ describe('when a user', function () {
         dropdown.dropdownlist();
         $('#alternate-element').click();
 
-        expect(isVisible(dropdown.closest('.dropdownlist-list'))).toEqual(false);
+        expect(dropdown.closest('.dropdownlist-list').css('display')).toEqual('none');
     });
 
     it('clicks on a item in an open single-select dropdown it selects the item', function () {
@@ -72,7 +56,7 @@ describe('when a user', function () {
         dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
         dropdown.find('.select-item').click();
 
-        expect(isVisible(dropdown.closest('.dropdownlist-list'))).toEqual(false);
+        expect(dropdown.closest('.dropdownlist-list').css('display')).toEqual('none');
     });
 
     it('clicks on a item in an open multiselect dropdown it selects the item', function () {
@@ -92,7 +76,7 @@ describe('when a user', function () {
         dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
         dropdown.find('.select-item').click();
 
-        expect(isVisible(dropdown.closest('.dropdownlist-list'))).toEqual(true);
+        expect(dropdown.closest('.dropdownlist-list').css('display')).not.toEqual('none');
     });
 
     it('clicks on select all in an open multiselect dropdown it selects all items', function () {

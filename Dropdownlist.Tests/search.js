@@ -34,11 +34,31 @@ describe('the text search', function () {
     });
 
     it('in a closed single-select dropdown is hidden', function () {
-        fail();
+        var dropdown = $('#dropdown-search-hidden');
+
+        dropdown.dropdownlist();
+
+        expect(dropdown.closest('.dropdownlist').find('.dropdownlist-selector input.dropdownlist-search').css('display')).toEqual('none');
     });
 
     it('hides the selector text in an open single-select dropdown', function () {
-        fail();
+        var dropdown = $('#dropdown-search-visible');
+
+        dropdown.dropdownlist();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
+
+        expect(dropdown.closest('.dropdownlist').find('.dropdownlist-selector input.dropdownlist-search').css('display')).not.toEqual('none');
+        expect(dropdown.closest('.dropdownlist').find('.dropdownlist-selector .dropdownlist-selector-text').css('display')).toEqual('none');
+    });
+
+    it('does not close a single-select dropdown on click', function () {
+        var dropdown = $('#dropdown-search-field-click');
+
+        dropdown.dropdownlist();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-search').click();
+
+        expect(dropdown.closest('.dropdownlist').find('.dropdownlist-list').css('display')).not.toEqual('none');
     });
 
     it('does not hide the selector text in an open multiselect dropdown', function () {
