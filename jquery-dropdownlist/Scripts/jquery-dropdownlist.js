@@ -3,7 +3,6 @@
      * TODO
      * - Add keyboard support? + tests
      * - Figure out NuGet package?
-     * - Add readme?
      * - Create examples/documentation?
      * - Project for server-side MVC implementation?
      */
