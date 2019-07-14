@@ -2,6 +2,10 @@
     position: relative;
 }
 
+.dropdownlist, .dropdownlist > * {
+    box-sizing: border-box;
+}
+
 .dropdownlist-selector {
     display: flex;
     flex-direction: row;
@@ -28,6 +32,7 @@
 
 .dropdownlist-selector-text {
     flex-grow: 1;
+    line-height: 1.5;
     margin-left: .3em;
     margin-right: .3em;
     white-space: nowrap;

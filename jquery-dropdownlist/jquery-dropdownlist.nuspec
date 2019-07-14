@@ -8,16 +8,17 @@
     <authors>Maikel Bos</authors>
     <license type="expression">MIT</license>
     <copyright>Copyright © 2019 Maikel Bos</copyright>
-    <tags>jquery dropdownlist list dropdown checkboxlist</tags>
+    <tags>jQuery, plugin, dropdownlist, list, dropdown, checkboxlist</tags>
     <language>en-us</language>
     <projectUrl>https://github.com/maikelbos0/VDT</projectUrl>
     <dependencies>
-      <dependency id="jQuery" version="3.0.0" />
+      <dependency id="jQuery" version="3.4.0" />
     </dependencies>
   </metadata>
 
   <files>
     <file src="README.md" />
+    <file src="LICENSE" />
     <file src="Scripts\jquery-dropdownlist*.js" target="content\Scripts" />
     <file src="Content\jquery-dropdownlist*.css" target="content\Content" />
   </files>
