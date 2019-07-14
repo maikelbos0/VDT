@@ -2,9 +2,6 @@
     /*
      * TODO
      * - Add options for attributes of container, list and selector + tests
-     * - Add filter textbox + tests
-     *   - Test single: ???
-     *   - Test multi: it clears when opening; it filters; clears filter; doesn't change selection?
      * - Add keyboard support? + tests
      * - Figure out licensing
      * - Figure out NuGet package?
