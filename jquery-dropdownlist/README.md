@@ -17,9 +17,9 @@ Html:
 
 ```
 <div id="example-dropdown" data-multiselect="true" data-field-name="example-value" data-text-search="true">
-	<div data-select-all="true">Select all options</div>
+    <div data-select-all="true">Select all options</div>
     <div data-value="1">Choice number 1</div>
-	<div data-value="1a">Option 1a</div>
+    <div data-value="1a">Option 1a</div>
     <div data-value="2" data-selected="true">Second choice</div>
     <div data-value="3">Final option</div>
 </div>
