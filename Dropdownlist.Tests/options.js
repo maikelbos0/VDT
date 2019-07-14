@@ -117,10 +117,34 @@ describe('a dropdownlist option', function () {
     });
 
     it('can be provided for hasTextSearch', function () {
-        fail();
+        $('#dropdown-options-text-search').dropdownlist({
+            hasTextSearch: function (element) {
+                return element.hasClass('text-search-enabled');
+            }
+        });
+
+        expect($('#dropdown-options-text-search').closest('.dropdownlist').find('input.dropdownlist-search').length).toEqual(1);
     });
 
     it('can be provided for itemMatchesTextSearch', function () {
-        fail();
+        $('#dropdown-options-search-item').dropdownlist({
+            itemMatchesTextSearch: function (item, searchText) {
+                return $(item).text().toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) === 0;
+            }
+        },
+        function () {
+            var base = this;
+            this.textSearch.val('choice');
+            this.textSearchKeyup({
+                data: base
+            });
+        });
+
+        var items = $('#dropdown-options-search-item div');
+
+        expect(items.length).toEqual(3);
+        expect($(items[0]).css('display')).toEqual('block');
+        expect($(items[1]).css('display')).toEqual('none');
+        expect($(items[2]).css('display')).toEqual('none');
     });
 });
