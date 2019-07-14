@@ -1,12 +1,36 @@
 ﻿/// <reference path="search.html" />
 
 describe('the text search', function () {
+    it('is disabled by default', function () {
+        var dropdown = $('#dropdown-search-disabled');
+
+        dropdown.dropdownlist();
+
+        expect(dropdown.closest('.dropdownlist').find('input.dropdownlist-search').length).toEqual(0);
+    });
+
+    it('is enabled if data-text-search is set to true', function () {
+        var dropdown = $('#dropdown-search-enabled');
+
+        dropdown.dropdownlist();
+
+        expect(dropdown.closest('.dropdownlist').find('input.dropdownlist-search').length).toEqual(1);
+    });
+    
     it('filter is in the list for a multiselect dropdown', function () {
-        fail();
+        var dropdown = $('#dropdown-search-multiselect-filter-position');
+
+        dropdown.dropdownlist();
+
+        expect(dropdown.closest('.dropdownlist-list').find('input.dropdownlist-search').length).toEqual(1);
     });
 
     it('filter is in the selector for a single-select dropdown', function () {
-        fail();
+        var dropdown = $('#dropdown-search-filter-position');
+
+        dropdown.dropdownlist();
+
+        expect(dropdown.closest('.dropdownlist').find('.dropdownlist-selector input.dropdownlist-search').length).toEqual(1);
     });
 
     it('in a closed single-select dropdown is hidden', function () {
