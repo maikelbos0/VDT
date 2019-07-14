@@ -47,7 +47,12 @@ describe('when a user', function () {
     });
 
     it('clicks outside the dropdown it does not open the dropdown', function () {
-        fail();
+        var dropdown = $('#dropdown-events-document-open');
+
+        dropdown.dropdownlist();
+        $('#alternate-element').click();
+
+        expect(isVisible(dropdown.closest('.dropdownlist-list'))).toEqual(false);
     });
 
     it('clicks on a item in an open single-select dropdown it selects the item', function () {
