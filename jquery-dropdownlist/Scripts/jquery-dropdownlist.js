@@ -1,11 +1,4 @@
 ﻿(function ($) {
-    /*
-     * TODO
-     * - Add keyboard support? + tests
-     * - Figure out NuGet package?
-     * - Create examples/documentation?
-     * - Project for server-side MVC implementation?
-     */
 
     // Extension for creating dropdownlists; supports multiple creations in one call
     $.fn.dropdownlist = function (settings, callback) {
