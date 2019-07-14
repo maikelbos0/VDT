@@ -62,31 +62,93 @@ describe('the text search', function () {
     });
 
     it('does not hide the selector text in an open multiselect dropdown', function () {
-        fail();
+        var dropdown = $('#dropdown-search-multiselect-not-hidden');
+
+        dropdown.dropdownlist();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
+
+        expect(dropdown.closest('.dropdownlist').find('.dropdownlist-selector .dropdownlist-selector-text').css('display')).not.toEqual('none');
     });
 
     it('filters the list of items in a dropdown when typing', function () {
-        fail();
+        var dropdown = $('#dropdown-search-field-filter');
+
+        dropdown.dropdownlist();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-search').val('final');
+        dropdown.closest('.dropdownlist').find('.dropdownlist-search').keyup();
+
+        var items = dropdown.children('div');
+
+        expect($(items[0]).css('display')).toEqual('none');
+        expect($(items[1]).css('display')).toEqual('none');
+        expect($(items[2]).css('display')).not.toEqual('none');
     });
 
     it('does not leave items hidden after closing and reopening a dropdown', function () {
-        fail();
+        var dropdown = $('#dropdown-search-field-filter-end');
+
+        dropdown.dropdownlist();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-search').val('final');
+        dropdown.closest('.dropdownlist').find('.dropdownlist-search').keyup();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
+
+        var items = dropdown.children('div');
+
+        expect($(items[0]).css('display')).not.toEqual('none');
+        expect($(items[1]).css('display')).not.toEqual('none');
+        expect($(items[2]).css('display')).not.toEqual('none');
     });
 
     it('hiding items does not change the selected items in a dropdown', function () {
-        // in multiselect
-        fail();
+        var dropdown = $('#dropdown-search-field-filter-selection');
+
+        dropdown.dropdownlist();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-search').val('final');
+        dropdown.closest('.dropdownlist').find('.dropdownlist-search').keyup();
+
+        var selectedItems;
+
+        dropdown.dropdownlist(function () {
+            selectedItems = this.getSelectedItems();
+        });
+
+        expect(selectedItems.length).toEqual(3);
     });
 
     it('copies the selector text after the selection changes in a single-select dropdown', function () {
-        fail();
+        var dropdown = $('#dropdown-search-field-text');
+
+        dropdown.dropdownlist(function () {
+            this.setSelectedItems(dropdown.find('.select-item'));
+        });
+
+        expect(dropdown.closest('.dropdownlist').find('.dropdownlist-search').val()).toEqual('Second choice');
     });
 
     it('changes back to the selector text after typing a value and closing and opening a single-select dropdown', function () {
-        fail();
+        var dropdown = $('#dropdown-search-field-selector-text');
+
+        dropdown.dropdownlist();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-search').val('final');
+        dropdown.closest('.dropdownlist').find('.dropdownlist-search').keyup();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
+
+        expect(dropdown.closest('.dropdownlist').find('.dropdownlist-search').val()).toEqual('Choice number 1');
     });
 
     it('is replaced by the selector text after opening and closing a single-select dropdown', function () {
-        fail();
+        var dropdown = $('#dropdown-search-hidden-after');
+
+        dropdown.dropdownlist();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
+
+        expect(dropdown.closest('.dropdownlist').find('.dropdownlist-selector input.dropdownlist-search').css('display')).toEqual('none');
+        expect(dropdown.closest('.dropdownlist').find('.dropdownlist-selector .dropdownlist-selector-text').css('display')).not.toEqual('none');
     });
 });
