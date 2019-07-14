@@ -59,9 +59,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Dropdownlist\Dropdownlist.csproj">
+    <ProjectReference Include="..\jquery-dropdownlist\jquery-dropdownlist.csproj">
       <Project>{2015AF5E-653F-4165-B3E1-467AEDBC141F}</Project>
-      <Name>Dropdownlist</Name>
+      <Name>jquery-dropdownlist</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
