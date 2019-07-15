@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - VDT-Playground</title>
+
+    @Scripts.Render("~/Scripts/jquery")
+    @Scripts.Render("~/Scripts/bootstrap")
+
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <div class="container site-container">
+        <div class="site-navbar">
+            @Html.ActionLink("Index", "Index", "Home", null, new { @class = "site-navbar-item" })
+        </div>
+    </div>
+
+    <div class="container site-container">
+        <div class="site-content">
+            <h2>@ViewBag.Title</h2>
+
+            @RenderBody()
+        </div>
+    </div>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

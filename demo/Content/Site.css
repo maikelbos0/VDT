@@ -1,0 +1,30 @@
+﻿.site-container {
+    padding: 15px;
+}
+
+.site-content {
+    background-color: #eeeeee;
+    padding: 15px;
+}
+
+.site-navbar {
+    background-color: #ccccff;
+    padding: 15px;
+}
+
+.site-navbar-item {
+    margin-right: 15px;
+    color: #333399;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.site-navbar-item:hover {
+    color: #6666cc;
+    text-decoration: underline;
+}
+
+.site-spaced {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
