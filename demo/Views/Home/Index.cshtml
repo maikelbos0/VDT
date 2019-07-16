@@ -22,6 +22,10 @@
     <div class="col-3">
         @Html.JQueryDropdownlistFor(model => model.DemoProperty, new Dictionary<string, object>() { { "class", "dictionary-test-class" }, { "id", "dictionary-test-id" } })
     </div>
+
+    <div class="col-3">
+        @Html.JQueryDropdownlistFor(model => ((IEnumerable<string>)model.DemoProperty))
+    </div>
 </div>
 
 <div class="row site-spaced">

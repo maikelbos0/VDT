@@ -23,22 +23,42 @@ namespace vdt.jquerydropdownlist.MVC {
                                                                   IDictionary<string, object> htmlAttributes) {
             var listBuilder = new TagBuilder("div");
             var listItemsBuilder = new StringBuilder();
-            var id = ExpressionHelper.GetExpressionText(expression);
+            var outputBuilder = new StringBuilder();
+            string id;
+            object idObject;
 
-            if (!string.IsNullOrWhiteSpace(id)) {
-                listBuilder.MergeAttribute("id", TagBuilder.CreateSanitizedId(id));
+            // We require an ID to be able to find the outer element in script
+            if (htmlAttributes != null && htmlAttributes.TryGetValue("id", out idObject)) {
+                id = idObject.ToString();
             }
-            
+            else {
+                id = html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(ExpressionHelper.GetExpressionText(expression));
+
+                if (string.IsNullOrWhiteSpace(id)) {                    
+                    id = $"jquery-dropdownlist-{Guid.NewGuid()}";
+                }
+            }
+
+            id = TagBuilder.CreateSanitizedId(id);
+            listBuilder.MergeAttribute("id", id);
+
             foreach (var value in expression.Compile().Invoke(html.ViewData.Model)) {
                 var itemBuilder = new TagBuilder("div");
                 itemBuilder.SetInnerText(value);
-                listItemsBuilder.Append(itemBuilder.ToString());
+                listItemsBuilder.AppendLine(itemBuilder.ToString());
             }
 
             listBuilder.InnerHtml = listItemsBuilder.ToString();
-            listBuilder.MergeAttributes(htmlAttributes, true);
+            listBuilder.MergeAttributes(htmlAttributes);
 
-            return new MvcHtmlString(listBuilder.ToString());
+            outputBuilder.AppendLine(listBuilder.ToString());
+            outputBuilder.AppendLine("<script type=\"text/javascript\">");
+            outputBuilder.AppendLine("$(function () {");
+            outputBuilder.AppendLine($"  $('div#{id}').dropdownlist();");
+            outputBuilder.AppendLine("});");
+            outputBuilder.AppendLine("</script>");
+
+            return new MvcHtmlString(outputBuilder.ToString());
         }
     }
 }
