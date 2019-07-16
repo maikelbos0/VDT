@@ -1,5 +1,7 @@
-﻿namespace vdt.demo.Models {
+﻿using System.Collections.Generic;
+
+namespace vdt.demo.Models {
     public class ExampleViewModel {
-        public string DemoProperty { get; set; }
+        public IEnumerable<string> DemoProperty { get; set; }
     }
 }

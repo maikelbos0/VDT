@@ -9,7 +9,7 @@ namespace vdt.demo.Controllers {
         [Route("Index")]
         public ActionResult Index() {
             return View(new ExampleViewModel() {
-                DemoProperty = "A value"
+                DemoProperty = new[] { "A value", "Another value", "Final string" }
             });
         }
     }
