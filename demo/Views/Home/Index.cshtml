@@ -1,10 +1,20 @@
-﻿@{
+﻿@using vdt.jquerydropdownlist.MVC
+
+@model vdt.demo.Models.ExampleViewModel
+
+@{
     ViewBag.Title = "Index";
 }
 
 <p>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lobortis, ipsum ut vulputate vestibulum, sem odio fermentum magna, sed ultricies sem purus et dolor. Aliquam dapibus felis magna, vitae ultrices sem posuere eu. Sed ante orci, dictum tincidunt eros quis, sagittis rutrum sem. Vivamus ac commodo est. Nunc gravida maximus ligula, quis dictum sem vestibulum eget. Sed vel facilisis lacus. Ut nisl mi, ultrices quis auctor iaculis, cursus quis lacus. Nullam lectus risus, faucibus non laoreet eget, bibendum vel ligula. Aenean at pharetra augue, sed consequat velit. Aenean tincidunt gravida semper. Quisque dictum ullamcorper sem non placerat.
 </p>
+
+<div class="row site-spaced">
+    <div class="col-3">
+        @Html.JQueryDropdownlistFor(model => model.DemoProperty)
+    </div>
+</div>
 
 <div class="row site-spaced">
     <div class="col-3">

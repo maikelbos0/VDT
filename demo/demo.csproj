@@ -147,6 +147,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ExampleViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -180,7 +181,14 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
+    <ProjectReference Include="..\jquery-dropdownlist.MVC\jquery-dropdownlist.MVC.csproj">
+      <Project>{bd3336a8-dc76-47e8-b7d0-4995db4fa6f7}</Project>
+      <Name>jquery-dropdownlist.MVC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\jquery-dropdownlist\jquery-dropdownlist.csproj">
+      <Project>{2015af5e-653f-4165-b3e1-467aedbc141f}</Project>
+      <Name>jquery-dropdownlist</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

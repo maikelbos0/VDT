@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using vdt.demo.Models;
 
 namespace vdt.demo.Controllers {
     [RoutePrefix("Home")]
@@ -7,7 +8,9 @@ namespace vdt.demo.Controllers {
         [Route]
         [Route("Index")]
         public ActionResult Index() {
-            return View();
+            return View(new ExampleViewModel() {
+                DemoProperty = "A value"
+            });
         }
     }
 }
