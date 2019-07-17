@@ -62,6 +62,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HtmlHelperExtensions.cs" />
+    <Compile Include="JQueryDropdownlist.cs" />
+    <Compile Include="JQueryDropdownlistItem.cs" />
+    <Compile Include="LinqExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
