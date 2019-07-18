@@ -53,3 +53,7 @@ This dropdownlist only provides very basic styling in the provided style sheet; 
 - `.dropdownlist-search` is the search/autocomplete input
 - `.dropdownlist-list` is the list that gets displayed/hidden and includes the original element
 - `.dropdownlist-field` are the input fields; checkboxes are displayed in multiselect
+
+## Documentation
+
+Full documentation can be found at [the wiki](https://github.com/maikelbos0/VDT/wiki)
