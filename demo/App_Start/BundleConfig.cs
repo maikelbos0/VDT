@@ -6,7 +6,7 @@ namespace vdt.demo.App_Start {
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles) {
             bundles.Add(new ScriptBundle("~/Scripts/jquery").Include(
-                "~/Scripts/jquery-3.4.1.min.js",
+                "~/Scripts/jquery-3.3.1.min.js",
                 "~/../jquery-dropdownlist/Scripts/jquery-dropdownlist.min.js"));
 
             bundles.Add(new ScriptBundle("~/Scripts/bootstrap").Include(
