@@ -17,7 +17,7 @@ Includes:
 
 ```
 <link rel="stylesheet" href="Content/jquery-dropdownlist.min.css" />
-<script type="text/javascript" src="Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="Scripts/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="Scripts/jquery-dropdownlist.min.js"></script>
 ```
 
