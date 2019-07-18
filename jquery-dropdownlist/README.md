@@ -13,6 +13,14 @@ A jQuery plugin that makes it easy to transform any html-element with children i
 
 ## Basic usage
 
+Includes:
+
+```
+<link rel="stylesheet" href="Content/jquery-dropdownlist.min.css" />
+<script type="text/javascript" src="Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="Scripts/jquery-dropdownlist.min.js"></script>
+```
+
 Html:
 
 ```
