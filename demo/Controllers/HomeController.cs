@@ -11,11 +11,11 @@ namespace vdt.demo.Controllers {
         public ActionResult Index() {
             return View(new ExampleViewModel() {
                 DemoProperty = new JQueryDropdownlist() {
-                    Items = new [] {
+                    Items = new[] {
                         new JQueryDropdownlistItem() { Value = "1a", Text = "Option 1a" },
                         new JQueryDropdownlistItem() { Value = "1b", Text = "Option 1b" },
                         new JQueryDropdownlistItem() { Value = "2", Text = "Choice 2" },
-                        new JQueryDropdownlistItem() { Value = "3", Text = "Third choice" },
+                        new JQueryDropdownlistItem() { Value = "3", Text = "Third choice" }
                     },
                     SelectedValues = new[] { "1b", "2" },
                     IsMultiselect = true,

@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jquery-dropdownlist.MVC", "
 		{2015AF5E-653F-4165-B3E1-467AEDBC141F} = {2015AF5E-653F-4165-B3E1-467AEDBC141F}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jquery-dropdownlist.MVC.test", "jquery-dropdownlist.MVC.test\jquery-dropdownlist.MVC.test.csproj", "{2D7FDB7C-7AA7-4AC2-88A0-7549FF529897}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{BD3336A8-DC76-47E8-B7D0-4995DB4FA6F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD3336A8-DC76-47E8-B7D0-4995DB4FA6F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD3336A8-DC76-47E8-B7D0-4995DB4FA6F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D7FDB7C-7AA7-4AC2-88A0-7549FF529897}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D7FDB7C-7AA7-4AC2-88A0-7549FF529897}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D7FDB7C-7AA7-4AC2-88A0-7549FF529897}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D7FDB7C-7AA7-4AC2-88A0-7549FF529897}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

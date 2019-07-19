@@ -35,7 +35,7 @@ namespace vdt.jquerydropdownlist.MVC {
                 id = idObject.ToString();
             }
             else {
-                id = html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(ExpressionHelper.GetExpressionText(expression));
+                id = html.ViewData.TemplateInfo.GetFullHtmlFieldName(ExpressionHelper.GetExpressionText(expression));
 
                 if (string.IsNullOrWhiteSpace(id)) {
                     id = $"jquery-dropdownlist-{Guid.NewGuid()}";
