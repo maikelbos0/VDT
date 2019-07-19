@@ -103,8 +103,10 @@
         this.element.before(this.container);
 
         // Select element
-        this.selector = $('<div>', { class: 'dropdownlist-selector' }).append(
-            $('<div>', { class: 'dropdownlist-selector-text' }),
+        this.selector = $('<div>', { class: 'dropdownlist-selector' });
+        this.selectorText = $('<div>', { class: 'dropdownlist-selector-text' });
+        this.selector.append(
+            this.selectorText,
             $('<div>', { class: 'dropdownlist-selector-toggle' })
         );
 
@@ -186,7 +188,7 @@
 
     // Click handler for list
     Dropdownlist.prototype.listClick = function (e) {
-        let item = $(e.target).closest('.dropdownlist-list > * > *');
+        let item = $(e.target).closest(e.data.items);
 
         // Only bother selecting/unselecting when clicking an item
         if (item.length === 0) {
@@ -244,7 +246,7 @@
 
     // Click handler for anywhere outside the dropdownlist
     Dropdownlist.prototype.documentClick = function (e) {
-        if ($(e.target).closest('.dropdownlist').is(e.data.container)) {
+        if ($(e.target).closest(e.data.container).length > 0) {
             return;
         }
 
@@ -268,15 +270,15 @@
         if (this.textSearch.length > 0) {
             if (this.isMultiselect) {
                 // Clear search text
-                this.list.find('.dropdownlist-search').val('');
+                this.textSearch.val('');
             }
             else {
                 // Switch selector text and input
-                this.selector.find('.dropdownlist-selector-text').show();
-                this.selector.find('.dropdownlist-search').hide();
+                this.selectorText.show();
+                this.textSearch.hide();
 
                 // Set search text to current selected item text
-                this.textSearch.val(this.container.find('.dropdownlist-selector-text').text());
+                this.textSearch.val(this.selectorText.text());
             }
 
             // Clear previous searches
@@ -290,8 +292,8 @@
 
         if (this.textSearch.length > 0 && !this.isMultiselect) {
             // Switch selector text and input
-            this.selector.find('.dropdownlist-selector-text').hide();
-            this.selector.find('.dropdownlist-search').show().focus().select();
+            this.selectorText.hide();
+            this.textSearch.show().focus().select();
         }
     }
 
@@ -300,6 +302,7 @@
         this.container.before(this.element);
         this.container.remove();
         this.items.find('input.dropdownlist-field').remove();
+        this.selectAllItem.find('input.dropdownlist-field').remove();
 
         // Remove object from data
         this.element.removeData('dropdownlist');
@@ -314,7 +317,7 @@
             text = $.map(items, this.options.getItemText).join(', ');
         }
 
-        this.container.find('.dropdownlist-selector-text').text(text);
+        this.selectorText.text(text);
 
         if (!this.isMultiselect && this.textSearch.length > 0) {
             this.textSearch.val(text);
@@ -365,7 +368,7 @@
 
     // Check if all items are currently selected
     Dropdownlist.prototype.areAllItemsSelected = function () {
-        return this.options.getItems(this.element).has('input.dropdownlist-field:not(:checked)').not(this.options.getSelectAllItem(this.element)).length === 0;
+        return this.items.has('input.dropdownlist-field:not(:checked)').not(this.selectAllItem).length === 0;
     }
 
 }(jQuery));
