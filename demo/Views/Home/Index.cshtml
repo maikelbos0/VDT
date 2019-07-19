@@ -24,7 +24,7 @@
     </div>
 
     <div class="col-3">
-        @Html.JQueryDropdownlistFor(model => ((IEnumerable<string>)model.DemoProperty))
+        @Html.JQueryDropdownlistFor(model => (JQueryDropdownlist)model.DemoProperty))
     </div>
 </div>
 
@@ -109,6 +109,7 @@
 
     <div class="col-3">
         <div id="my-dropdown-8" class="my-dropdown" data-multiselect="true" data-text-search="true">
+            <div data-select-all="true">All</div>
             <div class="item" data-value="1">This could be an option</div>
             <div class="item" data-value="2">And this</div>
             <div class="item" data-value="3">Number three</div>

@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using vdt.jquerydropdownlist.MVC;
 
 namespace vdt.demo.Models {
     public class ExampleViewModel {
-        public IEnumerable<string> DemoProperty { get; set; }
+        public JQueryDropdownlist DemoProperty { get; set; }
     }
 }
