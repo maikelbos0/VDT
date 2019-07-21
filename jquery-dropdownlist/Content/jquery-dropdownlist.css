@@ -66,7 +66,7 @@
     border-right: 1px solid #888888;
 }
 
-.dropdownlist-list-item-active, .dropdownlist-list > * > *:hover {
+.dropdownlist-list-item-active {
     background: #4488ff;
 }
 

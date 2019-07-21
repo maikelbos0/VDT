@@ -179,6 +179,8 @@
         this.allItems.find('input.dropdownlist-field').change(this, eventHandlers.inputChange);
         this.textSearch.keyup(this, eventHandlers.textSearchKeyup);
         $(document).click(this, eventHandlers.documentClick);
+        this.allItems.mouseover(this, eventHandlers.allItemsMouseover);
+        this.allItems.mouseout(this, eventHandlers.allItemsMouseout);
     }
 
     // Toggle the list and the text search if needed
@@ -374,6 +376,16 @@
             }
 
             e.data.hide();
+        },
+
+        // Mouse over handler for items including select all
+        allItemsMouseover: function (e) {
+            $(this).addClass('dropdownlist-list-item-active');
+        },
+
+        // Mouse out handler for items including select all
+        allItemsMouseout: function (e) {
+            e.data.allItems.filter('.dropdownlist-list-item-active').removeClass('dropdownlist-list-item-active');
         }
     }
 }(jQuery));
