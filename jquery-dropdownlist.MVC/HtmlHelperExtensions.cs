@@ -19,31 +19,33 @@ namespace vdt.jquerydropdownlist.MVC {
             return JQueryDropdownlistFor(html, expression, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
         }
 
+        private static string GetAttributeValues(IDictionary<string, object> htmlAttributes, string key, params string[] fallbackValues) {
+            object attributeValue;
+
+            if (htmlAttributes != null && htmlAttributes.TryGetValue(key, out attributeValue) && attributeValue != null) {
+                return attributeValue.ToString();
+            }
+
+            return fallbackValues.FirstOrDefault(v => !string.IsNullOrEmpty(v));
+        }
+
         public static MvcHtmlString JQueryDropdownlistFor<TModel>(this HtmlHelper<TModel> html,
                                                                   Expression<Func<TModel, JQueryDropdownlist>> expression,
                                                                   IDictionary<string, object> htmlAttributes) {
             var list = expression.Compile().Invoke(html.ViewData.Model);
-            var selectedValues = list.SelectedValues.ToHashSet();
+            var selectedValues = list.SelectedValues?.ToHashSet();
             var listBuilder = new TagBuilder("div");
             var listItemsBuilder = new StringBuilder();
             var outputBuilder = new StringBuilder();
-            string id;
-            object idObject;
+            var htmlFieldName = html.ViewData.TemplateInfo.GetFullHtmlFieldName(ExpressionHelper.GetExpressionText(expression));
+            var id = TagBuilder.CreateSanitizedId(GetAttributeValues(htmlAttributes, "id", htmlFieldName, $"jquery-dropdownlist-{Guid.NewGuid()}"));
+            var name = GetAttributeValues(htmlAttributes, "name", htmlFieldName + ".SelectedValues");
 
-            // We require an ID to be able to find the outer element in script
-            if (htmlAttributes != null && htmlAttributes.TryGetValue("id", out idObject)) {
-                id = idObject.ToString();
-            }
-            else {
-                id = html.ViewData.TemplateInfo.GetFullHtmlFieldName(ExpressionHelper.GetExpressionText(expression));
-
-                if (string.IsNullOrWhiteSpace(id)) {
-                    id = $"jquery-dropdownlist-{Guid.NewGuid()}";
-                }
-            }
-
-            id = TagBuilder.CreateSanitizedId(id);
             listBuilder.MergeAttribute("id", id);
+
+            if (!string.IsNullOrEmpty(name)) {
+                listBuilder.MergeAttribute("data-field-name", name);
+            }
 
             if (list.IsMultiselect) {
                 listBuilder.MergeAttribute("data-multiselect", "true");
@@ -56,20 +58,26 @@ namespace vdt.jquerydropdownlist.MVC {
             if (list.HasSelectAll) {
                 var itemBuilder = new TagBuilder("div");
                 itemBuilder.MergeAttribute("data-select-all", "true");
-                itemBuilder.SetInnerText(list.GetSelectAllText());
-                listItemsBuilder.AppendLine(itemBuilder.ToString());
-            }
 
-            foreach (var item in list.Items) {
-                var itemBuilder = new TagBuilder("div");
-                itemBuilder.SetInnerText(item.Text);
-                itemBuilder.MergeAttribute("data-value", item.Value);
-
-                if (selectedValues.Contains(item.Value)) {
-                    itemBuilder.MergeAttribute("data-selected", "true");
+                if (list.GetSelectAllText != null) {
+                    itemBuilder.SetInnerText(list.GetSelectAllText());
                 }
 
                 listItemsBuilder.AppendLine(itemBuilder.ToString());
+            }
+
+            if (list.Items != null) {
+                foreach (var item in list.Items) {
+                    var itemBuilder = new TagBuilder("div");
+                    itemBuilder.SetInnerText(item.Text);
+                    itemBuilder.MergeAttribute("data-value", item.Value);
+
+                    if (selectedValues != null && selectedValues.Contains(item.Value)) {
+                        itemBuilder.MergeAttribute("data-selected", "true");
+                    }
+
+                    listItemsBuilder.AppendLine(itemBuilder.ToString());
+                }
             }
 
             listBuilder.InnerHtml = listItemsBuilder.ToString();

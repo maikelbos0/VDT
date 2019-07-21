@@ -53,6 +53,34 @@ namespace vdt.jquerydropdownlist.MVC.test {
         }
 
         [TestMethod]
+        public void JQueryDropdownlistFor_GeneratesFieldNameAttribute() {
+            var viewModel = CreateViewModel();
+            var viewData = new ViewDataDictionary<TestViewModel>() { Model = viewModel };
+            var htmlHelper = CreateHtmlHelper<TestViewModel>(viewData);
+
+            var html = htmlHelper.JQueryDropdownlistFor(model => model.TestProperty);
+            var xml = XElement.Parse($"<list>{html}</list>");
+
+            xml.Element("div").Attribute("data-field-name").Should().NotBeNull();
+            xml.Element("div").Attribute("data-field-name").Value.Should().Be("TestProperty.SelectedValues");
+        }
+
+        [TestMethod]
+        public void JQueryDropdownlistFor_GeneratesFieldNameAttributeWithTemplateInfo() {
+            var viewModel = CreateViewModel();
+            var viewData = new ViewDataDictionary<TestViewModel>() { Model = viewModel };
+            var htmlHelper = CreateHtmlHelper<TestViewModel>(viewData);
+
+            htmlHelper.ViewData.TemplateInfo.HtmlFieldPrefix = "TestViewModel";
+
+            var html = htmlHelper.JQueryDropdownlistFor(model => model.TestProperty);
+            var xml = XElement.Parse($"<list>{html}</list>");
+
+            xml.Element("div").Attribute("data-field-name").Should().NotBeNull();
+            xml.Element("div").Attribute("data-field-name").Value.Should().Be("TestViewModel.TestProperty.SelectedValues");
+        }
+
+        [TestMethod]
         public void JQueryDropdownlistFor_GeneratesValueAttributes() {
             var viewModel = CreateViewModel();
             var viewData = new ViewDataDictionary<TestViewModel>() { Model = viewModel };
@@ -236,6 +264,21 @@ namespace vdt.jquerydropdownlist.MVC.test {
 
             xml.Element("div").Attribute("class").Should().NotBeNull();
             xml.Element("div").Attribute("class").Value.Should().Be("form-control");
+        }
+
+        [TestMethod]
+        public void JQueryDropdownlistFor_WorksForEmptyModel() {
+            var viewModel = new TestViewModel() {
+                TestProperty = new JQueryDropdownlist() {
+                    // Explicitly also test select all text
+                    HasSelectAll = true,
+                    GetSelectAllText = null
+                }
+            };
+            var viewData = new ViewDataDictionary<TestViewModel>() { Model = viewModel };
+            var htmlHelper = CreateHtmlHelper<TestViewModel>(viewData);
+
+            htmlHelper.Invoking(html => html.JQueryDropdownlistFor(model => model.TestProperty)).Should().NotThrow();
         }
 
         public TestViewModel CreateViewModel() {

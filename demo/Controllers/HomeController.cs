@@ -25,5 +25,25 @@ namespace vdt.demo.Controllers {
                 }
             });
         }
+
+        [Route("~/")]
+        [Route]
+        [Route("Index")]
+        [HttpPost]
+        public ActionResult Index(ExampleViewModel viewModel) {
+            viewModel.DemoProperty = viewModel.DemoProperty ?? new JQueryDropdownlist();
+            viewModel.DemoProperty.Items = new[] {
+                new JQueryDropdownlistItem() { Value = "1a", Text = "Option 1a" },
+                new JQueryDropdownlistItem() { Value = "1b", Text = "Option 1b" },
+                new JQueryDropdownlistItem() { Value = "2", Text = "Choice 2" },
+                new JQueryDropdownlistItem() { Value = "3", Text = "Third choice" }
+            };
+            viewModel.DemoProperty.IsMultiselect = true;
+            viewModel.DemoProperty.HasTextSearch = true;
+            viewModel.DemoProperty.HasSelectAll = true;
+            viewModel.DemoProperty.GetSelectAllText = () => "Select all items";
+
+            return View(viewModel);
+        }
     }
 }
