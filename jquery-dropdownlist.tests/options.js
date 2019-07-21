@@ -133,11 +133,8 @@ describe('a dropdownlist option', function () {
             }
         },
         function () {
-            var base = this;
             this.textSearch.val('choice');
-            this.textSearchKeyup({
-                data: base
-            });
+            this.textSearch.keyup();
         });
 
         var items = $('#dropdown-options-search-item div');

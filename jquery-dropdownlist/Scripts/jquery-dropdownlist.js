@@ -174,88 +174,11 @@
         this.setSelectorText();
 
         // Event handlers
-        this.selector.click(this, this.selectorClick);
-        this.list.click(this, this.listClick);
-        this.allItems.find('input.dropdownlist-field').change(this, this.inputChange);
-        this.textSearch.keyup(this, this.textSearchKeyup);
-        $(document).click(this, this.documentClick);
-    }
-
-    // Click handler for selector
-    Dropdownlist.prototype.selectorClick = function (e) {
-        if ($(e.target).is(e.data.textSearch)) {
-            return;
-        }
-
-        e.data.toggle();
-    }
-
-    // Change handler for inputs
-    Dropdownlist.prototype.inputChange = function (e) {        
-        if (e.data.isMultiselect && e.data.selectAllItem.length > 0) {
-            // Handle clicking of the select all
-            if ($(e.target).closest(e.data.selectAllItem).length > 0) {
-                if (e.data.selectAllItem.find('input.dropdownlist-field').prop('checked')) {
-                    e.data.selectAllItems();
-                }
-                else {
-                    e.data.clearSelectedItems();
-                }
-            }
-            // Set select all
-            else {
-                e.data.selectAllItem.find('input.dropdownlist-field').prop('checked', e.data.areAllItemsSelected());
-            }
-        }
-
-        e.data.setSelectorText();
-        e.data.element.trigger('dropdownlist.selectedItemsChanged');
-    }
-
-    // Click handler for list
-    Dropdownlist.prototype.listClick = function (e) {
-        let item = $(e.target).closest(e.data.allItems);
-
-        // Only bother selecting/unselecting when clicking an item
-        if (item.length === 0) {
-            return;
-        }
-
-        let input = item.find('input.dropdownlist-field');
-
-        // Let the input field handle the actual click
-        if (!input.is(e.target)) {
-            input.click();
-        }
-        // Close the dropdownlist if it's single-select
-        else if (!e.data.isMultiselect) {
-            console.log('hide');
-            e.data.hide();
-        }
-    }
-
-    // Change handler for search 
-    Dropdownlist.prototype.textSearchKeyup = function (e) {
-        var searchText = e.data.textSearch.val();
-        var visibleItems = e.data.items;
-
-        if (searchText) {
-            visibleItems = visibleItems.filter(function () {
-                return e.data.options.itemMatchesTextSearch(this, searchText);
-            });
-        }
-
-        e.data.items.not(visibleItems).hide();
-        visibleItems.show();
-    }
-
-    // Click handler for anywhere outside the dropdownlist
-    Dropdownlist.prototype.documentClick = function (e) {
-        if ($(e.target).closest(e.data.container).length > 0) {
-            return;
-        }
-
-        e.data.hide();
+        this.selector.click(this, eventHandlers.selectorClick);
+        this.list.click(this, eventHandlers.listClick);
+        this.allItems.find('input.dropdownlist-field').change(this, eventHandlers.inputChange);
+        this.textSearch.keyup(this, eventHandlers.textSearchKeyup);
+        $(document).click(this, eventHandlers.documentClick);
     }
 
     // Toggle the list and the text search if needed
@@ -375,4 +298,82 @@
         return this.items.has('input.dropdownlist-field:not(:checked)').length === 0;
     }
 
+    let eventHandlers = {
+        // Click handler for selector
+        selectorClick: function (e) {
+            if ($(e.target).is(e.data.textSearch)) {
+                return;
+            }
+
+            e.data.toggle();
+        },
+
+        // Change handler for inputs
+        inputChange: function (e) {
+            if (e.data.isMultiselect && e.data.selectAllItem.length > 0) {
+                // Handle clicking of the select all
+                if ($(e.target).closest(e.data.selectAllItem).length > 0) {
+                    if (e.data.selectAllItem.find('input.dropdownlist-field').prop('checked')) {
+                        e.data.selectAllItems();
+                    }
+                    else {
+                        e.data.clearSelectedItems();
+                    }
+                }
+                // Set select all
+                else {
+                    e.data.selectAllItem.find('input.dropdownlist-field').prop('checked', e.data.areAllItemsSelected());
+                }
+            }
+
+            e.data.setSelectorText();
+            e.data.element.trigger('dropdownlist.selectedItemsChanged');
+        },
+
+        // Click handler for list
+        listClick: function (e) {
+            let item = $(e.target).closest(e.data.allItems);
+
+            // Only bother selecting/unselecting when clicking an item
+            if (item.length === 0) {
+                return;
+            }
+
+            let input = item.find('input.dropdownlist-field');
+
+            // Let the input field handle the actual click
+            if (!input.is(e.target)) {
+                input.click();
+            }
+            // Close the dropdownlist if it's single-select
+            else if (!e.data.isMultiselect) {
+                console.log('hide');
+                e.data.hide();
+            }
+        },
+
+        // Change handler for search 
+        textSearchKeyup: function (e) {
+            var searchText = e.data.textSearch.val();
+            var visibleItems = e.data.items;
+
+            if (searchText) {
+                visibleItems = visibleItems.filter(function () {
+                    return e.data.options.itemMatchesTextSearch(this, searchText);
+                });
+            }
+
+            e.data.items.not(visibleItems).hide();
+            visibleItems.show();
+        },
+
+        // Click handler for anywhere outside the dropdownlist
+        documentClick: function (e) {
+            if ($(e.target).closest(e.data.container).length > 0) {
+                return;
+            }
+
+            e.data.hide();
+        }
+    }
 }(jQuery));
