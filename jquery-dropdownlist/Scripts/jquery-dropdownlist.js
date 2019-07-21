@@ -104,7 +104,7 @@
         this.element.before(this.container);
 
         // Select element
-        this.selector = $('<div>', { class: 'dropdownlist-selector' });
+        this.selector = $('<div>', { class: 'dropdownlist-selector', tabindex: 0 });
         this.selectorText = $('<div>', { class: 'dropdownlist-selector-text' });
         this.selector.append(
             this.selectorText,
@@ -133,7 +133,8 @@
         this.items.each(function () {
             let fieldProperties = {
                 name: base.fieldName,
-                value: base.options.getItemValue($(this))
+                value: base.options.getItemValue($(this)),
+                tabindex: -1
             };
 
             if (base.isMultiselect) {
@@ -164,7 +165,8 @@
             this.selectAllItem.prepend($('<input>', {
                 type: 'checkbox',
                 class: 'dropdownlist-field',
-                checked: this.areAllItemsSelected()
+                checked: this.areAllItemsSelected(),
+                tabindex: -1
             }));
         }
 
@@ -174,6 +176,8 @@
         this.setSelectorText();
 
         // Event handlers
+        this.container.focusout(this, eventHandlers.containerFocusout);
+        this.container.keypress(this, eventHandlers.containerKeypress);
         this.selector.click(this, eventHandlers.selectorClick);
         this.list.click(this, eventHandlers.listClick);
         this.allItems.find('input.dropdownlist-field').change(this, eventHandlers.inputChange);
@@ -300,6 +304,7 @@
         return this.items.has('input.dropdownlist-field:not(:checked)').length === 0;
     }
 
+    // Event handlers should not be accessible from the object itself
     let eventHandlers = {
         // Click handler for selector
         selectorClick: function (e) {
@@ -386,6 +391,47 @@
         // Mouse out handler for items including select all
         allItemsMouseout: function (e) {
             e.data.allItems.filter('.dropdownlist-list-item-active').removeClass('dropdownlist-list-item-active');
+        },
+
+        // Focus out handler for container
+        containerFocusout: function (e) {
+            if ($(e.relatedTarget).closest(e.data.container).length > 0) {
+                return;
+            }
+
+            e.data.hide();
+        },
+
+        // Keypress handler for container
+        containerKeypress: function (e) {
+            console.log(e.which);
+
+            // On enter we toggle the dropdownlist and select if needed
+            if (e.which === keyCodes.ENTER) {
+                var item = e.data.allItems.filter('.dropdownlist-list-item-active');
+
+                if (item.length > 0) {
+                    item.click();
+                }
+                else if ($(e.target).closest(e.data.selector).length > 0) {
+                    e.data.toggle();
+                }
+
+                //e.stopPropagation();
+            }
+            else if (e.which === keyCodes.ARROW_UP) {
+
+            }
+            else if (e.which === keyCodes.ARROW_DOWN) {
+
+            }
         }
     }
+
+    // Key codes for keyboard navigation
+    let keyCodes = {
+        ENTER: 13,
+        ARROW_UP: 38,
+        ARROW_DOWN: 40
+    };
 }(jQuery));
