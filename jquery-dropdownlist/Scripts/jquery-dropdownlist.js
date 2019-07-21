@@ -94,8 +94,9 @@
         this.fieldName = this.options.getFieldName(this.element) || 'dropdownlist-' + Math.random().toString().replace('.', '');
         this.isMultiselect = this.options.isMultiselect(this.element);
         this.selectAllItem = this.isMultiselect ? this.options.getSelectAllItem(this.element) : $();
-        this.textSearch = $();
+        this.allItems = this.options.getItems(this.element).add(this.selectAllItem);
         this.items = this.options.getItems(this.element).not(this.selectAllItem);
+        this.textSearch = $();
         this.emptyText = this.options.getEmptyText();
         this.container = $('<div>', { class: 'dropdownlist' });
 
@@ -175,6 +176,7 @@
         // Event handlers
         this.selector.click(this, this.selectorClick);
         this.list.click(this, this.listClick);
+        this.allItems.find('input.dropdownlist-field').change(this, this.inputChange);
         this.textSearch.keyup(this, this.textSearchKeyup);
         $(document).click(this, this.documentClick);
     }
@@ -188,9 +190,31 @@
         e.data.toggle();
     }
 
+    // Change handler for inputs
+    Dropdownlist.prototype.inputChange = function (e) {        
+        if (e.data.isMultiselect && e.data.selectAllItem.length > 0) {
+            // Handle clicking of the select all
+            if ($(e.target).closest(e.data.selectAllItem).length > 0) {
+                if (e.data.selectAllItem.find('input.dropdownlist-field').prop('checked')) {
+                    e.data.selectAllItems();
+                }
+                else {
+                    e.data.clearSelectedItems();
+                }
+            }
+            // Set select all
+            else {
+                e.data.selectAllItem.find('input.dropdownlist-field').prop('checked', e.data.areAllItemsSelected());
+            }
+        }
+
+        e.data.setSelectorText();
+        e.data.element.trigger('dropdownlist.selectedItemsChanged');
+    }
+
     // Click handler for list
     Dropdownlist.prototype.listClick = function (e) {
-        let item = $(e.target).closest(e.data.items.add(e.data.selectAllItem));
+        let item = $(e.target).closest(e.data.allItems);
 
         // Only bother selecting/unselecting when clicking an item
         if (item.length === 0) {
@@ -203,31 +227,10 @@
         if (!input.is(e.target)) {
             input.click();
         }
-        else {
-            // Actual click handling
-            if (e.data.isMultiselect && e.data.selectAllItem.length > 0) {
-                // Handle clicking of the select all
-                if ($(e.target).closest(e.data.selectAllItem).length > 0) {
-                    if (e.data.selectAllItem.find('input.dropdownlist-field').prop('checked')) {
-                        e.data.selectAllItems();
-                    }
-                    else {
-                        e.data.clearSelectedItems();
-                    }
-                }
-                // Set select all
-                else {
-                    e.data.selectAllItem.find('input.dropdownlist-field').prop('checked', e.data.areAllItemsSelected());
-                }
-            }
-
-            e.data.setSelectorText();
-
-            if (!e.data.isMultiselect) {
-                e.data.toggle();
-            }
-
-            e.data.element.trigger('dropdownlist.selectedItemsChanged');
+        // Close the dropdownlist if it's single-select
+        else if (!e.data.isMultiselect) {
+            console.log('hide');
+            e.data.hide();
         }
     }
 
@@ -339,20 +342,19 @@
     // Set selected items based on a jQuery-selector or selection
     // Multiple selected items for a single-select dropdownlist selects the first item
     Dropdownlist.prototype.setSelectedItems = function (selector) {
-        let items = this.options.getItems(this.element);
-        let selectedItems = items.filter(selector);
+        let selectedItems = this.items.filter(selector);
 
         // Make sure we select exactly one element for single-select
         if (!this.options.isMultiselect(this.element)) {
             selectedItems = selectedItems.first();
 
             if (selectedItems.length === 0) {
-                selectedItems = items.first();
+                selectedItems = this.items.first();
             }
         }
 
         // Select and deselect items as required
-        items.not(selectedItems).find('input.dropdownlist-field:checked').prop('checked', false);
+        this.items.not(selectedItems).find('input.dropdownlist-field:checked').prop('checked', false);
         selectedItems.find('input.dropdownlist-field:not(:checked)').prop('checked', true);
 
         this.setSelectorText();
