@@ -77,9 +77,7 @@ namespace vdt.jquerydropdownlist.MVC {
 
             outputBuilder.AppendLine(listBuilder.ToString());
             outputBuilder.AppendLine("<script type=\"text/javascript\">");
-            outputBuilder.AppendLine("$(function () {");
-            outputBuilder.AppendLine($"  $('div#{id}').dropdownlist();");
-            outputBuilder.AppendLine("});");
+            outputBuilder.AppendLine($"$(function () {{ $('div#{id}').dropdownlist(); }});");
             outputBuilder.AppendLine("</script>");
 
             return new MvcHtmlString(outputBuilder.ToString());
