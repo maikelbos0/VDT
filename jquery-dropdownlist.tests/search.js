@@ -85,6 +85,17 @@ describe('the text search', function () {
         expect($(items[2]).css('display')).not.toEqual('none');
     });
 
+    it('does not hide the select all item', function () {
+        var dropdown = $('#dropdown-search-field-filter-select-all');
+
+        dropdown.dropdownlist();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-search').val('final');
+        dropdown.closest('.dropdownlist').find('.dropdownlist-search').keyup();
+
+        expect(dropdown.find('.select-all').css('display')).not.toEqual('none');
+    });
+
     it('does not leave items hidden after closing and reopening a dropdown', function () {
         var dropdown = $('#dropdown-search-field-filter-end');
 

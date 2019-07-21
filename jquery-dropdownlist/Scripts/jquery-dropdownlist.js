@@ -95,7 +95,7 @@
         this.isMultiselect = this.options.isMultiselect(this.element);
         this.selectAllItem = this.isMultiselect ? this.options.getSelectAllItem(this.element) : $();
         this.textSearch = $();
-        this.items = this.options.getItems(this.element);
+        this.items = this.options.getItems(this.element).not(this.selectAllItem);
         this.emptyText = this.options.getEmptyText();
         this.container = $('<div>', { class: 'dropdownlist' });
 
@@ -130,11 +130,9 @@
 
         // Add input fields
         this.items.each(function () {
-            let fieldProperties = {};
-
-            if (!base.isMultiselect || !base.selectAllItem.is(this)) {
-                fieldProperties.name = base.fieldName;
-                fieldProperties.value = base.options.getItemValue($(this));
+            let fieldProperties = {
+                name: base.fieldName,
+                value: base.options.getItemValue($(this))
             };
 
             if (base.isMultiselect) {
@@ -160,9 +158,13 @@
             this.setSelectedItems(':first');
         }
 
-        // For multiselect, set the correct value of the select all item if it exists
+        // For multiselect, create input and set the correct value of the select all item if it exists
         if (this.isMultiselect && this.selectAllItem.length > 0) {
-            this.selectAllItem.find('input.dropdownlist-field').prop('checked', this.areAllItemsSelected());
+            this.selectAllItem.prepend($('<input>', {
+                type: 'checkbox',
+                class: 'dropdownlist-field',
+                checked: this.areAllItemsSelected()
+            }));
         }
 
         // Final assembly
@@ -188,7 +190,7 @@
 
     // Click handler for list
     Dropdownlist.prototype.listClick = function (e) {
-        let item = $(e.target).closest(e.data.items);
+        let item = $(e.target).closest(e.data.items.add(e.data.selectAllItem));
 
         // Only bother selecting/unselecting when clicking an item
         if (item.length === 0) {
@@ -326,7 +328,7 @@
 
     // Get a jQuery-object with all currently selected items
     Dropdownlist.prototype.getSelectedItems = function () {
-        return this.items.has('input.dropdownlist-field:checked').not(this.selectAllItem);
+        return this.items.has('input.dropdownlist-field:checked');
     }
 
     // Get an array of values from all currently selected items
@@ -368,7 +370,7 @@
 
     // Check if all items are currently selected
     Dropdownlist.prototype.areAllItemsSelected = function () {
-        return this.items.has('input.dropdownlist-field:not(:checked)').not(this.selectAllItem).length === 0;
+        return this.items.has('input.dropdownlist-field:not(:checked)').length === 0;
     }
 
 }(jQuery));
