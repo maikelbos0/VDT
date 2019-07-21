@@ -49,6 +49,16 @@ describe('when a user', function () {
         expect(dropdown.find('.select-item input').prop('checked')).toEqual(true);
     });
 
+    it('clicks on a item in an open single-select dropdown it updates the selector text', function () {
+        var dropdown = $('#dropdown-events-single-select-item-text');
+
+        dropdown.dropdownlist();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
+        dropdown.find('.select-item').click();
+
+        expect(dropdown.closest('.dropdownlist').find('.dropdownlist-selector-text').text()).toEqual('Second choice');
+    });
+
     it('clicks on a item in an open single-select dropdown it closes the dropdown', function () {
         var dropdown = $('#dropdown-events-select-item-close');
 
