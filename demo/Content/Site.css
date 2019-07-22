@@ -28,3 +28,8 @@
     margin-top: 15px;
     margin-bottom: 15px;
 }
+
+.site-control {
+    width: 100%;
+    line-height: 1.2em;
+}

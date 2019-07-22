@@ -15,11 +15,11 @@
 
     <div class="row site-spaced">
         <div class="col-3">
-            @Html.JQueryDropdownlistFor(model => model.DemoProperty, new { @class = "form-control" })
+            @Html.JQueryDropdownlistFor(model => model.DemoProperty, new { @class = "my-class" })
         </div>
 
         <div class="col-3">
-            <input type="submit" value="Submit" class="form-control" />
+            <input type="submit" value="Submit" class="site-control" />
         </div>
     </div>
 }
@@ -30,7 +30,7 @@
     </div>
 
     <div class="col-3">
-        @Html.JQueryDropdownlistFor(model => model.DemoProperty, new { id = "objectbasedid", @class = "object-test-class form-control" })
+        @Html.JQueryDropdownlistFor(model => model.DemoProperty, new { id = "objectbasedid", @class = "object-test-class my-class" })
     </div>
 
     <div class="col-3">

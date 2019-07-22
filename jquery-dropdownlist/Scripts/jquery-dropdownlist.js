@@ -177,7 +177,7 @@
 
         // Event handlers
         this.container.focusout(this, eventHandlers.containerFocusout);
-        this.container.keypress(this, eventHandlers.containerKeypress);
+        this.container.keydown(this, eventHandlers.containerKeydown);
         this.selector.click(this, eventHandlers.selectorClick);
         this.list.click(this, eventHandlers.listClick);
         this.allItems.find('input.dropdownlist-field').change(this, eventHandlers.inputChange);
@@ -187,21 +187,35 @@
         this.allItems.mouseout(this, eventHandlers.allItemsMouseout);
     }
 
+    // Determine whether or not the list is currently showing
+    Dropdownlist.prototype.isVisible = function () {
+        return this.list.css('display') !== 'none';
+    }
+
     // Toggle the list and the text search if needed
     Dropdownlist.prototype.toggle = function () {
-        if (this.list.css('display') == 'none') {
-            this.show();
+        if (this.isVisible()) {
+            this.hide();
         }
         else {
-            this.hide();
+            this.show();
         }
     }
 
     // Hide the list
     Dropdownlist.prototype.hide = function () {
+        if (!this.isVisible()) {
+            return;
+        }
+
         this.list.hide();
+        this.allItems.removeClass('dropdownlist-list-item-active');
 
         if (this.textSearch.length > 0) {
+            if (this.textSearch.filter(document.activeElement).length > 0) {
+                this.selector.focus();
+            }
+
             if (this.isMultiselect) {
                 // Clear search text
                 this.textSearch.val('');
@@ -224,10 +238,14 @@
     Dropdownlist.prototype.show = function () {
         this.list.show();
 
-        if (this.textSearch.length > 0 && !this.isMultiselect) {
-            // Switch selector text and input
-            this.selectorText.hide();
-            this.textSearch.show().focus().select();
+        if (this.textSearch.length > 0) {
+            if (!this.isMultiselect) {
+                // Switch selector text and input
+                this.selectorText.hide();
+                this.textSearch.show().select();
+            }
+
+            this.textSearch.focus();
         }
     }
 
@@ -236,7 +254,9 @@
         this.container.before(this.element);
         this.container.remove();
         this.items.find('input.dropdownlist-field').remove();
+        this.items.removeClass('dropdownlist-list-item-active');
         this.selectAllItem.find('input.dropdownlist-field').remove();
+        this.selectAllItem.removeClass('dropdownlist-list-item-active');
 
         // Remove object from data
         this.element.removeData('dropdownlist');
@@ -354,15 +374,19 @@
             }
             // Close the dropdownlist if it's single-select
             else if (!e.data.isMultiselect) {
-                console.log('hide');
                 e.data.hide();
             }
         },
 
         // Change handler for search 
         textSearchKeyup: function (e) {
-            var searchText = e.data.textSearch.val();
-            var visibleItems = e.data.items;
+            // Don't filter when input is a known dropdownlist control key
+            if (e.which === keyCodes.ENTER || e.which === keyCodes.ESCAPE || e.which === keyCodes.ARROW_UP || e.which === keyCodes.ARROW_DOWN) {
+                return;
+            }
+
+            let searchText = e.data.textSearch.val();
+            let visibleItems = e.data.items;
 
             if (searchText) {
                 visibleItems = visibleItems.filter(function () {
@@ -390,12 +414,12 @@
 
         // Mouse out handler for items including select all
         allItemsMouseout: function (e) {
-            e.data.allItems.filter('.dropdownlist-list-item-active').removeClass('dropdownlist-list-item-active');
+            e.data.allItems.removeClass('dropdownlist-list-item-active');
         },
 
         // Focus out handler for container
         containerFocusout: function (e) {
-            if ($(e.relatedTarget).closest(e.data.container).length > 0) {
+            if (e.relatedTarget == null || $(e.relatedTarget).closest(e.data.container).length > 0) {
                 return;
             }
 
@@ -403,12 +427,10 @@
         },
 
         // Keypress handler for container
-        containerKeypress: function (e) {
-            console.log(e.which);
-
-            // On enter we toggle the dropdownlist and select if needed
+        containerKeydown: function (e) {
             if (e.which === keyCodes.ENTER) {
-                var item = e.data.allItems.filter('.dropdownlist-list-item-active');
+                // On enter we select if an item is active or, if we're on the selector, toggle the dropdownlist
+                let item = e.data.allItems.filter('.dropdownlist-list-item-active');
 
                 if (item.length > 0) {
                     item.click();
@@ -417,13 +439,40 @@
                     e.data.toggle();
                 }
 
-                //e.stopPropagation();
+                e.preventDefault();
             }
             else if (e.which === keyCodes.ARROW_UP) {
+                // On arrow up we only need to select the next active item up
+                let allItems = e.data.allItems.filter(':visible');
+                let index = allItems.index(e.data.allItems.filter('.dropdownlist-list-item-active'));
 
+                if (--index >= 0) {
+                    e.data.allItems.removeClass('dropdownlist-list-item-active');
+                    $(allItems[index]).addClass('dropdownlist-list-item-active');
+                }
+
+                e.preventDefault();
             }
             else if (e.which === keyCodes.ARROW_DOWN) {
+                // On arrow down we open the dropdown if it is closed and select the next active item down
+                if (e.data.isVisible()) {
+                    let allItems = e.data.allItems.filter(':visible');
+                    let index = allItems.index(e.data.allItems.filter('.dropdownlist-list-item-active'));
 
+                    if (++index < allItems.length) {
+                        e.data.allItems.removeClass('dropdownlist-list-item-active');
+                        $(allItems[index]).addClass('dropdownlist-list-item-active');
+                    }
+                }
+                else {
+                    e.data.show();
+                    e.data.allItems.first().addClass('dropdownlist-list-item-active');
+                }
+
+                e.preventDefault();
+            }
+            else if (e.which === keyCodes.ESCAPE) {
+                e.data.hide();
             }
         }
     }
@@ -431,6 +480,7 @@
     // Key codes for keyboard navigation
     let keyCodes = {
         ENTER: 13,
+        ESCAPE: 27,
         ARROW_UP: 38,
         ARROW_DOWN: 40
     };
