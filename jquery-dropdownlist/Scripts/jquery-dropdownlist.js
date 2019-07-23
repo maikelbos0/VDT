@@ -247,6 +247,11 @@
 
             this.textSearch.focus();
         }
+
+        // Highlight the selected item for keyboard support
+        if (!this.isMultiselect) {
+            this.items.has('input.dropdownlist-field:checked').addClass('dropdownlist-list-item-active');
+        }
     }
 
     // Remove the entire dropdownlist; resets the base element to its former state
