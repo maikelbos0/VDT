@@ -181,6 +181,7 @@
         this.selector.click(this, eventHandlers.selectorClick);
         this.list.click(this, eventHandlers.listClick);
         this.allItems.find('input.dropdownlist-field').change(this, eventHandlers.inputChange);
+        this.textSearch.keydown(this, eventHandlers.textSearchKeydown);
         this.textSearch.keyup(this, eventHandlers.textSearchKeyup);
         $(document).click(this, eventHandlers.documentClick);
         this.allItems.mouseover(this, eventHandlers.allItemsMouseover);
@@ -431,9 +432,16 @@
             e.data.hide();
         },
 
-        // Keypress handler for container
+        // Keydown exception for when in the text search
+        textSearchKeydown: function (e) {
+            if (e.which === keyCodes.SPACE) {
+                e.stopPropagation();
+            }
+        },
+
+        // Keydown handler for container
         containerKeydown: function (e) {
-            if (e.which === keyCodes.ENTER) {
+            if (e.which === keyCodes.ENTER || e.which === keyCodes.SPACE) {
                 // On enter we select if an item is active or, if we're on the selector, toggle the dropdownlist
                 let item = e.data.allItems.filter('.dropdownlist-list-item-active');
 
@@ -478,6 +486,7 @@
             }
             else if (e.which === keyCodes.ESCAPE) {
                 e.data.hide();
+                e.data.selector.focus();
             }
         }
     }
@@ -486,6 +495,7 @@
     let keyCodes = {
         ENTER: 13,
         ESCAPE: 27,
+        SPACE: 32,
         ARROW_UP: 38,
         ARROW_DOWN: 40
     };
