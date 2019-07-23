@@ -479,7 +479,10 @@
                 }
                 else {
                     e.data.show();
-                    e.data.allItems.first().addClass('dropdownlist-list-item-active');
+
+                    if (e.data.isMultiselect) {
+                        e.data.allItems.first().addClass('dropdownlist-list-item-active');
+                    }
                 }
 
                 e.preventDefault();

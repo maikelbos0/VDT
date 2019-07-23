@@ -72,6 +72,8 @@
     <Content Include="events.js" />
     <Content Include="interaction.html" />
     <Content Include="interaction.js" />
+    <Content Include="keyboard.html" />
+    <Content Include="keyboard.js" />
     <Content Include="options.html" />
     <Content Include="options.js" />
     <Content Include="search.html" />
