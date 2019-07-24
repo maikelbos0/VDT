@@ -47,3 +47,7 @@ View:
 ```
 @Html.JQueryDropdownlistFor(model => model.DemoProperty)
 ```
+
+## Documentation
+
+Full documentation can be found at [the wiki](https://github.com/maikelbos0/VDT/wiki)
