@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jquery-dropdownlist.MVC.tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jquery-datagridview", "jquery-datagridview\jquery-datagridview.csproj", "{0885051B-8A62-437E-86AA-27C96DC555E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jquery-datagridview.tests", "jquery-datagridview.tests\jquery-datagridview.tests.csproj", "{70C64D35-A6A0-4669-B328-F179B23AD295}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +54,10 @@ Global
 		{0885051B-8A62-437E-86AA-27C96DC555E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0885051B-8A62-437E-86AA-27C96DC555E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0885051B-8A62-437E-86AA-27C96DC555E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70C64D35-A6A0-4669-B328-F179B23AD295}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70C64D35-A6A0-4669-B328-F179B23AD295}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70C64D35-A6A0-4669-B328-F179B23AD295}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70C64D35-A6A0-4669-B328-F179B23AD295}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
