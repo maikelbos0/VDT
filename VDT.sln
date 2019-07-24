@@ -18,7 +18,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jquery-dropdownlist.MVC", "
 		{2015AF5E-653F-4165-B3E1-467AEDBC141F} = {2015AF5E-653F-4165-B3E1-467AEDBC141F}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jquery-dropdownlist.MVC.test", "jquery-dropdownlist.MVC.test\jquery-dropdownlist.MVC.test.csproj", "{2D7FDB7C-7AA7-4AC2-88A0-7549FF529897}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jquery-dropdownlist.MVC.tests", "jquery-dropdownlist.MVC.tests\jquery-dropdownlist.MVC.tests.csproj", "{2D7FDB7C-7AA7-4AC2-88A0-7549FF529897}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>jQuery-dropdownlist.MVC</id>
+    <version>1.0.0</version>
+    <title>jQuery-dropdownlist.MVC</title>
+    <description>An extension to the jQuery-dropdownlist plugin that makes it simple to use as part of your viewmodels.</description>
+    <releaseNotes></releaseNotes>
+    <authors>Maikel Bos</authors>
+    <license type="expression">MIT</license>
+    <copyright>Copyright © 2019 Maikel Bos</copyright>
+    <tags>jQuery, plugin, dropdownlist, list, dropdown, checkboxlist, MVC, razor</tags>
+    <language>en-us</language>
+    <projectUrl>https://github.com/maikelbos0/VDT</projectUrl>
+    <dependencies>
+      <dependency id="jQuery" version="3.3.1" />
+	  <dependency id="jQuery-dropdownlist" version="1.1.0" />
+	  <dependency id="Microsoft.AspNet.Mvc" version="5.2.0" />
+    </dependencies>
+  </metadata>
+
+  <files>
+    <file src="README.md" />
+    <file src="LICENSE" />
+    <file src="bin\Release\vdt.jquery-dropdownlist*.dll" target="lib\net472" />
+  </files>
+</package>
