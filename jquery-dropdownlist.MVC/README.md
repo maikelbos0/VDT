@@ -14,7 +14,7 @@ Viewmodel:
 
 ```
 public class ExampleViewModel {
-	public JQueryDropdownlist DemoProperty { get; set; }
+    public JQueryDropdownlist DemoProperty { get; set; }
 }
 ```
 
@@ -38,7 +38,7 @@ public ActionResult Index() {
 
 [HttpPost]
 public ActionResult Index(ExampleViewModel viewModel) {
-	var selectedValues = viewModel.DemoProperty.SelectedValues;
+    var selectedValues = viewModel.DemoProperty.SelectedValues;
 }
 ```
 
