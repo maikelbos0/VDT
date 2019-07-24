@@ -209,11 +209,26 @@ namespace vdt.jquerydropdownlist.MVC.test {
         }
 
         [TestMethod]
+        public void JQueryDropdownlistFor_OmitsSelectAllItemForSingleSelect() {
+            var viewModel = CreateViewModel();
+            var viewData = new ViewDataDictionary<TestViewModel>() { Model = viewModel };
+            var htmlHelper = CreateHtmlHelper<TestViewModel>(viewData);
+
+            viewModel.TestProperty.HasSelectAll = true;
+
+            var html = htmlHelper.JQueryDropdownlistFor(model => model.TestProperty);
+            var xml = XElement.Parse($"<list>{html}</list>");
+
+            xml.Element("div").Elements().Should().HaveCount(viewModel.TestProperty.Items.Count());
+        }
+
+        [TestMethod]
         public void JQueryDropdownlistFor_GeneratesSelectAllItem() {
             var viewModel = CreateViewModel();
             var viewData = new ViewDataDictionary<TestViewModel>() { Model = viewModel };
             var htmlHelper = CreateHtmlHelper<TestViewModel>(viewData);
 
+            viewModel.TestProperty.IsMultiselect = true;
             viewModel.TestProperty.HasSelectAll = true;
 
             var html = htmlHelper.JQueryDropdownlistFor(model => model.TestProperty);
@@ -230,6 +245,7 @@ namespace vdt.jquerydropdownlist.MVC.test {
             var viewData = new ViewDataDictionary<TestViewModel>() { Model = viewModel };
             var htmlHelper = CreateHtmlHelper<TestViewModel>(viewData);
 
+            viewModel.TestProperty.IsMultiselect = true;
             viewModel.TestProperty.HasSelectAll = true;
             viewModel.TestProperty.GetSelectAllText = () => "Select all items";
 
