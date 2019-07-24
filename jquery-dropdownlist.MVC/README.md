@@ -4,7 +4,7 @@ An extension to the jQuery-dropdownlist plugin that makes it simple to use as pa
 
 ## Features
 
-- Automatically binds to your viewmodel when POSTing your form
+- Automatically binds selected values to your viewmodel when posting your form
 - Single- and multiselect support
 - Search text for autocomplete or filtering
 
