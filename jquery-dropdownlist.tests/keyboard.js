@@ -62,6 +62,16 @@ describe('the keyboard', function () {
         expect(dropdown.closest('.dropdownlist-list').css('display')).toEqual('none');
     });
 
+    it('escape key can be used to close the dropdown', function () {
+        var dropdown = $('#dropdown-keyboard-escape-close');
+
+        dropdown.dropdownlist();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
+        simulateKeydown(dropdown.closest('.dropdownlist').find('.dropdownlist-selector'), keyCodes.ESCAPE);
+
+        expect(dropdown.closest('.dropdownlist-list').css('display')).toEqual('none');
+    });
+
     it('enter key can be used to select the active item', function () {
         var dropdown = $('#dropdown-keyboard-enter-select');
 
@@ -91,6 +101,22 @@ describe('the keyboard', function () {
 
         expect($(fields[0]).prop('checked')).toEqual(false);
         expect($(fields[1]).prop('checked')).toEqual(true);
+        expect($(fields[2]).prop('checked')).toEqual(false);
+    });
+
+    it('escape key does not change the selection', function () {
+        var dropdown = $('#dropdown-keyboard-escape-not-select');
+        
+        dropdown.dropdownlist();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
+        dropdown.find('.dropdownlist-list-item-active').removeClass('dropdownlist-list-item-active');
+        dropdown.find('.select-item').addClass('dropdownlist-list-item-active');
+        simulateKeydown(dropdown.closest('.dropdownlist'), keyCodes.ESCAPE);
+
+        var fields = dropdown.find('input.dropdownlist-field');
+
+        expect($(fields[0]).prop('checked')).toEqual(true);
+        expect($(fields[1]).prop('checked')).toEqual(false);
         expect($(fields[2]).prop('checked')).toEqual(false);
     });
 
