@@ -22,6 +22,14 @@ namespace vdt.demo.Controllers {
                     HasTextSearch = true,
                     HasSelectAll = true,
                     GetSelectAllText = () => "Select all items"
+                },
+                DemoProperty2 = new JQueryDropdownlist() {
+                    Items = new[] {
+                        new JQueryDropdownlistItem() { Value = "1a", Text = "Option 1a" },
+                        new JQueryDropdownlistItem() { Value = "1b", Text = "Option 1b" },
+                        new JQueryDropdownlistItem() { Value = "2", Text = "Choice 2" },
+                        new JQueryDropdownlistItem() { Value = "3", Text = "Third choice" }
+                    }
                 }
             });
         }
@@ -43,7 +51,15 @@ namespace vdt.demo.Controllers {
             viewModel.DemoProperty.HasSelectAll = true;
             viewModel.DemoProperty.GetSelectAllText = () => "Select all items";
 
+            viewModel.DemoProperty2 = viewModel.DemoProperty2 ?? new JQueryDropdownlist();
+            viewModel.DemoProperty2.Items = new[] {
+                new JQueryDropdownlistItem() { Value = "1a", Text = "Option 1a" },
+                new JQueryDropdownlistItem() { Value = "1b", Text = "Option 1b" },
+                new JQueryDropdownlistItem() { Value = "2", Text = "Choice 2" },
+                new JQueryDropdownlistItem() { Value = "3", Text = "Third choice" }
+            };
+
             return View(viewModel);
-        }
     }
+}
 }

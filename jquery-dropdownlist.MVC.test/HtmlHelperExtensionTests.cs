@@ -283,6 +283,28 @@ namespace vdt.jquerydropdownlist.MVC.test {
         }
 
         [TestMethod]
+        public void JQueryDropdownlistFor_AllowsHtmlAttributeOverrides() {
+            var viewModel = CreateViewModel();
+            var viewData = new ViewDataDictionary<TestViewModel>() { Model = viewModel };
+            var htmlHelper = CreateHtmlHelper<TestViewModel>(viewData);
+
+            viewModel.TestProperty.IsMultiselect = true;
+            viewModel.TestProperty.HasTextSearch = true;
+
+            var html = htmlHelper.JQueryDropdownlistFor(model => model.TestProperty, new Dictionary<string, object>() {
+                { "class", "form-control" },
+                { "data-multiselect", "false" },
+                { "data-text-search", "false" },
+                { "id", "test-id" }
+            });
+            var xml = XElement.Parse($"<list>{html}</list>");
+
+            xml.Element("div").Attribute("data-multiselect").Value.Should().Be("false");
+            xml.Element("div").Attribute("data-text-search").Value.Should().Be("false");
+            xml.Element("div").Attribute("id").Value.Should().Be("test-id");
+        }
+
+        [TestMethod]
         public void JQueryDropdownlistFor_WorksForEmptyModel() {
             var viewModel = new TestViewModel() {
                 TestProperty = new JQueryDropdownlist() {

@@ -34,7 +34,12 @@
     </div>
 
     <div class="col-3">
-        @Html.JQueryDropdownlistFor(model => model.DemoProperty, new Dictionary<string, object>() { { "class", "dictionary-test-class" }, { "id", "dictionary-test-id" } })
+        @Html.JQueryDropdownlistFor(model => model.DemoProperty2, new Dictionary<string, object>() {
+            { "class", "dictionary-test-class" },
+            { "id", "dictionary-test-id" },
+            { "data-multiselect", "true" },
+            { "data-text-search", "true" }
+        })
     </div>
 
     <div class="col-3">

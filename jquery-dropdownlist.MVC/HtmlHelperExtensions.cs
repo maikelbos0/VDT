@@ -93,7 +93,7 @@ namespace vdt.jquerydropdownlist.MVC {
             }
 
             listBuilder.InnerHtml = listItemsBuilder.ToString();
-            listBuilder.MergeAttributes(htmlAttributes);
+            listBuilder.MergeAttributes(htmlAttributes, true);
 
             outputBuilder.AppendLine(listBuilder.ToString());
             outputBuilder.AppendLine("<script type=\"text/javascript\">");
