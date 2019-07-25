@@ -11,18 +11,15 @@
         }
 
         return $(this).each(function () {
-            let datagridview;
+            let datagridview = $(this).data('datagridview');;
 
             if (!$(this).data('datagridview')) {
+                // Create object
                 let options = $.extend({}, $.fn.datagridview.defaults, settings);
                 datagridview = new DataGridView($(this), options);
 
                 // Add object to data
                 $(this).data('datagridview', datagridview);
-            }
-            else {
-                // Get object from data
-                datagridview = $(this).data('datagridview');
             }
 
             // Call the callback, bound to the datagridview

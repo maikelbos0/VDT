@@ -9,18 +9,16 @@
         }
 
         return $(this).each(function () {
-            let dropdownlist;
+            // Get object from data
+            let dropdownlist = $(this).data('dropdownlist');
 
-            if ($(this).closest('.dropdownlist').length === 0) {
+            if (!dropdownlist) {
+                // Create object
                 let options = $.extend({}, $.fn.dropdownlist.defaults, settings);
                 dropdownlist = new Dropdownlist($(this), options);
 
                 // Add object to data
                 $(this).data('dropdownlist', dropdownlist);
-            }
-            else {
-                // Get object from data
-                dropdownlist = $(this).data('dropdownlist');
             }
 
             // Call the callback, bound to the dropdownlist
