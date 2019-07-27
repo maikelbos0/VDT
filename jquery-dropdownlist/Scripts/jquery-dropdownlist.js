@@ -418,6 +418,7 @@
 
         // Mouse over handler for items including select all
         allItemsMouseover: function (e) {
+            e.data.allItems.not(this).removeClass('dropdownlist-list-item-active');
             $(this).addClass('dropdownlist-list-item-active');
         },
 
@@ -428,11 +429,12 @@
 
         // Focus out handler for container
         containerFocusout: function (e) {
-            if (e.relatedTarget == null || $(e.relatedTarget).closest(e.data.container).length > 0) {
-                return;
+            if (e.relatedTarget == null) {
+                $(e.target).focus();
             }
-
-            e.data.hide();
+            else if ($(e.relatedTarget).closest(e.data.container).length === 0) {
+                e.data.hide();
+            }
         },
 
         // Keydown exception for when in the text search
