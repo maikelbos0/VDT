@@ -1,9 +1,8 @@
 ﻿using System.Web.Mvc;
 
 namespace vdt.demo.Controllers {
-    [RoutePrefix("Home")]
-    public class HomeController : Controller {
-        [Route("~/")]
+    [RoutePrefix("Datagridview")]
+    public class DatagridviewController : Controller {
         [Route]
         [Route("Index")]
         public ActionResult Index() {
