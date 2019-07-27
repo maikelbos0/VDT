@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>jQuery-dropdownlist</id>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <title>jQuery-dropdownlist</title>
     <description>A jQuery plugin that makes it easy to transform any html-element with children into a dropdownlist.</description>
-    <releaseNotes>- Added keyboard support
-- Fixed a bug that caused the selector text update to lag behind
-- Several small improvements</releaseNotes>
+    <releaseNotes>- Made the text search position an option
+- Added options to decorate all generated elements with attributes as desired
+- Fixed a bug where keyboard selection stopped working after mouse selecting in multiselect dropdownlists</releaseNotes>
     <authors>Maikel Bos</authors>
     <license type="expression">MIT</license>
     <copyright>Copyright © 2019 Maikel Bos</copyright>
