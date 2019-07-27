@@ -144,4 +144,17 @@ describe('a dropdownlist option', function () {
         expect($(items[1]).css('display')).toEqual('none');
         expect($(items[2]).css('display')).toEqual('none');
     });
+
+    it('can be provided for isTextSearchInsideSelector', function () {
+        var dropdownlist = $('#dropdown-options-selector-text-search');
+
+        dropdownlist.dropdownlist({
+            isTextSearchInsideSelector: function (element) {
+                return true;
+            }
+        });
+
+        expect(dropdownlist.closest('.dropdownlist-list').find('input.dropdownlist-search').length).toEqual(0);
+        expect(dropdownlist.closest('.dropdownlist').find('.dropdownlist-selector input.dropdownlist-search').length).toEqual(1);
+    });
 });

@@ -75,6 +75,11 @@
         hasTextSearch: function (element) {
             return $(element).data('text-search') !== undefined && $(element).data('text-search') != false;
         },
+        // If true, the text search will replace the selector text on open
+        // If false, the text search will be inside the dropdownlist as the first element
+        isTextSearchInsideSelector: function (element) {
+            return $(element).data('selector-text-search') !== undefined && $(element).data('selector-text-search') != false;
+        },
         // If text search is enabled, this is the filter that is used to determine if an item is valid
         // Defaults to searching in all the text inside the item
         itemMatchesTextSearch: function (item, searchText) {
@@ -95,6 +100,7 @@
         this.allItems = this.options.getItems(this.element).add(this.selectAllItem);
         this.items = this.options.getItems(this.element).not(this.selectAllItem);
         this.textSearch = $();
+        this.isTextSearchInsideSelector = false;
         this.emptyText = this.options.getEmptyText();
         this.container = $('<div>', { class: 'dropdownlist' });
 
@@ -115,15 +121,14 @@
         // Search text box
         if (this.options.hasTextSearch(this.element)) {
             this.textSearch = $('<input>', { type: 'text', class: 'dropdownlist-search' });
+            this.isTextSearchInsideSelector = this.options.isTextSearchInsideSelector(this.element);
 
-            if (this.isMultiselect) {
-                // In multiselect mode it does not replace the selector text but rather searches in the list
-                this.list.prepend(this.textSearch);
-            }
-            else {
-                // In single-select mode it replaces the selector text and acts as an autocomplete
+            if (this.isTextSearchInsideSelector) {
                 this.selector.prepend(this.textSearch);
                 this.textSearch.hide();
+            }
+            else {
+                this.list.prepend(this.textSearch);
             }
         }
 
@@ -215,17 +220,17 @@
                 this.selector.focus();
             }
 
-            if (this.isMultiselect) {
-                // Clear search text
-                this.textSearch.val('');
-            }
-            else {
+            if (this.isTextSearchInsideSelector) {
                 // Switch selector text and input
                 this.selectorText.show();
                 this.textSearch.hide();
 
                 // Set search text to current selected item text
                 this.textSearch.val(this.selectorText.text());
+            }
+            else {
+                // Clear search text
+                this.textSearch.val('');
             }
 
             // Clear previous searches
@@ -238,7 +243,7 @@
         this.list.show();
 
         if (this.textSearch.length > 0) {
-            if (!this.isMultiselect) {
+            if (this.isTextSearchInsideSelector) {
                 // Switch selector text and input
                 this.selectorText.hide();
                 this.textSearch.show().select();
@@ -277,7 +282,7 @@
 
         this.selectorText.text(text);
 
-        if (!this.isMultiselect && this.textSearch.length > 0) {
+        if (this.isTextSearchInsideSelector && this.textSearch.length > 0) {
             this.textSearch.val(text);
         }
     }

@@ -16,24 +16,24 @@ describe('the text search', function () {
 
         expect(dropdown.closest('.dropdownlist').find('input.dropdownlist-search').length).toEqual(1);
     });
-    
-    it('filter is in the list for a multiselect dropdown', function () {
-        var dropdown = $('#dropdown-search-multiselect-filter-position');
+
+    it('is in the list by default', function () {
+        var dropdown = $('#dropdown-search-filter-list');
 
         dropdown.dropdownlist();
 
         expect(dropdown.closest('.dropdownlist-list').find('input.dropdownlist-search').length).toEqual(1);
     });
 
-    it('filter is in the selector for a single-select dropdown', function () {
-        var dropdown = $('#dropdown-search-filter-position');
+    it('is in the selector when the option is provided', function () {
+        var dropdown = $('#dropdown-search-filter-selector');
 
         dropdown.dropdownlist();
 
         expect(dropdown.closest('.dropdownlist').find('.dropdownlist-selector input.dropdownlist-search').length).toEqual(1);
     });
 
-    it('in a closed single-select dropdown is hidden', function () {
+    it('in the selector in a closed dropdown is hidden', function () {
         var dropdown = $('#dropdown-search-hidden');
 
         dropdown.dropdownlist();
@@ -41,7 +41,7 @@ describe('the text search', function () {
         expect(dropdown.closest('.dropdownlist').find('.dropdownlist-selector input.dropdownlist-search').css('display')).toEqual('none');
     });
 
-    it('hides the selector text in an open single-select dropdown', function () {
+    it('hides the selector text when it is in the selector', function () {
         var dropdown = $('#dropdown-search-visible');
 
         dropdown.dropdownlist();
@@ -61,8 +61,8 @@ describe('the text search', function () {
         expect(dropdown.closest('.dropdownlist').find('.dropdownlist-list').css('display')).not.toEqual('none');
     });
 
-    it('does not hide the selector text in an open multiselect dropdown', function () {
-        var dropdown = $('#dropdown-search-multiselect-not-hidden');
+    it('does not hide the selector text when it is in the list', function () {
+        var dropdown = $('#dropdown-search-not-hidden');
 
         dropdown.dropdownlist();
         dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
@@ -130,7 +130,7 @@ describe('the text search', function () {
         expect(selectedItems.length).toEqual(3);
     });
 
-    it('copies the selector text after the selection changes in a single-select dropdown', function () {
+    it('copies the selector text after the selection changes if it is in the selector', function () {
         var dropdown = $('#dropdown-search-field-text');
 
         dropdown.dropdownlist(function () {
@@ -140,7 +140,7 @@ describe('the text search', function () {
         expect(dropdown.closest('.dropdownlist').find('.dropdownlist-search').val()).toEqual('Second choice');
     });
 
-    it('changes back to the selector text after typing a value and closing and opening a single-select dropdown', function () {
+    it('changes back to the selector text after typing a value and closing and opening if it is in the selector', function () {
         var dropdown = $('#dropdown-search-field-selector-text');
 
         dropdown.dropdownlist();
@@ -152,7 +152,7 @@ describe('the text search', function () {
         expect(dropdown.closest('.dropdownlist').find('.dropdownlist-search').val()).toEqual('Choice number 1');
     });
 
-    it('is replaced by the selector text after opening and closing a single-select dropdown', function () {
+    it('is replaced by the selector text after opening and closing if it is in the selector', function () {
         var dropdown = $('#dropdown-search-hidden-after');
 
         dropdown.dropdownlist();
