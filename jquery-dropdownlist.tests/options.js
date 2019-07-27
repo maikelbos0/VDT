@@ -157,4 +157,88 @@ describe('a dropdownlist option', function () {
         expect(dropdownlist.closest('.dropdownlist-list').find('input.dropdownlist-search').length).toEqual(0);
         expect(dropdownlist.closest('.dropdownlist').find('.dropdownlist-selector input.dropdownlist-search').length).toEqual(1);
     });
+
+    it('can be provided for getContainerAttributes', function () {
+        var dropdownlist = $('#dropdown-options-container-attributes');
+
+        dropdownlist.dropdownlist({
+            getContainerAttributes: function () {
+                return { id: 'test' };
+            }
+        });
+
+        expect(dropdownlist.closest('.dropdownlist').attr('id')).toEqual('test');
+    });
+
+    it('can be provided for getSelectorAttributes', function () {
+        var dropdownlist = $('#dropdown-options-selector-attributes');
+
+        dropdownlist.dropdownlist({
+            getSelectorAttributes: function () {
+                return { id: 'test' };
+            }
+        });
+
+        expect(dropdownlist.closest('.dropdownlist').find('.dropdownlist-selector').attr('id')).toEqual('test');
+    });
+
+    it('can be provided for getSelectorTextAttributes', function () {
+        var dropdownlist = $('#dropdown-options-selector-text-attributes');
+
+        dropdownlist.dropdownlist({
+            getSelectorTextAttributes: function () {
+                return { id: 'test' };
+            }
+        });
+
+        expect(dropdownlist.closest('.dropdownlist').find('.dropdownlist-selector-text').attr('id')).toEqual('test');
+    });
+
+    it('can be provided for getSelectorToggleAttributes', function () {
+        var dropdownlist = $('#dropdown-options-selector-toggle-attributes');
+
+        dropdownlist.dropdownlist({
+            getSelectorToggleAttributes: function () {
+                return { id: 'test' };
+            }
+        });
+
+        expect(dropdownlist.closest('.dropdownlist').find('.dropdownlist-selector-toggle').attr('id')).toEqual('test');
+    });
+
+    it('can be provided for getListAttributes', function () {
+        var dropdownlist = $('#dropdown-options-list-attributes');
+
+        dropdownlist.dropdownlist({
+            getListAttributes: function () {
+                return { id: 'test' };
+            }
+        });
+
+        expect(dropdownlist.closest('.dropdownlist-list').attr('id')).toEqual('test');
+    });
+
+    it('can be provided for getTextSearchAttributes', function () {
+        var dropdownlist = $('#dropdown-options-text-search-attributes');
+
+        dropdownlist.dropdownlist({
+            getTextSearchAttributes: function () {
+                return { id: 'test' };
+            }
+        });
+
+        expect(dropdownlist.closest('.dropdownlist').find('.dropdownlist-search').attr('id')).toEqual('test');
+    });
+
+    it('can be provided for getInputAttributes', function () {
+        var dropdownlist = $('#dropdown-options-input-attributes');
+
+        dropdownlist.dropdownlist({
+            getInputAttributes: function () {
+                return { id: 'test' };
+            }
+        });
+
+        expect(dropdownlist.find('.dropdownlist-field').attr('id')).toEqual('test');
+    });
 });

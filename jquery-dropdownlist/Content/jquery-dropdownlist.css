@@ -76,6 +76,6 @@
     margin-right: .3em;
 }
 
-.dropdownlist-field-hidden {
+.dropdownlist-field[type="radio"] {
     display: none;
 }

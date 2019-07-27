@@ -84,6 +84,42 @@
         // Defaults to searching in all the text inside the item
         itemMatchesTextSearch: function (item, searchText) {
             return $(item).text().toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1;
+        },
+        // Use below functions to add attributes to the different elements the dropdownlist creates
+        // The container is the top-level element 
+        // It always gets at least the class 'dropdownlist'
+        getContainerAttributes: function () {
+            return {};
+        },
+        // The selector is the element that is used to open/close the dropdown 
+        // It always gets at least the class 'dropdownlist-selector' and the tabindex 0
+        getSelectorAttributes: function () {
+            return {};
+        },
+        // The selector text element contains the text of the current selection
+        // It always gets at least the class 'dropdownlist-selector-text'
+        getSelectorTextAttributes: function () {
+            return {};
+        },
+        // The selector toggle is arrow part of the selector
+        // It always gets at least the class 'dropdownlist-selector-toggle'
+        getSelectorToggleAttributes: function () {
+            return {};
+        },
+        // The list is the container for the list items
+        // It always gets at least the class 'dropdownlist-list'
+        getListAttributes: function () {
+            return {};
+        },
+        // The text search is the input field for searching
+        // It always gets at least the class 'dropdownlist-search'
+        getTextSearchAttributes: function () {
+            return {};
+        },
+        // The inputs elements are the checkboxes or radio buttons that get prepended to the items
+        // It always gets at least the class 'dropdownlist-search'
+        getInputAttributes: function () {
+            return {};
         }
     }
 
@@ -102,25 +138,25 @@
         this.textSearch = $();
         this.isTextSearchInsideSelector = false;
         this.emptyText = this.options.getEmptyText();
-        this.container = $('<div>', { class: 'dropdownlist' });
+        this.container = this.createElement('<div>', 'dropdownlist', this.options.getContainerAttributes());
 
         // Add container early so can move the element after without issues
         this.element.before(this.container);
 
         // Select element
-        this.selector = $('<div>', { class: 'dropdownlist-selector', tabindex: 0 });
-        this.selectorText = $('<div>', { class: 'dropdownlist-selector-text' });
+        this.selector = this.createElement('<div>', 'dropdownlist-selector', this.options.getSelectorAttributes(), { tabindex: 0 });
+        this.selectorText = this.createElement('<div>', 'dropdownlist-selector-text', this.options.getSelectorTextAttributes());
         this.selector.append(
             this.selectorText,
-            $('<div>', { class: 'dropdownlist-selector-toggle' })
+            this.createElement('<div>', 'dropdownlist-selector-toggle', this.options.getSelectorToggleAttributes())
         );
 
         // List container
-        this.list = $('<div>', { class: 'dropdownlist-list' }).append(this.element).hide();
+        this.list = this.createElement('<div>', 'dropdownlist-list', this.options.getListAttributes()).append(this.element).hide();
 
         // Search text box
         if (this.options.hasTextSearch(this.element)) {
-            this.textSearch = $('<input>', { type: 'text', class: 'dropdownlist-search' });
+            this.textSearch = this.createElement('<input>', 'dropdownlist-search', this.options.getTextSearchAttributes(), { type: 'text' });
             this.isTextSearchInsideSelector = this.options.isTextSearchInsideSelector(this.element);
 
             if (this.isTextSearchInsideSelector) {
@@ -142,11 +178,9 @@
 
             if (base.isMultiselect) {
                 fieldProperties.type = 'checkbox';
-                fieldProperties.class = 'dropdownlist-field';
             }
             else {
                 fieldProperties.type = 'radio';
-                fieldProperties.class = 'dropdownlist-field dropdownlist-field-hidden';
             }
 
             if (base.options.isItemSelected($(this)) && (base.isMultiselect || !isItemSelected)) {
@@ -154,7 +188,7 @@
                 isItemSelected = true;
             }
 
-            $(this).prepend($('<input>', fieldProperties));
+            $(this).prepend(base.createElement('<input>', 'dropdownlist-field', base.options.getInputAttributes(), fieldProperties));
         });
 
         // For single-select, select the first option if nothing is selected
@@ -165,9 +199,8 @@
 
         // For multiselect, create input and set the correct value of the select all item if it exists
         if (this.isMultiselect && this.selectAllItem.length > 0) {
-            this.selectAllItem.prepend($('<input>', {
+            this.selectAllItem.prepend(this.createElement('<input>', 'dropdownlist-field', this.options.getInputAttributes(), {
                 type: 'checkbox',
-                class: 'dropdownlist-field',
                 checked: this.areAllItemsSelected(),
                 tabindex: -1
             }));
@@ -189,6 +222,14 @@
         $(document).click(this, eventHandlers.documentClick);
         this.allItems.mouseover(this, eventHandlers.allItemsMouseover);
         this.allItems.mouseout(this, eventHandlers.allItemsMouseout);
+    }
+
+    // Create an element and merge attribute objects to attributes
+    Dropdownlist.prototype.createElement = function (tagName, className) {
+        let attributes = $.extend.apply({}, Array.prototype.slice.call(arguments, 2));
+        let element = $(tagName, attributes).addClass(className);
+
+        return element;
     }
 
     // Determine whether or not the list is currently showing
