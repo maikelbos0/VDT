@@ -85,4 +85,44 @@ describe('a basic datagridview', function () {
             });
         }).toThrow('datagridview error: expected each item in option "columns" to have property "data"');
     });
+
+    it('will add a header with the right header name', function () {
+        var grid = $('#basic-datagridview-header-name');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test', header: 'Test column' }
+            ]
+        });
+        expect(grid.find('th').text()).toEqual('Test column');
+    });
+
+    it('will add a header with the data source as fallback', function () {
+        var grid = $('#basic-datagridview-header-data');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        });
+        expect(grid.find('th').text()).toEqual('test');
+    });
+
+    it('will add data when populating', function () {
+        var grid = $('#basic-datagridview-data');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate([
+                { test: 'Test 1' },
+                { test: 'Test 2' },
+            ]);
+        });
+
+        expect(grid.find('tbody > tr:first-child > td').text()).toEqual('Test 1');
+        expect(grid.find('tbody > tr:nth-child(2) > td').text()).toEqual('Test 2');
+    });
 });

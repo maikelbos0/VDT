@@ -56,6 +56,7 @@
         this.element = element;
         this.options = options;
         this.fillHeight = this.options.fillHeight(this.element);
+        this.data = [];
 
         this.element.addClass('datagridview');
         this.element.children().hide();
@@ -74,6 +75,25 @@
         this.options.columns.forEach(function (column) {
             base.headerRow.append($('<th>').text(column.header || column.data));
         });
+    }
+
+    // Fill the grid with the data
+    // TODO: research performance; preliminary results are 50 cells per ms in Chrome, 5 in IE10
+    DataGridView.prototype.populate = function (data) {        
+        let newBody = this.createElement('<tbody>', 'datagridview-body');
+
+        for (let r = 0; r < data.length; r++) {
+            let row = $('<tr>');
+
+            for (let c = 0; c < this.options.columns.length; c++) {
+                row.append($('<td>').text(data[r][this.options.columns[c].data] || ""));
+            }
+
+            newBody.append(row);
+        };
+
+        this.body.replaceWith(newBody);
+        this.body = newBody;
     }
 
     // Create an element and merge attribute objects to attributes
