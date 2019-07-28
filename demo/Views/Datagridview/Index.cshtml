@@ -28,76 +28,6 @@
             <td>1.456,78</td>
             <td>1.456,78</td>
         </tr>
-        <tr>
-            <td>A1234</td>
-            <td>Test</td>
-            <td>004455</td>
-            <td>01-02-2019</td>
-            <td>02-03-2019</td>
-            <td>EUR</td>
-            <td>1.448,78</td>
-            <td>656,44</td>
-        </tr>
-        <tr>
-            <td>B1234</td>
-            <td>Test</td>
-            <td>004444</td>
-            <td>01-01-2019</td>
-            <td>31-01-2019</td>
-            <td>EUR</td>
-            <td>1.456,78</td>
-            <td>1.456,78</td>
-        </tr>
-        <tr>
-            <td>B1234</td>
-            <td>Test</td>
-            <td>004455</td>
-            <td>01-02-2019</td>
-            <td>02-03-2019</td>
-            <td>EUR</td>
-            <td>1.448,78</td>
-            <td>656,44</td>
-        </tr>
-        <tr>
-            <td>C1234</td>
-            <td>Another test</td>
-            <td>004444</td>
-            <td>01-01-2019</td>
-            <td>31-01-2019</td>
-            <td>EUR</td>
-            <td>1.456,78</td>
-            <td>1.456,78</td>
-        </tr>
-        <tr>
-            <td>C1234</td>
-            <td>Another test</td>
-            <td>004455</td>
-            <td>01-02-2019</td>
-            <td>02-03-2019</td>
-            <td>EUR</td>
-            <td>1.448,78</td>
-            <td>656,44</td>
-        </tr>
-        <tr>
-            <td>D1234</td>
-            <td>Yet another test</td>
-            <td>004444</td>
-            <td>01-01-2019</td>
-            <td>31-01-2019</td>
-            <td>EUR</td>
-            <td>1.456,78</td>
-            <td>1.456,78</td>
-        </tr>
-        <tr>
-            <td>D1234</td>
-            <td>Yet another test</td>
-            <td>004455</td>
-            <td>01-02-2019</td>
-            <td>02-03-2019</td>
-            <td>EUR</td>
-            <td>1.448,78</td>
-            <td>656,44</td>
-        </tr>
     </table>
 </div>
 
@@ -127,76 +57,6 @@
             <td>1.456,78</td>
             <td>1.456,78</td>
         </tr>
-        <tr>
-            <td>A1234</td>
-            <td>Test</td>
-            <td>004455</td>
-            <td>01-02-2019</td>
-            <td>02-03-2019</td>
-            <td>EUR</td>
-            <td>1.448,78</td>
-            <td>656,44</td>
-        </tr>
-        <tr>
-            <td>B1234</td>
-            <td>Test</td>
-            <td>004444</td>
-            <td>01-01-2019</td>
-            <td>31-01-2019</td>
-            <td>EUR</td>
-            <td>1.456,78</td>
-            <td>1.456,78</td>
-        </tr>
-        <tr>
-            <td>B1234</td>
-            <td>Test</td>
-            <td>004455</td>
-            <td>01-02-2019</td>
-            <td>02-03-2019</td>
-            <td>EUR</td>
-            <td>1.448,78</td>
-            <td>656,44</td>
-        </tr>
-        <tr>
-            <td>C1234</td>
-            <td>Another test</td>
-            <td>004444</td>
-            <td>01-01-2019</td>
-            <td>31-01-2019</td>
-            <td>EUR</td>
-            <td>1.456,78</td>
-            <td>1.456,78</td>
-        </tr>
-        <tr>
-            <td>C1234</td>
-            <td>Another test</td>
-            <td>004455</td>
-            <td>01-02-2019</td>
-            <td>02-03-2019</td>
-            <td>EUR</td>
-            <td>1.448,78</td>
-            <td>656,44</td>
-        </tr>
-        <tr>
-            <td>D1234</td>
-            <td>Yet another test</td>
-            <td>004444</td>
-            <td>01-01-2019</td>
-            <td>31-01-2019</td>
-            <td>EUR</td>
-            <td>1.456,78</td>
-            <td>1.456,78</td>
-        </tr>
-        <tr>
-            <td>D1234</td>
-            <td>Yet another test</td>
-            <td>004455</td>
-            <td>01-02-2019</td>
-            <td>02-03-2019</td>
-            <td>EUR</td>
-            <td>1.448,78</td>
-            <td>656,44</td>
-        </tr>
     </table>
 </div>
 
@@ -209,11 +69,29 @@
     <script type="text/javascript">
         $(function () {
             $('#datagrid-1').datagridview({
-                columns: [{data:"Test"}]
+                columns: [
+                    { data: "DebtorNumber", header: "Debtor number" },
+                    { data: "DebtorName", header: "Debtor name" },
+                    { data: "InvoiceName", header: "Invoice number" },
+                    { data: "InvoiceDate", header: "Invoice date" },
+                    { data: "DueDate", header: "Due date" },
+                    { data: "Currency" },
+                    { data: "InvoiceAmount", header: "Invoice amount" },
+                    { data: "InvoiceOpenAmount", header: "Open amount" }
+                ]
             });
 
             $('#datagrid-2').datagridview({
-                columns: []
+                columns: [
+                    { data: "DebtorNumber", header: "Debtor number" },
+                    { data: "DebtorName", header: "Debtor name" },
+                    { data: "InvoiceName", header: "Invoice number" },
+                    { data: "InvoiceDate", header: "Invoice date" },
+                    { data: "DueDate", header: "Due date" },
+                    { data: "Currency" },
+                    { data: "InvoiceAmount", header: "Invoice amount" },
+                    { data: "InvoiceOpenAmount", header: "Open amount" }
+                ]
             });
         });
     </script>
