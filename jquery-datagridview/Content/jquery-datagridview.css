@@ -1,0 +1,16 @@
+﻿table.datagridview {
+    min-width: 100%;
+}
+
+/* temp */
+.datagridview-header * {
+    background: #ffffcc;
+}
+
+.datagridview-body * {
+    background: #ffccff;
+}
+
+.datagridview-footer * {
+    background: #ccffff;
+}

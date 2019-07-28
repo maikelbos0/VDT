@@ -33,3 +33,12 @@
     width: 100%;
     line-height: 1.2em;
 }
+
+.site-grid-container {
+    height: 200px;
+    max-height: 200px;
+}
+
+.site-grid-container table, .site-grid-container th, .site-grid-container td {
+    border: 1px solid black;
+}

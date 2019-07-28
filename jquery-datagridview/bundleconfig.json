@@ -4,5 +4,11 @@
     "inputFiles": [
       "Scripts/jquery-datagridview.js"
     ]
+  },
+  {
+    "outputFileName": "Content/jquery-datagridview.min.css",
+    "inputFiles": [
+      "Content/jquery-datagridview.css"
+    ]
   }
 ]

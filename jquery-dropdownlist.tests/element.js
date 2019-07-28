@@ -38,7 +38,7 @@ describe('creating an element', function () {
     });
 
     it('class always gets added', function () {
-        var dropdown = $('#element-attributes-multiple');
+        var dropdown = $('#element-attributes-class');
         var element;
 
         dropdown.dropdownlist(function () {

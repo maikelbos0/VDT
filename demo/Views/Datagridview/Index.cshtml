@@ -6,6 +6,101 @@
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lobortis, ipsum ut vulputate vestibulum, sem odio fermentum magna, sed ultricies sem purus et dolor. Aliquam dapibus felis magna, vitae ultrices sem posuere eu. Sed ante orci, dictum tincidunt eros quis, sagittis rutrum sem. Vivamus ac commodo est. Nunc gravida maximus ligula, quis dictum sem vestibulum eget. Sed vel facilisis lacus. Ut nisl mi, ultrices quis auctor iaculis, cursus quis lacus. Nullam lectus risus, faucibus non laoreet eget, bibendum vel ligula. Aenean at pharetra augue, sed consequat velit. Aenean tincidunt gravida semper. Quisque dictum ullamcorper sem non placerat.
 </p>
 
+<div class="site-grid-container">
+    <table id="datagrid-1">
+        <tr>
+            <th>Debtor number</th>
+            <th>Debtor name</th>
+            <th>Invoice number</th>
+            <th>Invoice date</th>
+            <th>Due date</th>
+            <th>Currency</th>
+            <th>Invoice amount</th>
+            <th>Open amount</th>
+        </tr>
+        <tr>
+            <td>A1234</td>
+            <td>Test</td>
+            <td>004444</td>
+            <td>01-01-2019</td>
+            <td>31-01-2019</td>
+            <td>EUR</td>
+            <td>1.456,78</td>
+            <td>1.456,78</td>
+        </tr>
+        <tr>
+            <td>A1234</td>
+            <td>Test</td>
+            <td>004455</td>
+            <td>01-02-2019</td>
+            <td>02-03-2019</td>
+            <td>EUR</td>
+            <td>1.448,78</td>
+            <td>656,44</td>
+        </tr>
+        <tr>
+            <td>B1234</td>
+            <td>Test</td>
+            <td>004444</td>
+            <td>01-01-2019</td>
+            <td>31-01-2019</td>
+            <td>EUR</td>
+            <td>1.456,78</td>
+            <td>1.456,78</td>
+        </tr>
+        <tr>
+            <td>B1234</td>
+            <td>Test</td>
+            <td>004455</td>
+            <td>01-02-2019</td>
+            <td>02-03-2019</td>
+            <td>EUR</td>
+            <td>1.448,78</td>
+            <td>656,44</td>
+        </tr>
+        <tr>
+            <td>C1234</td>
+            <td>Another test</td>
+            <td>004444</td>
+            <td>01-01-2019</td>
+            <td>31-01-2019</td>
+            <td>EUR</td>
+            <td>1.456,78</td>
+            <td>1.456,78</td>
+        </tr>
+        <tr>
+            <td>C1234</td>
+            <td>Another test</td>
+            <td>004455</td>
+            <td>01-02-2019</td>
+            <td>02-03-2019</td>
+            <td>EUR</td>
+            <td>1.448,78</td>
+            <td>656,44</td>
+        </tr>
+        <tr>
+            <td>D1234</td>
+            <td>Yet another test</td>
+            <td>004444</td>
+            <td>01-01-2019</td>
+            <td>31-01-2019</td>
+            <td>EUR</td>
+            <td>1.456,78</td>
+            <td>1.456,78</td>
+        </tr>
+        <tr>
+            <td>D1234</td>
+            <td>Yet another test</td>
+            <td>004455</td>
+            <td>01-02-2019</td>
+            <td>02-03-2019</td>
+            <td>EUR</td>
+            <td>1.448,78</td>
+            <td>656,44</td>
+        </tr>
+    </table>
+</div>
+
 <p>
     Ut viverra nunc ac justo efficitur dictum. Proin ultricies laoreet nisl, vitae volutpat leo euismod sed. Mauris euismod ex ut dolor pharetra suscipit nec eget sapien. Quisque gravida sagittis pulvinar. Ut et porta sem, eget congue odio. Cras arcu velit, ultrices a placerat vel, feugiat sed diam. Pellentesque venenatis bibendum mi, at aliquet justo iaculis quis. Integer magna arcu, viverra ut semper non, placerat sed quam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque scelerisque eget lorem eu tempus.
 </p>
@@ -13,3 +108,14 @@
 <p>
     Nullam dignissim lectus in ante porta tempor. Etiam congue felis vitae risus condimentum vulputate eget eu dui. Praesent id convallis libero, vitae fermentum metus. Aliquam ullamcorper neque semper aliquet dignissim. Sed eget sem condimentum, bibendum nulla ut, rutrum ipsum. Vestibulum in justo sit amet ex eleifend fringilla. Suspendisse ut ultrices ante. Sed molestie nisi urna, eget gravida ex viverra nec. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed at lectus sed ex commodo porta.
 </p>
+
+
+@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            $('#datagrid-1').datagridview(function () {
+                this.remove();
+            });
+        });
+    </script>
+}
