@@ -4,7 +4,9 @@ describe('a datagridview object', function () {
     it('can be removed', function () {
         var grid = $('#datagridview-interaction-remove');
 
-        grid.datagridview(function () {
+        grid.datagridview({
+            columns: []
+        }, function () {
             this.remove();
         });
 

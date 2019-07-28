@@ -208,10 +208,12 @@
 @section scripts {
     <script type="text/javascript">
         $(function () {
-            $('#datagrid-1').datagridview();
+            $('#datagrid-1').datagridview({
+                columns: [{data:"Test"}]
+            });
 
             $('#datagrid-2').datagridview({
-
+                columns: []
             });
         });
     </script>

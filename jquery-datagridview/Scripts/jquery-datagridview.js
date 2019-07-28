@@ -9,9 +9,22 @@
         }
 
         return $(this).each(function () {
-            let datagridview = $(this).data('datagridview');;
+            let datagridview = $(this).data('datagridview');
 
             if (!$(this).data('datagridview')) {
+                // Validate columns
+                if (!settings || !settings.columns) {
+                    throw 'datagridview error: expected required option "columns"';
+                }
+                else if (!$.isArray(settings.columns)) {
+                    throw 'datagridview error: expected option "columns" to be an array';
+                }
+                else if (!settings.columns.every(function (column) {
+                    return !!column.data;
+                })) {
+                    throw 'datagridview error: expected each item in option "columns" to have property "data"';
+                }
+
                 // Create object
                 let options = $.extend({}, $.fn.datagridview.defaults, settings);
                 datagridview = new DataGridView($(this), options);
@@ -38,38 +51,29 @@
 
     // Datagridview implementation
     function DataGridView(element, options) {
+        let base = this;
+
         this.element = element;
         this.options = options;
         this.fillHeight = this.options.fillHeight(this.element);
 
         this.element.addClass('datagridview');
-        this.header = this.element.find('thead');
-        this.body = this.element.find('tbody');
-        this.footer = this.element.find('tfoot');
+        this.element.children().hide();
 
-        // If no header is found, create it
-        if (this.header.length === 0) {
-            this.header = this.createElement('<thead>', 'datagridview-header');
-            this.element.append(this.header);
-        }
+        this.headerRow = this.createElement('<tr>');
+        this.header = this.createElement('<thead>', 'datagridview-header').append(this.headerRow);
+        this.body = this.createElement('<tbody>', 'datagridview-body');
+        this.footer = this.createElement('<tfoot>', 'datagridview-footer');
+        this.element.append(
+            this.header,
+            this.body,
+            this.footer
+        );
 
-        // If no body is found, create it and move all rows
-        if (this.body.length === 0) {
-            this.body = this.createElement('<tbody>', 'datagridview-body');
-            this.element.append(this.body);
-            this.body.append(this.element.find('tr'));
-        }
-
-        // If the header contains no row, assume the first row from the body
-        if (this.header.find('tr').length === 0) {
-            this.header.append(this.body.find('tr').first());
-        }
-
-        // If no header is found, create it
-        if (this.footer.length === 0) {
-            this.footer = this.createElement('<tfoot>', 'datagridview-footer');
-            this.element.append(this.footer);
-        }
+        // Create columns
+        this.options.columns.forEach(function (column) {
+            base.headerRow.append($('<th>').text(column.header || column.data));
+        });
     }
 
     // Create an element and merge attribute objects to attributes
@@ -83,17 +87,10 @@
     // Remove the entire datagridview; resets the base element to its former state
     DataGridView.prototype.remove = function () {
         this.element.removeClass('datagridview');
-
-        // If we had no header before, remove it
-        this.element.prepend(this.header.filter('.datagridview-header').find('tr'));
-        this.header.filter('.datagridview-header').remove();
-
-        // If we had no body before, remove it
-        this.element.append(this.body.filter('.datagridview-body').find('tr'));
-        this.body.filter('.datagridview-body').remove();
-
-        // If we had no footer before, remove it
-        this.element.find('tfoot.datagridview-footer').remove();
+        this.element.children().show();
+        this.header.remove();
+        this.body.remove();
+        this.footer.remove();
     }
 
     // Event handlers should not be accessible from the object itself
