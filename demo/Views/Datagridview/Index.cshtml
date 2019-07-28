@@ -99,20 +99,6 @@
                     { data: "InvoiceOpenAmount", header: "Open amount" }
                 ]
             });
-
-            console.time('repopulate x1000');
-
-            for (var i = 0; i < 1000; i++) {
-                $('#datagrid-1').datagridview(function () {
-                    this.populate([
-                        { DebtorNumber: "A234", DebtorName: "This is test", InvoiceNumber: "000144115", InvoiceDate: "2019-01-01", DueDate: "2019-01-31", Currency: "EUR", InvoiceAmount: "1.334,50", InvoiceOpenAmount: "1.000,00" },
-                        { DebtorNumber: "A234", DebtorName: "This is test", InvoiceNumber: "000144116", InvoiceDate: "2019-01-01", DueDate: "2019-01-31", Currency: "EUR", InvoiceAmount: "1.334,50", InvoiceOpenAmount: "1.000,00" },
-                        { DebtorNumber: "A234", DebtorName: "This is test", InvoiceNumber: "000144117", InvoiceDate: "2019-01-01", DueDate: "2019-01-31", Currency: "EUR", InvoiceAmount: "1.334,50", InvoiceOpenAmount: "1.000,00" }
-                    ]);
-                });
-            }
-
-            console.timeEnd('repopulate x1000');
         });
     </script>
 }
