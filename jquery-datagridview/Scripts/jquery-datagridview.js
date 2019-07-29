@@ -71,10 +71,28 @@
             this.footer
         );
 
+        this.style = $('<style>', { type: 'text/css' });
+        $('body').append(this.style);
+
         // Create columns
         this.options.columns.forEach(function (column) {
-            base.headerRow.append($('<th>').text(column.header || column.data));
+            // Define class
+            column._class = 'datagridview-' + Math.random().toString().replace('.', '');
+            column.width = isNaN(column.width) || column.width < 0 ? 10 : parseInt(column.width);
+
+            base.headerRow.append($('<th>').text(column.header || column.data).addClass(column._class).attr('title', column.header || column.data));
         });
+
+        this.setColumnWidth();
+    }
+
+    // Set the width of the column classes
+    DataGridView.prototype.setColumnWidth = function () {
+        this.style.html(this.options.columns.reduce(function (style, column) {
+            return style + '.' + column._class + '{ width: ' + column.width + '%}\n';
+        }, ''));
+
+        this.element.css('width', this.options.columns.reduce(function (w, c) { return w + c.width; }, 0) + '%');
     }
 
     // Fill the grid with the data
@@ -83,10 +101,13 @@
         let newBody = this.createElement('<tbody>', 'datagridview-body');
 
         for (let r = 0; r < data.length; r++) {
+            let dataRow = data[r];
             let row = $('<tr>');
 
             for (let c = 0; c < this.options.columns.length; c++) {
-                row.append($('<td>').text(data[r][this.options.columns[c].data] || ""));
+                let column = this.options.columns[c];
+
+                row.append($('<td>').text(dataRow[column.data] || "").addClass(column._class).attr('title', dataRow[column.data] || ""));
             }
 
             newBody.append(row);
@@ -111,6 +132,7 @@
         this.header.remove();
         this.body.remove();
         this.footer.remove();
+        this.style.remove();
     }
 
     // Event handlers should not be accessible from the object itself

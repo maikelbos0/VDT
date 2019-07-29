@@ -1,5 +1,12 @@
 ﻿.datagridview {
     min-width: 100%;
+    table-layout: fixed;
+}
+
+.datagridview th, .datagridview td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* temp */

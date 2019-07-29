@@ -1,13 +1,13 @@
 ﻿/// <reference path="element.html" />
 
-/// <reference path="element.html" />
-
 describe('creating an element', function () {
     it('succeeds', function () {
         var grid = $('#element-succeeds');
         var element;
 
-        grid.datagridview(function () {
+        grid.datagridview({
+            columns: []
+        }, function () {
             element = this.createElement('<div>', 'datagridview');
         });
 
@@ -19,7 +19,9 @@ describe('creating an element', function () {
         var grid = $('#element-attributes');
         var element;
 
-        grid.datagridview(function () {
+        grid.datagridview({
+            columns: []
+        }, function () {
             element = this.createElement('<div>', 'datagridview', { id: 'test', value: 'value' });
         });
 
@@ -31,7 +33,9 @@ describe('creating an element', function () {
         var grid = $('#element-attributes-multiple');
         var element;
 
-        grid.datagridview(function () {
+        grid.datagridview({
+            columns: []
+        }, function () {
             element = this.createElement('<div>', 'datagridview', { id: 'test', value: 'value' }, { id: 'test2' });
         });
 
@@ -43,7 +47,9 @@ describe('creating an element', function () {
         var grid = $('#element-attributes-class');
         var element;
 
-        grid.datagridview(function () {
+        grid.datagridview({
+            columns: []
+        }, function () {
             element = this.createElement('<div>', 'datagridview', { class: 'form-control' });
         });
 
