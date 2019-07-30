@@ -73,18 +73,26 @@
                     { data: "DebtorNumber", header: "Debtor number", width: 15 },
                     { data: "DebtorName", header: "Debtor name", width: 20 },
                     { data: "InvoiceNumber", header: "Invoice number", width: 12 },
-                    { data: "InvoiceDate", header: "Invoice date", width: 12 },
-                    { data: "DueDate", header: "Due date", width: 15 },
+                    { data: "InvoiceDateString", header: "Invoice date", width: 12 },
+                    { data: "DueDateString", header: "Due date", width: 15 },
                     { data: "Currency", width: 5 },
-                    { data: "InvoiceAmount", header: "Invoice amount", width: 10 },
-                    { data: "InvoiceOpenAmount", header: "Open amount", width: 10 }
+                    { data: "InvoiceAmountString", header: "Invoice amount", width: 10 },
+                    { data: "InvoiceOpenAmountString", header: "Open amount", width: 10 }
                 ]
-            }, function () {
-                this.populate([
-                    { DebtorNumber: "A234", DebtorName: "This is test long name that doesn't fit good", InvoiceNumber: "000144115", InvoiceDate: "2019-01-01", DueDate: "2019-01-31", Currency: "EUR", InvoiceAmount: "1.334,50", InvoiceOpenAmount: "1.000,00" },
-                    { DebtorNumber: "A234", DebtorName: "This is test long name that doesn't fit good", InvoiceNumber: "000144116", InvoiceDate: "2019-01-01", DueDate: "2019-01-31", Currency: "EUR", InvoiceAmount: "1.334,50", InvoiceOpenAmount: "1.000,00" },
-                    { DebtorNumber: "A234", DebtorName: "This is test long name that doesn't fit good", InvoiceNumber: "000144117", InvoiceDate: "2019-01-01", DueDate: "2019-01-31", Currency: "EUR", InvoiceAmount: "1.334,50", InvoiceOpenAmount: "1.000,00" }
-                ]);
+            });
+
+            $.ajax({
+                method: "POST",
+                url: "@Url.Action("GetInvoiceGridItems")",
+                success: function (data) {
+                    $('#datagrid-1').datagridview(function () {
+                        debugger;
+                        this.populate(data);
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
             });
 
             $('#datagrid-2').datagridview({
