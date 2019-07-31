@@ -169,26 +169,22 @@
         }
 
         // Add input fields
+        this.items.prepend(this.createElement('<input>', 'dropdownlist-field', this.options.getInputAttributes(), {
+            name: this.fieldName,
+            value: base.options.getItemValue($(this)),
+            tabindex: -1,
+            type: base.isMultiselect ? 'checkbox' : 'radio'
+        }));
+        
         this.items.each(function () {
-            let fieldProperties = {
-                name: base.fieldName,
-                value: base.options.getItemValue($(this)),
-                tabindex: -1
-            };
+            let field = $(this).find('input.dropdownlist-field');
 
-            if (base.isMultiselect) {
-                fieldProperties.type = 'checkbox';
-            }
-            else {
-                fieldProperties.type = 'radio';
-            }
+            field.val(base.options.getItemValue($(this)));
 
             if (base.options.isItemSelected($(this)) && (base.isMultiselect || !isItemSelected)) {
-                fieldProperties.checked = 'true';
+                field.attr('checked', 'true');
                 isItemSelected = true;
             }
-
-            $(this).prepend(base.createElement('<input>', 'dropdownlist-field', base.options.getInputAttributes(), fieldProperties));
         });
 
         // For single-select, select the first option if nothing is selected
@@ -299,7 +295,10 @@
 
             if (selectedItems.length > 0) {
                 selectedItems.addClass('dropdownlist-list-item-active');
-                selectedItems[0].scrollIntoView();
+
+                if (selectedItems[0].scrollIntoView) {
+                    selectedItems[0].scrollIntoView();
+                }
             }
         }
     }

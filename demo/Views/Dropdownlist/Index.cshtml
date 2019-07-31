@@ -148,6 +148,16 @@
     </div>
 </div>
 
+<div class="row site-spaced">
+    <div class="col-3">
+        <div id="speed-dropdown-1" class="my-dropdown">
+            @foreach (var item in Model.DemoProperty3.Items) {
+                <div data-value="@item.Value">@item.Text</div>
+            }
+        </div>
+    </div>
+</div>
+
 <p>
     Ut viverra nunc ac justo efficitur dictum. Proin ultricies laoreet nisl, vitae volutpat leo euismod sed. Mauris euismod ex ut dolor pharetra suscipit nec eget sapien. Quisque gravida sagittis pulvinar. Ut et porta sem, eget congue odio. Cras arcu velit, ultrices a placerat vel, feugiat sed diam. Pellentesque venenatis bibendum mi, at aliquet justo iaculis quis. Integer magna arcu, viverra ut semper non, placerat sed quam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque scelerisque eget lorem eu tempus.
 </p>
@@ -202,7 +212,13 @@
                     return $(element).children().not('.footer');
                 }
             });
+            
+            console.time('speed test 10000');
 
+            $('#speed-dropdown-1').dropdownlist();
+
+            console.timeEnd('speed test 10000');
+            
             // Create all other dropdown lists
             $('.my-dropdown').dropdownlist();
 

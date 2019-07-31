@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using vdt.demo.Models;
 using vdt.jquerydropdownlist.MVC;
 
@@ -29,6 +30,9 @@ namespace vdt.demo.Controllers {
                         new JQueryDropdownlistItem() { Value = "2", Text = "Choice 2" },
                         new JQueryDropdownlistItem() { Value = "3", Text = "Third choice" }
                     }
+                },
+                DemoProperty3 = new JQueryDropdownlist() {
+                    Items = Enumerable.Range(0, 10000).Select(i => new JQueryDropdownlistItem() { Value = i.ToString(), Text = $"Option {i}" })
                 }
             });
         }
@@ -56,6 +60,9 @@ namespace vdt.demo.Controllers {
                 new JQueryDropdownlistItem() { Value = "2", Text = "Choice 2" },
                 new JQueryDropdownlistItem() { Value = "3", Text = "Third choice" }
             };
+
+            viewModel.DemoProperty3 = viewModel.DemoProperty3 ?? new JQueryDropdownlist();
+            viewModel.DemoProperty3.Items = Enumerable.Range(0, 10000).Select(i => new JQueryDropdownlistItem() { Value = i.ToString(), Text = $"Option {i}" });
 
             return View(viewModel);
     }
