@@ -295,7 +295,12 @@
 
         // Highlight the selected item for keyboard support
         if (!this.isMultiselect) {
-            this.items.has('input.dropdownlist-field:checked').addClass('dropdownlist-list-item-active');
+            let selectedItems = this.items.has('input.dropdownlist-field:checked');
+
+            if (selectedItems.length > 0) {
+                selectedItems.addClass('dropdownlist-list-item-active');
+                selectedItems[0].scrollIntoView();
+            }
         }
     }
 
