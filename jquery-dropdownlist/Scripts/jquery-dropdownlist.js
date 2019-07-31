@@ -212,12 +212,17 @@
         this.container.keydown(this, eventHandlers.containerKeydown);
         this.selector.click(this, eventHandlers.selectorClick);
         this.list.click(this, eventHandlers.listClick);
-        this.allItems.find('input.dropdownlist-field').change(this, eventHandlers.inputChange);
+        this.element.on('change', 'input.dropdownlist-field', this, eventHandlers.inputChange);
+
         this.textSearch.keydown(this, eventHandlers.textSearchKeydown);
         this.textSearch.keyup(this, eventHandlers.textSearchKeyup);
         $(document).click(this, eventHandlers.documentClick);
-        this.allItems.mouseover(this, eventHandlers.allItemsMouseover);
-        this.allItems.mouseout(this, eventHandlers.allItemsMouseout);
+
+        // The event handlers themselves filter for only items
+        this.element.on('mouseover', '*', this, eventHandlers.allItemsMouseover);
+
+        // The event handlers themselves filter for only items
+        this.element.on('mouseout', '*', this, eventHandlers.allItemsMouseout);
     }
 
     // Create an element and merge attribute objects to attributes
@@ -463,12 +468,20 @@
 
         // Mouse over handler for items including select all
         allItemsMouseover: function (e) {
+            if (e.data.allItems.filter(this).length === 0) {
+                return;
+            }
+
             e.data.allItems.not(this).removeClass('dropdownlist-list-item-active');
             $(this).addClass('dropdownlist-list-item-active');
         },
 
         // Mouse out handler for items including select all
         allItemsMouseout: function (e) {
+            if (e.data.allItems.filter(this).length === 0) {
+                return;
+            }
+
             e.data.allItems.removeClass('dropdownlist-list-item-active');
         },
 
