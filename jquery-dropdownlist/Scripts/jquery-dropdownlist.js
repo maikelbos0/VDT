@@ -296,14 +296,21 @@
 
         // Highlight the selected item for keyboard support
         if (!this.isMultiselect) {
-            let selectedItems = this.items.has('input.dropdownlist-field:checked');
+            this.items.has('input.dropdownlist-field:checked').addClass('dropdownlist-list-item-active');
+            this.scrollToActiveItem();
+        }
+    }
 
-            if (selectedItems.length > 0) {
-                selectedItems.addClass('dropdownlist-list-item-active');
-
-                if (selectedItems[0].scrollIntoView) {
-                    selectedItems[0].scrollIntoView();
-                }
+    // Scroll the active item into view
+    Dropdownlist.prototype.scrollToActiveItem = function() {
+        let activeItem = this.items.filter('.dropdownlist-list-item-active');
+        
+        if (activeItem.length > 0 && activeItem[0].scrollIntoView) {
+            if (activeItem.position().top < 0) {
+                this.list.scrollTop(this.list.scrollTop() + activeItem.position().top);
+            }
+            else if (activeItem.position().top + activeItem.outerHeight(true) > this.list.height()) {
+                this.list.scrollTop(this.list.scrollTop() - this.list.height() + activeItem.position().top + activeItem.outerHeight(true));
             }
         }
     }
@@ -525,6 +532,7 @@
                 if (--index >= 0) {
                     e.data.allItems.removeClass('dropdownlist-list-item-active');
                     $(allItems[index]).addClass('dropdownlist-list-item-active');
+                    e.data.scrollToActiveItem();
                 }
 
                 e.preventDefault();
@@ -538,6 +546,7 @@
                     if (++index < allItems.length) {
                         e.data.allItems.removeClass('dropdownlist-list-item-active');
                         $(allItems[index]).addClass('dropdownlist-list-item-active');
+                        e.data.scrollToActiveItem();
                     }
                 }
                 else {
@@ -545,6 +554,7 @@
 
                     if (e.data.isMultiselect) {
                         e.data.allItems.first().addClass('dropdownlist-list-item-active');
+                        e.data.scrollToActiveItem();
                     }
                 }
 

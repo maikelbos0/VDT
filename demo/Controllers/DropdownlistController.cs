@@ -32,7 +32,7 @@ namespace vdt.demo.Controllers {
                     }
                 },
                 DemoProperty3 = new JQueryDropdownlist() {
-                    Items = Enumerable.Range(0, 10000).Select(i => new JQueryDropdownlistItem() { Value = i.ToString(), Text = $"Option {i}" })
+                    Items = Enumerable.Range(0, 1000).Select(i => new JQueryDropdownlistItem() { Value = i.ToString(), Text = $"Option {i}" })
                 }
             });
         }
@@ -62,7 +62,7 @@ namespace vdt.demo.Controllers {
             };
 
             viewModel.DemoProperty3 = viewModel.DemoProperty3 ?? new JQueryDropdownlist();
-            viewModel.DemoProperty3.Items = Enumerable.Range(0, 10000).Select(i => new JQueryDropdownlistItem() { Value = i.ToString(), Text = $"Option {i}" });
+            viewModel.DemoProperty3.Items = Enumerable.Range(0, 1000).Select(i => new JQueryDropdownlistItem() { Value = i.ToString(), Text = $"Option {i}" });
 
             return View(viewModel);
     }
