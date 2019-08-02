@@ -511,58 +511,81 @@
 
         // Keydown handler for container
         containerKeydown: function (e) {
-            if (e.which === keyCodes.ENTER || e.which === keyCodes.SPACE) {
-                // On enter we select if an item is active or, if we're on the selector, toggle the dropdownlist
-                let item = e.data.allItems.filter('.dropdownlist-list-item-active');
+            if (e.data.isVisible()) {
+                // If the dropdown is open, what we do depends on the key pressed
 
-                if (item.length > 0) {
-                    item.click();
-                }
-                else if ($(e.target).closest(e.data.selector).length > 0) {
-                    e.data.toggle();
-                }
+                if (e.which === keyCodes.ENTER || e.which === keyCodes.SPACE) {
+                    // On enter we select if an item is active or, if we're on the selector, toggle the dropdownlist
+                    let item = e.data.allItems.filter('.dropdownlist-list-item-active');
 
-                e.preventDefault();
+                    if (item.length > 0) {
+                        item.click();
+                    }
+                    else {
+                        e.data.hide();
+                    }
+
+                    e.preventDefault();
+                }
+                else if (e.which === keyCodes.ARROW_UP || e.which === keyCodes.ARROW_DOWN || e.which === keyCodes.PAGE_UP || e.which === keyCodes.PAGE_DOWN) {
+                    // Deterine the index of the active item
+                    let allItems = e.data.allItems.filter(':visible');
+                    let index = allItems.index(e.data.allItems.filter('.dropdownlist-list-item-active'));
+                    let newIndex = index;
+
+                    // Move one up if possible
+                    if (e.which === keyCodes.ARROW_UP && index > 0) {
+                        newIndex = index - 1;
+                    }
+                    // Move one down if possible
+                    else if (e.which === keyCodes.ARROW_DOWN && index < allItems.length - 1) {
+                        newIndex = index + 1;
+                    }
+                    // Move an entire page up if possible
+                    else if (e.which === keyCodes.PAGE_UP) {
+                        let totalHeight = e.data.list.height() - $(allItems[newIndex]).outerHeight(true);
+
+                        while (totalHeight > 0 && newIndex > 0) {
+                            newIndex--;
+                            totalHeight -= $(allItems[newIndex]).outerHeight(true);
+                        }
+                    }
+                    // Move an entire page down if possible
+                    else if (e.which === keyCodes.PAGE_DOWN) {
+                        let totalHeight = e.data.list.height() - $(allItems[newIndex]).outerHeight(true);
+
+                        while (totalHeight > 0 && newIndex < allItems.length - 1) {
+                            newIndex++;
+                            totalHeight -= $(allItems[newIndex]).outerHeight(true);
+                        }
+                    }
+
+                    // We're changing the active item
+                    if (newIndex !== index) {
+                        e.data.allItems.removeClass('dropdownlist-list-item-active');
+                        $(allItems[newIndex]).addClass('dropdownlist-list-item-active');
+                        e.data.scrollToActiveItem();
+                    }
+
+                    e.preventDefault();
+                }
+                else if (e.which === keyCodes.ESCAPE) {
+                    e.data.hide();
+                    e.data.selector.focus();
+                }
             }
-            else if (e.which === keyCodes.ARROW_UP) {
-                // On arrow up we only need to select the next active item up
-                let allItems = e.data.allItems.filter(':visible');
-                let index = allItems.index(e.data.allItems.filter('.dropdownlist-list-item-active'));
+            else if (e.which === keyCodes.ENTER || e.which === keyCodes.SPACE || e.which === keyCodes.ARROW_DOWN || e.which === keyCodes.PAGE_DOWN) {
+                // If the dropdownlist is closed, then we open it
+                e.data.show();
 
-                if (--index >= 0) {
-                    e.data.allItems.removeClass('dropdownlist-list-item-active');
-                    $(allItems[index]).addClass('dropdownlist-list-item-active');
+                // For multiselect we can set focus on the first item for arrow or page down
+                // For single select the focus is on the selected item so we do not do this
+                if (e.data.isMultiselect && (e.which === keyCodes.ARROW_DOWN || e.which === keyCodes.PAGE_DOWN)) {
+                    e.data.allItems.first().addClass('dropdownlist-list-item-active');
                     e.data.scrollToActiveItem();
                 }
 
                 e.preventDefault();
-            }
-            else if (e.which === keyCodes.ARROW_DOWN) {
-                // On arrow down we open the dropdown if it is closed and select the next active item down
-                if (e.data.isVisible()) {
-                    let allItems = e.data.allItems.filter(':visible');
-                    let index = allItems.index(e.data.allItems.filter('.dropdownlist-list-item-active'));
-
-                    if (++index < allItems.length) {
-                        e.data.allItems.removeClass('dropdownlist-list-item-active');
-                        $(allItems[index]).addClass('dropdownlist-list-item-active');
-                        e.data.scrollToActiveItem();
-                    }
-                }
-                else {
-                    e.data.show();
-
-                    if (e.data.isMultiselect) {
-                        e.data.allItems.first().addClass('dropdownlist-list-item-active');
-                        e.data.scrollToActiveItem();
-                    }
-                }
-
-                e.preventDefault();
-            }
-            else if (e.which === keyCodes.ESCAPE) {
-                e.data.hide();
-                e.data.selector.focus();
             }
         }
     }
@@ -572,6 +595,8 @@
         ENTER: 13,
         ESCAPE: 27,
         SPACE: 32,
+        PAGE_UP: 33,
+        PAGE_DOWN: 34,
         ARROW_UP: 38,
         ARROW_DOWN: 40
     };
