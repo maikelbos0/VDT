@@ -2,10 +2,10 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>jQuery-dropdownlist.MVC</id>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <title>jQuery-dropdownlist.MVC</title>
     <description>An extension to the jQuery-dropdownlist plugin that makes it simple to use as part of your viewmodels.</description>
-    <releaseNotes></releaseNotes>
+    <releaseNotes>- Added support for new dropdownlist options isDisabled and isTextSearchInSelector</releaseNotes>
     <authors>Maikel Bos</authors>
     <license type="expression">MIT</license>
     <copyright>Copyright © 2019 Maikel Bos</copyright>
@@ -14,7 +14,7 @@
     <projectUrl>https://github.com/maikelbos0/VDT</projectUrl>
     <dependencies>
       <dependency id="jQuery" version="3.3.1" />
-	  <dependency id="jQuery-dropdownlist" version="1.1.0" />
+	  <dependency id="jQuery-dropdownlist" version="1.2.3" />
 	  <dependency id="Microsoft.AspNet.Mvc" version="5.2.0" />
     </dependencies>
   </metadata>
