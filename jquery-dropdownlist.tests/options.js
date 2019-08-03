@@ -241,4 +241,16 @@ describe('a dropdownlist option', function () {
 
         expect(dropdownlist.find('.dropdownlist-field').attr('id')).toEqual('test');
     });
+
+    it('can be provided for isDisabled', function () {
+        var dropdownlist = $('#dropdown-options-disabled');
+
+        dropdownlist.dropdownlist({
+            isDisabled: function (element) {
+                return $(element).hasClass('disabled-field');
+            }
+        });
+
+        expect(dropdownlist.closest('.dropdownlist').hasClass('dropdownlist-disabled')).toEqual(true);
+    });
 });

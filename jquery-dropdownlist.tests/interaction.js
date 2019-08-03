@@ -156,4 +156,36 @@ describe('a dropdownlist object', function () {
         expect($(fields[4]).prop('checked')).toEqual(false);
         expect($(fields[5]).prop('checked')).toEqual(true);
     });
+
+    it('can be disabled', function () {
+        var dropdown = $('#dropdown-interaction-disable');
+
+        dropdown.dropdownlist(function () {
+            this.disable();
+        });
+
+        var fields = dropdown.find('input.dropdownlist-field');
+
+        expect($(fields[0]).prop('disabled')).toEqual(true);
+        expect($(fields[1]).prop('disabled')).toEqual(true);
+        expect($(fields[2]).prop('disabled')).toEqual(true);
+
+        expect(dropdown.closest('.dropdownlist').hasClass('dropdownlist-disabled')).toEqual(true);
+    });
+
+    it('can be enabled', function () {
+        var dropdown = $('#dropdown-interaction-enabled');
+
+        dropdown.dropdownlist(function () {
+            this.disable();
+        });
+
+        var fields = dropdown.find('input.dropdownlist-field');
+
+        expect($(fields[0]).prop('disabled')).toEqual(undefined);
+        expect($(fields[1]).prop('disabled')).toEqual(undefined);
+        expect($(fields[2]).prop('disabled')).toEqual(undefined);
+
+        expect(dropdown.closest('.dropdownlist').hasClass('dropdownlist-disabled')).toEqual(false);
+    });
 });

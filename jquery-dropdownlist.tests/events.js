@@ -155,4 +155,13 @@ describe('when a user', function () {
 
         expect(called).toEqual(true);
     });
+
+    it('clicks on a disabled dropdownlist it will not open', function () {
+        var dropdown = $('#dropdown-events-disabled-click');
+
+        dropdown.dropdownlist();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
+
+        expect(dropdown.closest('.dropdownlist-list').css('display')).toEqual('none');
+    });
 });

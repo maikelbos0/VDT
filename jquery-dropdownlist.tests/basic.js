@@ -121,4 +121,10 @@ describe('a basic dropdownlist', function () {
         expect(field.length).toEqual(1)
         expect(field.prop('name')).toEqual('');
     });
+
+    it('is disable if data-disabled is set to true', function () {
+        $('#basic-dropdown-disabled').dropdownlist();
+
+        expect($('#basic-dropdown-disabled').closest('.dropdownlist').hasClass('dropdownlist-disabled')).toEqual(true);
+    });
 });
