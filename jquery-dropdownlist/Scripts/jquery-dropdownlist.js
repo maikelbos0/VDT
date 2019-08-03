@@ -50,6 +50,10 @@
         getFieldName: function (element) {
             return $(element).data('field-name');
         },
+        // 
+        isDisabled: function (element) {
+            return $(element).data('disabled') !== undefined && $(element).data('disabled') != false;
+        },
         // The field value to use for the generated input fields based on the item
         // Defaults to the data-property value of the item
         getItemValue: function (item) {
@@ -131,6 +135,7 @@
         this.element = element;
         this.options = options;
         this.fieldName = this.options.getFieldName(this.element) || 'dropdownlist-' + Math.random().toString().replace('.', '');
+        this.isDisabled = false;
         this.isMultiselect = this.options.isMultiselect(this.element);
         this.selectAllItem = this.isMultiselect ? this.options.getSelectAllItem(this.element) : $();
         this.allItems = this.options.getItems(this.element).add(this.selectAllItem);
@@ -207,6 +212,11 @@
         this.container.append(this.list);
         this.setSelectorText();
 
+        // Disable if needed
+        if (this.options.isDisabled(this.element)) {
+            this.disable();
+        }
+
         // Event handlers
         this.container.focusout(this, eventHandlers.containerFocusout);
         this.container.keydown(this, eventHandlers.containerKeydown);
@@ -282,6 +292,11 @@
 
     // Show the list
     Dropdownlist.prototype.show = function () {
+        // If it's disabled, don't show
+        if (this.isDisabled) {
+            return;
+        }
+
         this.list.show();
 
         if (this.textSearch.length > 0) {
@@ -388,6 +403,28 @@
     // Check if all items are currently selected
     Dropdownlist.prototype.areAllItemsSelected = function () {
         return this.items.has('input.dropdownlist-field:not(:checked)').length === 0;
+    }
+
+    // Enable the dropdown if it is disabled
+    Dropdownlist.prototype.enable = function () {
+        if (!this.isDisabled) {
+            return;
+        }
+
+        this.isDisabled = false;
+        this.allItems.find('input.dropdownlist-field').prop('disabled', this.isDisabled);
+        this.container.removeClass('dropdownlist-disabled');
+    }
+
+    // Disable the dropdown if it is enabled
+    Dropdownlist.prototype.disable = function () {
+        if (this.isDisabled) {
+            return;
+        }
+
+        this.isDisabled = true;
+        this.allItems.find('input.dropdownlist-field').prop('disabled', this.isDisabled);
+        this.container.addClass('dropdownlist-disabled');
     }
 
     // Event handlers should not be accessible from the object itself
