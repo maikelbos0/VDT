@@ -2,12 +2,10 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>jQuery-dropdownlist</id>
-    <version>1.2.2</version>
+    <version>1.2.3</version>
     <title>jQuery-dropdownlist</title>
     <description>A jQuery plugin that makes it easy to transform any html-element with children into a dropdownlist.</description>
-    <releaseNotes>- Added support for page up / page down keys
-- Added enable/disable
-- Added events for shown and hidden</releaseNotes>
+    <releaseNotes></releaseNotes>
     <authors>Maikel Bos</authors>
     <license type="expression">MIT</license>
     <copyright>Copyright © 2019 Maikel Bos</copyright>
