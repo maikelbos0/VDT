@@ -50,7 +50,8 @@
         getFieldName: function (element) {
             return $(element).data('field-name');
         },
-        // 
+        // Initialize the dropdownlist disabled or not
+        // Defaults to the data-property disabled
         isDisabled: function (element) {
             return $(element).data('disabled') !== undefined && $(element).data('disabled') != false;
         },

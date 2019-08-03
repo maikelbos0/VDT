@@ -16,6 +16,10 @@ namespace vdt.jquerydropdownlist.MVC {
         /// </summary>
         public IEnumerable<string> SelectedValues { get; set; }
         /// <summary>
+        /// Initialize the dropdownlist disabled or not
+        /// </summary>
+        public bool IsDisabled { get; set; }
+        /// <summary>
         /// Gets or sets whether or not to render the dropdownlist as a multiselect dropdownlist.
         /// </summary>
         public bool IsMultiselect { get; set; }
@@ -23,6 +27,11 @@ namespace vdt.jquerydropdownlist.MVC {
         /// Gets or sets whether or not to render a text search for the dropdownlist.
         /// </summary>
         public bool HasTextSearch { get; set; }
+        /// <summary>
+        /// If true, the text search will replace the selector text on open.
+        /// If false, the text search will be inside the dropdownlist as the first element.
+        /// </summary>
+        public bool IsTextSearchInsideSelector { get; set; }
         /// <summary>
         /// Gets or sets whether or not the dropdownlist has a select all option. This only applies if <see cref="IsMultiselect">IsMultiselect</see> is set to true.
         /// </summary>

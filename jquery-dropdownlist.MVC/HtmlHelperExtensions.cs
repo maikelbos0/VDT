@@ -59,12 +59,20 @@ namespace vdt.jquerydropdownlist.MVC {
                 listBuilder.MergeAttribute("data-field-name", name);
             }
 
+            if (list.IsDisabled) {
+                listBuilder.MergeAttribute("data-disabled", "true");
+            }
+
             if (list.IsMultiselect) {
                 listBuilder.MergeAttribute("data-multiselect", "true");
             }
 
             if (list.HasTextSearch) {
                 listBuilder.MergeAttribute("data-text-search", "true");
+
+                if (list.IsTextSearchInsideSelector) {
+                    listBuilder.MergeAttribute("data-selector-text-search", "true");
+                }
             }
 
             if (list.IsMultiselect && list.HasSelectAll) {

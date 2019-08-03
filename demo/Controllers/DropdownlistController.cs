@@ -65,6 +65,6 @@ namespace vdt.demo.Controllers {
             viewModel.DemoProperty3.Items = Enumerable.Range(0, 1000).Select(i => new JQueryDropdownlistItem() { Value = i.ToString(), Text = $"Option {i}" });
 
             return View(viewModel);
+        }
     }
-}
 }

@@ -130,6 +130,33 @@ namespace vdt.jquerydropdownlist.MVC.test {
         }
 
         [TestMethod]
+        public void JQueryDropdownlistFor_GeneratesDisabledAttribute() {
+            var viewModel = CreateViewModel();
+            var viewData = new ViewDataDictionary<TestViewModel>() { Model = viewModel };
+            var htmlHelper = CreateHtmlHelper<TestViewModel>(viewData);
+
+            viewModel.TestProperty.IsDisabled = true;
+
+            var html = htmlHelper.JQueryDropdownlistFor(model => model.TestProperty);
+            var xml = XElement.Parse($"<list>{html}</list>");
+
+            xml.Element("div").Attribute("data-disabled").Should().NotBeNull();
+            xml.Element("div").Attribute("data-disabled").Value.Should().Be("true");
+        }
+
+        [TestMethod]
+        public void JQueryDropdownlistFor_OmitsDisabledAttributeByDefault() {
+            var viewModel = CreateViewModel();
+            var viewData = new ViewDataDictionary<TestViewModel>() { Model = viewModel };
+            var htmlHelper = CreateHtmlHelper<TestViewModel>(viewData);
+
+            var html = htmlHelper.JQueryDropdownlistFor(model => model.TestProperty);
+            var xml = XElement.Parse($"<list>{html}</list>");
+
+            xml.Element("div").Attribute("data-disabled").Should().BeNull();
+        }
+
+        [TestMethod]
         public void JQueryDropdownlistFor_GeneratesMultiselectAttribute() {
             var viewModel = CreateViewModel();
             var viewData = new ViewDataDictionary<TestViewModel>() { Model = viewModel };
@@ -206,6 +233,49 @@ namespace vdt.jquerydropdownlist.MVC.test {
             var xml = XElement.Parse($"<list>{html}</list>");
 
             xml.Element("div").Attribute("data-text-search").Should().BeNull();
+        }
+        
+        [TestMethod]
+        public void JQueryDropdownlistFor_GeneratesIsTextSearchInSelectorAttribute() {
+            var viewModel = CreateViewModel();
+            var viewData = new ViewDataDictionary<TestViewModel>() { Model = viewModel };
+            var htmlHelper = CreateHtmlHelper<TestViewModel>(viewData);
+
+            viewModel.TestProperty.HasTextSearch = true;
+            viewModel.TestProperty.IsTextSearchInsideSelector = true;
+
+            var html = htmlHelper.JQueryDropdownlistFor(model => model.TestProperty);
+            var xml = XElement.Parse($"<list>{html}</list>");
+
+            xml.Element("div").Attribute("data-selector-text-search").Should().NotBeNull();
+            xml.Element("div").Attribute("data-selector-text-search").Value.Should().Be("true");
+        }
+
+        [TestMethod]
+        public void JQueryDropdownlistFor_OmitsIsTextSearchInSelectorAttributeByDefault() {
+            var viewModel = CreateViewModel();
+            var viewData = new ViewDataDictionary<TestViewModel>() { Model = viewModel };
+            var htmlHelper = CreateHtmlHelper<TestViewModel>(viewData);
+
+            var html = htmlHelper.JQueryDropdownlistFor(model => model.TestProperty);
+            var xml = XElement.Parse($"<list>{html}</list>");
+
+            xml.Element("div").Attribute("data-selector-text-search").Should().BeNull();
+        }
+
+        [TestMethod]
+        public void JQueryDropdownlistFor_OmitsIsTextSearchInSelectorWhenHasTextSearchIsFalse() {
+            var viewModel = CreateViewModel();
+            var viewData = new ViewDataDictionary<TestViewModel>() { Model = viewModel };
+            var htmlHelper = CreateHtmlHelper<TestViewModel>(viewData);
+
+            viewModel.TestProperty.HasTextSearch = false;
+            viewModel.TestProperty.IsTextSearchInsideSelector = true;
+
+            var html = htmlHelper.JQueryDropdownlistFor(model => model.TestProperty);
+            var xml = XElement.Parse($"<list>{html}</list>");
+
+            xml.Element("div").Attribute("data-selector-text-search").Should().BeNull();
         }
 
         [TestMethod]
