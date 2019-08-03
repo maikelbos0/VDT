@@ -288,6 +288,8 @@
             // Clear previous searches
             this.items.show();
         }
+
+        this.element.trigger('dropdownlist.hidden');
     }
 
     // Show the list
@@ -314,6 +316,8 @@
             this.items.has('input.dropdownlist-field:checked').addClass('dropdownlist-list-item-active');
             this.scrollToActiveItem();
         }
+
+        this.element.trigger('dropdownlist.shown');
     }
 
     // Scroll the active item into view

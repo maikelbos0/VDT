@@ -164,4 +164,33 @@ describe('when a user', function () {
 
         expect(dropdown.closest('.dropdownlist-list').css('display')).toEqual('none');
     });
+
+    it('opens a dropdown it triggers the shown event', function () {
+        var dropdown = $('#dropdown-events-shown');
+        var called = false;
+
+        dropdown.dropdownlist();
+        dropdown.on('dropdownlist.shown', function () {
+            called = true;
+        });
+
+        dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
+
+        expect(called).toEqual(true);
+    });
+
+    it('closes a dropdown it triggers the hidden event', function () {
+        var dropdown = $('#dropdown-events-hidden');
+        var called = false;
+
+        dropdown.dropdownlist();
+        dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
+        dropdown.on('dropdownlist.hidden', function () {
+            called = true;
+        });
+
+        $('#alternate-element').click();
+
+        expect(called).toEqual(true);
+    });
 });
