@@ -42,11 +42,6 @@
 
     // Set defaults for extension
     $.fn.datagridview.defaults = {
-        // If true, the datagridview will adjust its height to however much room is available in the parent
-        // If false, the datagridview will adjust its height to the rows it contains
-        fillHeight: function (element) {
-            return $(element).data('fill-height') !== undefined && $(element).data('fill-height') != false;
-        }
     }
 
     // Datagridview implementation
@@ -55,10 +50,10 @@
 
         this.element = element;
         this.options = options;
-        this.fillHeight = this.options.fillHeight(this.element);
         this.data = [];
-
+        this.elementClass = 'datagridview-' + Math.random().toString().replace('.', '');
         this.element.addClass('datagridview');
+        this.element.addClass(this.elementClass);
         this.element.children().hide();
 
         this.headerRow = this.createElement('<tr>');
@@ -77,22 +72,27 @@
         // Create columns
         this.options.columns.forEach(function (column) {
             // Define class
-            column._class = 'datagridview-' + Math.random().toString().replace('.', '');
+            column.class = 'datagridview-column-' + Math.random().toString().replace('.', '');
             column.width = isNaN(column.width) || column.width < 0 ? 10 : parseInt(column.width);
 
-            base.headerRow.append($('<th>').text(column.header || column.data).addClass(column._class).attr('title', column.header || column.data));
+            base.headerRow.append($('<th>').text(column.header || column.data).addClass(column.class).attr('title', column.header || column.data));
         });
 
         this.setColumnWidth();
     }
 
-    // Set the width of the column classes
+    // Set the width of the columns
     DataGridView.prototype.setColumnWidth = function () {
-        this.style.html(this.options.columns.reduce(function (style, column) {
-            return style + '.' + column._class + '{ width: ' + column.width + '%}\n';
-        }, ''));
+        let style = '';
+        let tableWidth = this.options.columns.reduce(function (w, c) { return w + c.width; }, 0);
 
-        this.element.css('width', this.options.columns.reduce(function (w, c) { return w + c.width; }, 0) + '%');
+        if (tableWidth > 100) {
+            style = '.' + this.elementClass + ' tbody, .' + this.elementClass + ' thead { width: ' + tableWidth + '%}\n';
+        }
+
+        this.style.html(this.options.columns.reduce(function (style, column) {
+            return style + '.' + column.class + '{ flex-grow: ' + column.width + ' }\n';
+        }, style));
     }
 
     // Fill the grid with the data
@@ -107,7 +107,7 @@
             for (let c = 0; c < this.options.columns.length; c++) {
                 let column = this.options.columns[c];
 
-                row.append($('<td>').text(dataRow[column.data] || "").addClass(column._class).attr('title', dataRow[column.data] || ""));
+                row.append($('<td>').text(dataRow[column.data] || "").addClass(column.class).attr('title', dataRow[column.data] || ""));
             }
 
             newBody.append(row);
@@ -115,6 +115,13 @@
 
         this.body.replaceWith(newBody);
         this.body = newBody;
+        this.adjustHeader();
+    }
+
+    // Fix the header to take into account the scrollbar in the body, if present
+    DataGridView.prototype.adjustHeader = function () {
+        this.header.css('padding-right', this.header.prop('clientWidth') - this.body.prop('clientWidth'));
+
     }
 
     // Create an element and merge attribute objects to attributes
@@ -128,6 +135,7 @@
     // Remove the entire datagridview; resets the base element to its former state
     DataGridView.prototype.remove = function () {
         this.element.removeClass('datagridview');
+        this.element.removeClass(this.elementClass);
         this.element.children().show();
         this.header.remove();
         this.body.remove();

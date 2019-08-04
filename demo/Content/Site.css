@@ -36,10 +36,13 @@
 
 .site-grid-container {
     height: 200px;
-    max-height: 200px;
-    overflow: auto;
 }
 
 .site-grid-container table, .site-grid-container th, .site-grid-container td {
     border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.site-datagrid-full {
+    height: 100%;
 }

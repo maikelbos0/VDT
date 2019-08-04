@@ -7,7 +7,7 @@
 </p>
 
 <div class="site-grid-container">
-    <table id="datagrid-1" class="datagrid">
+    <table id="datagrid-1" class="datagrid site-datagrid-full" data-fill-height="true">
         <tr>
             <th>Debtor number</th>
             <th>Debtor name</th>
@@ -36,7 +36,7 @@
 </p>
 
 <div class="site-grid-container">
-    <table id="datagrid-2" class="datagrid" data-fill-height="true">
+    <table id="datagrid-2" class="datagrid">
         <tr>
             <th>Debtor number</th>
             <th>Debtor name</th>
@@ -72,8 +72,8 @@
                 columns: [
                     { data: "DebtorNumber", header: "Debtor number", width: 15 },
                     { data: "DebtorName", header: "Debtor name", width: 20 },
-                    { data: "InvoiceNumber", header: "Invoice number", width: 12 },
-                    { data: "InvoiceDateString", header: "Invoice date", width: 12 },
+                    { data: "InvoiceNumber", header: "Invoice number", width: 15 },
+                    { data: "InvoiceDateString", header: "Invoice date", width: 15 },
                     { data: "DueDateString", header: "Due date", width: 15 },
                     { data: "Currency", width: 5 },
                     { data: "InvoiceAmountString", header: "Invoice amount", width: 10 },
@@ -86,7 +86,6 @@
                 url: "@Url.Action("GetInvoiceGridItems")",
                 success: function (data) {
                     $('#datagrid-1').datagridview(function () {
-                        debugger;
                         this.populate(data);
                     });
                 },
