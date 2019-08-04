@@ -55,11 +55,11 @@
         this.element.addClass('datagridview');
         this.element.addClass(this.elementClass);
         this.element.children().hide();
-
         this.headerRow = this.createElement('<tr>');
         this.header = this.createElement('<thead>', 'datagridview-header').append(this.headerRow);
         this.body = this.createElement('<tbody>', 'datagridview-body');
         this.footer = this.createElement('<tfoot>', 'datagridview-footer');
+        this.sortToggle = this.createElement('<div>', 'datagridview-sort-toggle');
         this.element.append(
             this.header,
             this.body,
@@ -75,10 +75,13 @@
             column.class = 'datagridview-column-' + Math.random().toString().replace('.', '');
             column.width = isNaN(column.width) || column.width < 0 ? 10 : parseInt(column.width);
 
-            base.headerRow.append($('<th>').text(column.header || column.data).addClass(column.class).attr('title', column.header || column.data));
+            base.headerRow.append($('<th>').text(column.header || column.data).addClass(column.class).attr('title', column.header || column.data).data('column', column.data));
         });
 
         this.setColumnWidth();
+
+        // Event handlers
+        this.headerRow.on('mouseup', 'th', this, eventHandlers.headerMouseup);
     }
 
     // Set the width of the columns
@@ -97,7 +100,7 @@
 
     // Fill the grid with the data
     // TODO: research performance; preliminary results are 50 cells per ms in Chrome, 5 in IE10
-    DataGridView.prototype.populate = function (data) {        
+    DataGridView.prototype.populate = function (requestParameters, data) {
         let newBody = this.createElement('<tbody>', 'datagridview-body');
 
         for (let r = 0; r < data.length; r++) {
@@ -116,12 +119,15 @@
         this.body.replaceWith(newBody);
         this.body = newBody;
         this.adjustHeader();
+
+        // Show the new sort order
+        this.requestParameters = requestParameters || new DataGridViewRequestParameters(null, false);
+        this.displaySortOrder();
     }
 
     // Fix the header to take into account the scrollbar in the body, if present
     DataGridView.prototype.adjustHeader = function () {
         this.header.css('padding-right', this.header.prop('clientWidth') - this.body.prop('clientWidth'));
-
     }
 
     // Create an element and merge attribute objects to attributes
@@ -143,8 +149,57 @@
         this.style.remove();
     }
 
+    // Get request parameters currently in use; these can be edited or passed back via populate
+    DataGridView.prototype.getRequestParameters() {
+        return this.requestParameters;
+    }
+
+    // Set sorting icon after sorting action
+    DataGridView.prototype.displaySortOrder = function () {
+        let base = this;
+        let header = this.headerRow.find('th').filter(function () { return $(this).data('column') === base.requestParameters.sortColumn });
+
+        if (header.length > 0) {
+            if (this.requestParameters.sortDescending) {
+                this.sortToggle.removeClass('datagridview-sort-toggle-ascending').addClass('datagridview-sort-toggle-descending');
+            }
+            else {
+                this.sortToggle.removeClass('datagridview-sort-toggle-descending').addClass('datagridview-sort-toggle-ascending');
+            }
+
+            header.append(this.sortToggle);
+            this.sortToggle.show();
+        }
+        else {
+            this.sortToggle.hide();
+        }
+    }
+
     // Event handlers should not be accessible from the object itself
     let eventHandlers = {
+        headerMouseup: function (e) {
+            if (e.which !== 1) {
+                return;
+            }
+
+            let column = $(this).data('column');
+
+            if (e.data.requestParameters.sortColumn === column) {
+                e.data.requestParameters.sortDescending = !e.data.requestParameters.sortDescending;
+            }
+            else {
+                e.data.requestParameters.sortColumn = column;
+                e.data.requestParameters.sortDescending = false;
+            }
+
+            e.data.element.trigger('datagridview.sorted', e.data.requestParameters);
+        }
     }
 
 }(jQuery));
+
+// Datagridview request parameters
+function DataGridViewRequestParameters(sortColumn, sortDescending) {
+    this.sortColumn = sortColumn;
+    this.sortDescending = !!sortDescending;
+}

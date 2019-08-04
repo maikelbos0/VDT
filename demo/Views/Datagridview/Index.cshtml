@@ -81,17 +81,26 @@
                 ]
             });
 
-            $.ajax({
-                method: "POST",
-                url: "@Url.Action("GetInvoiceGridItems")",
-                success: function (data) {
-                    $('#datagrid-1').datagridview(function () {
-                        this.populate(data);
-                    });
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log(errorThrown);
-                }
+            function populate(requestParameters) {
+                $.ajax({
+                    method: "POST",
+                    url: "@Url.Action("GetInvoiceGridItems")",
+                    data: requestParameters,
+                    success: function (data) {
+                        $('#datagrid-1').datagridview(function () {
+                            this.populate(requestParameters, data);
+                        });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(errorThrown);
+                    }
+                });
+            }
+
+            populate();
+
+            $('#datagrid-1').on('datagridview.sorted', function (event, requestParameters) {
+                populate(requestParameters);
             });
 
             $('#datagrid-2').datagridview({

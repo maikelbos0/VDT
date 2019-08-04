@@ -14,8 +14,23 @@ namespace vdt.demo.Controllers {
 
         [HttpPost]
         [Route("GetInvoiceGridItems")]
-        public JsonResult GetInvoiceGridItems() {
-            return Json(GenerateInvoiceGridItems().Take(25));
+        public JsonResult GetInvoiceGridItems(RequestParameters requestParameters) {
+            var items = GenerateInvoiceGridItems().Take(25);
+            
+            if (requestParameters != null && requestParameters.sortColumn != null) {
+                var property = typeof(InvoiceGridItemViewModel).GetProperty(requestParameters.sortColumn);
+
+                if (property != null) {
+                    if (requestParameters.sortDescending) {
+                        items = items.OrderByDescending(i => property.GetValue(i));
+                    }
+                    else {
+                        items = items.OrderBy(i => property.GetValue(i));
+                    }
+                }
+            }
+
+            return Json(items);
         }
 
         public IEnumerable<InvoiceGridItemViewModel> GenerateInvoiceGridItems() {
