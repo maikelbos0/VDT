@@ -188,7 +188,7 @@
             field.val(base.options.getItemValue($(this)));
 
             if (base.options.isItemSelected($(this)) && (base.isMultiselect || !isItemSelected)) {
-                field.attr('checked', 'true');
+                field.prop('checked', 'true');
                 isItemSelected = true;
             }
         });

@@ -66,8 +66,8 @@ describe('datagridview columns', function () {
 
         var headers = grid.find('th');
 
-        expect(window.getComputedStyle(headers[0]).getPropertyValue('width')).toEqual('25%');
-        expect(window.getComputedStyle(headers[1]).getPropertyValue('width')).toEqual('10%');
+        expect(window.getComputedStyle(headers[0]).getPropertyValue('flex-grow')).toEqual('25');
+        expect(window.getComputedStyle(headers[1]).getPropertyValue('flex-grow')).toEqual('10');
     });
 
     it('width is applied to data', function () {
@@ -79,15 +79,15 @@ describe('datagridview columns', function () {
                 { data: 'test2' }
             ]
         }, function () {
-            this.populate([
+            this.populate(null, [
                 { test1: 'test' },
                 { test2: 'test' }
             ]);
         });
 
-        var headers = grid.find('td');
+        var cells = grid.find('td');
 
-        expect(window.getComputedStyle(headers[0]).getPropertyValue('width')).toEqual('25%');
-        expect(window.getComputedStyle(headers[1]).getPropertyValue('width')).toEqual('10%');
+        expect(window.getComputedStyle(cells[0]).getPropertyValue('flex-grow')).toEqual('25');
+        expect(window.getComputedStyle(cells[1]).getPropertyValue('flex-grow')).toEqual('10');
     });
 });

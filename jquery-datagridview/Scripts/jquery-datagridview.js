@@ -150,7 +150,7 @@
     }
 
     // Get request parameters currently in use; these can be edited or passed back via populate
-    DataGridView.prototype.getRequestParameters() {
+    DataGridView.prototype.getRequestParameters = function() {
         return this.requestParameters;
     }
 

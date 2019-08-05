@@ -116,7 +116,7 @@ describe('a basic datagridview', function () {
                 { data: 'test' }
             ]
         }, function () {
-            this.populate([
+            this.populate(null, [
                 { test: 'Test 1' },
                 { test: 'Test 2' },
             ]);
