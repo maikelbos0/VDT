@@ -65,9 +65,18 @@ describe('datagridview columns', function () {
         });
 
         var headers = grid.find('th');
+        var styles = $('style').text().split('}').reduce(function (obj, declaration) {
+            declaration = declaration.split("{");
 
-        expect(window.getComputedStyle(headers[0]).getPropertyValue('flex-grow')).toEqual('25');
-        expect(window.getComputedStyle(headers[1]).getPropertyValue('flex-grow')).toEqual('10');
+            if (declaration.length == 2) {
+                obj[declaration[0].trim().substring(1)] = declaration[1].trim();
+            }
+
+            return obj;
+        }, {});
+
+        expect(styles[$(headers[0]).attr('class')]).toEqual('flex-grow: 25');
+        expect(styles[$(headers[1]).attr('class')]).toEqual('flex-grow: 10');
     });
 
     it('width is applied to data', function () {
@@ -86,8 +95,17 @@ describe('datagridview columns', function () {
         });
 
         var cells = grid.find('td');
+        var styles = $('style').text().split('}').reduce(function (obj, declaration) {
+            declaration = declaration.split("{");
 
-        expect(window.getComputedStyle(cells[0]).getPropertyValue('flex-grow')).toEqual('25');
-        expect(window.getComputedStyle(cells[1]).getPropertyValue('flex-grow')).toEqual('10');
+            if (declaration.length == 2) {
+                obj[declaration[0].trim().substring(1)] = declaration[1].trim();
+            }
+
+            return obj;
+        }, {});
+
+        expect(styles[$(cells[0]).attr('class')]).toEqual('flex-grow: 25');
+        expect(styles[$(cells[1]).attr('class')]).toEqual('flex-grow: 10');
     });
 });
