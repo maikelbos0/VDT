@@ -75,7 +75,11 @@
             column.class = 'datagridview-column-' + Math.random().toString().replace('.', '');
             column.width = isNaN(column.width) || column.width < 0 ? 10 : parseInt(column.width);
 
-            base.headerRow.append($('<th>').text(column.header || column.data).addClass(column.class).attr('title', column.header || column.data).data('column', column.data));
+            base.headerRow.append($('<th>').text(column.header || column.data)
+                .addClass(column.class)
+                .attr('title', column.header || column.data)
+                .data('column', column.data)
+                .data('sort-column', column.sortData || column.data));
         });
 
         this.setColumnWidth();
@@ -157,7 +161,7 @@
     // Set sorting icon after sorting action
     DataGridView.prototype.displaySortOrder = function () {
         let base = this;
-        let header = this.headerRow.find('th').filter(function () { return $(this).data('column') === base.requestParameters.sortColumn });
+        let header = this.headerRow.find('th').filter(function () { return $(this).data('sort-column') === base.requestParameters.sortColumn });
 
         if (header.length > 0) {
             if (this.requestParameters.sortDescending) {
@@ -182,13 +186,13 @@
                 return;
             }
 
-            let column = $(this).data('column');
+            let sortColumn = $(this).data('sort-column');
 
-            if (e.data.requestParameters.sortColumn === column) {
+            if (e.data.requestParameters.sortColumn === sortColumn) {
                 e.data.requestParameters.sortDescending = !e.data.requestParameters.sortDescending;
             }
             else {
-                e.data.requestParameters.sortColumn = column;
+                e.data.requestParameters.sortColumn = sortColumn;
                 e.data.requestParameters.sortDescending = false;
             }
 

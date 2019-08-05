@@ -35,31 +35,6 @@
     Ut viverra nunc ac justo efficitur dictum. Proin ultricies laoreet nisl, vitae volutpat leo euismod sed. Mauris euismod ex ut dolor pharetra suscipit nec eget sapien. Quisque gravida sagittis pulvinar. Ut et porta sem, eget congue odio. Cras arcu velit, ultrices a placerat vel, feugiat sed diam. Pellentesque venenatis bibendum mi, at aliquet justo iaculis quis. Integer magna arcu, viverra ut semper non, placerat sed quam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque scelerisque eget lorem eu tempus.
 </p>
 
-<div class="site-grid-container">
-    <table id="datagrid-2" class="datagrid">
-        <tr>
-            <th>Debtor number</th>
-            <th>Debtor name</th>
-            <th>Invoice number</th>
-            <th>Invoice date</th>
-            <th>Due date</th>
-            <th>Currency</th>
-            <th>Invoice amount</th>
-            <th>Open amount</th>
-        </tr>
-        <tr>
-            <td>A1234</td>
-            <td>Test</td>
-            <td>004444</td>
-            <td>01-01-2019</td>
-            <td>31-01-2019</td>
-            <td>EUR</td>
-            <td>1.456,78</td>
-            <td>1.456,78</td>
-        </tr>
-    </table>
-</div>
-
 <p>
     Nullam dignissim lectus in ante porta tempor. Etiam congue felis vitae risus condimentum vulputate eget eu dui. Praesent id convallis libero, vitae fermentum metus. Aliquam ullamcorper neque semper aliquet dignissim. Sed eget sem condimentum, bibendum nulla ut, rutrum ipsum. Vestibulum in justo sit amet ex eleifend fringilla. Suspendisse ut ultrices ante. Sed molestie nisi urna, eget gravida ex viverra nec. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed at lectus sed ex commodo porta.
 </p>
@@ -73,11 +48,11 @@
                     { data: "DebtorNumber", header: "Debtor number", width: 15 },
                     { data: "DebtorName", header: "Debtor name", width: 20 },
                     { data: "InvoiceNumber", header: "Invoice number", width: 15 },
-                    { data: "InvoiceDateString", header: "Invoice date", width: 15 },
-                    { data: "DueDateString", header: "Due date", width: 15 },
+                    { data: "InvoiceDateString", sortData: "InvoiceDate", header: "Invoice date", width: 15 },
+                    { data: "DueDateString", sortData: "DueDate", header: "Due date", width: 15 },
                     { data: "Currency", width: 5 },
-                    { data: "InvoiceAmountString", header: "Invoice amount", width: 10 },
-                    { data: "InvoiceOpenAmountString", header: "Open amount", width: 10 }
+                    { data: "InvoiceAmountString", sortData: "InvoiceAmount", header: "Invoice amount", width: 10 },
+                    { data: "InvoiceOpenAmountString", sortData: "InvoiceOpenAmount", header: "Open amount", width: 10 }
                 ]
             });
 
@@ -103,18 +78,6 @@
                 populate(requestParameters);
             });
 
-            $('#datagrid-2').datagridview({
-                columns: [
-                    { data: "DebtorNumber", header: "Debtor number" },
-                    { data: "DebtorName", header: "Debtor name" },
-                    { data: "InvoiceNumber", header: "Invoice number" },
-                    { data: "InvoiceDate", header: "Invoice date" },
-                    { data: "DueDate", header: "Due date" },
-                    { data: "Currency" },
-                    { data: "InvoiceAmount", header: "Invoice amount" },
-                    { data: "InvoiceOpenAmount", header: "Open amount" }
-                ]
-            });
             /*
             console.time('repopulate x1000');
 

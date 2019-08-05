@@ -15,7 +15,7 @@ namespace vdt.demo.Controllers {
         [HttpPost]
         [Route("GetInvoiceGridItems")]
         public JsonResult GetInvoiceGridItems(RequestParameters requestParameters) {
-            var items = GenerateInvoiceGridItems().Take(25);
+            var items = GenerateInvoiceGridItems().Take(50);
             
             if (requestParameters != null && requestParameters.sortColumn != null) {
                 var property = typeof(InvoiceGridItemViewModel).GetProperty(requestParameters.sortColumn);
@@ -45,8 +45,8 @@ namespace vdt.demo.Controllers {
                     InvoiceDate = new System.DateTime(2019, 1, 1).AddDays(i),
                     DueDate = new System.DateTime(2019, 1, 31).AddDays(i),
                     Currency = currencies[i % currencies.Length],
-                    InvoiceAmount = 123.45m + (3 - i % 5) * 23 + (i % 223 * 1.03m),
-                    InvoiceOpenAmount = 123.45m + (5 - i % 7) * 23 + (i % 223 * 1.13m)
+                    InvoiceAmount = 123.45m + (3 - i % 5) * 181 + (i % 223 * 1.03m),
+                    InvoiceOpenAmount = 123.45m + (5 - i % 7) * 181 + (i % 223 * 1.13m)
                 };
 
                 i++;
