@@ -2,10 +2,10 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>jQuery-dropdownlist</id>
-    <version>1.2.3</version>
+    <version>1.2.4</version>
     <title>jQuery-dropdownlist</title>
     <description>A jQuery plugin that makes it easy to transform any html-element with children into a dropdownlist.</description>
-    <releaseNotes></releaseNotes>
+    <releaseNotes>- Fixed a bug where the initially selected fields didn't get selected in IE and Edge</releaseNotes>
     <authors>Maikel Bos</authors>
     <license type="expression">MIT</license>
     <copyright>Copyright © 2019 Maikel Bos</copyright>
