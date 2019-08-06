@@ -56,14 +56,14 @@
                 ]
             });
 
-            function populate(requestParameters) {
+            function populate(metaData) {
                 $.ajax({
                     method: "POST",
                     url: "@Url.Action("GetInvoiceGridItems")",
-                    data: requestParameters,
+                    data: metaData,
                     success: function (data) {
                         $('#datagrid-1').datagridview(function () {
-                            this.populate(requestParameters, data);
+                            this.populate(metaData, data);
                         });
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
@@ -74,25 +74,31 @@
 
             populate();
 
-            $('#datagrid-1').on('datagridview.sorted', function (event, requestParameters) {
-                populate(requestParameters);
+            $('#datagrid-1').on('datagridview.sorted', function (event, metaData) {
+                populate(metaData);
             });
 
-            /*
-            console.time('repopulate x1000');
+            @*$('#datagrid-1').datagridview(function () {
+                $.ajax({
+                    method: "POST",
+                    url: "@Url.Action("GetInvoiceGridItems")",
+                    data: this.getMetaData(),
+                    success: function (data) {
+                        console.time('repopulate x100');
 
-            for (var i = 0; i < 1000; i++) {
-                $('#datagrid-1').datagridview(function () {
-                    this.populate([
-                        { DebtorNumber: "A234", DebtorName: "This is test", InvoiceNumber: "000144115", InvoiceDate: "2019-01-01", DueDate: "2019-01-31", Currency: "EUR", InvoiceAmount: "1.334,50", InvoiceOpenAmount: "1.000,00" },
-                        { DebtorNumber: "A234", DebtorName: "This is test", InvoiceNumber: "000144116", InvoiceDate: "2019-01-01", DueDate: "2019-01-31", Currency: "EUR", InvoiceAmount: "1.334,50", InvoiceOpenAmount: "1.000,00" },
-                        { DebtorNumber: "A234", DebtorName: "This is test", InvoiceNumber: "000144117", InvoiceDate: "2019-01-01", DueDate: "2019-01-31", Currency: "EUR", InvoiceAmount: "1.334,50", InvoiceOpenAmount: "1.000,00" }
-                    ]);
+                        for (var i = 0; i < 100; i++) {
+                            $('#datagrid-1').datagridview(function () {
+                                this.populate(this.getMetaData(), data);
+                            });
+                        }
+
+                        console.timeEnd('repopulate x100');
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(errorThrown);
+                    }
                 });
-            }
-
-            console.timeEnd('repopulate x1000');
-            */
+            });*@
         });
     </script>
 }

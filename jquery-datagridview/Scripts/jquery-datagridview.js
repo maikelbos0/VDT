@@ -42,6 +42,11 @@
 
     // Set defaults for extension
     $.fn.datagridview.defaults = {
+        // Get initial meta data
+        // Expects a DataGridViewMetaData object
+        getMetaData: function (element) {
+            return new DataGridViewMetaData(null, false, 0, 25, 0);
+        }
     }
 
     // Datagridview implementation
@@ -51,6 +56,7 @@
         this.element = element;
         this.options = options;
         this.data = [];
+        this.metaData = this.options.getMetaData(this.element);
         this.elementClass = 'datagridview-' + Math.random().toString().replace('.', '');
         this.element.addClass('datagridview');
         this.element.addClass(this.elementClass);
@@ -73,7 +79,7 @@
         this.options.columns.forEach(function (column) {
             // Define class
             column.class = 'datagridview-column-' + Math.random().toString().replace('.', '');
-            column.width = isNaN(column.width) || column.width < 0 ? 10 : parseInt(column.width);
+            column.width = isNaN(column.width) || column.width <= 0 ? 10 : parseInt(column.width);
 
             base.headerRow.append($('<th>').text(column.header || column.data)
                 .addClass(column.class)
@@ -103,8 +109,8 @@
     }
 
     // Fill the grid with the data
-    // TODO: research performance; preliminary results are 50 cells per ms in Chrome, 5 in IE10
-    DataGridView.prototype.populate = function (requestParameters, data) {
+    // TODO: research performance; preliminary results are 20 cells per ms in Chrome
+    DataGridView.prototype.populate = function (metaData, data) {
         let newBody = this.createElement('<tbody>', 'datagridview-body');
 
         for (let r = 0; r < data.length; r++) {
@@ -122,10 +128,11 @@
 
         this.body.replaceWith(newBody);
         this.body = newBody;
+        this.data = data;
         this.adjustHeader();
 
         // Show the new sort order
-        this.requestParameters = requestParameters || new DataGridViewRequestParameters(null, false);
+        this.metaData = metaData || new DataGridViewMetaData(this.metaData.sortColumn, this.metaData.sortDescending, this.data.length, this.data.length, 0);
         this.displaySortOrder();
     }
 
@@ -153,18 +160,18 @@
         this.style.remove();
     }
 
-    // Get request parameters currently in use; these can be edited or passed back via populate
-    DataGridView.prototype.getRequestParameters = function() {
-        return this.requestParameters;
+    // Get meta currently in use; these can be edited and passed back via populate
+    DataGridView.prototype.getMetaData = function() {
+        return this.metaData.clone();
     }
 
     // Set sorting icon after sorting action
     DataGridView.prototype.displaySortOrder = function () {
         let base = this;
-        let header = this.headerRow.find('th').filter(function () { return $(this).data('sort-column') === base.requestParameters.sortColumn });
+        let header = this.headerRow.find('th').filter(function () { return $(this).data('sort-column') === base.metaData.sortColumn });
 
         if (header.length > 0) {
-            if (this.requestParameters.sortDescending) {
+            if (this.metaData.sortDescending) {
                 this.sortToggle.removeClass('datagridview-sort-toggle-ascending').addClass('datagridview-sort-toggle-descending');
             }
             else {
@@ -188,22 +195,31 @@
 
             let sortColumn = $(this).data('sort-column');
 
-            if (e.data.requestParameters.sortColumn === sortColumn) {
-                e.data.requestParameters.sortDescending = !e.data.requestParameters.sortDescending;
+            if (e.data.metaData.sortColumn === sortColumn) {
+                e.data.metaData.sortDescending = !e.data.metaData.sortDescending;
             }
             else {
-                e.data.requestParameters.sortColumn = sortColumn;
-                e.data.requestParameters.sortDescending = false;
+                e.data.metaData.sortColumn = sortColumn;
+                e.data.metaData.sortDescending = false;
             }
 
-            e.data.element.trigger('datagridview.sorted', e.data.requestParameters);
+            e.data.element.trigger('datagridview.sorted', e.data.getMetaData());
         }
     }
 
 }(jQuery));
 
-// Datagridview request parameters
-function DataGridViewRequestParameters(sortColumn, sortDescending) {
+// Datagridview meta data
+function DataGridViewMetaData(sortColumn, sortDescending, totalRows, rowsPerPage, page) {
     this.sortColumn = sortColumn;
     this.sortDescending = !!sortDescending;
+    this.totalRows = isNaN(totalRows) || totalRows <= 0 ? 0 : parseInt(totalRows);
+    this.rowsPerPage = isNaN(rowsPerPage) || rowsPerPage <= 0 ? 25 : parseInt(rowsPerPage);
+    this.page = isNaN(page) || page <= 0 ? 0 : parseInt(page);
+    this.totalPages = Math.ceil(totalRows / rowsPerPage);
+}
+
+// When accessing the meta data normally we get a clone
+DataGridViewMetaData.prototype.clone = function () {
+    return new DataGridViewMetaData(this.sortColumn, this.sortDescending, this.totalRows, this.rowsPerPage, this.page);
 }

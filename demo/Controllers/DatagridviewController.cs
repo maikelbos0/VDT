@@ -14,14 +14,14 @@ namespace vdt.demo.Controllers {
 
         [HttpPost]
         [Route("GetInvoiceGridItems")]
-        public JsonResult GetInvoiceGridItems(RequestParameters requestParameters) {
+        public JsonResult GetInvoiceGridItems(DataGridViewMetaData metaData) {
             var items = GenerateInvoiceGridItems().Take(50);
             
-            if (requestParameters != null && requestParameters.sortColumn != null) {
-                var property = typeof(InvoiceGridItemViewModel).GetProperty(requestParameters.sortColumn);
+            if (metaData != null && metaData.sortColumn != null) {
+                var property = typeof(InvoiceGridItemViewModel).GetProperty(metaData.sortColumn);
 
                 if (property != null) {
-                    if (requestParameters.sortDescending) {
+                    if (metaData.sortDescending) {
                         items = items.OrderByDescending(i => property.GetValue(i));
                     }
                     else {
