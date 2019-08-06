@@ -1,12 +1,11 @@
 ﻿.datagridview {
-    min-width: 100%;
-    max-width: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     overflow-x: auto;
 }
 
-.datagridview-header, .datagridview-footer {
+.datagridview-header {
     flex-grow: 0;
 }
 
@@ -21,11 +20,19 @@
     flex-wrap: nowrap;
 }
 
-.datagridview th, .datagridview td {
+.datagridview-header th, .datagridview-body td {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     flex-basis: 0;
+}
+
+.datagridview-footer tr {
+    justify-content: space-between;
+}
+
+.datagridview-footer td.datagridview-footer-element {
+    flex-basis: auto;
 }
 
 .datagridview th {
@@ -53,14 +60,14 @@
 }
 
 /* temp */
-.datagridview-header * {
+.datagridview-header {
     background: #ffffcc;
 }
 
-.datagridview-body * {
+.datagridview-body {
     background: #ffccff;
 }
 
-.datagridview-footer * {
+.datagridview-footer {
     background: #ccffff;
 }

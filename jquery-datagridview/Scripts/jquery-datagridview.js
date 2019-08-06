@@ -46,6 +46,27 @@
         // Expects a DataGridViewMetaData object
         getMetaData: function (element) {
             return new DataGridViewMetaData(null, false, 0, 25, 0);
+        },
+        // Footer functions, in order, to use for the footer
+        getFooterPlugins: function (element) {
+            return [
+                $.fn.datagridview.footerPlugins.displayBasic,
+                $.fn.datagridview.footerPlugins.displayFull,
+                $.fn.datagridview.footerPlugins.displayBasic
+            ];
+        }
+    }
+
+    // Pagination footer plugins
+    $.fn.datagridview.footerPlugins = {
+        displayBasic: function (footerElement, metaData, element) {
+            $(footerElement).append($('<div>').text("Page " + metaData.page + " of " + metaData.totalPages));
+        },
+        displayFull: function (footerElement, metaData, element) {
+            let rowStart = metaData.page * metaData.rowsPerPage + 1;
+            let rowEnd = (metaData.page + 1) * metaData.rowsPerPage;
+
+            $(footerElement).append($('<div>').text("Page " + metaData.page + " of " + metaData.totalPages + ", rows " + rowStart + " to " + rowEnd + " of " + metaData.totalRows));
         }
     }
 
@@ -90,6 +111,10 @@
 
         this.setColumnWidth();
 
+        // Create footers
+        this.footerPlugins = this.options.getFooterPlugins(this.element);
+        this.setFooters();
+
         // Event handlers
         this.headerRow.on('mouseup', 'th', this, eventHandlers.headerMouseup);
     }
@@ -100,12 +125,31 @@
         let tableWidth = this.options.columns.reduce(function (w, c) { return w + c.width; }, 0);
 
         if (tableWidth > 100) {
-            style = '.' + this.elementClass + ' tbody, .' + this.elementClass + ' thead { width: ' + tableWidth + '%}\n';
+            style = '.' + this.elementClass + ' thead, .' + this.elementClass + ' tbody, .' + this.elementClass + ' tfoot { width: ' + tableWidth + '%}\n';
         }
 
         this.style.html(this.options.columns.reduce(function (style, column) {
             return style + '.' + column.class + '{ flex-grow: ' + column.width + ' }\n';
         }, style));
+    }
+
+    // Fill the footers
+    DataGridView.prototype.setFooters = function () {
+        let base = this;
+        let footerRow = this.createElement('<tr>');
+
+        this.footer.children().remove();
+
+        if (this.footerPlugins.length !== 0) {
+            $.each(this.footerPlugins, function () {
+                let footerElement = base.createElement('<td>', 'datagridview-footer-element');
+
+                footerRow.append(footerElement);
+                this(footerElement, base.getMetaData(), base.element);
+            });
+        }
+
+        this.footer.append(footerRow);
     }
 
     // Fill the grid with the data
@@ -139,6 +183,8 @@
     // Fix the header to take into account the scrollbar in the body, if present
     DataGridView.prototype.adjustHeader = function () {
         this.header.css('padding-right', this.header.prop('clientWidth') - this.body.prop('clientWidth'));
+        // Temp
+        this.footer.css('padding-right', this.footer.prop('clientWidth') - this.body.prop('clientWidth'));
     }
 
     // Create an element and merge attribute objects to attributes
