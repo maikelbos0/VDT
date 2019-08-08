@@ -82,6 +82,16 @@
                 .click(function () { datagridview.initiatePaging(metaData.page - 1, metaData.rowsPerPage); })
                 .prop('disabled', metaData.page <= 0);
 
+            $(footerElement).append(first, prev);
+
+            for (let page = Math.max(0, metaData.page - 4); page < Math.min(metaData.totalPages, metaData.page + 5); page++) {
+                $(footerElement).append($('<button>')
+                    .addClass('datagridview-paging-page')
+                    .text(page + 1)
+                    .click(function () { datagridview.initiatePaging(page, metaData.rowsPerPage); })
+                    .prop('disabled', metaData.page === page));
+            }
+
             let next = $('<button>')
                 .addClass('datagridview-paging-prev')
                 .text('>')
@@ -94,12 +104,7 @@
                 .click(function () { datagridview.initiatePaging(metaData.totalPages - 1, metaData.rowsPerPage); })
                 .prop('disabled', metaData.page >= metaData.totalPages - 1);
 
-            $(footerElement).append(
-                first,
-                prev,
-                next,
-                last
-            );
+            $(footerElement).append(next, last);
         }
     }
 
