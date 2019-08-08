@@ -31,7 +31,7 @@ describe('a basic datagridview', function () {
         grid.datagridview({
             columns: []
         });
-        expect(grid.find('thead.datagridview-header').length).toEqual(1);
+        expect(grid.find('.datagridview-header').length).toEqual(1);
     });
 
     it('will add a body', function () {
@@ -40,7 +40,7 @@ describe('a basic datagridview', function () {
         grid.datagridview({
             columns: []
         });
-        expect(grid.find('tbody.datagridview-body').length).toEqual(1);
+        expect(grid.find('.datagridview-body').length).toEqual(1);
     });
 
     it('will add a footer', function () {
@@ -49,7 +49,7 @@ describe('a basic datagridview', function () {
         grid.datagridview({
             columns: []
         });
-        expect(grid.find('tfoot.datagridview-footer').length).toEqual(1);
+        expect(grid.find('.datagridview-footer').length).toEqual(1);
     });
 
     it('needs required option "columns"', function () {
@@ -94,7 +94,7 @@ describe('a basic datagridview', function () {
                 { data: 'test', header: 'Test column' }
             ]
         });
-        expect(grid.find('th').text()).toEqual('Test column');
+        expect(grid.find('.datagridview-header-cell').text()).toEqual('Test column');
     });
 
     it('will add a header with the data source as fallback', function () {
@@ -105,7 +105,7 @@ describe('a basic datagridview', function () {
                 { data: 'test' }
             ]
         });
-        expect(grid.find('th').text()).toEqual('test');
+        expect(grid.find('.datagridview-header-cell').text()).toEqual('test');
     });
 
     it('will add data when populating', function () {
@@ -122,7 +122,7 @@ describe('a basic datagridview', function () {
             ]);
         });
 
-        expect(grid.find('tbody > tr:first-child > td').text()).toEqual('Test 1');
-        expect(grid.find('tbody > tr:nth-child(2) > td').text()).toEqual('Test 2');
+        expect(grid.find('.datagridview-body > .datagridview-row:first-child > div').text()).toEqual('Test 1');
+        expect(grid.find('.datagridview-body > .datagridview-row:nth-child(2) > div').text()).toEqual('Test 2');
     });
 });

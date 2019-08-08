@@ -206,7 +206,7 @@
         }
         // Default
         else {
-            this.metaData = new DataGridViewMetaData(metaData.sortColumn, metaData.sortDescending, this.data.length, this.data.length, 0);
+            this.metaData = new DataGridViewMetaData(this.metaData.sortColumn, this.metaData.sortDescending, this.data.length, this.data.length, 0);
         }
 
         this.displaySortOrder();

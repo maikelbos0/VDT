@@ -75,6 +75,8 @@
     <Content Include="element.html" />
     <Content Include="interaction.html" />
     <Content Include="interaction.js" />
+    <Content Include="sorting.html" />
+    <Content Include="sorting.js" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

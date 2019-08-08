@@ -64,7 +64,7 @@ describe('datagridview columns', function () {
             ]
         });
 
-        var headers = grid.find('th');
+        var headers = grid.find('.datagridview-header-cell');
         var styles = $('style').text().split('}').reduce(function (obj, declaration) {
             declaration = declaration.split("{");
 
@@ -75,8 +75,8 @@ describe('datagridview columns', function () {
             return obj;
         }, {});
 
-        expect(styles[$(headers[0]).attr('class')]).toEqual('flex-grow: 25');
-        expect(styles[$(headers[1]).attr('class')]).toEqual('flex-grow: 10');
+        expect(styles[$(headers[0]).attr('class').split(' ')[0]]).toEqual('flex-grow: 25');
+        expect(styles[$(headers[1]).attr('class').split(' ')[0]]).toEqual('flex-grow: 10');
     });
 
     it('width is applied to data', function () {
@@ -94,7 +94,7 @@ describe('datagridview columns', function () {
             ]);
         });
 
-        var cells = grid.find('td');
+        var cells = grid.find('.datagridview-row > div');
         var styles = $('style').text().split('}').reduce(function (obj, declaration) {
             declaration = declaration.split("{");
 
