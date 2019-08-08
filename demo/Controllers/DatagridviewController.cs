@@ -15,9 +15,21 @@ namespace vdt.demo.Controllers {
         [HttpPost]
         [Route("GetInvoiceGridItems")]
         public JsonResult GetInvoiceGridItems(DataGridViewMetaData metaData) {
-            var items = GenerateInvoiceGridItems().Take(50);
+            var totalItems = 1254; // Random total count
+            var items = GenerateInvoiceGridItems().Take(totalItems);
+
+            if (metaData == null || metaData.rowsPerPage == 0) {
+                metaData = new DataGridViewMetaData() {
+                    sortColumn = null,
+                    sortDescending = false,
+                    totalRows = totalItems,
+                    rowsPerPage = 25,
+                    page = 0
+                };
+            }
             
-            if (metaData != null && metaData.sortColumn != null) {
+            // Sorting
+            if (metaData.sortColumn != null) {
                 var property = typeof(InvoiceGridItemViewModel).GetProperty(metaData.sortColumn);
 
                 if (property != null) {
@@ -30,7 +42,13 @@ namespace vdt.demo.Controllers {
                 }
             }
 
-            return Json(items);
+            // Paging
+            items = items.Skip(metaData.page * metaData.rowsPerPage).Take(metaData.rowsPerPage);
+
+            return Json(new {
+                metaData = metaData,
+                data = items
+            });
         }
 
         public IEnumerable<InvoiceGridItemViewModel> GenerateInvoiceGridItems() {

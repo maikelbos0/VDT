@@ -42,16 +42,9 @@
                     method: "POST",
                     url: "@Url.Action("GetInvoiceGridItems")",
                     data: metaData,
-                    success: function (data) {
-                        if (!metaData) {
-                            metaData = new DataGridViewMetaData(null, false, data.length, data.length, 0);
-                        }
-                        else {
-                            metaData = new DataGridViewMetaData(metaData.sortColumn, metaData.sortDescending, data.length, data.length, 0);
-                        }
-
+                    success: function (d) {
                         $('#datagrid-1').datagridview(function () {
-                            this.populate(metaData, data);
+                            this.populate(d.metaData, d.data);
                         });
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
@@ -62,7 +55,7 @@
 
             populate();
 
-            $('#datagrid-1').on('datagridview.sorted', function (event, metaData) {
+            $('#datagrid-1').on('datagridview.sorted datagridview.paged', function (event, metaData) {
                 populate(metaData);
             });
 
@@ -70,14 +63,14 @@
                 $.ajax({
                     method: "POST",
                     url: "@Url.Action("GetInvoiceGridItems")",
-                    data: this.getMetaData(),
-                    success: function (data) {
+                    data: null,
+                    success: function (d) {
                         console.time('repopulate x100');
 
                         for (var i = 0; i < 100; i++) {
-                            $('#datagrid-1').datagridview(function () {
-                                this.populate(this.getMetaData(), data);
-                            });
+                        $('#datagrid-1').datagridview(function () {
+                            this.populate(d.metaData, d.data);
+                        });
                         }
 
                         console.timeEnd('repopulate x100');

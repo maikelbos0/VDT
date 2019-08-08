@@ -70,10 +70,29 @@
             $(footerElement).append($('<div>').text("Page " + (metaData.page + 1) + " of " + metaData.totalPages + ", rows " + rowStart + " to " + rowEnd + " of " + metaData.totalRows));
         },
         prevNext: function (footerElement, metaData, datagridview) {
-            let first = $('<button>').addClass('datagridview-paging-first').text('|<').click(datagridview.initiatePaging(0, metaData.rowsPerPage)).prop('disabled', metaData.page <= 0);
-            let prev = $('<button>').addClass('datagridview-paging-prev').text('<').click(datagridview.initiatePaging(metaData.page - 1, metaData.rowsPerPage)).prop('disabled', metaData.page <= 0);
-            let next = $('<button>').addClass('datagridview-paging-prev').text('>').click(datagridview.initiatePaging(metaData.page + 1, metaData.rowsPerPage)).prop('disabled', metaData.page >= metaData.totalPages - 1);
-            let last = $('<button>').addClass('datagridview-paging-last').text('>|').click(datagridview.initiatePaging(metaData.totalPages - 1, metaData.rowsPerPage)).prop('disabled', metaData.page >= metaData.totalPages - 1);
+            let first = $('<button>')
+                .addClass('datagridview-paging-first')
+                .text('|<')
+                .click(function () { datagridview.initiatePaging(0, metaData.rowsPerPage); })
+                .prop('disabled', metaData.page <= 0);
+
+            let prev = $('<button>')
+                .addClass('datagridview-paging-prev')
+                .text('<')
+                .click(function () { datagridview.initiatePaging(metaData.page - 1, metaData.rowsPerPage); })
+                .prop('disabled', metaData.page <= 0);
+
+            let next = $('<button>')
+                .addClass('datagridview-paging-prev')
+                .text('>')
+                .click(function () { datagridview.initiatePaging(metaData.page + 1, metaData.rowsPerPage); })
+                .prop('disabled', metaData.page >= metaData.totalPages - 1);
+
+            let last = $('<button>')
+                .addClass('datagridview-paging-last')
+                .text('>|')
+                .click(function () { datagridview.initiatePaging(metaData.totalPages - 1, metaData.rowsPerPage); })
+                .prop('disabled', metaData.page >= metaData.totalPages - 1);
 
             $(footerElement).append(
                 first,
@@ -171,7 +190,18 @@
         this.data = data;
 
         // Use the new meta data if present to display appropriate sorting and paging
-        this.metaData = metaData || new DataGridViewMetaData(this.metaData.sortColumn, this.metaData.sortDescending, this.data.length, this.data.length, 0);
+        if (metaData instanceof DataGridViewMetaData) {
+            this.metaData = metaData;
+        }
+        // Try to resolve the meta data as far as we can
+        else if (metaData) {
+            this.metaData = new DataGridViewMetaData(metaData.sortColumn, metaData.sortDescending, metaData.totalRows || this.data.length, metaData.rowsPerPage || this.data.length, metaData.page || 0);
+        }
+        // Default
+        else {
+            this.metaData = new DataGridViewMetaData(metaData.sortColumn, metaData.sortDescending, this.data.length, this.data.length, 0);
+        }
+
         this.displaySortOrder();
         this.displayFooters();
     }
