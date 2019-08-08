@@ -45,28 +45,42 @@
         // Get initial meta data
         // Expects a DataGridViewMetaData object
         getMetaData: function (element) {
-            return new DataGridViewMetaData(null, false, 0, 25, 0);
+            return new DataGridViewMetaData(null, false, 0, 1, 0);
         },
         // Footer functions, in order, to use for the footer
         getFooterPlugins: function (element) {
             return [
-                $.fn.datagridview.footerPlugins.displayBasic,
-                $.fn.datagridview.footerPlugins.displayFull,
-                $.fn.datagridview.footerPlugins.displayBasic
+                $.fn.datagridview.footerPlugins.prevNext,
+                $.fn.datagridview.footerPlugins.displayFull
             ];
         }
     }
 
     // Pagination footer plugins
+    // This can easily be extended
+    // Please note that the page index is 0-based and needs to be corrected for display purposes
     $.fn.datagridview.footerPlugins = {
-        displayBasic: function (footerElement, metaData, element) {
-            $(footerElement).append($('<div>').text("Page " + metaData.page + " of " + metaData.totalPages));
+        displayBasic: function (footerElement, metaData, datagridview) {
+            $(footerElement).append($('<div>').text("Page " + (metaData.page + 1) + " of " + metaData.totalPages));
         },
-        displayFull: function (footerElement, metaData, element) {
+        displayFull: function (footerElement, metaData, datagridview) {
             let rowStart = metaData.page * metaData.rowsPerPage + 1;
             let rowEnd = (metaData.page + 1) * metaData.rowsPerPage;
 
-            $(footerElement).append($('<div>').text("Page " + metaData.page + " of " + metaData.totalPages + ", rows " + rowStart + " to " + rowEnd + " of " + metaData.totalRows));
+            $(footerElement).append($('<div>').text("Page " + (metaData.page + 1) + " of " + metaData.totalPages + ", rows " + rowStart + " to " + rowEnd + " of " + metaData.totalRows));
+        },
+        prevNext: function (footerElement, metaData, datagridview) {
+            let first = $('<button>').addClass('datagridview-paging-first').text('|<').click(datagridview.initiatePaging(0, metaData.rowsPerPage)).prop('disabled', metaData.page <= 0);
+            let prev = $('<button>').addClass('datagridview-paging-prev').text('<').click(datagridview.initiatePaging(metaData.page - 1, metaData.rowsPerPage)).prop('disabled', metaData.page <= 0);
+            let next = $('<button>').addClass('datagridview-paging-prev').text('>').click(datagridview.initiatePaging(metaData.page + 1, metaData.rowsPerPage)).prop('disabled', metaData.page >= metaData.totalPages - 1);
+            let last = $('<button>').addClass('datagridview-paging-last').text('>|').click(datagridview.initiatePaging(metaData.totalPages - 1, metaData.rowsPerPage)).prop('disabled', metaData.page >= metaData.totalPages - 1);
+
+            $(footerElement).append(
+                first,
+                prev,
+                next,
+                last
+            );
         }
     }
 
@@ -135,7 +149,7 @@
     }
 
     // Fill the grid with the data
-    // TODO: research performance; preliminary results are 20 cells per ms in Chrome
+    // TODO: research performance; preliminary results are 40 cells per ms in Chrome
     DataGridView.prototype.populate = function (metaData, data) {
         let newBody = this.createElement('<div>', 'datagridview-body');
 
@@ -181,7 +195,7 @@
     }
 
     // Get meta currently in use; these can be edited and passed back via populate
-    DataGridView.prototype.getMetaData = function() {
+    DataGridView.prototype.getMetaData = function () {
         return this.metaData.clone();
     }
 
@@ -218,11 +232,20 @@
                 let footerElement = base.createElement('<div>', 'datagridview-footer-element');
 
                 newFooter.append(footerElement);
-                this(footerElement, base.getMetaData(), base.element);
+                this(footerElement, base.getMetaData(), base);
             });
         }
 
         this.footer.replaceWith(newFooter);
+        this.footer = newFooter;
+    }
+
+    // Initiate paging event
+    DataGridView.prototype.initiatePaging = function (page, rowsPerPage) {
+        // We work with a copy of the element; we only set paging when getting data in
+        let metaData = new DataGridViewMetaData(this.metaData.sortColumn, this.metaData.sortDescending, this.metaData.totalRows, rowsPerPage || this.metaData.rowsPerPage, page);
+
+        this.element.trigger('datagridview.paged', metaData);
     }
 
     // Event handlers should not be accessible from the object itself
@@ -232,7 +255,7 @@
                 return;
             }
 
-            // In the event handler we work with a copy of the element; we only sort if 
+            // In the event handler we work with a copy of the element; we only sort when getting data in
             let metaData = e.data.getMetaData();
             let sortColumn = $(this).data('sort-column');
 
@@ -254,9 +277,9 @@
 function DataGridViewMetaData(sortColumn, sortDescending, totalRows, rowsPerPage, page) {
     this.sortColumn = sortColumn;
     this.sortDescending = !!sortDescending;
-    this.totalRows = isNaN(totalRows) || totalRows <= 0 ? 0 : parseInt(totalRows);
-    this.rowsPerPage = isNaN(rowsPerPage) || rowsPerPage <= 0 ? 25 : parseInt(rowsPerPage);
-    this.page = isNaN(page) || page <= 0 ? 0 : parseInt(page);
+    this.totalRows = isNaN(totalRows) || totalRows < 0 ? 0 : parseInt(totalRows);
+    this.rowsPerPage = isNaN(rowsPerPage) || rowsPerPage < 0 ? 0 : parseInt(rowsPerPage);
+    this.page = isNaN(page) || page < 0 ? 0 : parseInt(page);
     this.totalPages = Math.ceil(totalRows / rowsPerPage);
 }
 

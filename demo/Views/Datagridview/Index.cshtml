@@ -43,6 +43,13 @@
                     url: "@Url.Action("GetInvoiceGridItems")",
                     data: metaData,
                     success: function (data) {
+                        if (!metaData) {
+                            metaData = new DataGridViewMetaData(null, false, data.length, data.length, 0);
+                        }
+                        else {
+                            metaData = new DataGridViewMetaData(metaData.sortColumn, metaData.sortDescending, data.length, data.length, 0);
+                        }
+
                         $('#datagrid-1').datagridview(function () {
                             this.populate(metaData, data);
                         });
