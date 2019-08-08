@@ -51,6 +51,7 @@
         getFooterPlugins: function (element) {
             return [
                 $.fn.datagridview.footerPlugins.prevNext,
+                $.fn.datagridview.footerPlugins.pageInput,
                 $.fn.datagridview.footerPlugins.displayFull
             ];
         }
@@ -106,6 +107,19 @@
                 .prop('disabled', metaData.page >= metaData.totalPages - 1);
 
             $(footerElement).append(next, last);
+        },
+        pageInput: function (footerElement, metaData, datagridview) {
+            let page = $('<input>', { type: 'text' })
+                .addClass('datagridview-paging-page')
+                .val(metaData.page + 1);
+            let go = $('<button>')
+                .addClass('datagridview-paging-go')
+                .text('Go')
+                .click(function () {
+                    datagridview.initiatePaging(page.val() - 1, metaData.rowsPerPage);
+                });
+
+            $(footerElement).append(page, go);
         }
     }
 
@@ -318,6 +332,10 @@ function DataGridViewMetaData(sortColumn, sortDescending, totalRows, rowsPerPage
     this.rowsPerPage = isNaN(rowsPerPage) || rowsPerPage < 0 ? 0 : parseInt(rowsPerPage);
     this.page = isNaN(page) || page < 0 ? 0 : parseInt(page);
     this.totalPages = Math.ceil(totalRows / rowsPerPage);
+
+    if (this.page >= this.totalPages) {
+        this.page = Math.max(this.totalPages - 1, 0);
+    }
 }
 
 // When accessing the meta data normally we get a clone
