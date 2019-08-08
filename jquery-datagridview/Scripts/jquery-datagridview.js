@@ -70,6 +70,7 @@
             $(footerElement).append($('<div>').text("Page " + (metaData.page + 1) + " of " + metaData.totalPages + ", rows " + rowStart + " to " + rowEnd + " of " + metaData.totalRows));
         },
         prevNext: function (footerElement, metaData, datagridview) {
+            // To disable any of these options, simply hide them in css for the all, or just the appropriate grids
             let first = $('<button>')
                 .addClass('datagridview-paging-first')
                 .text('|<')
