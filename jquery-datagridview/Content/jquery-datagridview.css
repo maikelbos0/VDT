@@ -44,6 +44,10 @@
     flex-basis: auto;
 }
 
+.datagridview-footer-element input {
+    max-width: 3em;
+}
+
 .datagridview-header-cell-sortable {
     cursor: pointer;
 }
