@@ -71,10 +71,16 @@
     <Content Include="basic.js" />
     <Content Include="columns.html" />
     <Content Include="columns.js" />
+    <Content Include="defaults.html" />
+    <Content Include="defaults.js" />
     <Content Include="element.js" />
     <Content Include="element.html" />
     <Content Include="interaction.html" />
     <Content Include="interaction.js" />
+    <Content Include="options.html" />
+    <Content Include="options.js" />
+    <Content Include="paging.html" />
+    <Content Include="paging.js" />
     <Content Include="sorting.html" />
     <Content Include="sorting.js" />
   </ItemGroup>
