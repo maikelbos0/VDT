@@ -144,6 +144,7 @@
             base.header.append($('<div>').text(column.header || column.data)
                 .addClass(column.class)
                 .addClass('datagridview-header-cell')
+                .toggleClass('datagridview-header-cell-sortable', column.sortable !== false)
                 .attr('title', column.header || column.data)
                 .data('column', column.data)
                 .data('sort-column', column.sortData || column.data));
@@ -156,7 +157,7 @@
         this.displayFooters();
 
         // Event handlers
-        this.header.on('mouseup', 'div.datagridview-header-cell', this, eventHandlers.headerMouseup);
+        this.header.on('mouseup', 'div.datagridview-header-cell-sortable', this, eventHandlers.headerMouseup);
     }
 
     // Set the width of the columns

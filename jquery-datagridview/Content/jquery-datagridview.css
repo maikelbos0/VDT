@@ -44,7 +44,7 @@
     flex-basis: auto;
 }
 
-.datagridview-header-cell {
+.datagridview-header-cell-sortable {
     cursor: pointer;
 }
 
