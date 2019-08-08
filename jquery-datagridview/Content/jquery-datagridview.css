@@ -2,40 +2,49 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    overflow-x: auto;
+    position: relative;
+}
+
+.datagridview-content-container {
+    flex-grow: 1;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .datagridview-header {
     flex-grow: 0;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
 }
 
 .datagridview-body {
     flex-grow: 1;
-    overflow: auto;
 }
 
-.datagridview tr {
+.datagridview-header, .datagridview-row, .datagridview-footer {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
 }
 
-.datagridview-header th, .datagridview-body td {
+.datagridview-header-cell, .datagridview-row > div {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     flex-basis: 0;
 }
 
-.datagridview-footer tr {
+.datagridview-footer {
     justify-content: space-between;
 }
 
-.datagridview-footer td.datagridview-footer-element {
+.datagridview-footer > .datagridview-footer-element {
     flex-basis: auto;
 }
 
-.datagridview th {
+.datagridview-header-cell {
     cursor: pointer;
 }
 
@@ -70,4 +79,8 @@
 
 .datagridview-footer {
     background: #ccffff;
+}
+
+.datagridview-header-cell {
+    font-weight: bold;
 }

@@ -82,14 +82,14 @@
         this.element.addClass('datagridview');
         this.element.addClass(this.elementClass);
         this.element.children().hide();
-        this.headerRow = this.createElement('<tr>');
-        this.header = this.createElement('<thead>', 'datagridview-header').append(this.headerRow);
-        this.body = this.createElement('<tbody>', 'datagridview-body');
-        this.footer = this.createElement('<tfoot>', 'datagridview-footer');
+        this.header = this.createElement('<div>', 'datagridview-header');
+        this.body = this.createElement('<div>', 'datagridview-body');
+        this.contentContainer = this.createElement('<div>', 'datagridview-content-container').append(this.header, this.body);
+        this.footer = this.createElement('<div>'); // Placeholder only
+        this.footerPlugins = this.options.getFooterPlugins(this.element);
         this.sortToggle = this.createElement('<div>', 'datagridview-sort-toggle');
         this.element.append(
-            this.header,
-            this.body,
+            this.contentContainer,
             this.footer
         );
 
@@ -102,8 +102,9 @@
             column.class = 'datagridview-column-' + Math.random().toString().replace('.', '');
             column.width = isNaN(column.width) || column.width <= 0 ? 10 : parseInt(column.width);
 
-            base.headerRow.append($('<th>').text(column.header || column.data)
+            base.header.append($('<div>').text(column.header || column.data)
                 .addClass(column.class)
+                .addClass('datagridview-header-cell')
                 .attr('title', column.header || column.data)
                 .data('column', column.data)
                 .data('sort-column', column.sortData || column.data));
@@ -111,12 +112,12 @@
 
         this.setColumnWidth();
 
-        // Create footers
-        this.footerPlugins = this.options.getFooterPlugins(this.element);
-        this.setFooters();
+        // Use the meta data if present to display appropriate sorting and paging
+        this.displaySortOrder();
+        this.displayFooters();
 
         // Event handlers
-        this.headerRow.on('mouseup', 'th', this, eventHandlers.headerMouseup);
+        this.header.on('mouseup', 'div.datagridview-header-cell', this, eventHandlers.headerMouseup);
     }
 
     // Set the width of the columns
@@ -125,7 +126,7 @@
         let tableWidth = this.options.columns.reduce(function (w, c) { return w + c.width; }, 0);
 
         if (tableWidth > 100) {
-            style = '.' + this.elementClass + ' thead, .' + this.elementClass + ' tbody, .' + this.elementClass + ' tfoot { width: ' + tableWidth + '%}\n';
+            style = '.' + this.elementClass + ' div.datagridview-header, .' + this.elementClass + ' div.datagridview-body { width: ' + tableWidth + '%}\n';
         }
 
         this.style.html(this.options.columns.reduce(function (style, column) {
@@ -133,38 +134,19 @@
         }, style));
     }
 
-    // Fill the footers
-    DataGridView.prototype.setFooters = function () {
-        let base = this;
-        let footerRow = this.createElement('<tr>');
-
-        this.footer.children().remove();
-
-        if (this.footerPlugins.length !== 0) {
-            $.each(this.footerPlugins, function () {
-                let footerElement = base.createElement('<td>', 'datagridview-footer-element');
-
-                footerRow.append(footerElement);
-                this(footerElement, base.getMetaData(), base.element);
-            });
-        }
-
-        this.footer.append(footerRow);
-    }
-
     // Fill the grid with the data
     // TODO: research performance; preliminary results are 20 cells per ms in Chrome
     DataGridView.prototype.populate = function (metaData, data) {
-        let newBody = this.createElement('<tbody>', 'datagridview-body');
+        let newBody = this.createElement('<div>', 'datagridview-body');
 
         for (let r = 0; r < data.length; r++) {
             let dataRow = data[r];
-            let row = $('<tr>');
+            let row = this.createElement('<div>', 'datagridview-row');
 
             for (let c = 0; c < this.options.columns.length; c++) {
                 let column = this.options.columns[c];
 
-                row.append($('<td>').text(dataRow[column.data] || "").addClass(column.class).attr('title', dataRow[column.data] || ""));
+                row.append($('<div>').text(dataRow[column.data] || "").addClass(column.class).attr('title', dataRow[column.data] || ""));
             }
 
             newBody.append(row);
@@ -173,18 +155,11 @@
         this.body.replaceWith(newBody);
         this.body = newBody;
         this.data = data;
-        this.adjustHeader();
 
-        // Show the new sort order
+        // Use the new meta data if present to display appropriate sorting and paging
         this.metaData = metaData || new DataGridViewMetaData(this.metaData.sortColumn, this.metaData.sortDescending, this.data.length, this.data.length, 0);
         this.displaySortOrder();
-    }
-
-    // Fix the header to take into account the scrollbar in the body, if present
-    DataGridView.prototype.adjustHeader = function () {
-        this.header.css('padding-right', this.header.prop('clientWidth') - this.body.prop('clientWidth'));
-        // Temp
-        this.footer.css('padding-right', this.footer.prop('clientWidth') - this.body.prop('clientWidth'));
+        this.displayFooters();
     }
 
     // Create an element and merge attribute objects to attributes
@@ -200,8 +175,7 @@
         this.element.removeClass('datagridview');
         this.element.removeClass(this.elementClass);
         this.element.children().show();
-        this.header.remove();
-        this.body.remove();
+        this.contentContainer.remove();
         this.footer.remove();
         this.style.remove();
     }
@@ -214,7 +188,7 @@
     // Set sorting icon after sorting action
     DataGridView.prototype.displaySortOrder = function () {
         let base = this;
-        let header = this.headerRow.find('th').filter(function () { return $(this).data('sort-column') === base.metaData.sortColumn });
+        let header = this.header.find('div.datagridview-header-cell').filter(function () { return $(this).data('sort-column') === base.metaData.sortColumn });
 
         if (header.length > 0) {
             if (this.metaData.sortDescending) {
@@ -232,6 +206,25 @@
         }
     }
 
+    // Create the footers
+    DataGridView.prototype.displayFooters = function () {
+        let base = this;
+        let newFooter = this.createElement('<div>', 'datagridview-footer');
+
+        this.footer.children().remove();
+
+        if (this.footerPlugins.length !== 0) {
+            $.each(this.footerPlugins, function () {
+                let footerElement = base.createElement('<div>', 'datagridview-footer-element');
+
+                newFooter.append(footerElement);
+                this(footerElement, base.getMetaData(), base.element);
+            });
+        }
+
+        this.footer.replaceWith(newFooter);
+    }
+
     // Event handlers should not be accessible from the object itself
     let eventHandlers = {
         headerMouseup: function (e) {
@@ -239,17 +232,19 @@
                 return;
             }
 
+            // In the event handler we work with a copy of the element; we only sort if 
+            let metaData = e.data.getMetaData();
             let sortColumn = $(this).data('sort-column');
 
-            if (e.data.metaData.sortColumn === sortColumn) {
-                e.data.metaData.sortDescending = !e.data.metaData.sortDescending;
+            if (metaData.sortColumn === sortColumn) {
+                metaData.sortDescending = !metaData.sortDescending;
             }
             else {
-                e.data.metaData.sortColumn = sortColumn;
-                e.data.metaData.sortDescending = false;
+                metaData.sortColumn = sortColumn;
+                metaData.sortDescending = false;
             }
 
-            e.data.element.trigger('datagridview.sorted', e.data.getMetaData());
+            e.data.element.trigger('datagridview.sorted', metaData);
         }
     }
 
