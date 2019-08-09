@@ -8,13 +8,6 @@ describe('datagridview paging', function () {
         $(element).trigger(event);
     }
 
-    /*
-    function generateData(dataRow, length) {
-        var data = new Array()
-        Array(15).fill()
-    }
-    */
-
     $.fn.datagridview.defaults.getFooterPlugins = function () {
         return [
             $.fn.datagridview.footerPlugins.displayBasic,
@@ -237,23 +230,112 @@ describe('datagridview paging', function () {
     });
 
     it('prev-next contains buttons for last and next', function () {
-        fail();
+        var grid = $('#paging-prev-next-next-last');
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 156, 25, 2);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.prevNext
+                ];
+            }
+        });
+
+        expect(grid.find('.datagridview-footer-element button.datagridview-paging-next').length).toEqual(1);
+        expect(grid.find('.datagridview-footer-element button.datagridview-paging-last').length).toEqual(1);
     });
 
     it('prev-next buttons for last and next are disabled on last page', function () {
-        fail();
+        var grid = $('#paging-prev-next-next-last-disabled');
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 156, 25, 6);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.prevNext
+                ];
+            }
+        });
+
+        expect(grid.find('.datagridview-footer-element button.datagridview-paging-next').prop('disabled')).toEqual(true);
+        expect(grid.find('.datagridview-footer-element button.datagridview-paging-last').prop('disabled')).toEqual(true);
     });
 
-    it('prev-next buttons for last and next are enabled on second to page', function () {
-        fail();
+    it('prev-next buttons for last and next are enabled on second to last page', function () {
+        var grid = $('#paging-prev-next-next-last-enabled');
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 156, 25, 5);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.prevNext
+                ];
+            }
+        });
+
+        expect(grid.find('.datagridview-footer-element button.datagridview-paging-next').prop('disabled')).toEqual(false);
+        expect(grid.find('.datagridview-footer-element button.datagridview-paging-last').prop('disabled')).toEqual(false);
     });
 
     it('prev-next buttons for last triggers request for last page', function () {
-        fail();
+        var grid = $('#paging-prev-next-last-event');
+        var mData;
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 156, 25, 2);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.prevNext
+                ];
+            }
+        });
+
+        grid.on('datagridview.paged', function (e, metaData) {
+            mData = metaData;
+        });
+
+        grid.find('.datagridview-footer-element .datagridview-paging-last').click();
+
+        expect(mData).not.toEqual(null);
+        expect(mData.page).toEqual(6);
     });
 
     it('prev-next buttons for next triggers request for next page', function () {
-        fail();
+        var grid = $('#paging-prev-next-next-event');
+        var mData;
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 156, 25, 2);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.prevNext
+                ];
+            }
+        });
+
+        grid.on('datagridview.paged', function (e, metaData) {
+            mData = metaData;
+        });
+
+        grid.find('.datagridview-footer-element .datagridview-paging-next').click();
+
+        expect(mData).not.toEqual(null);
+        expect(mData.page).toEqual(3);
     });
 
     it('prev-next contains buttons for specific pages', function () {
