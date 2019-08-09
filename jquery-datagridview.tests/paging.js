@@ -15,31 +15,121 @@ describe('datagridview paging', function () {
     }
     */
 
-    //$.fn.datagridview.defaults.getFooterPlugins = function() { return []; }
-    //$.fn.datagridview.footerPlugins.custom: function (footerElement, metaData, datagridview) {}
+    $.fn.datagridview.defaults.getFooterPlugins = function () {
+        return [
+            $.fn.datagridview.footerPlugins.displayBasic,
+            $.fn.datagridview.footerPlugins.displayFull,
+            $.fn.datagridview.footerPlugins.prevNext,
+            $.fn.datagridview.footerPlugins.pageInput,
+            $.fn.datagridview.footerPlugins.pageSizeInput
+        ];
+    }
+
+    /*
+    $.fn.datagridview.footerPlugins.custom = function (footerElement, metaData, datagridview) {
+    }
+    */
 
     it('elements get added', function () {
-        fail();
+        var grid = $('#paging-element');
+
+        grid.datagridview({ columns: [] });
+
+        expect(grid.find('.datagridview-footer').length).toEqual(1);
+        expect(grid.find('.datagridview-footer .datagridview-footer-element').length).toEqual(5);
     });
 
     it('elements have access to the meta data', function () {
-        fail();
+        var grid = $('#paging-access-meta-data');
+        var mData;
+
+        grid.datagridview({
+            columns: [],
+            getFooterPlugins: function () {
+                return [
+                    function (footerElement, metaData, datagridview) {
+                        mData = metaData;
+                    }
+                ]
+            }
+        });
+
+        expect(mData).not.toEqual(null);
+        expect(mData instanceof DataGridViewMetaData).toEqual(true);
     });
 
     it('elements have access to the datagridview', function () {
-        fail();
+        var grid = $('#paging-access-grid');
+        var datagrid;
+
+        grid.datagridview({
+            columns: [],
+            getFooterPlugins: function () {
+                return [
+                    function (footerElement, metaData, datagridview) {
+                        datagrid = datagridview;
+                    }
+                ]
+            }
+        });
+
+        expect(datagrid).not.toEqual(null);
+        expect(datagrid.element).toEqual(grid);
     });
 
-    it('elements have access to the original element', function () {
-        fail();
+    it('elements have access to the footer element', function () {
+        var grid = $('#paging-access-element');
+        var footer;
+
+        grid.datagridview({
+            columns: [],
+            getFooterPlugins: function () {
+                return [
+                    function (footerElement, metaData, datagridview) {
+                        footer = footerElement;
+                    }
+                ]
+            }
+        });
+
+        expect(footer).not.toEqual(null);
+        expect(footer.hasClass('datagridview-footer-element')).toEqual(true);
     });
 
     it('basic display contains the right information', function () {
-        fail();
+        var grid = $('#paging-basic-display');
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 156, 25, 2);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.displayBasic
+                ];
+            }
+        });
+
+        expect(grid.find('.datagridview-footer-element').text()).toEqual('Page 3 of 7');
     });
 
     it('extended display contains the right information', function () {
-        fail();
+        var grid = $('#paging-extended-display');
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 156, 25, 2);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.displayFull
+                ];
+            }
+        });
+
+        expect(grid.find('.datagridview-footer-element').text()).toEqual('Page 3 of 7, rows 51 to 75 of 156');
     });
 
     it('prev-next contains buttons for first and previous', function () {
