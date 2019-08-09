@@ -96,7 +96,7 @@
             }
 
             let next = $('<button>')
-                .addClass('datagridview-paging-prev')
+                .addClass('datagridview-paging-next')
                 .text('>')
                 .click(function () { datagridview.initiatePaging(metaData.page + 1, metaData.rowsPerPage); })
                 .prop('disabled', metaData.page >= metaData.totalPages - 1);

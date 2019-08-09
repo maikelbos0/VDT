@@ -25,11 +25,6 @@ describe('datagridview paging', function () {
         ];
     }
 
-    /*
-    $.fn.datagridview.footerPlugins.custom = function (footerElement, metaData, datagridview) {
-    }
-    */
-
     it('elements get added', function () {
         var grid = $('#paging-element');
 
@@ -133,7 +128,22 @@ describe('datagridview paging', function () {
     });
 
     it('prev-next contains buttons for first and previous', function () {
-        fail();
+        var grid = $('#paging-prev-next-first-previous');
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 156, 25, 2);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.prevNext
+                ];
+            }
+        });
+
+        expect(grid.find('.datagridview-footer-element button.datagridview-paging-first').length).toEqual(1);
+        expect(grid.find('.datagridview-footer-element button.datagridview-paging-prev').length).toEqual(1);
     });
 
     it('prev-next buttons for first and previous are disabled on first page', function () {
