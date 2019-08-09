@@ -339,11 +339,39 @@ describe('datagridview paging', function () {
     });
 
     it('prev-next contains buttons for specific pages', function () {
-        fail();
+        var grid = $('#paging-prev-next-buttons');
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 156, 25, 2);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.prevNext
+                ];
+            }
+        });
+
+        expect(grid.find('.datagridview-footer-element button.datagridview-paging-page').length).toEqual(7);
     });
 
     it('prev-next button for current page is disabled', function () {
-        fail();
+        var grid = $('#paging-prev-next-buttons-current');
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 156, 25, 2);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.prevNext
+                ];
+            }
+        });
+
+        expect(grid.find('.datagridview-footer-element button.datagridview-paging-page:nth-child(3)').prop('disabled')).not.toEqual(true);
     });
 
     it('prev-next button for all pages except current page are enabled', function () {
