@@ -147,11 +147,41 @@ describe('datagridview paging', function () {
     });
 
     it('prev-next buttons for first and previous are disabled on first page', function () {
-        fail();
+        var grid = $('#paging-prev-next-first-previous-disabled');
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 156, 25, 0);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.prevNext
+                ];
+            }
+        });
+
+        expect(grid.find('.datagridview-footer-element button.datagridview-paging-first').prop('disabled')).toEqual(true);
+        expect(grid.find('.datagridview-footer-element button.datagridview-paging-prev').prop('disabled')).toEqual(true);
     });
 
     it('prev-next buttons for first and previous are enabled on second page', function () {
-        fail();
+        var grid = $('#paging-prev-next-first-previous-enabled');
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 156, 25, 1);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.prevNext
+                ];
+            }
+        });
+
+        expect(grid.find('.datagridview-footer-element button.datagridview-paging-first').prop('disabled')).toEqual(false);
+        expect(grid.find('.datagridview-footer-element button.datagridview-paging-prev').prop('disabled')).toEqual(false);
     });
 
     it('prev-next buttons for first triggers request for first page', function () {
