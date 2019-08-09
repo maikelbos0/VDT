@@ -185,11 +185,55 @@ describe('datagridview paging', function () {
     });
 
     it('prev-next buttons for first triggers request for first page', function () {
-        fail();
+        var grid = $('#paging-prev-next-first-event');
+        var mData;
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 156, 25, 2);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.prevNext
+                ];
+            }
+        });
+
+        grid.on('datagridview.paged', function (e, metaData) {
+            mData = metaData;
+        });
+
+        grid.find('.datagridview-footer-element .datagridview-paging-first').click();
+
+        expect(mData).not.toEqual(null);
+        expect(mData.page).toEqual(0);
     });
 
     it('prev-next buttons for previous triggers request for previous page', function () {
-        fail();
+        var grid = $('#paging-prev-next-prev-event');
+        var mData;
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 156, 25, 2);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.prevNext
+                ];
+            }
+        });
+
+        grid.on('datagridview.paged', function (e, metaData) {
+            mData = metaData;
+        });
+
+        grid.find('.datagridview-footer-element .datagridview-paging-prev').click();
+
+        expect(mData).not.toEqual(null);
+        expect(mData.page).toEqual(1);
     });
 
     it('prev-next contains buttons for last and next', function () {
