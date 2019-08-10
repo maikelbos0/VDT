@@ -153,6 +153,7 @@
     // Datagridview implementation
     function DataGridView(element, options) {
         let base = this;
+        let i = 0;
 
         this.element = element;
         this.options = options;
@@ -186,7 +187,7 @@
             column.id = Math.random().toString().replace('.', '');
             column.class = 'datagridview-column-' + column.id;
             column.width = isNaN(column.width) || column.width <= 0 ? 10 : parseFloat(column.width);
-            column.id = Math.random().toString().replace('.', '');
+            column.index = i++;
 
             let headerCell = $('<div>').text(column.header || column.data)
                 .addClass(column.class)
@@ -341,6 +342,19 @@
     // Get a column by its id
     DataGridView.prototype.getColumn = function (id) {
         return this.options.columns.filter(function (column) { return column.id === id; })[0];
+    }
+
+    // Get the column definitions currently in use; creates a copy
+    DataGridView.prototype.getColumns = function () {
+        return this.options.columns.map(function (column) {
+            return {
+                width: column.width,
+                data: column.data,
+                sortData: column.sortData,
+                sortable: column.sortable,
+                index: column.index
+            };
+        });
     }
 
     // Initiate paging event
