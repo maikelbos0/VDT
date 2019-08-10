@@ -27,6 +27,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    position: relative;
 }
 
 .datagridview-header-cell, .datagridview-row > div {
@@ -37,8 +38,9 @@
 }
 
 .datagridview-header-drag {
-    flex-basis: 5px;
-    flex-grow: 0;
+    float: right;
+    height: 100%;
+    width: 5px;
     cursor: col-resize;
 }
 
@@ -97,4 +99,8 @@
 
 .datagridview-header-drag {
     background-color: #000000;
+}
+
+.datagridview-row > div {
+    outline: 1px solid #000000;
 }
