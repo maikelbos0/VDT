@@ -407,26 +407,20 @@
             let rightColumn = e.data.getColumn(e.data.dragState.rightColumn);
 
             // Adjust shift to only be enough to hide a column fully
-            if (leftColumn && leftColumn.width - shift < 0) {
+            if (leftColumn.width - shift < 0) {
                 shift = leftColumn.width;
             }
             else if (rightColumn && rightColumn.width + shift < 0) {
                 shift = -rightColumn.width;
             }
 
-            if (leftColumn) {
-                leftColumn.width -= shift;
-            }
-
+            leftColumn.width -= shift;
             if (rightColumn) {
                 rightColumn.width += shift;
             }
 
-            // If we've found any column then set the new style
-            if (leftColumn || rightColumn) {
-                e.data.setColumnWidth();
-            }
-
+            // Set the new style
+            e.data.setColumnWidth();
             e.data.dragState.position = e.pageX;
         },
         documentMouseup: function (e) {

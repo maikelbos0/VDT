@@ -36,4 +36,8 @@ describe('a datagridview option', function () {
 
         expect(grid.find('.datagridview-footer-element').length).toEqual(2);
     });
+
+    it('can be provided for areHeadersResizable', function () {
+        fail();
+    });
 });
