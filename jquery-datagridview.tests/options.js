@@ -38,6 +38,15 @@ describe('a datagridview option', function () {
     });
 
     it('can be provided for areHeadersResizable', function () {
-        fail();
+        var grid = $('#datagridview-options-headers-resizable');
+
+        grid.datagridview({
+            columns: [{ data: 'test' }],
+            areHeadersResizable: function () {
+                return true;
+            }
+        });
+
+        expect(grid.find('.datagridview-header-drag').length).toEqual(1);
     });
 });
