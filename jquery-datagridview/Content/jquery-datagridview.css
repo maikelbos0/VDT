@@ -36,6 +36,12 @@
     flex-basis: 0;
 }
 
+.datagridview-header-drag {
+    flex-basis: 5px;
+    flex-grow: 0;
+    cursor: col-resize;
+}
+
 .datagridview-footer {
     justify-content: space-between;
 }
@@ -87,4 +93,8 @@
 
 .datagridview-header-cell {
     font-weight: bold;
+}
+
+.datagridview-header-drag {
+    background-color: #000000;
 }

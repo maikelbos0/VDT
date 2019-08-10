@@ -55,6 +55,10 @@
                 $.fn.datagridview.footerPlugins.pageSizeInput,
                 $.fn.datagridview.footerPlugins.displayFull
             ];
+        },
+        // Allow headers to be resized
+        areHeadersResizable: function (element) {
+            return $(element).data('header-resizable') !== undefined && $(element).data('header-resizable') != false;
         }
     }
 
@@ -164,6 +168,8 @@
         this.footer = this.createElement('<div>'); // Placeholder only
         this.footerPlugins = this.options.getFooterPlugins(this.element);
         this.sortToggle = this.createElement('<div>', 'datagridview-sort-toggle');
+        this.areHeadersResizable = this.options.areHeadersResizable(this.element);
+        this.headerDragging = false;
         this.element.append(
             this.contentContainer,
             this.footer
@@ -185,6 +191,11 @@
                 .attr('title', column.header || column.data)
                 .data('column', column.data)
                 .data('sort-column', column.sortData || column.data));
+
+            if (base.areHeadersResizable) {
+                // Drag item
+                base.header.append($('<div>').addClass('datagridview-header-drag'));
+            }
         });
 
         this.setColumnWidth();
@@ -195,6 +206,12 @@
 
         // Event handlers
         this.header.on('mouseup', 'div.datagridview-header-cell-sortable', this, eventHandlers.headerMouseup);
+
+        if (this.areHeadersResizable) {
+            this.header.on('mousedown', 'div.datagridview-header-drag', this, eventHandlers.headerDragMousedown);
+            this.header.on('mousemove', 'div.datagridview-header-drag', this, eventHandlers.headerDragMousemove);
+            this.header.on('mouseup', 'div.datagridview-header-drag', this, eventHandlers.headerDragMouseup);
+        }
     }
 
     // Set the width of the columns
@@ -325,7 +342,7 @@
     // Event handlers should not be accessible from the object itself
     let eventHandlers = {
         headerMouseup: function (e) {
-            if (e.which !== 1) {
+            if (e.which !== 1 || e.data.headerDragging) {
                 return;
             }
 
@@ -342,6 +359,14 @@
             }
 
             e.data.element.trigger('datagridview.sorted', metaData);
+        },
+        headerDragMousedown: function (e) {
+            e.data.headerDragging = true;
+        },
+        headerDragMousemove: function (e) {
+        },
+        headerDragMouseup: function (e) {
+            e.data.headerDragging = false;
         }
     }
 
