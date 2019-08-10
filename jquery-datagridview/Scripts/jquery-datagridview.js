@@ -88,11 +88,14 @@
             $(footerElement).append(first, prev);
 
             for (let page = Math.max(0, metaData.page - 4); page < Math.min(metaData.totalPages, metaData.page + 5); page++) {
+                // Using an iterator in an anonymous function does not work as expected cross-browser
+                let currentPage = page;
+
                 $(footerElement).append($('<button>')
                     .addClass('datagridview-paging-page')
-                    .text(page + 1)
-                    .click(function () { datagridview.initiatePaging(page, metaData.rowsPerPage); })
-                    .prop('disabled', metaData.page === page));
+                    .text(currentPage + 1)
+                    .click(function () { datagridview.initiatePaging(currentPage, metaData.rowsPerPage); })
+                    .prop('disabled', metaData.page === currentPage));
             }
 
             let next = $('<button>')
