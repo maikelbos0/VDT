@@ -35,8 +35,8 @@ describe('dragging datagridview', function () {
         expect(grid.find('.datagridview-header-drag').length).toEqual(2);
     });
 
-    it('header changes the size of the adjacent columns', function () {
-        var grid = $('#datagridview-dragging-adjacent-headers');
+    it('header changes the size of the owner column', function () {
+        var grid = $('#datagridview-dragging-owner-header');
         var columns;
 
         grid.width('100px');
@@ -60,7 +60,6 @@ describe('dragging datagridview', function () {
         });
 
         expect(columns[1].width).toEqual(2);
-        expect(columns[2].width).toEqual(18);
     });
 
     it('header does not change the size of other columns', function () {
@@ -88,6 +87,7 @@ describe('dragging datagridview', function () {
         });
 
         expect(columns[0].width).toEqual(10);
+        expect(columns[2].width).toEqual(10);
         expect(columns[3].width).toEqual(10);
     });
 

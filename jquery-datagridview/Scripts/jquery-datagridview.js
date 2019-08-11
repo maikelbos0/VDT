@@ -347,11 +347,6 @@
         this.footer = newFooter;
     }
 
-    // Get a column by its id
-    DataGridView.prototype.getColumn = function (id) {
-        return this.options.columns.filter(function (column) { return column.id === id; })[0];
-    }
-
     // Get the column definitions currently in use; creates a copy
     DataGridView.prototype.getColumns = function () {
         return this.options.columns.map(function (column) {
@@ -458,8 +453,7 @@
             
             e.data.dragState.dragging = true;
             e.data.dragState.position = e.pageX;
-            e.data.dragState.leftColumn = $(this).closest('.datagridview-header-cell').data('id');
-            e.data.dragState.rightColumn = $(this).closest('.datagridview-header-cell').next('.datagridview-header-cell').data('id');
+            e.data.dragState.column = $(this).closest('.datagridview-header-cell').data('id');
         },
         documentMousemove: function (e) {
             if (!e.data.dragState.dragging) {
@@ -469,21 +463,14 @@
             // the shift is expressed, same as column width, as a percentage of the original element
             let tableWidth = Math.min(100, e.data.options.columns.reduce(function (w, c) { return w + c.width; }, 0));
             let shift = (e.data.dragState.position - e.pageX) / $(e.data.element).width() * tableWidth;
-            let leftColumn = e.data.getColumn(e.data.dragState.leftColumn);
-            let rightColumn = e.data.getColumn(e.data.dragState.rightColumn);
+            let column = e.data.options.columns.filter(function (c) { return c.id === e.data.dragState.column; })[0];
 
             // Adjust shift to only be enough to hide a column fully
-            if (leftColumn.width - shift < 0) {
-                shift = leftColumn.width;
-            }
-            else if (rightColumn && rightColumn.width + shift < 0) {
-                shift = -rightColumn.width;
+            if (column.width - shift < 0) {
+                shift = column.width;
             }
 
-            leftColumn.width -= shift;
-            if (rightColumn) {
-                rightColumn.width += shift;
-            }
+            column.width -= shift;
 
             // Set the new style
             e.data.setColumnWidth();
