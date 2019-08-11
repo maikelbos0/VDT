@@ -402,7 +402,8 @@
             }
 
             // the shift is expressed, same as column width, as a percentage of the original element
-            let shift = (e.data.dragState.position - e.pageX) / $(e.data.element).width() * 100;
+            let tableWidth = Math.min(100, e.data.options.columns.reduce(function (w, c) { return w + c.width; }, 0));
+            let shift = (e.data.dragState.position - e.pageX) / $(e.data.element).width() * tableWidth;
             let leftColumn = e.data.getColumn(e.data.dragState.leftColumn);
             let rightColumn = e.data.getColumn(e.data.dragState.rightColumn);
 
@@ -424,6 +425,10 @@
             e.data.dragState.position = e.pageX;
         },
         documentMouseup: function (e) {
+            if (e.which !== 1) {
+                return;
+            }
+
             e.data.dragState.dragging = false;
         }
     }
