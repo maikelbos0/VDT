@@ -58,7 +58,11 @@
         },
         // Allow headers to be resized
         areHeadersResizable: function (element) {
-            return $(element).data('header-resizable') !== undefined && $(element).data('header-resizable') != false;
+            return $(element).data('header-resize') !== undefined && $(element).data('header-resize') != false;
+        },
+        // Allow the user to select rows
+        allowSelect: function (element) {
+            return $(element).data('select') !== undefined && $(element).data('select') != false;
         }
     }
 
@@ -177,6 +181,7 @@
         this.dragState = {
             dragging: false
         };
+        this.allowSelect = this.options.allowSelect(this.element);
 
         this.style = $('<style>', { type: 'text/css' });
         $('body').append(this.style);
@@ -219,6 +224,10 @@
             this.header.on('mousedown', 'div.datagridview-header-drag', this, eventHandlers.headerDragMousedown);
             $(document).on('mousemove', this, eventHandlers.documentMousemove);
             $(document).on('mouseup', this, eventHandlers.documentMouseup);
+        }
+
+        if (this.allowSelect) {
+            this.element.on('mousedown', 'div.datagridview-row', this, eventHandlers.rowMousedown);
         }
     }
 
@@ -430,6 +439,10 @@
             }
 
             e.data.dragState.dragging = false;
+        },
+        rowMousedown: function (e) {
+            e.data.body.find('div.datagridview-row').not(this).removeClass('datagridview-row-selected');
+            $(this).addClass('datagridview-row-selected');
         }
     }
 

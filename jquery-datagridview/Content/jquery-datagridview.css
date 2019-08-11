@@ -31,6 +31,10 @@
     position: relative;
 }
 
+.datagridview-row-selected {
+    background: #aaccff;
+}
+
 .datagridview-header-cell, .datagridview-row > div {
     white-space: nowrap;
     overflow: hidden;
