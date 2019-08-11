@@ -24,6 +24,10 @@
     flex-grow: 1;
 }
 
+.datagridview-container-multiselect .datagridview-body {
+    user-select: none;
+}
+
 .datagridview-header, .datagridview-row, .datagridview-footer {
     display: flex;
     flex-direction: row;

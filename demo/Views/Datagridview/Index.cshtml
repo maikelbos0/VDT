@@ -7,7 +7,7 @@
 </p>
 
 <div class="site-grid-container">
-    <div id="datagrid-1" class="datagrid site-datagrid-full" data-header-resize="true" data-select="true">
+    <div id="datagrid-1" class="datagrid site-datagrid-full" data-header-resize="true" data-select="true" data-multiselect="true">
         <div>This content to be replaced</div>
     </div>
 </div>
@@ -57,6 +57,12 @@
 
             $('#datagrid-1').on('datagridview.sorted datagridview.paged', function (event, metaData) {
                 populate(metaData);
+            });
+
+            $('#datagrid-1').on('datagridview.selectionChanged', function (event) {
+                $('#datagrid-1').datagridview(function () {
+                    console.log(this.getSelectedIndexes());
+                });
             });
 
             @*$('#datagrid-1').datagridview(function () {

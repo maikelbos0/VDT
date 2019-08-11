@@ -63,6 +63,10 @@
         // Allow the user to select rows
         allowSelect: function (element) {
             return $(element).data('select') !== undefined && $(element).data('select') != false;
+        },
+        // If select is enabled, allow multiple row selection
+        isMultiselect: function (element) {
+            return $(element).data('multiselect') !== undefined && $(element).data('multiselect') != false;
         }
     }
 
@@ -162,6 +166,15 @@
         this.element = element;
         this.options = options;
         this.data = [];
+        this.areHeadersResizable = this.options.areHeadersResizable(this.element);
+        this.dragState = {
+            dragging: false
+        };
+        this.allowSelect = this.options.allowSelect(this.element);
+        this.isMultiselect = this.allowSelect && this.options.isMultiselect(this.element);
+        this.selectState = {
+            element: null
+        }
         this.metaData = this.options.getMetaData(this.element);
         this.elementClass = 'datagridview-' + Math.random().toString().replace('.', '');
         this.element.addClass('datagridview');
@@ -169,7 +182,7 @@
         this.element.children().hide();
         this.header = this.createElement('<div>', 'datagridview-header');
         this.body = this.createElement('<div>', 'datagridview-body');
-        this.contentContainer = this.createElement('<div>', 'datagridview-content-container').append(this.header, this.body);
+        this.contentContainer = this.createElement('<div>', 'datagridview-content-container').toggleClass('datagridview-container-multiselect', this.isMultiselect).append(this.header, this.body);
         this.footer = this.createElement('<div>'); // Placeholder only
         this.footerPlugins = this.options.getFooterPlugins(this.element);
         this.sortToggle = this.createElement('<div>', 'datagridview-sort-toggle');
@@ -177,11 +190,6 @@
             this.contentContainer,
             this.footer
         );
-        this.areHeadersResizable = this.options.areHeadersResizable(this.element);
-        this.dragState = {
-            dragging: false
-        };
-        this.allowSelect = this.options.allowSelect(this.element);
 
         this.style = $('<style>', { type: 'text/css' });
         $('body').append(this.style);
@@ -381,16 +389,52 @@
         });
     }
 
+    // Internal function for altering selection
+    DataGridView.prototype.alterSelection = function (rows, selectedRows, toggle, resetSelection) {
+        let selectionChanged = false;
+
+        // Reset selection means we unselect the selected rows that aren't in the current selection
+        if (resetSelection) {
+            let unselectRows = rows.not(selectedRows).filter('.datagridview-row-selected');
+
+            if (unselectRows.length > 0) {
+                selectionChanged = true;
+                unselectRows.removeClass('datagridview-row-selected');
+            }
+        }
+
+        // If we toggle then all selected rows will be unselected or vice versa
+        if (toggle) {
+            if (selectedRows.length > 0) {
+                selectionChanged = true;
+                selectedRows.toggleClass('datagridview-row-selected');
+            }
+        }
+        // Else we detect which rows to select that haven't been selected
+        else {
+            selectedRows = selectedRows.not('.datagridview-row-selected');
+
+            if (selectedRows.length > 0) {
+                selectionChanged = true;
+                selectedRows.addClass('datagridview-row-selected');
+            }
+        }
+
+        if (selectionChanged) {
+            this.element.trigger('datagridview.selectionChanged');
+        }
+    }
+
     // Set selected rows by selector/selection/function/element
     DataGridView.prototype.setSelectedRows = function (selector) {
         let rows = this.body.find('.datagridview-row');
         let selectedRows = rows.filter(selector);
 
-        // Single select
-        selectedRows = selectedRows.first();
+        if (!this.isMultiselect) {
+            selectedRows = selectedRows.first();
+        }
 
-        rows.not(selectedRows).removeClass('datagridview-row-selected');
-        selectedRows.addClass('datagridview-row-selected');
+        this.alterSelection(rows, selectedRows, false, true);
     }
 
     // Set selected rows by index
@@ -400,7 +444,7 @@
             return indexes.filter(function (v) { return v === index; }).length > 0;
         })
 
-        this.setSelectedRows(selectedRows);
+        this.alterSelection(rows, selectedRows, false, true);
     }
 
     // Set selected rows by filter function applied to data array
@@ -484,8 +528,27 @@
             e.data.dragState.dragging = false;
         },
         rowMousedown: function (e) {
-            e.data.body.find('div.datagridview-row').not(this).removeClass('datagridview-row-selected');
-            $(this).addClass('datagridview-row-selected');
+            let rows = e.data.body.find('.datagridview-row');
+
+            if (e.data.isMultiselect && e.shiftKey && e.data.selectState.element) {
+                let firstIndex = rows.index(e.data.selectState.element);
+                let secondIndex = rows.index(this);
+
+                if (firstIndex > secondIndex) {
+                    e.data.alterSelection(rows, rows.slice(secondIndex, firstIndex + 1), false, !e.ctrlKey);
+                }
+                else {
+                    e.data.alterSelection(rows, rows.slice(firstIndex, secondIndex + 1), false, !e.ctrlKey);
+                }
+            }
+            else if (e.data.isMultiselect && e.ctrlKey) {
+                e.data.alterSelection(rows, $(this), true, false);
+                e.data.selectState.element = $(this);
+            }
+            else {
+                e.data.alterSelection(rows, $(this), false, true);
+                e.data.selectState.element = $(this);
+            }
         }
     }
 
