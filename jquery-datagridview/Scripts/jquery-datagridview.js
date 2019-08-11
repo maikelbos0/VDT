@@ -246,7 +246,6 @@
     }
 
     // Fill the grid with the data
-    // TODO: research performance; preliminary results are 40 cells per ms in Chrome
     DataGridView.prototype.populate = function (metaData, data) {
         let newBody = this.createElement('<div>', 'datagridview-body');
 
@@ -364,6 +363,63 @@
                 index: column.index
             };
         });
+    }
+
+    // Get selected rows
+    DataGridView.prototype.getSelectedRows = function () {
+        return this.body.find('.datagridview-row-selected');
+    }
+
+    // Get selected indexes
+    DataGridView.prototype.getSelectedIndexes = function () {
+        return this.getSelectedRows().map(function () {
+            return $(this).index('.datagridview-row');
+        }).get();
+    }
+
+    // Get selected data
+    DataGridView.prototype.getSelectedData = function () {
+        let base = this;
+
+        return this.getSelectedIndexes().map(function (index) {
+            return base.data[index];
+        });
+    }
+
+    // Set selected rows by selector/selection/function/element
+    DataGridView.prototype.setSelectedRows = function (selector) {
+        let rows = this.body.find('.datagridview-row');
+        let selectedRows = rows.filter(selector);
+
+        // Single select
+        selectedRows = selectedRows.first();
+
+        rows.not(selectedRows).removeClass('datagridview-row-selected');
+        selectedRows.addClass('datagridview-row-selected');
+    }
+
+    // Set selected rows by index
+    DataGridView.prototype.setSelectedIndexes = function (indexes) {
+        let rows = this.body.find('.datagridview-row');
+        let selectedRows = rows.get().filter(function (value, index) {
+            return indexes.filter(function (v) { return v === index; }).length > 0;
+        })
+
+        this.setSelectedRows(selectedRows);
+    }
+
+    // Set selected rows by filter function applied to data array
+    // Filter function arguments are the standard array filter function arguments
+    DataGridView.prototype.setSelectedData = function (filter) {
+        let indexes = [];
+
+        this.data.forEach(function (value, index, array) {
+            if (filter(value, index, array)) {
+                indexes.push(index);
+            }
+        });
+
+        this.setSelectedIndexes(indexes);
     }
 
     // Initiate paging event

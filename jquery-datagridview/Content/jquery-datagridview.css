@@ -28,7 +28,6 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    position: relative;
 }
 
 .datagridview-row-selected {
@@ -103,9 +102,9 @@
 }
 
 .datagridview-header-drag {
-    background-color: #000000;
+    background-color: #cccc99;
 }
 
-.datagridview-row > div {
-    outline: 1px solid #000000;
+.datagridview-row > div, .datagridview-header-cell {
+    border-bottom: 1px solid #000000;
 }
