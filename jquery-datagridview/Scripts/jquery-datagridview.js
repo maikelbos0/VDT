@@ -547,14 +547,7 @@
             let rows = e.data.body.find('.datagridview-row');
             let firstIndex = rows.index(e.data.selectState.dragElement);
             let secondIndex = rows.index(this);
-            let dragSelection;
-
-            if (firstIndex > secondIndex) {
-                dragSelection = rows.slice(secondIndex, firstIndex + 1);
-            }
-            else {
-                dragSelection = rows.slice(firstIndex, secondIndex + 1);
-            }
+            let dragSelection = rows.slice(Math.min(firstIndex, secondIndex), Math.max(firstIndex, secondIndex) + 1);
 
             rows.not(dragSelection).removeClass('datagridview-row-selecting');
             dragSelection.addClass('datagridview-row-selecting');
@@ -566,23 +559,13 @@
                 let firstIndex = rows.index(e.data.selectState.dragElement);
                 let secondIndex = rows.index(this);
 
-                if (firstIndex > secondIndex) {
-                    e.data.alterSelection(rows, rows.slice(secondIndex, firstIndex + 1), false, !e.ctrlKey);
-                }
-                else {
-                    e.data.alterSelection(rows, rows.slice(firstIndex, secondIndex + 1), false, !e.ctrlKey);
-                }
+                e.data.alterSelection(rows, rows.slice(Math.min(firstIndex, secondIndex), Math.max(firstIndex, secondIndex) + 1), false, !e.ctrlKey);
             }
             else if (e.data.isMultiselect && e.shiftKey && e.data.selectState.extendElement) {
                 let firstIndex = rows.index(e.data.selectState.extendElement);
                 let secondIndex = rows.index(this);
 
-                if (firstIndex > secondIndex) {
-                    e.data.alterSelection(rows, rows.slice(secondIndex, firstIndex + 1), false, !e.ctrlKey);
-                }
-                else {
-                    e.data.alterSelection(rows, rows.slice(firstIndex, secondIndex + 1), false, !e.ctrlKey);
-                }
+                e.data.alterSelection(rows, rows.slice(Math.min(firstIndex, secondIndex), Math.max(firstIndex, secondIndex) + 1), false, !e.ctrlKey);
             }
             else if (e.data.isMultiselect && e.ctrlKey) {
                 e.data.alterSelection(rows, $(this), true, false);
