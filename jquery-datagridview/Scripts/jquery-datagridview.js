@@ -173,7 +173,8 @@
         this.allowSelect = this.options.allowSelect(this.element);
         this.isMultiselect = this.allowSelect && this.options.isMultiselect(this.element);
         this.selectState = {
-            element: null
+            selecting: false,
+            dragging: false
         }
         this.metaData = this.options.getMetaData(this.element);
         this.elementClass = 'datagridview-' + Math.random().toString().replace('.', '');
@@ -236,6 +237,8 @@
 
         if (this.allowSelect) {
             this.element.on('mousedown', 'div.datagridview-row', this, eventHandlers.rowMousedown);
+            this.element.on('mouseenter', 'div.datagridview-row', this, eventHandlers.rowMouseenter);
+            this.element.on('mouseup', 'div.datagridview-row', this, eventHandlers.rowMouseup);
         }
     }
 
@@ -528,10 +531,50 @@
             e.data.dragState.dragging = false;
         },
         rowMousedown: function (e) {
+            e.data.selectState.selecting = true;
+            e.data.selectState.dragElement = $(this);
+            e.data.selectState.dragElement.addClass('datagridview-row-selecting');
+        },
+        rowMouseenter: function (e) {
+            if (!e.data.selectState.selecting) {
+                return;
+            }
+
+            // Only if we are selecting, and we've entered a new row, are we dragging
+            e.data.selectState.dragging = true;
+
+            // This is just to display that we're select-dragging the rows
+            let rows = e.data.body.find('.datagridview-row');
+            let firstIndex = rows.index(e.data.selectState.dragElement);
+            let secondIndex = rows.index(this);
+            let dragSelection;
+
+            if (firstIndex > secondIndex) {
+                dragSelection = rows.slice(secondIndex, firstIndex + 1);
+            }
+            else {
+                dragSelection = rows.slice(firstIndex, secondIndex + 1);
+            }
+
+            rows.not(dragSelection).removeClass('datagridview-row-selecting');
+            dragSelection.addClass('datagridview-row-selecting');
+        },
+        rowMouseup: function (e) {
             let rows = e.data.body.find('.datagridview-row');
 
-            if (e.data.isMultiselect && e.shiftKey && e.data.selectState.element) {
-                let firstIndex = rows.index(e.data.selectState.element);
+            if (e.data.isMultiselect && e.data.selectState.dragging && e.data.selectState.dragElement) {
+                let firstIndex = rows.index(e.data.selectState.dragElement);
+                let secondIndex = rows.index(this);
+
+                if (firstIndex > secondIndex) {
+                    e.data.alterSelection(rows, rows.slice(secondIndex, firstIndex + 1), false, !e.ctrlKey);
+                }
+                else {
+                    e.data.alterSelection(rows, rows.slice(firstIndex, secondIndex + 1), false, !e.ctrlKey);
+                }
+            }
+            else if (e.data.isMultiselect && e.shiftKey && e.data.selectState.extendElement) {
+                let firstIndex = rows.index(e.data.selectState.extendElement);
                 let secondIndex = rows.index(this);
 
                 if (firstIndex > secondIndex) {
@@ -543,12 +586,18 @@
             }
             else if (e.data.isMultiselect && e.ctrlKey) {
                 e.data.alterSelection(rows, $(this), true, false);
-                e.data.selectState.element = $(this);
+                e.data.selectState.extendElement = $(this);
             }
             else {
                 e.data.alterSelection(rows, $(this), false, true);
-                e.data.selectState.element = $(this);
+                e.data.selectState.extendElement = $(this);
             }
+
+            // Reset select state
+            rows.removeClass('datagridview-row-selecting');
+            e.data.selectState.dragElement = null;
+            e.data.selectState.selecting = false;
+            e.data.selectState.dragging = false;
         }
     }
 
