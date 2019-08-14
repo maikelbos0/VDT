@@ -2,76 +2,63 @@
 
 describe('a datagridview object', function () {
     it('callback is called', function () {
-        /*
         var called = false;
 
-        $('#dropdown-interaction-callback').dropdownlist({}, function () {
+        $('#datagridview-interaction-callback').datagridview({ columns: [] }, function () {
             called = true;
         });
 
         expect(called).toEqual(true);
-        */
-        fail();
-    });
-
-    it('callback is called if it\'s the first argument of the create function', function () {
-        /*
-        var called = false;
-
-        $('#dropdown-interaction-callback-no-options').dropdownlist(function () {
-            called = true;
-        });
-
-        expect(called).toEqual(true);
-        */
-        fail();
     });
 
     it('is the function scope in the callback when creating a datagridview', function () {
-        /*
         var called = false;
 
-        $('#dropdown-interaction-this').dropdownlist(null, function () {
-            expect(typeof this.areAllItemsSelected).toEqual('function');
+        $('#datagridview-interaction-this').datagridview({ columns: [] }, function () {
+            expect(typeof this.populate).toEqual('function');
             called = true;
         });
 
         expect(called).toEqual(true);
-        */
-        fail();
     });
 
     it('is the function scope in the callback when a datagridview already exists', function () {
-        /*
         var called = false;
 
-        $('#dropdown-interaction-this-existing').dropdownlist();
+        $('#datagridview-interaction-this-existing').datagridview({ columns: [] });
 
-        $('#dropdown-interaction-this-existing').dropdownlist(null, function () {
-            expect(typeof this.areAllItemsSelected).toEqual('function');
+        $('#datagridview-interaction-this-existing').datagridview(null, function () {
+            expect(typeof this.populate).toEqual('function');
             called = true;
         });
 
         expect(called).toEqual(true);
-        */
-        fail();
+    });
+
+    it('callback is called if it\'s the first argument of the function after creating', function () {
+        var called = false;
+
+        $('#datagridview-interaction-callback-no-options').datagridview({ columns: [] });
+
+        $('#datagridview-interaction-callback-no-options').datagridview(function () {
+            called = true;
+        });
+
+        expect(called).toEqual(true);
     });
 
     it('is the first parameter in the callback', function () {
-        /*
         var called = false;
 
-        $('#dropdown-interaction-first-parameter').dropdownlist(null, function (d) {
+        $('#datagridview-interaction-first-parameter').datagridview({ columns: [] }, function (d) {
             expect(d).not.toBeNull();
             expect(d).not.toBeUndefined();
-            expect(typeof d.areAllItemsSelected).toEqual('function');
+            expect(typeof d.populate).toEqual('function');
 
             called = true;
         });
 
         expect(called).toEqual(true);
-        */
-        fail();
     });
 
     it('can be removed', function () {
