@@ -4,6 +4,10 @@ describe('in a datagridview a user can select', function () {
     it('nothing by clicking if selecting is not allowed', function () {
         fail();
     });
+    
+    it('nothing by clicking if selecting is not allowed and multiselect is on', function () {
+        fail();
+    });
 
     it('a single row by clicking on the row', function () {
         fail();

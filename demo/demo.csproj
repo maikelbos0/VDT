@@ -186,6 +186,10 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\jquery-datagridview\jquery-datagridview.csproj">
+      <Project>{0885051b-8a62-437e-86aa-27c96dc555e4}</Project>
+      <Name>jquery-datagridview</Name>
+    </ProjectReference>
     <ProjectReference Include="..\jquery-dropdownlist.MVC\jquery-dropdownlist.MVC.csproj">
       <Project>{bd3336a8-dc76-47e8-b7d0-4995db4fa6f7}</Project>
       <Name>jquery-dropdownlist.MVC</Name>

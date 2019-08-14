@@ -51,10 +51,34 @@ describe('a datagridview option', function () {
     });
     
     it('can be provided for allowSelect', function () {
-        fail();
+        var grid = $('#datagridview-options-allow-select');
+        var allowSelect = false;
+
+        grid.datagridview({
+            columns: [],
+            allowSelect: function () {
+                return true;
+            }
+        }, function () {
+            allowSelect = this.allowSelect;
+        });
+
+        expect(allowSelect).toEqual(true);
     });
 
     it('can be provided for isMultiselect', function () {
-        fail();
+        var grid = $('#datagridview-options-multiselect');
+        var isMultiselect = false;
+
+        grid.datagridview({
+            columns: [],
+            isMultiselect: function () {
+                return true;
+            }
+        }, function () {
+            isMultiselect = this.isMultiselect;
+        });
+
+        expect(isMultiselect).toEqual(true);
     });
 });
