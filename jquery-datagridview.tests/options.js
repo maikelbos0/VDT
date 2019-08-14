@@ -49,4 +49,12 @@ describe('a datagridview option', function () {
 
         expect(grid.find('.datagridview-header-drag').length).toEqual(1);
     });
+    
+    it('can be provided for allowSelect', function () {
+        fail();
+    });
+
+    it('can be provided for isMultiselect', function () {
+        fail();
+    });
 });

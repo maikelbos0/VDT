@@ -1,6 +1,79 @@
 ﻿/// <reference path="interaction.html" />
 
 describe('a datagridview object', function () {
+    it('callback is called', function () {
+        /*
+        var called = false;
+
+        $('#dropdown-interaction-callback').dropdownlist({}, function () {
+            called = true;
+        });
+
+        expect(called).toEqual(true);
+        */
+        fail();
+    });
+
+    it('callback is called if it\'s the first argument of the create function', function () {
+        /*
+        var called = false;
+
+        $('#dropdown-interaction-callback-no-options').dropdownlist(function () {
+            called = true;
+        });
+
+        expect(called).toEqual(true);
+        */
+        fail();
+    });
+
+    it('is the function scope in the callback when creating a datagridview', function () {
+        /*
+        var called = false;
+
+        $('#dropdown-interaction-this').dropdownlist(null, function () {
+            expect(typeof this.areAllItemsSelected).toEqual('function');
+            called = true;
+        });
+
+        expect(called).toEqual(true);
+        */
+        fail();
+    });
+
+    it('is the function scope in the callback when a datagridview already exists', function () {
+        /*
+        var called = false;
+
+        $('#dropdown-interaction-this-existing').dropdownlist();
+
+        $('#dropdown-interaction-this-existing').dropdownlist(null, function () {
+            expect(typeof this.areAllItemsSelected).toEqual('function');
+            called = true;
+        });
+
+        expect(called).toEqual(true);
+        */
+        fail();
+    });
+
+    it('is the first parameter in the callback', function () {
+        /*
+        var called = false;
+
+        $('#dropdown-interaction-first-parameter').dropdownlist(null, function (d) {
+            expect(d).not.toBeNull();
+            expect(d).not.toBeUndefined();
+            expect(typeof d.areAllItemsSelected).toEqual('function');
+
+            called = true;
+        });
+
+        expect(called).toEqual(true);
+        */
+        fail();
+    });
+
     it('can be removed', function () {
         var grid = $('#datagridview-interaction-remove');
 
@@ -111,5 +184,45 @@ describe('a datagridview object', function () {
         expect(columns.length).toEqual(2);
         expect(columns[0].data).toEqual('test');
         expect(columns[1].index).toEqual(1);
+    });
+
+    it('can give the current selected rows', function () {
+        fail();
+    });
+
+    it('can give the current selected row indexes', function () {
+        fail();
+    });
+
+    it('can give the current selected data', function () {
+        fail();
+    });
+
+    it('can set the selected rows', function () {
+        fail();
+    });
+
+    it('can set the selected indexes', function () {
+        fail();
+    });
+
+    it('can set the selected rows by data function', function () {
+        fail();
+    });
+
+    it('can not set selected rows when selecting is not allowed', function () {
+        fail();
+    });
+
+    it('sets only the first matching row as selected when multiselect is disabled', function () {
+        fail();
+    });
+
+    it('selects all matching rows when multiselect is enabled', function () {
+        fail();
+    });
+
+    it('triggers the selection changed event when setting the selection programmatically', function () {
+        fail();
     });
 });
