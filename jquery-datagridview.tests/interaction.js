@@ -331,18 +331,97 @@ describe('a datagridview object', function () {
     });
 
     it('can not set selected rows when selecting is not allowed', function () {
-        fail();
+        var grid = $('#datagridview-interaction-selected-no-select');
+        var rows = null;
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, }
+            ]);
+
+            this.setSelectedRows(':nth-child(2)');
+        });
+
+        expect(grid.find('.datagridview-row-selected').length).toEqual(0);
     });
 
     it('sets only the first matching row as selected when multiselect is disabled', function () {
-        fail();
+        var grid = $('#datagridview-interaction-selected-single');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, }
+            ]);
+
+            this.setSelectedRows('*');
+        });
+
+        var rows = grid.find('.datagridview-row-selected');
+
+        expect(rows.length).toEqual(1);
+        expect(rows[0]).toEqual(grid.find('.datagridview-row')[0]);
     });
 
     it('selects all matching rows when multiselect is enabled', function () {
-        fail();
+        var grid = $('#datagridview-interaction-selected-multi');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, }
+            ]);
+
+            this.setSelectedRows(':not(:first-child)');
+        });
+
+        var rows = grid.find('.datagridview-row-selected');
+
+        expect(rows.length).toEqual(2);
+        expect(rows[0]).toEqual(grid.find('.datagridview-row')[1]);
+        expect(rows[1]).toEqual(grid.find('.datagridview-row')[2]);
     });
 
     it('triggers the selection changed event when setting the selection programmatically', function () {
-        fail();
+        var grid = $('#datagridview-interaction-selected-event');
+        var called = false;
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, }
+            ]);
+        });
+
+        grid.on('datagridview.selectionChanged', function () {
+            called = true;
+        });
+
+        grid.datagridview(function () {
+            this.setSelectedRows('*');
+        });
+        
+        expect(called).toEqual(true);
     });
 });

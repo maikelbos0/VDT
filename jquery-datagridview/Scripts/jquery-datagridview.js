@@ -433,6 +433,9 @@
         let rows = this.body.find('.datagridview-row');
         let selectedRows = rows.filter(selector);
 
+        if (!this.allowSelect) {
+            selectedRows = $(false);
+        }
         if (!this.isMultiselect) {
             selectedRows = selectedRows.first();
         }
