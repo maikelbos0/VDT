@@ -37,17 +37,21 @@ describe('a datagridview option', function () {
         expect(grid.find('.datagridview-footer-element').length).toEqual(2);
     });
 
-    it('can be provided for areHeadersResizable', function () {
+    it('can be provided for allowColumnResize', function () {
         var grid = $('#datagridview-options-headers-resizable');
 
         grid.datagridview({
             columns: [{ data: 'test' }],
-            areHeadersResizable: function () {
+            allowColumnResize: function () {
                 return true;
             }
         });
 
         expect(grid.find('.datagridview-header-drag').length).toEqual(1);
+    });
+
+    it('can be provided for allowColumnMove', function () {
+        fail();
     });
     
     it('can be provided for allowSelect', function () {

@@ -56,9 +56,13 @@
                 $.fn.datagridview.footerPlugins.displayFull
             ];
         },
-        // Allow headers to be resized
-        areHeadersResizable: function (element) {
-            return $(element).data('header-resize') !== undefined && $(element).data('header-resize') != false;
+        // Allow columns to be resized
+        allowColumnResize: function (element) {
+            return $(element).data('column-resize') !== undefined && $(element).data('column-resize') != false;
+        },
+        // Allow columns to be moved around
+        allowColumnMove: function (element) {
+            return $(element).data('column-move') !== undefined && $(element).data('column-move') != false;
         },
         // Allow the user to select rows
         allowSelect: function (element) {
@@ -166,10 +170,14 @@
         this.element = element;
         this.options = options;
         this.data = [];
-        this.areHeadersResizable = this.options.areHeadersResizable(this.element);
-        this.dragState = {
+        this.allowColumnResize = this.options.allowColumnResize(this.element);
+        this.headerResizeState = {
             dragging: false
         };
+        this.allowColumnMove = this.options.allowColumnMove(this.element);
+        this.headerMoveState = {
+            dragging: false
+        }
         this.allowSelect = this.options.allowSelect(this.element);
         this.isMultiselect = this.allowSelect && this.options.isMultiselect(this.element);
         this.selectState = {
@@ -212,7 +220,7 @@
                 .data('column', column.data)
                 .data('sort-column', column.sortData || column.data);
 
-            if (base.areHeadersResizable) {
+            if (base.allowColumnResize) {
                 // Drag item
                 headerCell.prepend($('<div>').addClass('datagridview-header-drag'));
             }
@@ -229,10 +237,15 @@
         // Event handlers
         this.header.on('mouseup', 'div.datagridview-header-cell-sortable', this, eventHandlers.headerMouseup);
 
-        if (this.areHeadersResizable) {
+        if (this.allowColumnResize) {
             this.header.on('mousedown', 'div.datagridview-header-drag', this, eventHandlers.headerDragMousedown);
             $(document).on('mousemove', this, eventHandlers.documentMousemove);
             $(document).on('mouseup', this, eventHandlers.documentMouseup);
+        }
+        
+        if (this.allowColumnMove) {
+            this.header.on('mousedown', 'div.datagridview-header-cell', this, eventHandlers.headerMousedown);
+            this.header.on('mousemove', 'div.datagridview-header-cell', this, eventHandlers.headerMousemove);
         }
 
         if (this.allowSelect) {
@@ -477,8 +490,27 @@
 
     // Event handlers should not be accessible from the object itself
     let eventHandlers = {
+        headerMousedown: function (e) {
+            console.log('asd');
+            if (e.which !== 1) {
+                return;
+            }
+
+            e.data.headerMoveState.dragging = true;
+            e.data.headerMoveState.element = $(this);
+            e.data.headerMoveState.startPosition = e.pageX;
+        },
+        headerMousemove: function (e) {
+            if (!e.data.headerMoveState.dragging) {
+                return;
+            }
+
+            let shift = e.data.headerMoveState.startPosition - e.pageX;
+
+            console.log(shift);
+        },
         headerMouseup: function (e) {
-            if (e.which !== 1 || e.data.dragState.dragging) {
+            if (e.which !== 1 || e.data.headerResizeState.dragging || e.data.headerMoveState.dragging) {
                 return;
             }
 
@@ -501,19 +533,19 @@
                 return;
             }
             
-            e.data.dragState.dragging = true;
-            e.data.dragState.position = e.pageX;
-            e.data.dragState.column = $(this).closest('.datagridview-header-cell').data('id');
+            e.data.headerResizeState.dragging = true;
+            e.data.headerResizeState.position = e.pageX;
+            e.data.headerResizeState.column = $(this).closest('.datagridview-header-cell').data('id');
         },
         documentMousemove: function (e) {
-            if (!e.data.dragState.dragging) {
+            if (!e.data.headerResizeState.dragging) {
                 return;
             }
 
             // the shift is expressed, same as column width, as a percentage of the original element
             let tableWidth = Math.min(100, e.data.options.columns.reduce(function (w, c) { return w + c.width; }, 0));
-            let shift = (e.data.dragState.position - e.pageX) / $(e.data.element).width() * tableWidth;
-            let column = e.data.options.columns.filter(function (c) { return c.id === e.data.dragState.column; })[0];
+            let shift = (e.data.headerResizeState.position - e.pageX) / $(e.data.element).width() * tableWidth;
+            let column = e.data.options.columns.filter(function (c) { return c.id === e.data.headerResizeState.column; })[0];
 
             // Adjust shift to only be enough to hide a column fully
             if (column.width - shift < 0) {
@@ -524,14 +556,14 @@
 
             // Set the new style
             e.data.setColumnWidth();
-            e.data.dragState.position = e.pageX;
+            e.data.headerResizeState.position = e.pageX;
         },
         documentMouseup: function (e) {
             if (e.which !== 1) {
                 return;
             }
 
-            e.data.dragState.dragging = false;
+            e.data.headerResizeState.dragging = false;
         },
         rowMousedown: function (e) {
             e.data.selectState.selecting = true;
