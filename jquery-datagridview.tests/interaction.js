@@ -207,11 +207,56 @@ describe('a datagridview object', function () {
     });
 
     it('can give the current selected row indexes', function () {
-        fail();
+        var grid = $('#datagridview-interaction-selected-indexes');
+        var indexes = null;
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, }
+            ]);
+        });
+
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mouseup');
+
+        grid.datagridview(function () {
+            indexes = this.getSelectedIndexes();
+        });
+
+        expect(indexes.length).toEqual(1);
+        expect(indexes[0]).toEqual(1);
     });
 
     it('can give the current selected data', function () {
-        fail();
+        var grid = $('#datagridview-interaction-selected-data');
+        var data = [
+            { test: 1, },
+            { test: 2, },
+            { test: 3, }
+        ];
+        var selectedData = null;
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), data);
+        });
+
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mouseup');
+
+        grid.datagridview(function () {
+            selectedData = this.getSelectedData();
+        });
+
+        expect(selectedData.length).toEqual(1);
+        expect(selectedData[0]).toEqual(data[1]);
     });
 
     it('can set the selected rows', function () {

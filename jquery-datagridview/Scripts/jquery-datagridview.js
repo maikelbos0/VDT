@@ -379,7 +379,7 @@
     // Get selected indexes
     DataGridView.prototype.getSelectedIndexes = function () {
         return this.getSelectedRows().map(function () {
-            return $(this).index('.datagridview-row');
+            return $(this).index();
         }).get();
     }
 
