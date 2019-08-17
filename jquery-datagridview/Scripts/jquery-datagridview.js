@@ -450,7 +450,7 @@
             return indexes.filter(function (v) { return v === index; }).length > 0;
         })
 
-        this.alterSelection(rows, selectedRows, false, true);
+        this.setSelectedRows(selectedRows);
     }
 
     // Set selected rows by filter function applied to data array

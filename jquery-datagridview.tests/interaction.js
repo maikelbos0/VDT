@@ -332,7 +332,6 @@ describe('a datagridview object', function () {
 
     it('can not set selected rows when selecting is not allowed', function () {
         var grid = $('#datagridview-interaction-selected-no-select');
-        var rows = null;
 
         grid.datagridview({
             columns: [
@@ -346,6 +345,26 @@ describe('a datagridview object', function () {
             ]);
 
             this.setSelectedRows(':nth-child(2)');
+        });
+
+        expect(grid.find('.datagridview-row-selected').length).toEqual(0);
+    });
+
+    it('can not set selected data when selecting is not allowed', function () {
+        var grid = $('#datagridview-interaction-selected-no-select-data');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, }
+            ]);
+
+            this.setSelectedData(function () { return true; });
         });
 
         expect(grid.find('.datagridview-row-selected').length).toEqual(0);
@@ -423,5 +442,67 @@ describe('a datagridview object', function () {
         });
         
         expect(called).toEqual(true);
+    });
+
+    it('triggers the selection changed event when deselecting', function () {
+        var grid = $('#datagridview-interaction-selected-event');
+        var called = false;
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, }
+            ]);
+            });
+
+        grid.datagridview(function () {
+            this.setSelectedRows('*');
+        });
+
+        grid.on('datagridview.selectionChanged', function () {
+            called = true;
+        });
+
+        grid.datagridview(function () {
+            this.setSelectedRows(false);
+        });
+
+        expect(called).toEqual(true);
+    });
+
+    it('does not trigger the selection changed event when the selection does not change', function () {
+        var grid = $('#datagridview-interaction-no-selected-event');
+        var called = false;
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, }
+            ]);
+        });
+
+        grid.datagridview(function () {
+            this.setSelectedRows('*');
+        });
+
+        grid.on('datagridview.selectionChanged', function () {
+            called = true;
+        });
+
+        grid.datagridview(function () {
+            this.setSelectedRows('*');
+        });
+
+        expect(called).toEqual(false);
     });
 });
