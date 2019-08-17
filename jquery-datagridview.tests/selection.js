@@ -252,14 +252,87 @@ describe('in a datagridview a user can select', function () {
     });
 
     it('a range of rows by dragging from a higher row to a lower row in multiselect mode', function () {
-        fail();
+        var grid = $('#selection-multi-drag');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, },
+                { test: 4, }
+            ]);
+        });
+
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mousedown');
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(4)'), 'mouseenter');
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(4)'), 'mouseup');
+
+        var rows = grid.find('.datagridview-row-selected');
+
+        expect(rows.length).toEqual(3);
+        expect(rows[0]).toEqual(grid.find('.datagridview-row')[1]);
+        expect(rows[2]).toEqual(grid.find('.datagridview-row')[3]);
     });
 
     it('a range of rows by dragging from a lower row to a higher row in multiselect mode', function () {
-        fail();
+        var grid = $('#selection-multi-drag-reverse');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, },
+                { test: 4, }
+            ]);
+        });
+
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(4)'), 'mousedown');
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mouseenter');
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mouseup');
+
+        var rows = grid.find('.datagridview-row-selected');
+
+        expect(rows.length).toEqual(3);
+        expect(rows[0]).toEqual(grid.find('.datagridview-row')[1]);
+        expect(rows[2]).toEqual(grid.find('.datagridview-row')[3]);
     });
 
     it('an additional range of rows by ctrl+dragging in multiselect mode', function () {
-        fail();
+        var grid = $('#selection-multi-ctrl-drag');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, },
+                { test: 4, },
+                { test: 5, },
+                { test: 6, }
+            ]);
+
+            this.setSelectedIndexes([0, 1]);
+        });
+
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(4)'), 'mousedown', true);
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(5)'), 'mouseenter', true);
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(5)'), 'mouseup', true);
+
+        var rows = grid.find('.datagridview-row-selected');
+
+        expect(rows.length).toEqual(4);
+        expect(rows[0]).toEqual(grid.find('.datagridview-row')[0]);
+        expect(rows[3]).toEqual(grid.find('.datagridview-row')[4]);
     });
 });
