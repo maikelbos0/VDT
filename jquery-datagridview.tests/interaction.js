@@ -1,6 +1,13 @@
 ﻿/// <reference path="interaction.html" />
 
 describe('a datagridview object', function () {
+    function triggerMouseEvent(element, eventType) {
+        var event = jQuery.Event(eventType);
+        event.which = 1;
+
+        $(element).trigger(event);
+    }
+
     it('callback is called', function () {
         var called = false;
 
@@ -174,7 +181,29 @@ describe('a datagridview object', function () {
     });
 
     it('can give the current selected rows', function () {
-        fail();
+        var grid = $('#datagridview-interaction-selected-rows');
+        var rows = null;
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, }
+            ]);
+        });
+
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mouseup');
+
+        grid.datagridview(function () {
+            rows = this.getSelectedRows();
+        });
+
+        expect(rows.length).toEqual(1);
+        expect(rows[0]).toEqual($('.datagridview-row:nth-child(2)')[0]);
     });
 
     it('can give the current selected row indexes', function () {

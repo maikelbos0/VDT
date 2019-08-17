@@ -1,13 +1,6 @@
 ﻿/// <reference path="paging.html" />
 
 describe('datagridview paging', function () {
-    function triggerMouseup(element) {
-        var event = jQuery.Event("mouseup");
-        event.which = 1;
-
-        $(element).trigger(event);
-    }
-
     $.fn.datagridview.defaults.getFooterPlugins = function () {
         return [
             $.fn.datagridview.footerPlugins.displayBasic,
