@@ -260,15 +260,74 @@ describe('a datagridview object', function () {
     });
 
     it('can set the selected rows', function () {
-        fail();
+        var grid = $('#datagridview-interaction-set-selected-rows');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, }
+            ]);
+
+            this.setSelectedRows(':nth-child(2)');
+        });
+
+        var rows = grid.find('.datagridview-row-selected');
+
+        expect(rows.length).toEqual(1);
+        expect(rows[0]).toEqual(grid.find('.datagridview-row:nth-child(2)')[0]);
     });
 
     it('can set the selected indexes', function () {
-        fail();
+        var grid = $('#datagridview-interaction-set-selected-indexes');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, }
+            ]);
+
+            this.setSelectedIndexes([2]);
+        });
+
+        var rows = grid.find('.datagridview-row-selected');
+
+        expect(rows.length).toEqual(1);
+        expect(rows[0]).toEqual(grid.find('.datagridview-row:nth-child(3)')[0]);
     });
 
     it('can set the selected rows by data function', function () {
-        fail();
+        var grid = $('#datagridview-interaction-set-selected-data');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, }
+            ]);
+
+            this.setSelectedData(function (value) {
+                return value.test == 2;
+            });
+        });
+
+        var rows = grid.find('.datagridview-row-selected');
+
+        expect(rows.length).toEqual(1);
+        expect(rows[0]).toEqual(grid.find('.datagridview-row:nth-child(2)')[0]);
     });
 
     it('can not set selected rows when selecting is not allowed', function () {

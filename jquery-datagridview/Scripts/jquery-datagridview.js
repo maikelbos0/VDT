@@ -443,7 +443,7 @@
     // Set selected rows by index
     DataGridView.prototype.setSelectedIndexes = function (indexes) {
         let rows = this.body.find('.datagridview-row');
-        let selectedRows = rows.get().filter(function (value, index) {
+        let selectedRows = rows.filter(function (index) {
             return indexes.filter(function (v) { return v === index; }).length > 0;
         })
 
@@ -451,7 +451,7 @@
     }
 
     // Set selected rows by filter function applied to data array
-    // Filter function arguments are the standard array filter function arguments
+    // Filter function arguments are the standard array filter function arguments value, index, array
     DataGridView.prototype.setSelectedData = function (filter) {
         let indexes = [];
 
