@@ -235,23 +235,24 @@
         this.displayFooters();
 
         // Event handlers
-        this.header.on('mouseup', 'div.datagridview-header-cell-sortable', this, eventHandlers.headerMouseup);
+        this.header.on('mouseup', 'div.datagridview-header-cell-sortable', this, eventHandlers.sort);
 
         if (this.allowColumnResize) {
-            this.header.on('mousedown', 'div.datagridview-header-drag', this, eventHandlers.headerDragMousedown);
-            $(document).on('mousemove', this, eventHandlers.documentMousemove);
-            $(document).on('mouseup', this, eventHandlers.documentMouseup);
+            this.header.on('mousedown', 'div.datagridview-header-drag', this, eventHandlers.columnResizeStart);
+            $(document).on('mousemove', this, eventHandlers.columnResize);
+            $(document).on('mouseup', this, eventHandlers.columnResizeEnd);
         }
         
         if (this.allowColumnMove) {
-            this.header.on('mousedown', 'div.datagridview-header-cell', this, eventHandlers.headerMousedown);
-            this.header.on('mousemove', 'div.datagridview-header-cell', this, eventHandlers.headerMousemove);
+            this.header.on('mousedown', 'div.datagridview-header-cell', this, eventHandlers.columnMoveStart);
+            $(document).on('mousemove', this, eventHandlers.columnMove);
+            $(document).on('mouseup', this, eventHandlers.columnMoveEnd);
         }
 
         if (this.allowSelect) {
-            this.element.on('mousedown', 'div.datagridview-row', this, eventHandlers.rowMousedown);
-            this.element.on('mouseenter', 'div.datagridview-row', this, eventHandlers.rowMouseenter);
-            this.element.on('mouseup', 'div.datagridview-row', this, eventHandlers.rowMouseup);
+            this.element.on('mousedown', 'div.datagridview-row', this, eventHandlers.rowSelectStart);
+            this.element.on('mouseenter', 'div.datagridview-row', this, eventHandlers.rowSelect);
+            this.element.on('mouseup', 'div.datagridview-row', this, eventHandlers.rowSelectEnd);
         }
     }
 
@@ -490,17 +491,17 @@
 
     // Event handlers should not be accessible from the object itself
     let eventHandlers = {
-        headerMousedown: function (e) {
+        columnMoveStart: function (e) {
             if (e.which !== 1) {
                 return;
             }
 
-            e.data.headerMoveState.dragging = true;
             e.data.headerMoveState.column = $(this).data('id');
             e.data.headerMoveState.startPosition = e.pageX;
+            e.data.headerMoveState.draggingStart = true;
         },
-        headerMousemove: function (e) {
-            if (!e.data.headerMoveState.dragging) {
+        columnMove: function (e) {
+            if (!e.data.headerMoveState.draggingStart) {
                 return;
             }
 
@@ -512,44 +513,45 @@
                 e.data.element.append(e.data.headerMoveState.title);
             }
 
+            e.data.headerMoveState.dragging = true;
             e.data.headerMoveState.title.css('top', e.pageY + 5 - e.data.element.position().top + 'px');
             e.data.headerMoveState.title.css('left', e.pageX + 15 - e.data.element.position().left + 'px');
 
             //console.log(shift);
         },
-        headerMouseup: function (e) {
-            if (e.which !== 1 || e.data.headerResizeState.dragging) {
+        columnMoveEnd: function (e) {
+            if (e.which !== 1 || !e.data.headerMoveState.dragging) {
                 return;
             }
 
-            // Move columns
-            if (e.data.headerMoveState.dragging) {
-
-                if (e.data.headerMoveState.title) {
-                    e.data.headerMoveState.title.remove();
-                    e.data.headerMoveState.title = null;
-                }
-
-                e.data.headerMoveState.dragging = false;
+            if (e.data.headerMoveState.title) {
+                e.data.headerMoveState.title.remove();
+                e.data.headerMoveState.title = null;
             }
-            // Sort
-            else {
-                // In the event handler we work with a copy of the element; we only sort when getting data in
-                let metaData = e.data.getMetaData();
-                let sortColumn = $(this).data('sort-column');
 
-                if (metaData.sortColumn === sortColumn) {
-                    metaData.sortDescending = !metaData.sortDescending;
-                }
-                else {
-                    metaData.sortColumn = sortColumn;
-                    metaData.sortDescending = false;
-                }
-
-                e.data.element.trigger('datagridview.sorted', metaData);
-            }
+            e.data.headerMoveState.draggingStart = false;
+            e.data.headerMoveState.dragging = false;
         },
-        headerDragMousedown: function (e) {
+        sort: function (e) {
+            if (e.which !== 1 || e.data.headerResizeState.dragging || e.data.headerMoveState.dragging) {
+                return;
+            }
+
+            // In the event handler we work with a copy of the element; we only sort when getting data in
+            let metaData = e.data.getMetaData();
+            let sortColumn = $(this).data('sort-column');
+
+            if (metaData.sortColumn === sortColumn) {
+                metaData.sortDescending = !metaData.sortDescending;
+            }
+            else {
+                metaData.sortColumn = sortColumn;
+                metaData.sortDescending = false;
+            }
+
+            e.data.element.trigger('datagridview.sorted', metaData);
+        },
+        columnResizeStart: function (e) {
             if (e.which !== 1) {
                 return;
             }
@@ -558,7 +560,7 @@
             e.data.headerResizeState.position = e.pageX;
             e.data.headerResizeState.column = $(this).closest('.datagridview-header-cell').data('id');
         },
-        documentMousemove: function (e) {
+        columnResize: function (e) {
             if (!e.data.headerResizeState.dragging) {
                 return;
             }
@@ -579,19 +581,19 @@
             e.data.setColumnWidth();
             e.data.headerResizeState.position = e.pageX;
         },
-        documentMouseup: function (e) {
+        columnResizeEnd: function (e) {
             if (e.which !== 1) {
                 return;
             }
 
             e.data.headerResizeState.dragging = false;
         },
-        rowMousedown: function (e) {
+        rowSelectStart: function (e) {
             e.data.selectState.selecting = true;
             e.data.selectState.dragElement = $(this);
             e.data.selectState.dragElement.addClass('datagridview-row-selecting');
         },
-        rowMouseenter: function (e) {
+        rowSelect: function (e) {
             if (!e.data.selectState.selecting) {
                 return;
             }
@@ -608,7 +610,11 @@
             rows.not(dragSelection).removeClass('datagridview-row-selecting');
             dragSelection.addClass('datagridview-row-selecting');
         },
-        rowMouseup: function (e) {
+        rowSelectEnd: function (e) {
+            if (!e.data.selectState.selecting) {
+                return;
+            }
+
             let rows = e.data.body.find('.datagridview-row');
 
             if (e.data.isMultiselect && e.data.selectState.dragging && e.data.selectState.dragElement) {
