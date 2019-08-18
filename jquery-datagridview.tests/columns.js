@@ -1,6 +1,14 @@
 ﻿/// <reference path="columns.html" />
 
 describe('datagridview columns', function () {
+    function triggerMouseEvent(element, eventType, pageX) {
+        var event = jQuery.Event(eventType);
+        event.which = 1;
+        event.pageX = pageX;
+
+        $(element).trigger(event);
+    }
+
     it('have an default width', function () {
         var grid = $('#columns-width-default');
         var columns;
@@ -110,42 +118,169 @@ describe('datagridview columns', function () {
     });
 
     it('get added in the order of the array', function () {
-        fail();
+        var grid = $('#columns-order');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test1', width: 25 },
+                { data: 'test2' }
+            ]
+        });
+
+        var headers = grid.find('.datagridview-header-cell');
+
+        expect($(headers[0]).text()).toEqual('test1');
+        expect($(headers[1]).text()).toEqual('test2');
     });
 
     it('can be not moved if moving columns is disabled', function () {
         var grid = $('#columns-order-move-disabled');
+        var columns = null;
 
-        fail();
+        grid.width('100px');
+        grid.datagridview({
+            columns: [
+                { data: 'test1' },
+                { data: 'test2' }
+            ]
+        });
+
+        triggerMouseEvent(grid.find('.datagridview-header-cell').first(), 'mousedown', 1);
+        triggerMouseEvent(grid, 'mousemove', 1);
+        triggerMouseEvent(grid, 'mouseup', 1000);
+
+        grid.datagridview(function () {
+            columns = this.getColumns();
+        });
+
+        expect(columns[0].data).toEqual('test1');
+        expect(columns[1].data).toEqual('test2');
     });
 
     it('can be moved if moving columns is enabled', function () {
         var grid = $('#columns-order-move-enabled');
+        var columns = null;
 
-        fail();
+        grid.width('100px');
+        grid.datagridview({
+            columns: [
+                { data: 'test1' },
+                { data: 'test2' }
+            ]
+        });
+
+        triggerMouseEvent(grid.find('.datagridview-header-cell').first(), 'mousedown', -100);
+        triggerMouseEvent(grid, 'mousemove', -100);
+        triggerMouseEvent(grid, 'mouseup', 100);
+
+        grid.datagridview(function () {
+            columns = this.getColumns();
+        });
+
+        expect(columns[0].data).toEqual('test2');
+        expect(columns[1].data).toEqual('test1');
     });
 
     it('can be moved backwards if moving columns is enabled', function () {
         var grid = $('#columns-order-move-backward');
+        var columns = null;
 
-        fail();
+        grid.width('100px');
+        grid.datagridview({
+            columns: [
+                { data: 'test1' },
+                { data: 'test2' }
+            ]
+        });
+
+        triggerMouseEvent(grid.find('.datagridview-header-cell').last(), 'mousedown', 100);
+        triggerMouseEvent(grid, 'mousemove', 100);
+        triggerMouseEvent(grid, 'mouseup', -100);
+
+        grid.datagridview(function () {
+            columns = this.getColumns();
+        });
+
+        expect(columns[0].data).toEqual('test2');
+        expect(columns[1].data).toEqual('test1');
     });
 
     it('get reordered as expected when moving a column up three positions', function () {
         var grid = $('#columns-order-move-forward-three');
+        var columns = null;
 
-        fail();
+        grid.width('100px');
+        grid.datagridview({
+            columns: [
+                { data: 'test1' },
+                { data: 'test2' },
+                { data: 'test3' },
+                { data: 'test4' }
+            ]
+        });
+
+        triggerMouseEvent(grid.find('.datagridview-header-cell').first(), 'mousedown', -100);
+        triggerMouseEvent(grid, 'mousemove', -100);
+        triggerMouseEvent(grid, 'mouseup', 100);
+
+        grid.datagridview(function () {
+            columns = this.getColumns();
+        });
+
+        expect(columns[0].data).toEqual('test2');
+        expect(columns[1].data).toEqual('test3');
+        expect(columns[2].data).toEqual('test4');
+        expect(columns[3].data).toEqual('test1');
     });
 
     it('get reordered as expected when moving a column down three positions', function () {
         var grid = $('#columns-order-move-backward-three');
+        var columns = null;
 
-        fail();
+        grid.width('100px');
+        grid.datagridview({
+            columns: [
+                { data: 'test1' },
+                { data: 'test2' },
+                { data: 'test3' },
+                { data: 'test4' }
+            ]
+        });
+
+        triggerMouseEvent(grid.find('.datagridview-header-cell').last(), 'mousedown', 100);
+        triggerMouseEvent(grid, 'mousemove', 100);
+        triggerMouseEvent(grid, 'mouseup', -100);
+
+        grid.datagridview(function () {
+            columns = this.getColumns();
+        });
+
+        expect(columns[0].data).toEqual('test4');
+        expect(columns[1].data).toEqual('test1');
+        expect(columns[2].data).toEqual('test2');
+        expect(columns[3].data).toEqual('test3');
     });
 
     it('don\'t initiate sorting when moving', function () {
         var grid = $('#columns-order-move-no-sort');
+        var called = false;
 
-        fail();
+        grid.width('100px');
+        grid.datagridview({
+            columns: [
+                { data: 'test1' },
+                { data: 'test2' }
+            ]
+        });
+
+        grid.on('datagridview.sorted', function () {
+            called = true;
+        });
+
+        triggerMouseEvent(grid.find('.datagridview-header-cell').last(), 'mousedown', 100);
+        triggerMouseEvent(grid, 'mousemove', 100);
+        triggerMouseEvent(grid.find('.datagridview-header-cell').first(), 'mouseup', -100);
+
+        expect(called).toEqual(false);
     });
 });
