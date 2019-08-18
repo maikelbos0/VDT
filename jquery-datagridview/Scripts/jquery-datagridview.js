@@ -693,10 +693,6 @@
             dragSelection.addClass('datagridview-row-selecting');
         },
         rowSelectEnd: function (e) {
-            if (!e.data.selectState.selecting) {
-                return;
-            }
-
             let rows = e.data.body.find('.datagridview-row');
 
             if (e.data.isMultiselect && e.data.selectState.dragging && e.data.selectState.dragElement) {

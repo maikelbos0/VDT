@@ -75,8 +75,8 @@ describe('datagridview columns', function () {
             return obj;
         }, {});
 
-        expect(styles[$(headers[0]).attr('class').split(' ')[0]]).toEqual('flex-grow: 25');
-        expect(styles[$(headers[1]).attr('class').split(' ')[0]]).toEqual('flex-grow: 10');
+        expect(styles[$(headers[0]).attr('class').split(' ')[0]]).toEqual('flex-grow: 25; order: 0;');
+        expect(styles[$(headers[1]).attr('class').split(' ')[0]]).toEqual('flex-grow: 10; order: 1;');
     });
 
     it('width is applied to data', function () {
@@ -105,16 +105,47 @@ describe('datagridview columns', function () {
             return obj;
         }, {});
 
-        expect(styles[$(cells[0]).attr('class')]).toEqual('flex-grow: 25');
-        expect(styles[$(cells[1]).attr('class')]).toEqual('flex-grow: 10');
+        expect(styles[$(cells[0]).attr('class')]).toEqual('flex-grow: 25; order: 0;');
+        expect(styles[$(cells[1]).attr('class')]).toEqual('flex-grow: 10; order: 1;');
     });
 
-    /*
-     * Column index when defining
-     * Column index when swapping 1 for 1 forwards
-     * Column index when swapping 1 for 1 backwards
-     * Column index when moving 1 forwards 3 positions
-     * Column index when moving 1 backwards 3 positions
-     * Getting column index out
-     */
+    it('get added in the order of the array', function () {
+        fail();
+    });
+
+    it('can be not moved if moving columns is disabled', function () {
+        var grid = $('#columns-order-move-disabled');
+
+        fail();
+    });
+
+    it('can be moved if moving columns is enabled', function () {
+        var grid = $('#columns-order-move-enabled');
+
+        fail();
+    });
+
+    it('can be moved backwards if moving columns is enabled', function () {
+        var grid = $('#columns-order-move-backward');
+
+        fail();
+    });
+
+    it('get reordered as expected when moving a column up three positions', function () {
+        var grid = $('#columns-order-move-forward-three');
+
+        fail();
+    });
+
+    it('get reordered as expected when moving a column down three positions', function () {
+        var grid = $('#columns-order-move-backward-three');
+
+        fail();
+    });
+
+    it('don\'t initiate sorting when moving', function () {
+        var grid = $('#columns-order-move-no-sort');
+
+        fail();
+    });
 });

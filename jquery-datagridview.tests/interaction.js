@@ -87,7 +87,7 @@ describe('a datagridview object', function () {
     it('can be used to get the meta data out', function () {
         var grid = $('#datagridview-interaction-meta-data');
         var metaData = null;
-        
+
         grid.datagridview({
             columns: [],
             getMetaData() {
@@ -440,7 +440,7 @@ describe('a datagridview object', function () {
         grid.datagridview(function () {
             this.setSelectedRows('*');
         });
-        
+
         expect(called).toEqual(true);
     });
 
@@ -458,7 +458,7 @@ describe('a datagridview object', function () {
                 { test: 2, },
                 { test: 3, }
             ]);
-            });
+        });
 
         grid.datagridview(function () {
             this.setSelectedRows('*');
