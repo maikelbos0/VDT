@@ -83,8 +83,8 @@ describe('datagridview columns', function () {
             return obj;
         }, {});
 
-        expect(styles[$(headers[0]).attr('class').split(' ')[0]]).toEqual('flex-grow: 25; order: 0;');
-        expect(styles[$(headers[1]).attr('class').split(' ')[0]]).toEqual('flex-grow: 10; order: 1;');
+        expect(styles[$(headers[0]).attr('class').split(' ')[1]]).toEqual('flex-grow: 25; order: 0;');
+        expect(styles[$(headers[1]).attr('class').split(' ')[1]]).toEqual('flex-grow: 10; order: 1;');
     });
 
     it('width is applied to data', function () {
@@ -282,5 +282,129 @@ describe('datagridview columns', function () {
         triggerMouseEvent(grid.find('.datagridview-header-cell').first(), 'mouseup', -100);
 
         expect(called).toEqual(false);
+    });
+
+    it('have an default way of being rendered', function () {
+        var grid = $('#columns-no-renderer');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test1' },
+                { data: 'test2' }
+            ]
+        }, function () {
+            this.populate(null, [
+                { test1: 'This is a test', test2: 'Another value' }
+            ]);
+        });
+
+        var cells = grid.find('.datagridview-row > div');
+
+        expect(cells.length).toEqual(2);
+        expect($(cells[0]).text()).toEqual('This is a test');
+        expect($(cells[0]).attr('title')).toEqual('This is a test');
+        expect($(cells[1]).text()).toEqual('Another value');
+        expect($(cells[1]).attr('title')).toEqual('Another value');
+    });
+
+    it('can be provided with a renderer function', function () {
+        var grid = $('#columns-renderer');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test1' },
+                { data: 'test2', renderer: function (cell, value, data) { cell.text('Prefix:' + value); } }
+            ]
+        }, function () {
+            this.populate(null, [
+                { test1: 'This is a test', test2: 'Another value' }
+            ]);
+        });
+
+        var cells = grid.find('.datagridview-row > div');
+
+        expect(cells.length).toEqual(2);
+        expect($(cells[0]).text()).toEqual('This is a test');
+        expect($(cells[0]).attr('title')).toEqual('This is a test');
+        expect($(cells[1]).text()).toEqual('Prefix:Another value');
+    });
+
+    it('renderer function has access to the cell', function () {
+        var grid = $('#columns-renderer-cell');
+        var cellElement = null;
+
+        grid.datagridview({
+            columns: [
+                { data: 'test1' },
+                { data: 'test2', renderer: function (cell, value, data) { cellElement = cell; } }
+            ]
+        }, function () {
+            this.populate(null, [
+                { test1: 'This is a test', test2: 'Another value' }
+            ]);
+        });
+
+        expect(cellElement).not.toBeNull();
+        expect(cellElement.prop('tagName')).toEqual('DIV');
+    });
+
+    it('renderer function has access to the value', function () {
+        var grid = $('#columns-renderer-value');
+        var cellValue = null;
+
+        grid.datagridview({
+            columns: [
+                { data: 'test1' },
+                { data: 'test2', renderer: function (cell, value, data) { cellValue = value; } }
+            ]
+        }, function () {
+            this.populate(null, [
+                { test1: 'This is a test', test2: 'Another value' }
+            ]);
+        });
+
+        expect(cellValue).not.toBeNull();
+        expect(cellValue).toEqual('Another value');
+    });
+
+    it('renderer function has access to the data', function () {
+        var grid = $('#columns-renderer-data');
+        var data = [
+            { test1: 'This is a test', test2: 'Another value' }
+        ]
+        var cellData = null;
+
+        grid.datagridview({
+            columns: [
+                { data: 'test1' },
+                { data: 'test2', renderer: function (cell, value, data) { cellData = data; } }
+            ]
+        }, function () {
+            this.populate(null, data);
+        });
+
+        expect(cellData).not.toBeNull();
+        expect(cellData).toEqual(data[0]);
+    });
+
+    it('renderer function will only be called if it is a function', function () {
+        var grid = $('#columns-fake-renderer');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test1' },
+                { data: 'test2', renderer: 'not a function' }
+            ]
+        }, function () {
+            this.populate(null, [
+                { test1: 'This is a test', test2: 'Another value' }
+            ]);
+        });
+
+        var cells = grid.find('.datagridview-row > div');
+
+        expect(cells.length).toEqual(2);
+        expect($(cells[1]).text()).toEqual('Another value');
+        expect($(cells[1]).attr('title')).toEqual('Another value');
     });
 });

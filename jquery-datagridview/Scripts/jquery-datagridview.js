@@ -200,7 +200,7 @@
             this.footer
         );
 
-        this.style = $('<style>', { type: 'text/css' });
+        this.style = this.createElement('<style>', { type: 'text/css' });
         $('body').append(this.style);
 
         // Create columns
@@ -211,10 +211,14 @@
             column.width = isNaN(column.width) || column.width <= 0 ? 10 : parseFloat(column.width);
             column.index = i++;
 
-            let headerCell = $('<div>').text(column.header || column.data)
+            if (!$.isFunction(column.renderer)) {
+                column.renderer = null;
+            }
+
+            let headerCell = base.createElement('<div>', 'datagridview-header-cell')
                 .addClass(column.class)
-                .addClass('datagridview-header-cell')
                 .toggleClass('datagridview-header-cell-sortable', column.sortable !== false)
+                .text(column.header || column.data)
                 .attr('title', column.header || column.data)
                 .data('id', column.id)
                 .data('column', column.data)
@@ -222,7 +226,7 @@
 
             if (base.allowColumnResize) {
                 // Drag item
-                headerCell.prepend($('<div>').addClass('datagridview-header-drag'));
+                headerCell.prepend(base.createElement('<div>', 'datagridview-header-drag'));
             }
 
             base.header.append(headerCell);
@@ -280,8 +284,16 @@
 
             for (let c = 0; c < this.options.columns.length; c++) {
                 let column = this.options.columns[c];
+                let cell = this.createElement('<div>', column.class);
 
-                row.append($('<div>').text(dataRow[column.data] || "").addClass(column.class).attr('title', dataRow[column.data] || ""));
+                if (column.renderer) {
+                    column.renderer(cell, dataRow[column.data], dataRow);
+                }
+                else {
+                    cell.text(dataRow[column.data] || "").attr('title', dataRow[column.data] || "");
+                }
+
+                row.append(cell);
             }
 
             newBody.append(row);

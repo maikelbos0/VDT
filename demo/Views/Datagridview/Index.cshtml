@@ -24,6 +24,10 @@
 @section scripts {
     <script type="text/javascript">
         $(function () {
+            currencyRenderer = function (cell, value, data) {
+                cell.append($('<a>', { href: 'https://en.wikipedia.org/wiki/' + value, title: value }).text(value));
+            };
+
             $('#datagrid-1').datagridview({
                 columns: [
                     { data: "DebtorNumber", header: "Debtor number", width: 15 },
@@ -31,7 +35,7 @@
                     { data: "InvoiceNumber", header: "Invoice number", width: 15 },
                     { data: "InvoiceDateString", sortData: "InvoiceDate", header: "Invoice date", width: 15 },
                     { data: "DueDateString", sortData: "DueDate", header: "Due date", width: 15 },
-                    { data: "Currency", width: 5, sortable: false },
+                    { data: "Currency", width: 5, sortable: false, renderer: currencyRenderer },
                     { data: "InvoiceAmountString", sortData: "InvoiceAmount", header: "Invoice amount", width: 10 },
                     { data: "InvoiceOpenAmountString", sortData: "InvoiceOpenAmount", header: "Open amount", width: 10 }
                 ]
