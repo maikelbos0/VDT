@@ -51,7 +51,19 @@ describe('a datagridview option', function () {
     });
 
     it('can be provided for allowColumnMove', function () {
-        fail();
+        var grid = $('#datagridview-options-headers-move');
+        var allow = false;
+
+        grid.datagridview({
+            columns: [{ data: 'test' }],
+            allowColumnMove: function () {
+                return true;
+            }
+        }, function () {
+            allow = this.allowColumnMove;
+        });
+
+        expect(allow).toEqual(true);
     });
     
     it('can be provided for allowSelect', function () {
