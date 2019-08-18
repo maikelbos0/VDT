@@ -108,4 +108,13 @@ describe('datagridview columns', function () {
         expect(styles[$(cells[0]).attr('class')]).toEqual('flex-grow: 25');
         expect(styles[$(cells[1]).attr('class')]).toEqual('flex-grow: 10');
     });
+
+    /*
+     * Column index when defining
+     * Column index when swapping 1 for 1 forwards
+     * Column index when swapping 1 for 1 backwards
+     * Column index when moving 1 forwards 3 positions
+     * Column index when moving 1 backwards 3 positions
+     * Getting column index out
+     */
 });

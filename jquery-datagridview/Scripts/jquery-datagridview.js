@@ -228,7 +228,7 @@
             base.header.append(headerCell);
         });
 
-        this.setColumnWidth();
+        this.setColumnStyle();
 
         // Use the meta data if present to display appropriate sorting and paging
         this.displaySortOrder();
@@ -242,7 +242,7 @@
             $(document).on('mousemove', this, eventHandlers.columnResize);
             $(document).on('mouseup', this, eventHandlers.columnResizeEnd);
         }
-        
+
         if (this.allowColumnMove) {
             this.header.on('mousedown', 'div.datagridview-header-cell', this, eventHandlers.columnMoveStart);
             $(document).on('mousemove', this, eventHandlers.columnMove);
@@ -256,17 +256,17 @@
         }
     }
 
-    // Set the width of the columns
-    DataGridView.prototype.setColumnWidth = function () {
+    // Set the column styles
+    DataGridView.prototype.setColumnStyle = function () {
         let style = '';
         let tableWidth = this.options.columns.reduce(function (w, c) { return w + c.width; }, 0);
 
         if (tableWidth > 100) {
-            style = '.' + this.elementClass + ' div.datagridview-header, .' + this.elementClass + ' div.datagridview-body { width: ' + tableWidth + '%}\n';
+            style = '.' + this.elementClass + ' div.datagridview-header, .' + this.elementClass + ' div.datagridview-body { width: ' + tableWidth + '%; }\n';
         }
 
         this.style.html(this.options.columns.reduce(function (style, column) {
-            return style + '.' + column.class + '{ flex-grow: ' + column.width + ' }\n';
+            return style + '.' + column.class + '{ flex-grow: ' + column.width + '; order: ' + column.index + '; }\n';
         }, style));
     }
 
@@ -496,8 +496,8 @@
                 return;
             }
 
-            e.data.headerMoveState.column = $(this).data('id');
-            e.data.headerMoveState.startPosition = e.pageX;
+            e.data.headerMoveState.header = $(this);
+            e.data.headerMoveState.column = e.data.options.columns.filter(function (c) { return c.id === e.data.headerMoveState.header.data('id'); })[0];
             e.data.headerMoveState.draggingStart = true;
         },
         columnMove: function (e) {
@@ -505,28 +505,110 @@
                 return;
             }
 
-            let column = e.data.options.columns.filter(function (c) { return c.id === e.data.headerMoveState.column; })[0];
-            //let shift = e.data.headerMoveState.startPosition - e.pageX;
+            let headers = e.data.header.find('.datagridview-header-cell');
+            let position = e.pageX - e.data.element.position().left + e.data.contentContainer.scrollLeft();
+            
+            if (!e.data.headerMoveState.indicator) {
+                e.data.headerMoveState.indicator = e.data.createElement('<div>', 'datagridview-header-move-indicator').hide();
+                e.data.headerMoveState.indicator.css('top', e.data.header.outerHeight(true) + 'px');
+                e.data.contentContainer.append(e.data.headerMoveState.indicator);
+            }
 
             if (!e.data.headerMoveState.title) {
-                e.data.headerMoveState.title = e.data.createElement('<div>', 'datagridview-header-move-title').text(column.header || column.data);
-                e.data.element.append(e.data.headerMoveState.title);
+                e.data.headerMoveState.title = e.data.createElement('<div>', 'datagridview-header-move-title').text(e.data.headerMoveState.column.header || e.data.headerMoveState.column.data);
+                e.data.contentContainer.append(e.data.headerMoveState.title);
             }
 
             e.data.headerMoveState.dragging = true;
             e.data.headerMoveState.title.css('top', e.pageY + 5 - e.data.element.position().top + 'px');
             e.data.headerMoveState.title.css('left', e.pageX + 15 - e.data.element.position().left + 'px');
 
-            //console.log(shift);
+            // Figure out where in the columns the to add the indicator
+            // First look to the left
+            if (position < e.data.headerMoveState.header.position().left) {
+                for (let i = e.data.headerMoveState.column.index; i >= 0; i--) {
+                    let header = headers.filter(function () { return $(this).data('id') == e.data.options.columns[i].id; });
+                    
+                    if (position > header.position().left) {
+                        e.data.headerMoveState.indicator.css('left', header.position().left + 'px');
+                        e.data.headerMoveState.indicator.show();
+                        break;
+                    }
+                }
+            }
+            // Then look to the right
+            else if (position > e.data.headerMoveState.header.position().left + e.data.headerMoveState.header.outerWidth(true)) {
+                for (let i = e.data.headerMoveState.column.index; i < e.data.options.columns.length; i++) {
+                    let header = headers.filter(function () { return $(this).data('id') == e.data.options.columns[i].id; });
+
+                    if (position < header.position().left + header.outerWidth(true)) {
+                        e.data.headerMoveState.indicator.css('left', header.position().left + header.outerWidth(true) + 'px');
+                        e.data.headerMoveState.indicator.show();
+                        break;
+                    }
+                }
+            }
+            // If we've not gone far enough to the right or left, the column will not move so the indicator is hidden
+            else {
+                e.data.headerMoveState.indicator.hide();
+            }
         },
         columnMoveEnd: function (e) {
             if (e.which !== 1 || !e.data.headerMoveState.dragging) {
                 return;
             }
 
+            let headers = e.data.header.find('.datagridview-header-cell');
+            let header = null;
+            let position = e.pageX - e.data.element.position().left + e.data.contentContainer.scrollLeft();
+
+            // Figure out where the column needs to move to by finding the header which it will replac
+            // First look to the left
+            if (position < e.data.headerMoveState.header.position().left) {
+                for (let i = e.data.headerMoveState.column.index; i >= 0; i--) {
+                    header = headers.filter(function () { return $(this).data('id') == e.data.options.columns[i].id; });
+
+                    if (position > header.position().left) {
+                        break;
+                    }
+                };
+            }
+            // Then look to the right
+            else if (position > e.data.headerMoveState.header.position().left + e.data.headerMoveState.header.outerWidth(true)) {
+                for (let i = e.data.headerMoveState.column.index; i < e.data.options.columns.length; i++) {
+                    header = headers.filter(function () { return $(this).data('id') == e.data.options.columns[i].id; });
+
+                    if (position < header.position().left + header.outerWidth(true)) {
+                        break;
+                    }
+                }
+            }
+
+            if (header) {
+                // Rearrange the columns array
+                let oldIndex = e.data.options.columns.indexOf(e.data.headerMoveState.column);
+                let newIndex = e.data.options.columns.indexOf(e.data.options.columns.filter(function (c) { return c.id === header.data('id'); })[0]);
+                let i = 0;
+
+                e.data.options.columns.splice(newIndex, 0, e.data.options.columns.splice(oldIndex, 1)[0]);
+
+                // Reset indexes
+                e.data.options.columns.forEach(function (column) {
+                    column.index = i++;
+                });
+
+                // Finally we can figure out the new style
+                e.data.setColumnStyle();
+            }
+
             if (e.data.headerMoveState.title) {
                 e.data.headerMoveState.title.remove();
                 e.data.headerMoveState.title = null;
+            }
+
+            if (e.data.headerMoveState.indicator) {
+                e.data.headerMoveState.indicator.remove();
+                e.data.headerMoveState.indicator = null;
             }
 
             e.data.headerMoveState.draggingStart = false;
@@ -555,7 +637,7 @@
             if (e.which !== 1) {
                 return;
             }
-            
+
             e.data.headerResizeState.dragging = true;
             e.data.headerResizeState.position = e.pageX;
             e.data.headerResizeState.column = $(this).closest('.datagridview-header-cell').data('id');
@@ -578,7 +660,7 @@
             column.width -= shift;
 
             // Set the new style
-            e.data.setColumnWidth();
+            e.data.setColumnStyle();
             e.data.headerResizeState.position = e.pageX;
         },
         columnResizeEnd: function (e) {
