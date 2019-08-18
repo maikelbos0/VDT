@@ -491,13 +491,12 @@
     // Event handlers should not be accessible from the object itself
     let eventHandlers = {
         headerMousedown: function (e) {
-            console.log('asd');
             if (e.which !== 1) {
                 return;
             }
 
             e.data.headerMoveState.dragging = true;
-            e.data.headerMoveState.element = $(this);
+            e.data.headerMoveState.column = $(this).data('id');
             e.data.headerMoveState.startPosition = e.pageX;
         },
         headerMousemove: function (e) {
@@ -505,28 +504,50 @@
                 return;
             }
 
-            let shift = e.data.headerMoveState.startPosition - e.pageX;
+            let column = e.data.options.columns.filter(function (c) { return c.id === e.data.headerMoveState.column; })[0];
+            //let shift = e.data.headerMoveState.startPosition - e.pageX;
 
-            console.log(shift);
+            if (!e.data.headerMoveState.title) {
+                e.data.headerMoveState.title = e.data.createElement('<div>', 'datagridview-header-move-title').text(column.header || column.data);
+                e.data.element.append(e.data.headerMoveState.title);
+            }
+
+            e.data.headerMoveState.title.css('top', e.pageY + 5 - e.data.element.position().top + 'px');
+            e.data.headerMoveState.title.css('left', e.pageX + 15 - e.data.element.position().left + 'px');
+
+            //console.log(shift);
         },
         headerMouseup: function (e) {
-            if (e.which !== 1 || e.data.headerResizeState.dragging || e.data.headerMoveState.dragging) {
+            if (e.which !== 1 || e.data.headerResizeState.dragging) {
                 return;
             }
 
-            // In the event handler we work with a copy of the element; we only sort when getting data in
-            let metaData = e.data.getMetaData();
-            let sortColumn = $(this).data('sort-column');
+            // Move columns
+            if (e.data.headerMoveState.dragging) {
 
-            if (metaData.sortColumn === sortColumn) {
-                metaData.sortDescending = !metaData.sortDescending;
+                if (e.data.headerMoveState.title) {
+                    e.data.headerMoveState.title.remove();
+                    e.data.headerMoveState.title = null;
+                }
+
+                e.data.headerMoveState.dragging = false;
             }
+            // Sort
             else {
-                metaData.sortColumn = sortColumn;
-                metaData.sortDescending = false;
-            }
+                // In the event handler we work with a copy of the element; we only sort when getting data in
+                let metaData = e.data.getMetaData();
+                let sortColumn = $(this).data('sort-column');
 
-            e.data.element.trigger('datagridview.sorted', metaData);
+                if (metaData.sortColumn === sortColumn) {
+                    metaData.sortDescending = !metaData.sortDescending;
+                }
+                else {
+                    metaData.sortColumn = sortColumn;
+                    metaData.sortDescending = false;
+                }
+
+                e.data.element.trigger('datagridview.sorted', metaData);
+            }
         },
         headerDragMousedown: function (e) {
             if (e.which !== 1) {

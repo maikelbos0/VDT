@@ -20,6 +20,13 @@
     user-select: none;
 }
 
+.datagridview-header-move-title {
+    position: absolute;
+    display: inline-block;
+    border: 1px solid #000000;
+    background-color: #ffffff;
+}
+
 .datagridview-body {
     flex-grow: 1;
 }
