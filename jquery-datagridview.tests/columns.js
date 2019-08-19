@@ -145,9 +145,9 @@ describe('datagridview columns', function () {
             ]
         });
 
-        triggerMouseEvent(grid.find('.datagridview-header-cell').first(), 'mousedown', 1);
-        triggerMouseEvent(grid, 'mousemove', 1);
-        triggerMouseEvent(grid, 'mouseup', 1000);
+        triggerMouseEvent(grid.find('.datagridview-header-cell').first(), 'mousedown', -100);
+        triggerMouseEvent(grid, 'mousemove', 0);
+        triggerMouseEvent(grid, 'mouseup', 100);
 
         grid.datagridview(function () {
             columns = this.getColumns();
@@ -170,7 +170,7 @@ describe('datagridview columns', function () {
         });
 
         triggerMouseEvent(grid.find('.datagridview-header-cell').first(), 'mousedown', -100);
-        triggerMouseEvent(grid, 'mousemove', -100);
+        triggerMouseEvent(grid, 'mousemove', 0);
         triggerMouseEvent(grid, 'mouseup', 100);
 
         grid.datagridview(function () {
@@ -194,7 +194,7 @@ describe('datagridview columns', function () {
         });
 
         triggerMouseEvent(grid.find('.datagridview-header-cell').last(), 'mousedown', 100);
-        triggerMouseEvent(grid, 'mousemove', 100);
+        triggerMouseEvent(grid, 'mousemove', 0);
         triggerMouseEvent(grid, 'mouseup', -100);
 
         grid.datagridview(function () {
@@ -220,7 +220,7 @@ describe('datagridview columns', function () {
         });
 
         triggerMouseEvent(grid.find('.datagridview-header-cell').first(), 'mousedown', -100);
-        triggerMouseEvent(grid, 'mousemove', -100);
+        triggerMouseEvent(grid, 'mousemove', 0);
         triggerMouseEvent(grid, 'mouseup', 100);
 
         grid.datagridview(function () {
@@ -248,7 +248,7 @@ describe('datagridview columns', function () {
         });
 
         triggerMouseEvent(grid.find('.datagridview-header-cell').last(), 'mousedown', 100);
-        triggerMouseEvent(grid, 'mousemove', 100);
+        triggerMouseEvent(grid, 'mousemove', 0);
         triggerMouseEvent(grid, 'mouseup', -100);
 
         grid.datagridview(function () {
@@ -278,7 +278,7 @@ describe('datagridview columns', function () {
         });
 
         triggerMouseEvent(grid.find('.datagridview-header-cell').last(), 'mousedown', 100);
-        triggerMouseEvent(grid, 'mousemove', 100);
+        triggerMouseEvent(grid, 'mousemove', 0);
         triggerMouseEvent(grid.find('.datagridview-header-cell').first(), 'mouseup', -100);
 
         expect(called).toEqual(false);

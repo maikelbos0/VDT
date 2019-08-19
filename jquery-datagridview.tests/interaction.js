@@ -196,6 +196,7 @@ describe('a datagridview object', function () {
             ]);
         });
 
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mousedown');
         triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mouseup');
 
         grid.datagridview(function () {
@@ -222,6 +223,7 @@ describe('a datagridview object', function () {
             ]);
         });
 
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mousedown');
         triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mouseup');
 
         grid.datagridview(function () {
@@ -249,6 +251,7 @@ describe('a datagridview object', function () {
             this.populate(this.getMetaData(), data);
         });
 
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mousedown');
         triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mouseup');
 
         grid.datagridview(function () {

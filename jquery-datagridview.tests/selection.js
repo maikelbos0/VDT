@@ -65,6 +65,7 @@ describe('in a datagridview a user can select', function () {
             ]);
         });
 
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mousedown');
         triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mouseup');
 
         var rows = grid.find('.datagridview-row-selected');
@@ -88,7 +89,9 @@ describe('in a datagridview a user can select', function () {
             ]);
         });
 
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mousedown');
         triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mouseup');
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(1)'), 'mousedown');
         triggerMouseEvent(grid.find('.datagridview-row:nth-child(1)'), 'mouseup');
 
         var rows = grid.find('.datagridview-row-selected');
@@ -112,7 +115,9 @@ describe('in a datagridview a user can select', function () {
             ]);
         });
 
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mousedown');
         triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mouseup');
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(1)'), 'mousedown');
         triggerMouseEvent(grid.find('.datagridview-row:nth-child(1)'), 'mouseup');
 
         var rows = grid.find('.datagridview-row-selected');
@@ -136,7 +141,9 @@ describe('in a datagridview a user can select', function () {
             ]);
         });
 
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mousedown');
         triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mouseup');
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(1)'), 'mousedown', true);
         triggerMouseEvent(grid.find('.datagridview-row:nth-child(1)'), 'mouseup', true);
 
         var rows = grid.find('.datagridview-row-selected');
@@ -184,7 +191,9 @@ describe('in a datagridview a user can select', function () {
             ]);
         });
 
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mousedown');
         triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mouseup');
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(4)'), 'mousedown', false, true);
         triggerMouseEvent(grid.find('.datagridview-row:nth-child(4)'), 'mouseup', false, true);
 
         var rows = grid.find('.datagridview-row-selected');
@@ -211,7 +220,9 @@ describe('in a datagridview a user can select', function () {
             ]);
         });
 
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(4)'), 'mousedown');
         triggerMouseEvent(grid.find('.datagridview-row:nth-child(4)'), 'mouseup');
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mousedown', false, true);
         triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mouseup', false, true);
 
         var rows = grid.find('.datagridview-row-selected');
@@ -241,7 +252,9 @@ describe('in a datagridview a user can select', function () {
             this.setSelectedIndexes([0, 1]);
         });
 
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(4)'), 'mousedown', true);
         triggerMouseEvent(grid.find('.datagridview-row:nth-child(4)'), 'mouseup', true);
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(5)'), 'mousedown', true, true);
         triggerMouseEvent(grid.find('.datagridview-row:nth-child(5)'), 'mouseup', true, true);
 
         var rows = grid.find('.datagridview-row-selected');

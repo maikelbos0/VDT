@@ -504,16 +504,18 @@
     // Event handlers should not be accessible from the object itself
     let eventHandlers = {
         columnMoveStart: function (e) {
-            if (e.which !== 1) {
+            if (e.which !== 1 || e.data.headerResizeState.dragging) {
                 return;
             }
 
+            e.data.headerMoveState.position = e.pageX;
             e.data.headerMoveState.header = $(this);
             e.data.headerMoveState.column = e.data.options.columns.filter(function (c) { return c.id === e.data.headerMoveState.header.data('id'); })[0];
             e.data.headerMoveState.draggingStart = true;
         },
         columnMove: function (e) {
-            if (!e.data.headerMoveState.draggingStart) {
+            // Only start actually dragging when the distance is more than a few pixels
+            if (!e.data.headerMoveState.draggingStart || Math.abs(e.data.headerMoveState.position - e.pageX) < 3) {
                 return;
             }
 
@@ -567,6 +569,7 @@
         },
         columnMoveEnd: function (e) {
             if (e.which !== 1 || !e.data.headerMoveState.dragging) {
+                e.data.headerMoveState.draggingStart = false;
                 return;
             }
 
@@ -683,6 +686,7 @@
             e.data.headerResizeState.dragging = false;
         },
         rowSelectStart: function (e) {
+            e.data.test = 'rowSelectStart';
             e.data.selectState.selecting = true;
             e.data.selectState.dragElement = $(this);
             e.data.selectState.dragElement.addClass('datagridview-row-selecting');
@@ -705,6 +709,10 @@
             dragSelection.addClass('datagridview-row-selecting');
         },
         rowSelectEnd: function (e) {
+            if (!e.data.selectState.selecting) {
+                return;
+            }
+
             let rows = e.data.body.find('.datagridview-row');
 
             if (e.data.isMultiselect && e.data.selectState.dragging && e.data.selectState.dragElement) {
