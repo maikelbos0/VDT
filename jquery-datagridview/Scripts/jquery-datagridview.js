@@ -209,6 +209,8 @@
             column.id = Math.random().toString().replace('.', '');
             column.class = 'datagridview-column-' + column.id;
             column.width = isNaN(column.width) || column.width <= 0 ? 10 : parseFloat(column.width);
+            column.defaultWidth = column.width;
+            column.visible = column.visible !== false;
             column.index = i++;
 
             if (!$.isFunction(column.renderer)) {
@@ -263,14 +265,19 @@
     // Set the column styles
     DataGridView.prototype.setColumnStyle = function () {
         let style = '';
-        let tableWidth = this.options.columns.reduce(function (w, c) { return w + c.width; }, 0);
+        let tableWidth = this.options.columns.filter(function (c) { return c.visible; }).reduce(function (w, c) { return w + c.width; }, 0);
 
         if (tableWidth > 100) {
             style = '.' + this.elementClass + ' div.datagridview-header, .' + this.elementClass + ' div.datagridview-body { width: ' + tableWidth + '%; }\n';
         }
 
         this.style.html(this.options.columns.reduce(function (style, column) {
-            return style + '.' + column.class + '{ flex-grow: ' + column.width + '; order: ' + column.index + '; }\n';
+            if (column.visible) {
+                return style + '.' + column.class + '{ flex-grow: ' + column.width + '; order: ' + column.index + '; }\n';
+            }
+            else {
+                return style + '.' + column.class + '{ display: none; }\n';
+            }
         }, style));
     }
 
@@ -388,7 +395,9 @@
     DataGridView.prototype.getColumns = function () {
         return this.options.columns.map(function (column) {
             return {
+                id: column.id,
                 width: column.width,
+                visible: column.visible,
                 data: column.data,
                 sortData: column.sortData,
                 sortable: column.sortable,
@@ -499,6 +508,25 @@
         let metaData = new DataGridViewMetaData(this.metaData.sortColumn, this.metaData.sortDescending, this.metaData.totalRows, rowsPerPage || this.metaData.rowsPerPage, page);
 
         this.element.trigger('datagridview.paged', metaData);
+    }
+
+    // Toggle the visibility of a column
+    // This allows you to show or hide columns by external means
+    // Once the user has reduced column width to 0 it becomes invisible so this is a way to make it visible again
+    DataGridView.prototype.toggleColumnVisibility = function (id, visible) {
+        let columns = this.options.columns.filter(function (column) { return column.id === id; });
+
+        if (columns.length === 1) {
+            visible = visible !== false;
+
+            if (visible && !columns[0].visible) {
+                columns[0].width = columns[0].defaultWidth;
+            }
+
+            columns[0].visible = visible;
+
+            this.setColumnStyle();
+        }
     }
 
     // Event handlers should not be accessible from the object itself
@@ -663,7 +691,7 @@
             }
 
             // the shift is expressed, same as column width, as a percentage of the original element
-            let tableWidth = Math.min(100, e.data.options.columns.reduce(function (w, c) { return w + c.width; }, 0));
+            let tableWidth = Math.min(100, e.data.options.columns.filter(function (c) { return c.visible; }).reduce(function (w, c) { return w + c.width; }, 0));
             let shift = (e.data.headerResizeState.position - e.pageX) / $(e.data.element).width() * tableWidth;
             let column = e.data.options.columns.filter(function (c) { return c.id === e.data.headerResizeState.column; })[0];
 
@@ -681,6 +709,18 @@
         columnResizeEnd: function (e) {
             if (e.which !== 1) {
                 return;
+            }
+
+            let invisibleColumns = e.data.options.columns.filter(function (c) { return c.width <= 0; });
+
+            // If we've made any columns 0 width, then make them invisible
+            if (invisibleColumns.length > 0) {
+                $.each(invisibleColumns, function () {
+                    this.visible = false;
+                });
+
+                // Set the new style
+                e.data.setColumnStyle();
             }
 
             e.data.headerResizeState.dragging = false;
