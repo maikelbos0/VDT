@@ -118,11 +118,53 @@ describe('datagridview columns', function () {
     });
 
     it('are visible by default', function () {
-        fail();
+        var grid = $('#columns-visible');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test1', width: 25 },
+                { data: 'test2' }
+            ]
+        });
+
+        var headers = grid.find('.datagridview-header-cell');
+        var styles = $('style').text().split('}').reduce(function (obj, declaration) {
+            declaration = declaration.split("{");
+
+            if (declaration.length == 2) {
+                obj[declaration[0].trim().substring(1)] = declaration[1].trim();
+            }
+
+            return obj;
+        }, {});
+
+        expect(styles[$(headers[0]).attr('class')]).not.toEqual('display: none;');
+        expect(styles[$(headers[1]).attr('class')]).not.toEqual('display: none;');
     });
 
     it('can be created invisible', function () {
-        fail();
+        var grid = $('#columns-invisible');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test1', width: 25, visible: false },
+                { data: 'test2', visible: false }
+            ]
+        });
+
+        var headers = grid.find('.datagridview-header-cell');
+        var styles = $('style').text().split('}').reduce(function (obj, declaration) {
+            declaration = declaration.split("{");
+
+            if (declaration.length == 2) {
+                obj[declaration[0].trim().substring(1)] = declaration[1].trim();
+            }
+
+            return obj;
+        }, {});
+
+        expect(styles[$(headers[0]).attr('class')]).not.toEqual('display: none;');
+        expect(styles[$(headers[1]).attr('class')]).not.toEqual('display: none;');
     });
 
     it('get added in the order of the array', function () {
