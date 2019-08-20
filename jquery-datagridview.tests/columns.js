@@ -117,6 +117,14 @@ describe('datagridview columns', function () {
         expect(styles[$(cells[1]).attr('class')]).toEqual('flex-grow: 10; order: 1;');
     });
 
+    it('are visible by default', function () {
+        fail();
+    });
+
+    it('can be created invisible', function () {
+        fail();
+    });
+
     it('get added in the order of the array', function () {
         var grid = $('#columns-order');
 

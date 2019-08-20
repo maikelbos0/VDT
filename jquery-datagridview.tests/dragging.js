@@ -147,4 +147,8 @@ describe('dragging datagridview', function () {
 
         expect(metaData.sortColumn).toBeNull();
     });
+
+    it('header all the way to the left makes the column invisible', function () {
+        fail();
+    });
 });

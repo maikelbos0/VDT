@@ -532,12 +532,12 @@
     // Event handlers should not be accessible from the object itself
     let eventHandlers = {
         columnMoveStart: function (e) {
-            if (e.which !== 1 || e.data.headerResizeState.dragging) {
+            if (e.which !== 1 || $(e.target).hasClass('datagridview-header-toggle')) {
                 return;
             }
 
             e.data.headerMoveState.position = e.pageX;
-            e.data.headerMoveState.header = $(this);
+            e.data.headerMoveState.header = $(this).closest('.datagridview-header-cell');
             e.data.headerMoveState.column = e.data.options.columns.filter(function (c) { return c.id === e.data.headerMoveState.header.data('id'); })[0];
             e.data.headerMoveState.draggingStart = true;
         },
@@ -549,7 +549,7 @@
 
             let headers = e.data.header.find('.datagridview-header-cell');
             let position = e.pageX - e.data.element.position().left + e.data.contentContainer.scrollLeft();
-            
+
             if (!e.data.headerMoveState.indicator) {
                 e.data.headerMoveState.indicator = e.data.createElement('<div>', 'datagridview-header-move-indicator').hide();
                 e.data.headerMoveState.indicator.css('top', e.data.header.outerHeight(true) + 'px');
@@ -570,7 +570,7 @@
             if (position < e.data.headerMoveState.header.position().left) {
                 for (let i = e.data.headerMoveState.column.index; i >= 0; i--) {
                     let header = headers.filter(function () { return $(this).data('id') == e.data.options.columns[i].id; });
-                    
+
                     if (position > header.position().left) {
                         e.data.headerMoveState.indicator.css('left', header.position().left + 'px');
                         e.data.headerMoveState.indicator.show();
@@ -644,16 +644,10 @@
                 e.data.setColumnStyle();
             }
 
-            if (e.data.headerMoveState.title) {
-                e.data.headerMoveState.title.remove();
-                e.data.headerMoveState.title = null;
-            }
-
-            if (e.data.headerMoveState.indicator) {
-                e.data.headerMoveState.indicator.remove();
-                e.data.headerMoveState.indicator = null;
-            }
-
+            $(e.data.headerMoveState.title).remove();
+            e.data.headerMoveState.title = null;
+            $(e.data.headerMoveState.indicator).remove();
+            e.data.headerMoveState.indicator = null;
             e.data.headerMoveState.draggingStart = false;
             e.data.headerMoveState.dragging = false;
         },

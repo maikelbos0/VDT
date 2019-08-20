@@ -133,7 +133,7 @@ describe('a datagridview object', function () {
         grid.datagridview({
             columns: [
                 { data: 'test', sortable: false },
-                { data: 'column', sortData: 'column-org', width: 25 }
+                { data: 'column', sortData: 'column-org', width: 25, visible: false }
             ]
         }, function () {
             columns = this.getColumns();
@@ -142,16 +142,20 @@ describe('a datagridview object', function () {
         expect(columns).not.toBeNull();
         expect(columns.length).toEqual(2);
 
+        expect(columns[0].id).not.toBeUndefined();
         expect(columns[0].data).toEqual('test');
         expect(columns[0].sortable).toEqual(false);
         expect(columns[0].width).toEqual(10);
         expect(columns[0].index).toEqual(0);
+        expect(columns[0].visible).toEqual(true);
 
+        expect(columns[1].id).not.toBeUndefined();
         expect(columns[1].data).toEqual('column');
         expect(columns[1].sortable).not.toEqual(false);
         expect(columns[1].sortData).toEqual('column-org');
         expect(columns[1].width).toEqual(25);
         expect(columns[1].index).toEqual(1);
+        expect(columns[1].visible).toEqual(false);
     });
 
     it('getting column definitions returns a copy', function () {
@@ -507,5 +511,17 @@ describe('a datagridview object', function () {
         });
 
         expect(called).toEqual(false);
+    });
+
+    it('can make a column invisible', function () {
+        fail();
+    });
+
+    it('can make an invisible column visible', function () {
+        fail();
+    });
+
+    it('sets column width to initial when making an invisible column visible', function () {
+        fail();
     });
 });
