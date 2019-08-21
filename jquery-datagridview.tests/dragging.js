@@ -149,6 +149,30 @@ describe('dragging datagridview', function () {
     });
 
     it('header all the way to the left makes the column invisible', function () {
-        fail();
+        var grid = $('#datagridview-dragging-invisible');
+        var columns;
+
+        grid.width('100px');
+        grid.datagridview({
+            columns: [
+                { data: 'test' },
+                { data: 'column' },
+                { data: 'three' },
+                { data: 'four' }
+            ]
+        });
+
+        var dragElement = grid.find('.datagridview-header-cell:nth-child(2) .datagridview-header-drag');
+
+        triggerMouseEvent(dragElement, 'mousedown', 100);
+        triggerMouseEvent(dragElement, 'mousemove', 50);
+        triggerMouseEvent(dragElement, 'mouseup');
+
+        grid.datagridview(function () {
+            columns = this.getColumns();
+        });
+
+        expect(columns[1].width).toEqual(0);
+        expect(columns[1].visible).toEqual(false);
     });
 });

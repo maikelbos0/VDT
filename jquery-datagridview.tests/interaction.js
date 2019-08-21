@@ -1,9 +1,10 @@
 ﻿/// <reference path="interaction.html" />
 
 describe('a datagridview object', function () {
-    function triggerMouseEvent(element, eventType) {
+    function triggerMouseEvent(element, eventType, pageX) {
         var event = jQuery.Event(eventType);
         event.which = 1;
+        event.pageX = pageX;
 
         $(element).trigger(event);
     }
@@ -514,14 +515,69 @@ describe('a datagridview object', function () {
     });
 
     it('can make a column invisible', function () {
-        fail();
+        var grid = $('#datagridview-interaction-column-invisible');
+        var columns;
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            columns = this.getColumns();
+            this.toggleColumnVisibility(columns[0].id, false);
+            columns = this.getColumns();
+        });
+
+        expect(columns[0].visible).toEqual(false);
     });
 
     it('can make an invisible column visible', function () {
-        fail();
+        var grid = $('#datagridview-interaction-column-visible');
+        var columns;
+
+        grid.datagridview({
+            columns: [
+                { data: 'test', visible: false }
+            ]
+        }, function () {
+            columns = this.getColumns();
+            this.toggleColumnVisibility(columns[0].id, true);
+            columns = this.getColumns();
+        });
+
+        expect(columns[0].visible).toEqual(true);
     });
 
     it('sets column width to initial when making an invisible column visible', function () {
-        fail();
+        var grid = $('#datagridview-interaction-column-invisible-width');
+        var columns;
+
+        grid.width('100px');
+        grid.datagridview({
+            columns: [
+                { data: 'test1', width: 50 },
+                { data: 'test2', width: 50 }
+            ]
+        });
+
+        var dragElement = grid.find('.datagridview-header-cell:nth-child(2) .datagridview-header-drag');
+        
+        triggerMouseEvent(dragElement, 'mousedown', 100);
+        triggerMouseEvent(dragElement, 'mousemove', 25);
+        triggerMouseEvent(dragElement, 'mouseup');
+
+        grid.datagridview(function () {
+            columns = this.getColumns();
+        });
+
+        expect(columns[1].visible).toEqual(false);
+
+        grid.datagridview(function () {
+            this.toggleColumnVisibility(columns[1].id, true);
+            columns = this.getColumns();
+        });
+
+        expect(columns[1].visible).toEqual(true);
+        expect(columns[1].width).toEqual(50);
     });
 });
