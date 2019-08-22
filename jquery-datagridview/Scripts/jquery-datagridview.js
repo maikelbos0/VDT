@@ -541,7 +541,7 @@
     // Event handlers should not be accessible from the object itself
     let eventHandlers = {
         columnMoveStart: function (e) {
-            if (e.which !== 1 || $(e.target).hasClass('datagridview-header-toggle')) {
+            if (e.which !== 1 || $(e.target).hasClass('datagridview-header-drag')) {
                 return;
             }
 

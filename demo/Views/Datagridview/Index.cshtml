@@ -78,9 +78,9 @@
                         console.time('repopulate x100');
 
                         for (var i = 0; i < 100; i++) {
-                        $('#datagrid-1').datagridview(function () {
-                            this.populate(d.metaData, d.data);
-                        });
+                            $('#datagrid-1').datagridview(function () {
+                                this.populate(d.metaData, d.data);
+                            });
                         }
 
                         console.timeEnd('repopulate x100');

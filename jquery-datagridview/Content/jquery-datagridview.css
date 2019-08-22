@@ -24,8 +24,6 @@
 .datagridview-header-move-title {
     position: absolute;
     display: inline-block;
-    border: 1px solid #000000;
-    background-color: #ffffff;
 }
 
 .datagridview-body {
@@ -42,14 +40,6 @@
     flex-wrap: nowrap;
 }
 
-.datagridview-row-selected {
-    background: #aaccff;
-}
-
-.datagridview-row-selecting {
-    background: #bbddff;
-}
-
 .datagridview-header-cell, .datagridview-row > div {
     white-space: nowrap;
     overflow: hidden;
@@ -59,12 +49,12 @@
 
 .datagridview-header-cell {
     position: relative;
-    padding-right: 5px;
 }
 
 .datagridview-header-drag {
     position: absolute;
     right: 0px;
+    top: 0px;
     height: 100%;
     width: 5px;
     cursor: col-resize;
@@ -76,10 +66,6 @@
 
 .datagridview-footer > .datagridview-footer-element {
     flex-basis: auto;
-}
-
-.datagridview-footer-element input {
-    max-width: 3em;
 }
 
 .datagridview-header-cell-sortable {
@@ -111,18 +97,51 @@
     margin-left: -0.4em;
     margin-top: 1px;
 }
-
-/* temp */
-.datagridview-header {
-    background: #ffffcc;
+    
+/* Non-functional styling */
+    
+.datagridview {
+    border: 1px solid #999999;
 }
 
-.datagridview-body {
-    background: #ffccff;
+.datagridview-header, .datagridview-footer {
+    background: #eeeeee;
 }
 
 .datagridview-footer {
-    background: #ccffff;
+    padding: 0.2rem;
+}
+
+.datagridview-header-cell {
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+}
+
+.datagridview-row.datagridview-row-selected {
+    background: #aaccff;
+}
+
+.datagridview-row.datagridview-row-selecting {
+    background: #bbddff;
+}
+
+.datagridview-footer input, .datagridview-footer button {
+    padding-top: 0;
+    padding-bottom: 0;
+    border: 1px solid #999999;
+}
+
+.datagridview-footer button {
+    background: transparent;
+}
+
+.datagridview-footer input {
+    max-width: 3em;
+    text-align: center;
+}
+
+.datagridview-row {
+    background: #ffffff;
 }
 
 .datagridview-header-cell {
@@ -130,9 +149,17 @@
 }
 
 .datagridview-header-drag {
-    background-color: #cccc99;
+    background-color: #cccccc;
 }
 
 .datagridview-row > div, .datagridview-header-cell {
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid #999999;
+    padding-left: 0.2rem;
+    padding-right: calc(0.2rem + 5px);
+}
+
+.datagridview-header-move-title {
+    padding: 0.2rem;
+    border: 1px solid #000000;
+    background-color: #ffffff;
 }
