@@ -516,7 +516,7 @@
         // We work with a copy of the element; we only set paging when getting data in
         let metaData = new DataGridViewMetaData(this.metaData.sortColumn, this.metaData.sortDescending, this.metaData.totalRows, rowsPerPage || this.metaData.rowsPerPage, page);
 
-        this.element.trigger('datagridview.paged', metaData);
+        this.element.trigger('datagridview.paged', [metaData]);
     }
 
     // Toggle the visibility of a column
@@ -651,6 +651,9 @@
 
                 // Finally we can figure out the new style
                 e.data.setColumnStyle();
+
+                // Trigger event that a header was moved
+                e.data.element.trigger('datagridview.columnMoved', [e.data.getColumns()]);
             }
 
             $(e.data.headerMoveState.title).remove();
@@ -677,7 +680,7 @@
                 metaData.sortDescending = false;
             }
 
-            e.data.element.trigger('datagridview.sorted', metaData);
+            e.data.element.trigger('datagridview.sorted', [metaData]);
         },
         columnResizeStart: function (e) {
             if (e.which !== 1) {
@@ -713,7 +716,7 @@
             if (e.which !== 1) {
                 return;
             }
-
+            
             let invisibleColumns = e.data.options.columns.filter(function (c) { return c.width <= 0; });
 
             // If we've made any columns 0 width, then make them invisible
@@ -725,6 +728,9 @@
                 // Set the new style
                 e.data.setColumnStyle();
             }
+
+            // Trigger event that a header was resized
+            e.data.element.trigger('datagridview.columnResized', [e.data.getColumns()]);
 
             e.data.headerResizeState.dragging = false;
         },

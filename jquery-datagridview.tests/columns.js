@@ -348,6 +348,31 @@ describe('datagridview columns', function () {
         expect(columns[3].data).toEqual('test3');
     });
 
+    it('getting moved causes event to be fired with column info', function () {
+        var grid = $('#columns-order-move-event');
+        var columns = null;
+
+        grid.width('100px');
+        grid.datagridview({
+            columns: [
+                { data: 'test1' },
+                { data: 'test2' }
+            ]
+        });
+
+        grid.on('datagridview.columnMoved', function (e, cols) {
+            columns = cols;
+        });
+
+        triggerMouseEvent(grid.find('.datagridview-header-cell').first(), 'mousedown', -100);
+        triggerMouseEvent(grid, 'mousemove', 0);
+        triggerMouseEvent(grid, 'mouseup', 100);
+
+        expect(columns).not.toBeNull();
+        expect(columns.length).toEqual(2);
+        expect(columns[0].data).toEqual('test2');
+    });
+
     it('don\'t initiate sorting when moving', function () {
         var grid = $('#columns-order-move-no-sort');
         var called = false;

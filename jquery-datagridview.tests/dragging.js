@@ -175,4 +175,33 @@ describe('dragging datagridview', function () {
         expect(columns[1].width).toEqual(0);
         expect(columns[1].visible).toEqual(false);
     });
+
+    it('header causes event to be fired with column info', function () {
+        var grid = $('#datagridview-dragging-event');
+        var columns;
+
+        grid.width('100px');
+        grid.datagridview({
+            columns: [
+                { data: 'test' },
+                { data: 'column' },
+                { data: 'three' },
+                { data: 'four' }
+            ]
+        });
+
+        var dragElement = grid.find('.datagridview-header-cell:nth-child(2) .datagridview-header-drag');
+
+        grid.on('datagridview.columnResized', function (e, cols) {
+            columns = cols;
+        });
+
+        triggerMouseEvent(dragElement, 'mousedown', 100);
+        triggerMouseEvent(dragElement, 'mousemove', 80);
+        triggerMouseEvent(dragElement, 'mouseup');
+
+        expect(columns).not.toBeNull();
+        expect(columns.length).toEqual(4);
+        expect(columns[1].width).toEqual(2);
+    });
 });
