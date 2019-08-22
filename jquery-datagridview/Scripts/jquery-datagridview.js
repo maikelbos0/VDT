@@ -207,7 +207,7 @@
         this.options.columns.forEach(function (column) {
             // Define class
             column.id = Math.random().toString().replace('.', '');
-            column.class = 'datagridview-column-' + column.id;
+            column.columnClass = 'datagridview-column-' + column.id;
             column.width = isNaN(column.width) || column.width <= 0 ? 10 : parseFloat(column.width);
             column.defaultWidth = column.width;
             column.visible = column.visible !== false;
@@ -218,13 +218,17 @@
             }
 
             let headerCell = base.createElement('<div>', 'datagridview-header-cell')
-                .addClass(column.class)
+                .addClass(column.columnClass)
                 .toggleClass('datagridview-header-cell-sortable', column.sortable !== false)
                 .text(column.header || column.data)
                 .attr('title', column.header || column.data)
                 .data('id', column.id)
                 .data('column', column.data)
                 .data('sort-column', column.sortData || column.data);
+
+            if (column.class) {
+                headerCell.addClass(column.class);
+            }
 
             if (base.allowColumnResize) {
                 // Drag item
@@ -273,10 +277,10 @@
 
         this.style.html(this.options.columns.reduce(function (style, column) {
             if (column.visible) {
-                return style + '.' + column.class + '{ flex-grow: ' + column.width + '; order: ' + column.index + '; }\n';
+                return style + '.' + column.columnClass + '{ flex-grow: ' + column.width + '; order: ' + column.index + '; }\n';
             }
             else {
-                return style + '.' + column.class + '{ display: none; }\n';
+                return style + '.' + column.columnClass + '{ display: none; }\n';
             }
         }, style));
     }
@@ -291,7 +295,11 @@
 
             for (let c = 0; c < this.options.columns.length; c++) {
                 let column = this.options.columns[c];
-                let cell = this.createElement('<div>', column.class);
+                let cell = this.createElement('<div>', column.columnClass);
+                
+                if (column.class) {
+                    cell.addClass(column.class);
+                }
 
                 if (column.renderer) {
                     column.renderer(cell, dataRow[column.data], dataRow);
@@ -401,7 +409,8 @@
                 data: column.data,
                 sortData: column.sortData,
                 sortable: column.sortable,
-                index: column.index
+                index: column.index,
+                class: column.class
             };
         });
     }

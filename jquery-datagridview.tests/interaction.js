@@ -133,7 +133,7 @@ describe('a datagridview object', function () {
 
         grid.datagridview({
             columns: [
-                { data: 'test', sortable: false },
+                { data: 'test', sortable: false, class: 'text-right' },
                 { data: 'column', sortData: 'column-org', width: 25, visible: false }
             ]
         }, function () {
@@ -149,6 +149,7 @@ describe('a datagridview object', function () {
         expect(columns[0].width).toEqual(10);
         expect(columns[0].index).toEqual(0);
         expect(columns[0].visible).toEqual(true);
+        expect(columns[0].class).toEqual('text-right');
 
         expect(columns[1].id).not.toBeUndefined();
         expect(columns[1].data).toEqual('column');
@@ -157,6 +158,7 @@ describe('a datagridview object', function () {
         expect(columns[1].width).toEqual(25);
         expect(columns[1].index).toEqual(1);
         expect(columns[1].visible).toEqual(false);
+        expect(columns[1].class).toBeUndefined();
     });
 
     it('getting column definitions returns a copy', function () {

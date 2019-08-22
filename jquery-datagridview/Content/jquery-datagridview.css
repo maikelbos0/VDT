@@ -59,6 +59,7 @@
 
 .datagridview-header-cell {
     position: relative;
+    padding-right: 5px;
 }
 
 .datagridview-header-drag {

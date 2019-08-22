@@ -117,6 +117,43 @@ describe('datagridview columns', function () {
         expect(styles[$(cells[1]).attr('class')]).toEqual('flex-grow: 10; order: 1;');
     });
 
+    it('class is applied to headers', function () {
+        var grid = $('#columns-class-headers');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test1', width: 25 },
+                { data: 'test2', class: 'text-right' }
+            ]
+        });
+
+        var headers = grid.find('.datagridview-header-cell');
+
+        expect($(headers[0]).hasClass('text-right')).toEqual(false);
+        expect($(headers[1]).hasClass('text-right')).toEqual(true);
+    });
+
+    it('class is applied to data', function () {
+        var grid = $('#columns-class-data');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test1', width: 25 },
+                { data: 'test2', class: 'text-right' }
+            ]
+        }, function () {
+            this.populate(null, [
+                { test1: 'test' },
+                { test2: 'test' }
+            ]);
+        });
+
+        var cells = grid.find('.datagridview-row > div');
+
+        expect($(cells[0]).hasClass('text-right')).toEqual(false);
+        expect($(cells[1]).hasClass('text-right')).toEqual(true);
+    });
+
     it('are visible by default', function () {
         var grid = $('#columns-visible');
 
