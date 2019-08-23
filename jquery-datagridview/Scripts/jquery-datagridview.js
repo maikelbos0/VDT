@@ -191,6 +191,7 @@
         this.element.children().hide();
         this.header = this.createElement('<div>', 'datagridview-header');
         this.body = this.createElement('<div>', 'datagridview-body');
+        this.rows = $(false);
         this.contentContainer = this.createElement('<div>', 'datagridview-content-container').toggleClass('datagridview-container-multiselect', this.isMultiselect).append(this.header, this.body);
         this.footer = this.createElement('<div>'); // Placeholder only
         this.footerPlugins = this.options.getFooterPlugins(this.element);
@@ -238,6 +239,7 @@
             base.header.append(headerCell);
         });
 
+        this.headerCells = this.header.children('.datagridview-header-cell');
         this.setColumnStyle();
 
         // Use the meta data if present to display appropriate sorting and paging
@@ -316,6 +318,7 @@
 
         this.body.replaceWith(newBody);
         this.body = newBody;
+        this.rows = newBody.children('.datagridview-row');
         this.data = data;
 
         // Use the new meta data if present to display appropriate sorting and paging
@@ -361,7 +364,7 @@
     // Set sorting icon after sorting action
     DataGridView.prototype.displaySortOrder = function () {
         let base = this;
-        let header = this.header.find('div.datagridview-header-cell').filter(function () { return $(this).data('sort-column') === base.metaData.sortColumn });
+        let header = this.headerCells.filter(function () { return $(this).data('sort-column') === base.metaData.sortColumn });
 
         if (header.length > 0) {
             if (this.metaData.sortDescending) {
@@ -437,12 +440,12 @@
     }
 
     // Internal function for altering selection
-    DataGridView.prototype.alterSelection = function (rows, selectedRows, toggle, resetSelection) {
+    DataGridView.prototype.alterSelection = function (selectedRows, toggle, resetSelection) {
         let selectionChanged = false;
 
         // Reset selection means we unselect the selected rows that aren't in the current selection
         if (resetSelection) {
-            let unselectRows = rows.not(selectedRows).filter('.datagridview-row-selected');
+            let unselectRows = this.rows.not(selectedRows).filter('.datagridview-row-selected');
 
             if (unselectRows.length > 0) {
                 selectionChanged = true;
@@ -474,8 +477,7 @@
 
     // Set selected rows by selector/selection/function/element
     DataGridView.prototype.setSelectedRows = function (selector) {
-        let rows = this.body.find('.datagridview-row');
-        let selectedRows = rows.filter(selector);
+        let selectedRows = this.rows.filter(selector);
 
         if (!this.allowSelect) {
             selectedRows = $(false);
@@ -484,13 +486,12 @@
             selectedRows = selectedRows.first();
         }
 
-        this.alterSelection(rows, selectedRows, false, true);
+        this.alterSelection(selectedRows, false, true);
     }
 
     // Set selected rows by index
     DataGridView.prototype.setSelectedIndexes = function (indexes) {
-        let rows = this.body.find('.datagridview-row');
-        let selectedRows = rows.filter(function (index) {
+        let selectedRows = this.rows.filter(function (index) {
             return indexes.filter(function (v) { return v === index; }).length > 0;
         })
 
@@ -556,7 +557,6 @@
                 return;
             }
 
-            let headers = e.data.header.find('.datagridview-header-cell');
             let position = e.pageX - e.data.element.position().left + e.data.contentContainer.scrollLeft();
 
             if (!e.data.headerMoveState.indicator) {
@@ -578,7 +578,7 @@
             // First look to the left
             if (position < e.data.headerMoveState.header.position().left) {
                 for (let i = e.data.headerMoveState.column.index; i >= 0; i--) {
-                    let header = headers.filter(function () { return $(this).data('id') == e.data.options.columns[i].id; });
+                    let header = e.data.headerCells.filter(function () { return $(this).data('id') == e.data.options.columns[i].id; });
 
                     if (position > header.position().left) {
                         e.data.headerMoveState.indicator.css('left', header.position().left + 'px');
@@ -590,7 +590,7 @@
             // Then look to the right
             else if (position > e.data.headerMoveState.header.position().left + e.data.headerMoveState.header.outerWidth(true)) {
                 for (let i = e.data.headerMoveState.column.index; i < e.data.options.columns.length; i++) {
-                    let header = headers.filter(function () { return $(this).data('id') == e.data.options.columns[i].id; });
+                    let header = e.data.headerCells.filter(function () { return $(this).data('id') == e.data.options.columns[i].id; });
 
                     if (position < header.position().left + header.outerWidth(true)) {
                         e.data.headerMoveState.indicator.css('left', header.position().left + header.outerWidth(true) + 'px');
@@ -610,7 +610,6 @@
                 return;
             }
 
-            let headers = e.data.header.find('.datagridview-header-cell');
             let header = null;
             let position = e.pageX - e.data.element.position().left + e.data.contentContainer.scrollLeft();
 
@@ -618,7 +617,7 @@
             // First look to the left
             if (position < e.data.headerMoveState.header.position().left) {
                 for (let i = e.data.headerMoveState.column.index; i >= 0; i--) {
-                    header = headers.filter(function () { return $(this).data('id') == e.data.options.columns[i].id; });
+                    header = e.data.headerCells.filter(function () { return $(this).data('id') == e.data.options.columns[i].id; });
 
                     if (position > header.position().left) {
                         break;
@@ -628,7 +627,7 @@
             // Then look to the right
             else if (position > e.data.headerMoveState.header.position().left + e.data.headerMoveState.header.outerWidth(true)) {
                 for (let i = e.data.headerMoveState.column.index; i < e.data.options.columns.length; i++) {
-                    header = headers.filter(function () { return $(this).data('id') == e.data.options.columns[i].id; });
+                    header = e.data.headerCells.filter(function () { return $(this).data('id') == e.data.options.columns[i].id; });
 
                     if (position < header.position().left + header.outerWidth(true)) {
                         break;
@@ -689,7 +688,7 @@
 
             e.data.headerResizeState.dragging = true;
             e.data.headerResizeState.position = e.pageX;
-            e.data.headerResizeState.column = $(this).closest('.datagridview-header-cell').data('id');
+            e.data.headerResizeState.column = $(this).closest(e.data.headerCells).data('id');
         },
         columnResize: function (e) {
             if (!e.data.headerResizeState.dragging) {
@@ -749,12 +748,11 @@
             e.data.selectState.dragging = true;
 
             // This is just to display that we're select-dragging the rows
-            let rows = e.data.body.find('.datagridview-row');
-            let firstIndex = rows.index(e.data.selectState.dragElement);
-            let secondIndex = rows.index(this);
-            let dragSelection = rows.slice(Math.min(firstIndex, secondIndex), Math.max(firstIndex, secondIndex) + 1);
+            let firstIndex = e.data.rows.index(e.data.selectState.dragElement);
+            let secondIndex = e.data.rows.index(this);
+            let dragSelection = e.data.rows.slice(Math.min(firstIndex, secondIndex), Math.max(firstIndex, secondIndex) + 1);
 
-            rows.not(dragSelection).removeClass('datagridview-row-selecting');
+            e.data.rows.not(dragSelection).removeClass('datagridview-row-selecting');
             dragSelection.addClass('datagridview-row-selecting');
         },
         rowSelectEnd: function (e) {
@@ -762,31 +760,31 @@
                 return;
             }
 
-            let rows = e.data.body.find('.datagridview-row');
+            debugger;
 
             if (e.data.isMultiselect && e.data.selectState.dragging && e.data.selectState.dragElement) {
-                let firstIndex = rows.index(e.data.selectState.dragElement);
-                let secondIndex = rows.index(this);
+                let firstIndex = e.data.rows.index(e.data.selectState.dragElement);
+                let secondIndex = e.data.rows.index(this);
 
-                e.data.alterSelection(rows, rows.slice(Math.min(firstIndex, secondIndex), Math.max(firstIndex, secondIndex) + 1), false, !e.ctrlKey);
+                e.data.alterSelection(e.data.rows.slice(Math.min(firstIndex, secondIndex), Math.max(firstIndex, secondIndex) + 1), false, !e.ctrlKey);
             }
             else if (e.data.isMultiselect && e.shiftKey && e.data.selectState.extendElement) {
-                let firstIndex = rows.index(e.data.selectState.extendElement);
-                let secondIndex = rows.index(this);
+                let firstIndex = e.data.rows.index(e.data.selectState.extendElement);
+                let secondIndex = e.data.rows.index(this);
 
-                e.data.alterSelection(rows, rows.slice(Math.min(firstIndex, secondIndex), Math.max(firstIndex, secondIndex) + 1), false, !e.ctrlKey);
+                e.data.alterSelection(e.data.rows.slice(Math.min(firstIndex, secondIndex), Math.max(firstIndex, secondIndex) + 1), false, !e.ctrlKey);
             }
             else if (e.data.isMultiselect && e.ctrlKey) {
-                e.data.alterSelection(rows, $(this), true, false);
+                e.data.alterSelection($(this), true, false);
                 e.data.selectState.extendElement = $(this);
             }
             else {
-                e.data.alterSelection(rows, $(this), false, true);
+                e.data.alterSelection($(this), false, true);
                 e.data.selectState.extendElement = $(this);
             }
 
             // Reset select state
-            rows.removeClass('datagridview-row-selecting');
+            e.data.rows.removeClass('datagridview-row-selecting');
             e.data.selectState.dragElement = null;
             e.data.selectState.selecting = false;
             e.data.selectState.dragging = false;
