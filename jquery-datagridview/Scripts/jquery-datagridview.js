@@ -71,6 +71,68 @@
         // If select is enabled, allow multiple row selection
         isMultiselect: function (element) {
             return $(element).data('multiselect') !== undefined && $(element).data('multiselect') != false;
+        },
+        // Use below functions to add attributes to the different elements the datagridview creates
+        // The content container is the scroll container for the header and body
+        // It always gets at least the class 'datagridview-content-container' and in multiselect the class 'datagridview-container-multiselect'
+        getContentContainerAttributes: function () {
+            return {};
+        },
+        // The header is the container for the header cells
+        // It always gets at least the class 'datagridview-header'
+        getHeaderAttributes: function () {
+            return {};
+        },
+        // The sort toggle is the element displaying the current sort order if applicable
+        // It always gets at least the class 'datagridview-sort-toggle' and depending on sort order the class 'datagridview-sort-toggle-ascending' or 'datagridview-sort-toggle-descending'
+        getSortToggleAttributes: function () {
+            return {};
+        },
+
+
+        // let headerCell = base.createElement('<div>', 'datagridview-header-cell')
+        getHeaderCellAttributes: function () {
+            return {};
+        },
+
+        //e.data.headerMoveState.indicator = e.data.createElement('<div>', 'datagridview-header-move-indicator').hide();
+        getHeaderMoveIndicatorAttributes: function () {
+            return {};
+        },
+
+        //e.data.headerMoveState.title = e.data.createElement('<div>', 'datagridview-header-move-title').text(e.data.headerMoveState.column.header || e.data.headerMoveState.column.data);
+        getHeaderMoveTitleAttributes: function () {
+            return {};
+        },
+
+        //this.body = this.createElement('<div>', 'datagridview-body');
+        getBodyAttributes: function () {
+            return {};
+        },
+
+        //let row = this.createElement('<div>', 'datagridview-row');
+        getRowAttributes: function () {
+            return {};
+        },
+
+        //let cell = this.createElement('<div>', column.columnClass);
+        getCellAttributes: function () {
+            return {};
+        },
+
+        //let newFooter = this.createElement('<div>', 'datagridview-footer');
+        getFooterAttributes: function () {
+            return {};
+        },
+
+        //let footerElement = base.createElement('<div>', 'datagridview-footer-element');
+        getFooterElementAttributes: function () {
+            return {};
+        },
+
+        //this.style = this.createElement('<style>', { type: 'text/css' });
+        getStyleAttributes: function () {
+            return {};
         }
     }
 
@@ -193,7 +255,7 @@
         this.body = this.createElement('<div>', 'datagridview-body');
         this.rows = $(false);
         this.contentContainer = this.createElement('<div>', 'datagridview-content-container').toggleClass('datagridview-container-multiselect', this.isMultiselect).append(this.header, this.body);
-        this.footer = this.createElement('<div>'); // Placeholder only
+        this.footer = this.createElement('<div>', 'datagridview-footer'); // Placeholder only
         this.footerPlugins = this.options.getFooterPlugins(this.element);
         this.sortToggle = this.createElement('<div>', 'datagridview-sort-toggle');
         this.element.append(
