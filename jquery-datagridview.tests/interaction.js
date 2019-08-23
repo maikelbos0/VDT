@@ -427,9 +427,9 @@ describe('a datagridview object', function () {
         expect(rows[1]).toEqual(grid.find('.datagridview-row')[2]);
     });
 
-    it('triggers the selection changed event when setting the selection programmatically', function () {
+    it('triggers the selection changed event with new selected data when setting the selection programmatically', function () {
         var grid = $('#datagridview-interaction-selected-event');
-        var called = false;
+        var data = null;
 
         grid.datagridview({
             columns: [
@@ -443,20 +443,21 @@ describe('a datagridview object', function () {
             ]);
         });
 
-        grid.on('datagridview.selectionChanged', function () {
-            called = true;
+        grid.on('datagridview.selectionChanged', function (e, d) {
+            data = d;
         });
 
         grid.datagridview(function () {
             this.setSelectedRows('*');
         });
 
-        expect(called).toEqual(true);
+        expect(data).not.toBeNull();
+        expect(data.length).toEqual(1);
     });
 
-    it('triggers the selection changed event when deselecting', function () {
+    it('triggers the selection changed event when deselecting with new selected data', function () {
         var grid = $('#datagridview-interaction-selected-event');
-        var called = false;
+        var data = null;
 
         grid.datagridview({
             columns: [
@@ -474,15 +475,16 @@ describe('a datagridview object', function () {
             this.setSelectedRows('*');
         });
 
-        grid.on('datagridview.selectionChanged', function () {
-            called = true;
+        grid.on('datagridview.selectionChanged', function (e, d) {
+            data = d;
         });
 
         grid.datagridview(function () {
             this.setSelectedRows(false);
         });
 
-        expect(called).toEqual(true);
+        expect(data).not.toBeNull();
+        expect(data.length).toEqual(0);
     });
 
     it('does not trigger the selection changed event when the selection does not change', function () {

@@ -348,4 +348,36 @@ describe('in a datagridview a user can select', function () {
         expect(rows[0]).toEqual(grid.find('.datagridview-row')[0]);
         expect(rows[3]).toEqual(grid.find('.datagridview-row')[4]);
     });
+    it('an range of rows triggers selection changed event with new selected data', function () {
+        var grid = $('#selection-multi-event');
+        var data = null;
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, },
+                { test: 4, },
+                { test: 5, },
+                { test: 6, }
+            ]);
+
+            this.setSelectedIndexes([0, 1]);
+        });
+
+        grid.on('datagridview.selectionChanged', function (e, d) {
+            data = d;
+        });
+
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(4)'), 'mousedown', true);
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(5)'), 'mouseenter', true);
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(5)'), 'mouseup', true);
+        
+        expect(data).not.toBeNull();
+        expect(data.length).toEqual(4);
+    });
 });

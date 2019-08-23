@@ -468,7 +468,7 @@
         }
 
         if (selectionChanged) {
-            this.element.trigger('datagridview.selectionChanged');
+            this.element.trigger('datagridview.selectionChanged', [this.getSelectedData()]);
         }
     }
 
