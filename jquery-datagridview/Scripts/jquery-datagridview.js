@@ -829,8 +829,6 @@
                 return;
             }
 
-            debugger;
-
             if (e.data.isMultiselect && e.data.selectState.dragging && e.data.selectState.dragElement) {
                 let firstIndex = e.data.rows.index(e.data.selectState.dragElement);
                 let secondIndex = e.data.rows.index(this);

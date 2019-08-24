@@ -61,6 +61,10 @@
     <Content Include="Content\jquery-datagridview.min.css">
       <DependentUpon>jquery-datagridview.css</DependentUpon>
     </Content>
+    <Content Include="Content\jquery-datagridview.style.css" />
+    <Content Include="Content\jquery-datagridview.style.min.css">
+      <DependentUpon>jquery-datagridview.style.css</DependentUpon>
+    </Content>
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />

@@ -10,5 +10,11 @@
     "inputFiles": [
       "Content/jquery-datagridview.css"
     ]
+  },
+  {
+    "outputFileName": "Content/jquery-datagridview.style.min.css",
+    "inputFiles": [
+      "Content/jquery-datagridview.style.css"
+    ]
   }
 ]
