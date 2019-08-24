@@ -88,49 +88,48 @@
         getSortToggleAttributes: function () {
             return {};
         },
-
-
-        // let headerCell = base.createElement('<div>', 'datagridview-header-cell')
+        // Header cells are the individual column headers within the header.
+        // They always get at least the class 'datagridview-header-cell' and a column-specific class
         getHeaderCellAttributes: function () {
             return {};
         },
-
-        //e.data.headerMoveState.indicator = e.data.createElement('<div>', 'datagridview-header-move-indicator').hide();
+        // The header move indicator is the arrow pointing at the new column position while dragging a header to move a column
+        // It always gets at least the class 'datagridview-header-move-indicator'
         getHeaderMoveIndicatorAttributes: function () {
             return {};
         },
-
-        //e.data.headerMoveState.title = e.data.createElement('<div>', 'datagridview-header-move-title').text(e.data.headerMoveState.column.header || e.data.headerMoveState.column.data);
+        // The header move title contains the header title of the header that's being dragged to move a column and is attached to the mouse position
+        // It always gets at least the class 'datagridview-header-move-title'
         getHeaderMoveTitleAttributes: function () {
             return {};
         },
-
-        //this.body = this.createElement('<div>', 'datagridview-body');
+        // The body is the container for the grid rows
+        // It always gets at least the class 'datagridview-body'
         getBodyAttributes: function () {
             return {};
         },
-
-        //let row = this.createElement('<div>', 'datagridview-row');
+        // The rows are the data rows inside the body that contain the data
+        // They always get at least the class 'datagridview-row'
         getRowAttributes: function () {
             return {};
         },
-
-        //let cell = this.createElement('<div>', column.columnClass);
+        // The cells are the data cells inside the rows
+        // They always get at least a column-specific class
         getCellAttributes: function () {
             return {};
         },
-
-        //let newFooter = this.createElement('<div>', 'datagridview-footer');
+        // The footer is the container for the footer (paging) elements
+        // It always gets at least the class 'datagridview-footer'
         getFooterAttributes: function () {
             return {};
         },
-
-        //let footerElement = base.createElement('<div>', 'datagridview-footer-element');
+        // Footer elements are the containers for each separate footer (paging) plugin
+        // They always get at least the class 'datagridview-footer-element');
         getFooterElementAttributes: function () {
             return {};
         },
-
-        //this.style = this.createElement('<style>', { type: 'text/css' });
+        // The style element is an element that contains the widths and visibility of columns
+        // It always gets at least the type 'text/css'
         getStyleAttributes: function () {
             return {};
         }
