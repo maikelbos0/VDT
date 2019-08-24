@@ -38,8 +38,8 @@ Html and javascript:
 </script>
 
 <script type="text/javascript">
-    $('#example-table-1').datagridview(function () {
-        this.populate(new DataGridViewMetaData(null, false, 25, 0, 2), [
+    $('#example-table').datagridview(function () {
+        this.populate(new DataGridViewMetaData(null, false, 2, 25, 0), [
             { firstName: 'Keanu', lastName: 'Reeves' },
             { firstName: 'Laurence', lastName: 'Fishburne' }
         ]);

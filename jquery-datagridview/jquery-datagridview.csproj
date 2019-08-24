@@ -58,6 +58,7 @@
     <None Include="bundleconfig.json" />
     <Content Include="LICENSE" />
     <Content Include="README.md" />
+    <Content Include="jquery-datagridview.nuspec" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Content\jquery-datagridview.css" />
     <Content Include="Content\jquery-datagridview.min.css">
