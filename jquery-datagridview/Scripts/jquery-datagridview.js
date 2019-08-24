@@ -93,6 +93,11 @@
         getHeaderCellAttributes: function () {
             return {};
         },
+        // Header drag elements are the elements to hold to drag to change column size
+        // They always get at least the class 'datagridview-header-drag' and a column-specific class
+        getHeaderDragAttributes: function () {
+            return {};
+        },
         // The header move indicator is the arrow pointing at the new column position while dragging a header to move a column
         // It always gets at least the class 'datagridview-header-move-indicator'
         getHeaderMoveIndicatorAttributes: function () {
@@ -250,19 +255,21 @@
         this.element.addClass('datagridview');
         this.element.addClass(this.elementClass);
         this.element.children().hide();
-        this.header = this.createElement('<div>', 'datagridview-header');
-        this.body = this.createElement('<div>', 'datagridview-body');
+        this.header = this.createElement('<div>', 'datagridview-header', this.options.getHeaderAttributes());
+        this.body = this.createElement('<div>', 'datagridview-body', this.options.getBodyAttributes());
         this.rows = $(false);
-        this.contentContainer = this.createElement('<div>', 'datagridview-content-container').toggleClass('datagridview-container-multiselect', this.isMultiselect).append(this.header, this.body);
-        this.footer = this.createElement('<div>', 'datagridview-footer'); // Placeholder only
+        this.contentContainer = this.createElement('<div>', 'datagridview-content-container', this.options.getContentContainerAttributes())
+            .toggleClass('datagridview-container-multiselect', this.isMultiselect)
+            .append(this.header, this.body);
+        this.footer = this.createElement('<div>', 'datagridview-footer', this.options.getFooterAttributes());
         this.footerPlugins = this.options.getFooterPlugins(this.element);
-        this.sortToggle = this.createElement('<div>', 'datagridview-sort-toggle');
+        this.sortToggle = this.createElement('<div>', 'datagridview-sort-toggle', this.options.getSortToggleAttributes());
         this.element.append(
             this.contentContainer,
             this.footer
         );
 
-        this.style = this.createElement('<style>', { type: 'text/css' });
+        this.style = this.createElement('<style>', null, this.options.getStyleAttributes(), { type: 'text/css' });
         $('body').append(this.style);
 
         // Create columns
@@ -279,7 +286,7 @@
                 column.renderer = null;
             }
 
-            let headerCell = base.createElement('<div>', 'datagridview-header-cell')
+            let headerCell = base.createElement('<div>', 'datagridview-header-cell', base.options.getHeaderCellAttributes())
                 .addClass(column.columnClass)
                 .toggleClass('datagridview-header-cell-sortable', column.sortable !== false)
                 .text(column.header || column.data)
@@ -294,7 +301,7 @@
 
             if (base.allowColumnResize) {
                 // Drag item
-                headerCell.prepend(base.createElement('<div>', 'datagridview-header-drag'));
+                headerCell.prepend(base.createElement('<div>', 'datagridview-header-drag', base.options.getHeaderDragAttributes()));
             }
 
             base.header.append(headerCell);
@@ -350,15 +357,15 @@
 
     // Fill the grid with the data
     DataGridView.prototype.populate = function (metaData, data) {
-        let newBody = this.createElement('<div>', 'datagridview-body');
+        let newBody = this.createElement('<div>', 'datagridview-body', this.options.getBodyAttributes());
 
         for (let r = 0; r < data.length; r++) {
             let dataRow = data[r];
-            let row = this.createElement('<div>', 'datagridview-row');
+            let row = this.createElement('<div>', 'datagridview-row', this.options.getRowAttributes());
 
             for (let c = 0; c < this.options.columns.length; c++) {
                 let column = this.options.columns[c];
-                let cell = this.createElement('<div>', column.columnClass);
+                let cell = this.createElement('<div>', column.columnClass, this.options.getCellAttributes());
                 
                 if (column.class) {
                     cell.addClass(column.class);
@@ -446,13 +453,13 @@
     // Create the footers
     DataGridView.prototype.displayFooters = function () {
         let base = this;
-        let newFooter = this.createElement('<div>', 'datagridview-footer');
+        let newFooter = this.createElement('<div>', 'datagridview-footer', this.options.getFooterAttributes());
 
         this.footer.children().remove();
 
         if (this.footerPlugins.length !== 0) {
             $.each(this.footerPlugins, function () {
-                let footerElement = base.createElement('<div>', 'datagridview-footer-element');
+                let footerElement = base.createElement('<div>', 'datagridview-footer-element', base.options.getFooterElementAttributes());
 
                 newFooter.append(footerElement);
                 this(footerElement, base.getMetaData(), base);
@@ -621,13 +628,14 @@
             let position = e.pageX - e.data.element.position().left + e.data.contentContainer.scrollLeft();
 
             if (!e.data.headerMoveState.indicator) {
-                e.data.headerMoveState.indicator = e.data.createElement('<div>', 'datagridview-header-move-indicator').hide();
+                e.data.headerMoveState.indicator = e.data.createElement('<div>', 'datagridview-header-move-indicator', e.data.options.getHeaderMoveIndicatorAttributes()).hide();
                 e.data.headerMoveState.indicator.css('top', e.data.header.outerHeight(true) + 'px');
                 e.data.contentContainer.append(e.data.headerMoveState.indicator);
             }
 
             if (!e.data.headerMoveState.title) {
-                e.data.headerMoveState.title = e.data.createElement('<div>', 'datagridview-header-move-title').text(e.data.headerMoveState.column.header || e.data.headerMoveState.column.data);
+                e.data.headerMoveState.title = e.data.createElement('<div>', 'datagridview-header-move-title', e.data.options.getHeaderMoveTitleAttributes())
+                    .text(e.data.headerMoveState.column.header || e.data.headerMoveState.column.data);
                 e.data.contentContainer.append(e.data.headerMoveState.title);
             }
 
