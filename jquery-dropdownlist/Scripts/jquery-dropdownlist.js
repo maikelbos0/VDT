@@ -462,7 +462,7 @@
             }
 
             e.data.setSelectorText();
-            e.data.element.trigger('dropdownlist.selectedItemsChanged');
+            e.data.element.trigger('dropdownlist.selectedItemsChanged', [e.data.getSelectedItems(), e.data.getSelectedValues()]);
         },
 
         // Click handler for list

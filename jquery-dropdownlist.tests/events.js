@@ -141,19 +141,23 @@ describe('when a user', function () {
         expect(dropdown.find('.select-all input.dropdownlist-field').prop('checked')).toEqual(true);
     });
 
-    it('clicks on an item in an open dropdown it triggers the selected items changed event', function () {
+    it('clicks on an item in an open dropdown it triggers the selected items changed event with appropriate parameters', function () {
         var dropdown = $('#dropdown-events-selected-items-changed');
-        var called = false;
+        var items = null;
+        var values = null;
 
         dropdown.dropdownlist();
-        dropdown.on('dropdownlist.selectedItemsChanged', function () {
-            called = true;
+        dropdown.on('dropdownlist.selectedItemsChanged', function (e, i, v) {
+            items = i;
+            values = v;
         });
 
         dropdown.closest('.dropdownlist').find('.dropdownlist-selector').click();
         dropdown.find('.select-item input').click();
 
-        expect(called).toEqual(true);
+        expect(items).not.toBeNull();
+        expect(items[0]).toEqual(dropdown.find('.select-item')[0]);
+        expect(values).toEqual([2])
     });
 
     it('clicks on a disabled dropdownlist it will not open', function () {

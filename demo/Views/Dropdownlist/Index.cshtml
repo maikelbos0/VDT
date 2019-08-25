@@ -222,10 +222,12 @@
             // Create all other dropdown lists
             $('.my-dropdown').dropdownlist();
 
-            $('.my-dropdown').on('dropdownlist.selectedItemsChanged', function () {
+            $('.my-dropdown').on('dropdownlist.selectedItemsChanged', function (e, items, values) {
                 $(this).dropdownlist(function (d) {
-                    console.log(d.fieldName + ": " + d.getSelectedValues());
+                    console.log(d.fieldName + ": ");
                 });
+
+                console.log(values);
             });
         });
     </script>
