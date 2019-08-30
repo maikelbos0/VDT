@@ -625,11 +625,11 @@
                 return;
             }
 
-            let position = e.pageX - e.data.element.position().left + e.data.contentContainer.scrollLeft();
+            let position = e.pageX - e.data.element.offset().left + e.data.contentContainer.scrollLeft();
 
             if (!e.data.headerMoveState.indicator) {
                 e.data.headerMoveState.indicator = e.data.createElement('<div>', 'datagridview-header-move-indicator', e.data.options.getHeaderMoveIndicatorAttributes()).hide();
-                e.data.headerMoveState.indicator.css('top', e.data.header.outerHeight(true) + 'px');
+                e.data.headerMoveState.indicator.css('top', e.data.header.outerHeight(true) + e.data.contentContainer.scrollTop() + 'px');
                 e.data.contentContainer.append(e.data.headerMoveState.indicator);
             }
 
@@ -640,8 +640,8 @@
             }
 
             e.data.headerMoveState.dragging = true;
-            e.data.headerMoveState.title.css('top', e.pageY + 5 - e.data.element.position().top + 'px');
-            e.data.headerMoveState.title.css('left', e.pageX + 15 - e.data.element.position().left + 'px');
+            e.data.headerMoveState.title.css('top', e.pageY + 5 - e.data.element.offset().top + e.data.contentContainer.scrollTop() + 'px');
+            e.data.headerMoveState.title.css('left', e.pageX + 15 - e.data.element.offset().left + 'px');
 
             // Figure out where in the columns the to add the indicator
             // First look to the left
@@ -680,7 +680,7 @@
             }
 
             let header = null;
-            let position = e.pageX - e.data.element.position().left + e.data.contentContainer.scrollLeft();
+            let position = e.pageX - e.data.element.offset().left + e.data.contentContainer.scrollLeft();
 
             // Figure out where the column needs to move to by finding the header which it will replac
             // First look to the left
