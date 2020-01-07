@@ -69,10 +69,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="options.js" />
+    <Content Include="range.js" />
     <Content Include="basic.html" />
     <Content Include="basic.js" />
     <Content Include="element.html" />
     <Content Include="element.js" />
+    <Content Include="options.html" />
+    <Content Include="range.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
