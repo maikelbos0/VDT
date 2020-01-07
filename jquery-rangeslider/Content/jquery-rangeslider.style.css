@@ -1,0 +1,9 @@
+﻿.rangeslider-track {
+	background-color: #cccccc;
+}
+
+.rangeslider-thumb {
+	background-color: #666666;
+	border: 0px;
+	border-radius: 0.125em;
+}

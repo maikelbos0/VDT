@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "Slider demo";
+}
+
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lobortis, ipsum ut vulputate vestibulum, sem odio fermentum magna, sed ultricies sem purus et dolor. Aliquam dapibus felis magna, vitae ultrices sem posuere eu. Sed ante orci, dictum tincidunt eros quis, sagittis rutrum sem. Vivamus ac commodo est. Nunc gravida maximus ligula, quis dictum sem vestibulum eget. Sed vel facilisis lacus. Ut nisl mi, ultrices quis auctor iaculis, cursus quis lacus. Nullam lectus risus, faucibus non laoreet eget, bibendum vel ligula. Aenean at pharetra augue, sed consequat velit. Aenean tincidunt gravida semper. Quisque dictum ullamcorper sem non placerat.
+</p>
+
+<div class="row">
+    <div class="col-3">
+        Slider:
+    </div>
+    <div class="col-3">
+        <div id="slider-1"></div>
+    </div>
+    <div class="col-3">
+        <div id="slider-2"></div>
+    </div>
+</div>
+
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lobortis, ipsum ut vulputate vestibulum, sem odio fermentum magna, sed ultricies sem purus et dolor. Aliquam dapibus felis magna, vitae ultrices sem posuere eu. Sed ante orci, dictum tincidunt eros quis, sagittis rutrum sem. Vivamus ac commodo est. Nunc gravida maximus ligula, quis dictum sem vestibulum eget. Sed vel facilisis lacus. Ut nisl mi, ultrices quis auctor iaculis, cursus quis lacus. Nullam lectus risus, faucibus non laoreet eget, bibendum vel ligula. Aenean at pharetra augue, sed consequat velit. Aenean tincidunt gravida semper. Quisque dictum ullamcorper sem non placerat.
+</p>
+
+@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            $('#slider-2').rangeslider();
+
+            var slider = $('#slider-1');
+            //var rangeStart = 0;
+            //var rangeEnd = 100;
+            var stepCount = 10;
+            var value = 50;
+            var track = $('<div>', { class: 'slider-track' });
+            var thumb = $('<div>', { class: 'slider-thumb' });
+            var data = {
+                step: 5
+            };
+
+            thumb.css('left', 'calc(' + 100 / stepCount * data.step + '% - ' + thumb.outerWidth(true) + 'px)');
+
+            slider.addClass('slider');
+            slider.append(track, thumb);
+
+            slider.on('mousedown', '.slider-thumb', data, function (e) {
+                if (e.which !== 1 || e.data.sliding) {
+                    return;
+                }
+
+                e.data.slidingStartPosition = e.pageX;
+                e.data.sliding = true;
+            });
+
+            $(document).on('mousemove', data, function (e) {
+                if (!e.data.sliding) {
+                    return;
+                }
+
+                var delta = e.data.slidingStartPosition - e.pageX;
+                var stepWidth = slider.width() / stepCount;
+                var step = Math.min(stepCount, Math.max(0, e.data.step - Math.round(delta / stepWidth)));
+
+                thumb.css('left', 'calc(' + 100 / stepCount * step + '% - ' + thumb.outerWidth(true) + 'px)');
+            });
+
+            $(document).on('mouseup', data, function (e) {
+                if (e.which !== 1 || !e.data.sliding) {
+                    return;
+                }
+
+                var delta = e.data.slidingStartPosition - e.pageX;
+                var stepWidth = slider.width() / stepCount;
+                var step = Math.min(stepCount, Math.max(0, e.data.step - Math.round(delta / stepWidth)));
+
+                e.data.step = step;
+                e.data.sliding = false;
+
+                thumb.css('left', 'calc(' + 100 / stepCount * e.data.step + '% - ' + thumb.outerWidth(true) + 'px)');
+            });
+        });
+    </script>
+}
+
+<style type="text/css">
+    .slider {
+        position: relative;
+        height: 1.5em;
+    }
+
+    .slider-track {
+        position: absolute;
+        top: calc(50% - 2px);
+        width: 100%;
+        height: 4px;
+        background-color: #cccccc;
+    }
+
+    .slider-thumb {
+        position: absolute;
+        top: -3px;
+        width: 12px;
+        height: calc(100% + 6px);
+        background-color: #666666;
+        border: 0px;
+        border-radius: 2px;
+    }
+</style>

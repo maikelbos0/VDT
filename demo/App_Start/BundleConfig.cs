@@ -6,7 +6,8 @@ namespace vdt.demo.App_Start {
             bundles.Add(new ScriptBundle("~/Scripts/jquery").Include(
                 "~/Scripts/jquery-3.3.1.min.js",
                 "~/../jquery-dropdownlist/Scripts/jquery-dropdownlist.js",
-                "~/../jquery-datagridview/Scripts/jquery-datagridview.js"));
+                "~/../jquery-datagridview/Scripts/jquery-datagridview.js",
+                "~/../jquery-rangeslider/Scripts/jquery-rangeslider.js"));
 
             bundles.Add(new ScriptBundle("~/Scripts/bootstrap").Include(
                 "~/Scripts/bootstrap.min.js"));
@@ -16,7 +17,9 @@ namespace vdt.demo.App_Start {
                 "~/Content/Site.css",
                 "~/../jquery-dropdownlist/Content/jquery-dropdownlist.css",
                 "~/../jquery-datagridview/Content/jquery-datagridview.css",
-                "~/../jquery-datagridview/Content/jquery-datagridview.style.css"));
+                "~/../jquery-datagridview/Content/jquery-datagridview.style.css",
+                "~/../jquery-rangeslider/Content/jquery-rangeslider.css",
+                "~/../jquery-rangeslider/Content/jquery-rangeslider.style.css"));
         }
     }
 }

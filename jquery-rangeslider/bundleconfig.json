@@ -1,0 +1,20 @@
+[
+  {
+    "outputFileName": "Scripts/jquery-rangeslider.min.js",
+    "inputFiles": [
+      "Scripts/jquery-rangeslider.js"
+    ]
+  },
+  {
+    "outputFileName": "Content/jquery-rangeslider.min.css",
+    "inputFiles": [
+      "Content/jquery-rangeslider.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/jquery-rangeslider.style.min.css",
+    "inputFiles": [
+      "Content/jquery-rangeslider.style.css"
+    ]
+  }
+]

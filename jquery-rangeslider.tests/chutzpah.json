@@ -1,0 +1,8 @@
+{
+  "Framework": "jasmine",
+  "Engine": "JSDom",
+  "References": [
+    { "Path": "../jquery-rangeslider/Scripts/jquery-3.3.1.min.js" },
+    { "Path": "../jquery-rangeslider/Scripts/jquery-rangeslider.min.js" }
+  ]
+}
