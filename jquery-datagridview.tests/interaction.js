@@ -1,6 +1,4 @@
-﻿/// <reference path="interaction.html" />
-
-describe('a datagridview object', function () {
+﻿describe('a datagridview object', function () {
     function triggerMouseEvent(element, eventType, pageX) {
         var event = jQuery.Event(eventType);
         event.which = 1;

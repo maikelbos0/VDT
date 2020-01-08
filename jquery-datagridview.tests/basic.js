@@ -1,6 +1,4 @@
-﻿/// <reference path="basic.html" />
-
-describe('a basic datagridview', function () {
+﻿describe('a basic datagridview', function () {
     it('can be created', function () {
         var grid = $('#basic-datagridview-created');
 

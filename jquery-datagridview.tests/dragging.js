@@ -1,6 +1,4 @@
-﻿/// <reference path="dragging.html" />
-
-describe('dragging datagridview', function () {
+﻿describe('dragging datagridview', function () {
     function triggerMouseEvent(element, eventType, pageX) {
         var event = jQuery.Event(eventType);
         event.which = 1;

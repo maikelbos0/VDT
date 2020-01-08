@@ -1,6 +1,4 @@
-﻿/// <reference path="basic.html" />
-
-describe('a basic rangeslider', function () {
+﻿describe('a basic rangeslider', function () {
     it('can be created', function () {
         var slider = $('#basic-rangeslider-created');
 

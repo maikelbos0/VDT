@@ -1,6 +1,4 @@
-﻿/// <reference path="options.html" />
-
-describe('a rangeslider option', function () {
+﻿describe('a rangeslider option', function () {
     it('can be provided for getRangeStart', function () {
         var slider = $('#options-range-start');
         var value;
@@ -59,7 +57,7 @@ describe('a rangeslider option', function () {
             }
         },
         function (slider) {
-            value = slider.value;
+            value = slider.getValue();
         });
 
         expect(value).toEqual(20);

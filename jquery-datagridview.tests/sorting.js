@@ -1,6 +1,4 @@
-﻿/// <reference path="sorting.html" />
-
-describe('datagridview sorting', function () {
+﻿describe('datagridview sorting', function () {
     function triggerMouseup(element) {
         var event = jQuery.Event("mouseup");
         event.which = 1;

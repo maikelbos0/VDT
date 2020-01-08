@@ -1,6 +1,4 @@
-﻿/// <reference path="columns.html" />
-
-describe('datagridview columns', function () {
+﻿describe('datagridview columns', function () {
     function triggerMouseEvent(element, eventType, pageX) {
         var event = jQuery.Event(eventType);
         event.which = 1;

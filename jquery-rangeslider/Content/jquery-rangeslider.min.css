@@ -1,1 +1,1 @@
-.rangeslider{user-select:none;position:relative;height:1.5em}.rangeslider-track{position:absolute;top:calc(50% - .15em);width:100%;height:.3em}.rangeslider-thumb{position:absolute;top:-.15em;width:.6em;height:calc(100% + .3em)}
+.rangeslider{user-select:none;position:relative}.rangeslider-thumb{position:absolute}.rangeslider-track{position:absolute;width:100%}

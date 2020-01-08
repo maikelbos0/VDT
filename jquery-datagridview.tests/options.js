@@ -1,6 +1,4 @@
-﻿/// <reference path="options.html" />
-
-describe('a datagridview option', function () {
+﻿describe('a datagridview option', function () {
     function triggerMouseEvent(element, eventType, pageX) {
         var event = jQuery.Event(eventType);
         event.which = 1;

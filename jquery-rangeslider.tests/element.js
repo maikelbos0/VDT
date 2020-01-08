@@ -1,6 +1,4 @@
-﻿/// <reference path="element.html" />
-
-describe('creating an element for rangeslider', function () {
+﻿describe('creating an element for rangeslider', function () {
     it('succeeds', function () {
         var slider = $('#element-succeeds');
         var element;

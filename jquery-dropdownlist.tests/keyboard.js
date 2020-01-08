@@ -1,6 +1,4 @@
-﻿/// <reference path="keyboard.html" />
-
-describe('the keyboard', function () {
+﻿describe('the keyboard', function () {
     function simulateKeydown(element, key) {
         var event = jQuery.Event("keydown");
         event.which = key;

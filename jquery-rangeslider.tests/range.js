@@ -1,6 +1,4 @@
-﻿/// <reference path="range.html" />
-
-describe('a rangeslider can use range options for ', function () {
+﻿describe('a rangeslider can use range options for ', function () {
     it('getting default range start', function () {
         var slider = $('#range-range-start-default');
         var value;
@@ -94,7 +92,7 @@ describe('a rangeslider can use range options for ', function () {
         var value;
 
         slider.rangeslider(function (slider) {
-            value = slider.value;
+            value = slider.getValue();
         });
 
         expect(value).toEqual(0);
@@ -105,7 +103,7 @@ describe('a rangeslider can use range options for ', function () {
         var value;
 
         slider.rangeslider(function (slider) {
-            value = slider.value;
+            value = slider.getValue();
         });
 
         expect(value).toEqual(10);
@@ -116,7 +114,7 @@ describe('a rangeslider can use range options for ', function () {
         var value;
 
         slider.rangeslider(function (slider) {
-            value = slider.value;
+            value = slider.getValue();
         });
 
         expect(value).toEqual(20);

@@ -1,6 +1,4 @@
-﻿/// <reference path="element.html" />
-
-describe('creating an element for datagridview', function () {
+﻿describe('creating an element for datagridview', function () {
     it('succeeds', function () {
         var grid = $('#element-succeeds');
         var element;

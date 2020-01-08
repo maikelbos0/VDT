@@ -1,6 +1,4 @@
-﻿/// <reference path="interaction.html" />
-
-describe('a dropdownlist object', function () {
+﻿describe('a dropdownlist object', function () {
     it('callback is called', function () {
         var called = false;
 

@@ -81,33 +81,25 @@
 
     // Rangeslider implementation
     function Rangeslider(element, options) {
-        let base = this;
         this.element = element;
         this.options = options;
 
         this.rangeStart = options.getRangeStart(this.element);
         this.stepCount = options.getStepCount(this.element);
         this.stepSize = options.getStepSize(this.element);
-        this.value = options.getValue(this.element);
-
-        if (this.value < this.rangeStart) {
-            this.value = this.rangeStart;
-        }
-        else if (this.value > this.rangeStart + this.stepCount * this.stepSize) {
-            this.value = this.rangeStart + this.stepCount * this.stepSize;
-        }
-        else if (Math.round(this.value / this.stepSize) !== this.value / this.stepSize) {
-            this.value = Math.round(this.value / this.stepSize) * this.stepSize;
-        }
 
         this.element.addClass('rangeslider');
         this.element.children().hide();
 
-        this.track = this.createElement('<div>', 'rangeslider-track'); //, this.options.getTrackAttributes());
         this.thumb = this.createElement('<div>', 'rangeslider-thumb'); //, this.options.getThumbAttributes());
+        this.track = this.createElement('<div>', 'rangeslider-track'); //, this.options.getTrackAttributes());
         this.element.append(this.track, this.thumb);
 
+        // Set value only after elements are in place
+        this.setValue(options.getValue(this.element));
 
+        // Event handlers
+        this.element.click(this, EventHandlers.click);
     }
 
     // Create an element and merge attribute objects to attributes
@@ -117,5 +109,56 @@
 
         return element;
     }
+
+    // Remove the entire slider; resets the base element to its former state
+    Rangeslider.prototype.remove = function () {
+        this.element.removeClass('slider');
+        this.thumb.remove();
+        this.track.remove();
+        this.element.children().show();
+    }
+
+    // Get step width in pixels based on current page layout
+    Rangeslider.prototype.getStepWidth = function () {
+        return this.element.width() / this.stepCount;
+    }
+
+    // Set new step
+    Rangeslider.prototype.setStep = function (step) {
+        this.step = step;
+        this.thumb.css('left', 'calc(' + 100 / this.stepCount * step + '% - ' + this.thumb.outerWidth(true) / 2 + 'px)');
+    }
+
+    // Get current value
+    Rangeslider.prototype.getValue = function () {
+        return this.rangeStart + this.stepSize * this.step;
+    }
+
+    // Set current value
+    Rangeslider.prototype.setValue = function (value) {
+        if (value < this.rangeStart) {
+            this.setStep(0);
+        }
+        else if (value > this.rangeStart + this.stepCount * this.stepSize) {
+            this.setStep(this.stepCount);
+        }
+        else {
+            this.setStep(Math.round((value - this.rangeStart) / this.stepSize));
+        }
+    }
+
+    // Event handlers should not be accessible from the object itself
+    let EventHandlers = {
+        click: function (e) {
+            // If we're clicking the thumb, ignore the click here
+            if (e.data.thumb.filter(e.target).length === 1) {
+                return;
+            }
+
+            let step = Math.round(e.offsetX / e.data.getStepWidth());
+
+            e.data.setStep(step);
+        }
+    };
 
 }(jQuery));

@@ -1,6 +1,4 @@
-﻿/// <reference path="selection.html" />
-
-describe('in a datagridview a user can select', function () {
+﻿describe('in a datagridview a user can select', function () {
     function triggerMouseEvent(element, eventType, ctrlKey, shiftKey) {
         var event = jQuery.Event(eventType);
         event.which = 1;

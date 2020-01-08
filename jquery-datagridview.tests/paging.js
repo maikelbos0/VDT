@@ -1,6 +1,4 @@
-﻿/// <reference path="paging.html" />
-
-describe('datagridview paging', function () {
+﻿describe('datagridview paging', function () {
     $.fn.datagridview.defaults.getFooterPlugins = function () {
         return [
             $.fn.datagridview.footerPlugins.displayBasic,

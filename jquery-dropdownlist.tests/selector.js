@@ -1,6 +1,4 @@
-﻿/// <reference path="selector.html" />
-
-describe('the selector text', function () {
+﻿describe('the selector text', function () {
     it('of a single-select dropdown without a default selection should be initialized with the text of the first option', function () {
         $('#dropdown-selector-first-option').dropdownlist();
 

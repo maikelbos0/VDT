@@ -1,6 +1,4 @@
-﻿/// <reference path="events.html" />
-
-describe('when a user', function () {
+﻿describe('when a user', function () {
     it('clicks on a dropdown-selector it opens', function () {
         var dropdown = $('#dropdown-events-open');
 

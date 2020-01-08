@@ -1,6 +1,4 @@
-﻿/// <reference path="defaults.html" />
-
-describe('datagridview defaults', function () {
+﻿describe('datagridview defaults', function () {
     $.fn.datagridview.defaults.getMetaData = function () {
         return new DataGridViewMetaData('column-1', true, 0, 35, 0);
     };

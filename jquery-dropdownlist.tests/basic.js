@@ -1,6 +1,4 @@
-﻿/// <reference path="basic.html" />
-
-describe('a basic dropdownlist', function () {
+﻿describe('a basic dropdownlist', function () {
     it('can be created', function () {
         var dropdown = $('#basic-dropdown-can-be-created');
 

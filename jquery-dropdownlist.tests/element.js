@@ -1,6 +1,4 @@
-﻿/// <reference path="element.html" />
-
-describe('creating an element for dropdownlist', function () {
+﻿describe('creating an element for dropdownlist', function () {
     it('succeeds', function () {
         var dropdown = $('#element-succeeds');
         var element;

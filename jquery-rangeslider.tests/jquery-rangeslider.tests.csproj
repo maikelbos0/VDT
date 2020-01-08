@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="chutzpah.json" />
+    <Content Include="LICENSE" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +70,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="events.html" />
+    <Content Include="events.js" />
+    <Content Include="interaction.html" />
+    <Content Include="interaction.js" />
     <Content Include="options.js" />
     <Content Include="range.js" />
     <Content Include="basic.html" />

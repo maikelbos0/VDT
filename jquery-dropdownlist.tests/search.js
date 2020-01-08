@@ -1,6 +1,4 @@
-﻿/// <reference path="search.html" />
-
-describe('the text search', function () {
+﻿describe('the text search', function () {
     it('is disabled by default', function () {
         var dropdown = $('#dropdown-search-disabled');
 
