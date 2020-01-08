@@ -76,6 +76,11 @@
             }
 
             return value;
+        },
+        // The field name to use for the generated hidden input field
+        // Defaults to the data-property field-name
+        getFieldName: function (element) {
+            return $(element).data('field-name');
         }
     }
 
@@ -96,7 +101,11 @@
 
         this.thumb = this.createElement('<div>', 'rangeslider-thumb'); //, this.options.getThumbAttributes());
         this.track = this.createElement('<div>', 'rangeslider-track'); //, this.options.getTrackAttributes());
-        this.element.append(this.track, this.thumb);
+        this.input = this.createElement('<input>', 'rangeslider-input', {
+            name: this.options.getFieldName(this.element),
+            type: 'hidden'
+        })
+        this.element.append(this.track, this.thumb, this.input);
 
         // Set value only after elements are in place
         this.setValue(options.getValue(this.element));
@@ -121,6 +130,7 @@
         this.element.removeClass('slider');
         this.thumb.remove();
         this.track.remove();
+        this.input.remove();
         this.element.children().show();
     }
 
@@ -129,10 +139,11 @@
         return this.element.width() / this.stepCount;
     }
 
-    // Set new step
+    // Set current step and value
     Rangeslider.prototype.setStep = function (step) {
         this.step = step;
         this.thumb.css('left', 'calc(' + 100 / this.stepCount * step + '% - ' + this.thumb.outerWidth(true) / 2 + 'px)');
+        this.input.val(this.rangeStart + this.step * this.stepSize);
     }
 
     // Get current value

@@ -67,8 +67,9 @@
         });
 
         expect(slider.hasClass('.slider')).toEqual(false);
-        expect(slider.find('.rangeslider-track').length).toEqual(0);
-        expect(slider.find('.rangeslider-thumb').length).toEqual(0);
+        expect(slider.find('div.rangeslider-track').length).toEqual(0);
+        expect(slider.find('div.rangeslider-thumb').length).toEqual(0);
+        expect(slider.find('input.rangeslider-input').length).toEqual(0);
 
         var hiddenContent = slider.find('.test-hidden');
 
@@ -97,6 +98,7 @@
         });
 
         expect(value).toEqual(30);
+        expect(slider.find('input').val()).toEqual('30');
     });
 
     it('can be used to set the current value', function () {

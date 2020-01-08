@@ -62,4 +62,16 @@
 
         expect(value).toEqual(20);
     });
+
+    it('can be provided for getFieldName', function () {
+        var slider = $('#options-field-name');
+
+        slider.rangeslider({
+            getFieldName: function (element) {
+                return 'test';
+            }
+        });
+
+        expect(slider.find('input').attr('name')).toEqual('test');
+    });
 });

@@ -30,13 +30,24 @@
         var slider = $('#basic-rangeslider-track');
 
         slider.rangeslider();
-        expect(slider.find('.rangeslider-track').length).toEqual(1);
+        expect(slider.find('div.rangeslider-track').length).toEqual(1);
     });
 
     it('will add a thumb', function () {
         var slider = $('#basic-rangeslider-thumb');
 
         slider.rangeslider();
-        expect(slider.find('.rangeslider-thumb').length).toEqual(1);
+        expect(slider.find('div.rangeslider-thumb').length).toEqual(1);
+    });
+
+    it('will add a hidden input', function () {
+        var slider = $('#basic-rangeslider-input');
+
+        slider.rangeslider();
+
+        var input = slider.find('input.rangeslider-input[type="hidden"]');
+
+        expect(input.length).toEqual(1);
+        expect(input.attr('name')).toEqual('test');
     });
 });
