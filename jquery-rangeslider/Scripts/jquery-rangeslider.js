@@ -87,6 +87,9 @@
         this.rangeStart = options.getRangeStart(this.element);
         this.stepCount = options.getStepCount(this.element);
         this.stepSize = options.getStepSize(this.element);
+        this.dragStatus = {
+            dragging: false
+        };
 
         this.element.addClass('rangeslider');
         this.element.children().hide();
@@ -99,7 +102,10 @@
         this.setValue(options.getValue(this.element));
 
         // Event handlers
-        this.element.click(this, EventHandlers.click);
+        this.element.click(this, eventHandlers.click);
+        this.thumb.on('mousedown', this, eventHandlers.thumbDragStart);
+        $(document).on('mousemove', this, eventHandlers.thumbDrag);
+        $(document).on('mouseup', this, eventHandlers.thumbDragEnd);
     }
 
     // Create an element and merge attribute objects to attributes
@@ -148,7 +154,36 @@
     }
 
     // Event handlers should not be accessible from the object itself
-    let EventHandlers = {
+    let eventHandlers = {
+        thumbDragStart: function (e) {
+            if (e.which !== 1) {
+                return;
+            }
+
+            e.data.dragStatus.dragging = true;
+            e.data.dragStatus.startPosition = e.pageX;
+            e.data.dragStatus.startStep = e.data.step;
+        },
+        thumbDrag: function (e) {
+            if (!e.data.dragStatus.dragging) {
+                return;
+            }
+
+            let delta = e.data.dragStatus.startPosition - e.pageX;
+            let step = e.data.dragStatus.startStep - Math.round(delta / e.data.getStepWidth());
+
+            if (step < 0) {
+                step = 0;
+            }
+            else if (step > e.data.stepCount) {
+                step = e.data.stepCount;
+            }
+
+            e.data.setStep(step);
+        },
+        thumbDragEnd: function (e) {
+            e.data.dragStatus.dragging = false;
+        },
         click: function (e) {
             // If we're clicking the thumb, ignore the click here
             if (e.data.thumb.filter(e.target).length === 1) {
