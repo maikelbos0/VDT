@@ -70,4 +70,20 @@
 
         expect(value).toEqual(100);
     });
+
+    it('clicks on the slider it triggers a valueChanged event', function () {
+        var slider = $('#slider-events-click-event');
+        var value;
+
+        slider.width('100px');
+        slider.rangeslider();
+
+        slider.on('rangeslider.valueChanged', function (e, v) {
+            value = v;
+        });
+
+        triggerMouseEvent(slider, "click", 0, 30);
+
+        expect(value).toEqual(30);
+    });
 });

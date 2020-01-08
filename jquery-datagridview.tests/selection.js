@@ -346,6 +346,7 @@
         expect(rows[0]).toEqual(grid.find('.datagridview-row')[0]);
         expect(rows[3]).toEqual(grid.find('.datagridview-row')[4]);
     });
+
     it('an range of rows triggers selection changed event with new selected data', function () {
         var grid = $('#selection-multi-event');
         var data = null;

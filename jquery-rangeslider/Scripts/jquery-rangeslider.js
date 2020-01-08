@@ -141,9 +141,13 @@
 
     // Set current step and value
     Rangeslider.prototype.setStep = function (step) {
-        this.step = step;
-        this.thumb.css('left', 'calc(' + 100 / this.stepCount * step + '% - ' + this.thumb.outerWidth(true) / 2 + 'px)');
-        this.input.val(this.rangeStart + this.step * this.stepSize);
+        if (this.step !== step) {
+            this.step = step;
+            this.thumb.css('left', 'calc(' + 100 / this.stepCount * step + '% - ' + this.thumb.outerWidth(true) / 2 + 'px)');
+            this.input.val(this.rangeStart + this.step * this.stepSize);
+
+            this.element.trigger('rangeslider.valueChanged', this.getValue());
+        }
     }
 
     // Get current value

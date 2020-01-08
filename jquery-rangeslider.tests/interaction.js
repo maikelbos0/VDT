@@ -112,4 +112,19 @@
 
         expect(value).toEqual(10);
     });
+
+    it('triggers a valueChanged event when setting the current step', function () {
+        var slider = $('#rangeslider-interaction-set-value-event');
+        var value;
+
+        slider.on('rangeslider.valueChanged', function (e, v) {
+            value = v;
+        });
+
+        slider.rangeslider(function () {
+            this.setValue(20);
+        });
+
+        expect(value).toEqual(20);
+    });
 });
