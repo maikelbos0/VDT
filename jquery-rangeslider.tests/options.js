@@ -74,4 +74,40 @@
 
         expect(slider.find('input').attr('name')).toEqual('test');
     });
+
+    it('can be provided for getInputAttributes', function () {
+        var slider = $('#options-input-attributes');
+
+        slider.rangeslider({
+            getInputAttributes: function () {
+                return { class: 'test' };
+            }
+        });
+
+        expect(slider.find('.rangeslider-input').hasClass('test')).toEqual(true);
+    });
+
+    it('can be provided for getThumbAttributes', function () {
+        var slider = $('#options-thumb-attributes');
+
+        slider.rangeslider({
+            getThumbAttributes: function () {
+                return { class: 'test' };
+            }
+        });
+
+        expect(slider.find('.rangeslider-thumb').hasClass('test')).toEqual(true);
+    });
+
+    it('can be provided for getTrackAttributes', function () {
+        var slider = $('#options-track-attributes');
+
+        slider.rangeslider({
+            getTrackAttributes: function () {
+                return { class: 'test' };
+            }
+        });
+
+        expect(slider.find('.rangeslider-track').hasClass('test')).toEqual(true);
+    });
 });

@@ -81,6 +81,21 @@
         // Defaults to the data-property field-name
         getFieldName: function (element) {
             return $(element).data('field-name');
+        },
+        // The input is the hidden input field that contains the current value
+        // It always gets at least the class 'rangeslider-input', type 'hidden' and name as specifified by data-property field-name
+        getInputAttributes: function () {
+            return {};
+        },
+        // The thumb is the element that drags
+        // It always gets at least the class 'rangeslider-thumb'
+        getThumbAttributes: function () {
+            return {};
+        },
+        // The track is the background element along which the thumb drags
+        // It always gets at least the class 'rangeslider-track'
+        getTrackAttributes: function () {
+            return {};
         }
     }
 
@@ -99,9 +114,9 @@
         this.element.addClass('rangeslider');
         this.element.children().hide();
 
-        this.thumb = this.createElement('<div>', 'rangeslider-thumb'); //, this.options.getThumbAttributes());
-        this.track = this.createElement('<div>', 'rangeslider-track'); //, this.options.getTrackAttributes());
-        this.input = this.createElement('<input>', 'rangeslider-input', {
+        this.thumb = this.createElement('<div>', 'rangeslider-thumb', this.options.getThumbAttributes());
+        this.track = this.createElement('<div>', 'rangeslider-track', this.options.getTrackAttributes());
+        this.input = this.createElement('<input>', 'rangeslider-input', this.options.getInputAttributes(), {
             name: this.options.getFieldName(this.element),
             type: 'hidden'
         })
