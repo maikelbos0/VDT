@@ -71,6 +71,7 @@
     </Content>
     <Content Include="Content\jquery-rangeslider.style.css" />
     <Content Include="LICENSE" />
+    <Content Include="README.md" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Content\jquery-rangeslider.css" />
     <Content Include="Content\jquery-rangeslider.style.min.css">
