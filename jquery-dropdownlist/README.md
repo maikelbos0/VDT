@@ -5,6 +5,7 @@ A jQuery plugin that makes it easy to transform any html-element with children i
 ## Features
 
 - Single- and multiselect support
+- Full keyboard support
 - Automatically generates form fields with the desired names
 - Search text for autocomplete or filtering
 - Programmatic access to the dropdown for manipulating selection
@@ -17,6 +18,7 @@ Includes:
 
 ```
 <link rel="stylesheet" href="Content/jquery-dropdownlist.min.css" />
+<link rel="stylesheet" href="Content/jquery-dropdownlist.style.min.css" />
 <script type="text/javascript" src="Scripts/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="Scripts/jquery-dropdownlist.min.js"></script>
 ```
@@ -44,7 +46,8 @@ The input fields will have the values mentioned in the data-value attribute and 
 
 ## Styling
 
-This dropdownlist only provides very basic styling in the provided style sheet; the list elements can be accessed with the following css classes:
+The dropdownlist only provides very basic styling in the provided style sheet `jquery-dropdownlist.style.css`; you can use this as a template
+to create your own style. The various css classes the dropdownlist uses are:
 
 - `.dropdownlist` is the main container for the dropdown
 - `.dropdownlist-selector` is the selector element that is clicked to expand the dropdown
