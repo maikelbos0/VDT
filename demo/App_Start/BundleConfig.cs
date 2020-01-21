@@ -16,6 +16,7 @@ namespace vdt.demo.App_Start {
                 "~/Content/bootstrap.min.css",
                 "~/Content/Site.css",
                 "~/../jquery-dropdownlist/Content/jquery-dropdownlist.css",
+                "~/../jquery-dropdownlist/Content/jquery-dropdownlist.style.css",
                 "~/../jquery-datagridview/Content/jquery-datagridview.css",
                 "~/../jquery-datagridview/Content/jquery-datagridview.style.css",
                 "~/../jquery-rangeslider/Content/jquery-rangeslider.css",

@@ -55,9 +55,13 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\jquery-dropdownlist.style.css" />
     <Content Include="Content\jquery-dropdownlist.css" />
     <Content Include="Content\jquery-dropdownlist.min.css">
       <DependentUpon>jquery-dropdownlist.css</DependentUpon>
+    </Content>
+    <Content Include="Content\jquery-dropdownlist.style.min.css">
+      <DependentUpon>jquery-dropdownlist.style.css</DependentUpon>
     </Content>
     <Content Include="LICENSE" />
     <Content Include="README.md" />

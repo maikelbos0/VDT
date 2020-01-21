@@ -10,5 +10,11 @@
     "inputFiles": [
       "Content/jquery-dropdownlist.css"
     ]
+  },
+  {
+    "outputFileName": "Content/jquery-dropdownlist.style.min.css",
+    "inputFiles": [
+      "Content/jquery-dropdownlist.style.css"
+    ]
   }
 ]
