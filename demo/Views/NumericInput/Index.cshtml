@@ -1,0 +1,111 @@
+﻿@using System.Globalization
+
+@{
+    ViewBag.Title = "NumericInput demo";
+}
+
+<style type="text/css">
+    .error {
+        border-color: red;
+    }
+</style>
+
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lobortis, ipsum ut vulputate vestibulum, sem odio fermentum magna, sed ultricies sem purus et dolor. Aliquam dapibus felis magna, vitae ultrices sem posuere eu. Sed ante orci, dictum tincidunt eros quis, sagittis rutrum sem. Vivamus ac commodo est. Nunc gravida maximus ligula, quis dictum sem vestibulum eget. Sed vel facilisis lacus. Ut nisl mi, ultrices quis auctor iaculis, cursus quis lacus. Nullam lectus risus, faucibus non laoreet eget, bibendum vel ligula. Aenean at pharetra augue, sed consequat velit. Aenean tincidunt gravida semper. Quisque dictum ullamcorper sem non placerat.
+</p>
+
+<div class="row">
+    <div class="col-3">
+        <input id="numeric-1" type="text" class="form-control" />
+    </div>
+    <div class="col-3">
+
+    </div>
+    <div class="col-3">
+
+    </div>
+    <div class="col-3">
+
+    </div>
+</div>
+
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lobortis, ipsum ut vulputate vestibulum, sem odio fermentum magna, sed ultricies sem purus et dolor. Aliquam dapibus felis magna, vitae ultrices sem posuere eu. Sed ante orci, dictum tincidunt eros quis, sagittis rutrum sem. Vivamus ac commodo est. Nunc gravida maximus ligula, quis dictum sem vestibulum eget. Sed vel facilisis lacus. Ut nisl mi, ultrices quis auctor iaculis, cursus quis lacus. Nullam lectus risus, faucibus non laoreet eget, bibendum vel ligula. Aenean at pharetra augue, sed consequat velit. Aenean tincidunt gravida semper. Quisque dictum ullamcorper sem non placerat.
+</p>
+
+<script type="text/javascript">
+    let decimalSeparator = '@CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator';
+    let groupSeparator = '@CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator';
+    let groupSizes = [@string.Join(",", CultureInfo.CurrentCulture.NumberFormat.NumberGroupSizes)];
+    let negativeSign = '@CultureInfo.CurrentCulture.NumberFormat.NegativeSign';
+    let decimalDigits = 2;
+    let maximumValue = 1000;
+    let minimumValue = -1000;
+    let errorDelayMS = 200;
+
+    let input = $('#numeric-1');
+
+    input.on("change", function (e) {
+        let element = $(this);
+        let value = parseFloat(element.val().replace(groupSeparator, "").replace(decimalSeparator, "."));
+        let hasError = false;
+
+        if (isNaN(value)) {
+            hasError = true;
+            element.val("");
+        }
+        else if (value > maximumValue) {
+            hasError = true;
+            element.val(format(maximumValue));
+        }
+        else if (value < minimumValue) {
+            hasError = true;
+            element.val(format(minimumValue));
+        }
+        else {
+            element.val(format(value));
+        }
+
+        if (hasError) {
+            element.addClass("error");
+
+            window.setTimeout(function () {
+                element.removeClass("error");
+            }, errorDelayMS);
+        }
+    });
+
+    function format(value) {
+        let isNegative = value < 0;
+        let absoluteValue = Math.abs(value);
+        let integerValue = Math.floor(absoluteValue).toString().split("");
+        let formattedValue = "";
+        let groupIndex = 0;
+        let groupSize = groupSizes[groupIndex];
+
+        while (integerValue.length > 0) {
+            if (groupSize == 0) {
+                if (groupIndex < groupSizes.length - 1) {
+                    groupIndex++;
+                }
+
+                formattedValue = groupSeparator + formattedValue;
+                groupSize = groupSizes[groupIndex];
+            }
+
+            formattedValue = integerValue.pop() + formattedValue;
+            groupSize--;
+        }
+
+        if (decimalDigits > 0) {
+            formattedValue += decimalSeparator + absoluteValue.toFixed(decimalDigits).substr(-decimalDigits);
+        }
+
+        if (isNegative) {
+            formattedValue = negativeSign + formattedValue;
+        }
+
+        return formattedValue;
+    }
+
+</script>
