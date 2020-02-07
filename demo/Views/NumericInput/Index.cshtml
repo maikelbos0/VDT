@@ -19,7 +19,7 @@
         <input id="numeric-1" type="text" class="form-control" />
     </div>
     <div class="col-3">
-
+        <input id="numeric-2" type="text" class="form-control" />
     </div>
     <div class="col-3">
 
@@ -34,6 +34,10 @@
 </p>
 
 <script type="text/javascript">
+    $(function () {
+        $('#numeric-2').numericinput();
+    }());
+
     let decimalSeparator = '@CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator';
     let groupSeparator = '@CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator';
     let groupSizes = [@string.Join(",", CultureInfo.CurrentCulture.NumberFormat.NumberGroupSizes)];
