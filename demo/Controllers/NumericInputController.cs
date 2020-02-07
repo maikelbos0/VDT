@@ -2,8 +2,8 @@
 using System.Web.Mvc;
 
 namespace vdt.demo.Controllers {
-    [RoutePrefix("NumericInput")]
-        public class NumericInputController : Controller {
+    [RoutePrefix("Numericinput")]
+        public class NumericinputController : Controller {
         [Route]
         [Route("Index")]
         public ActionResult Index() {

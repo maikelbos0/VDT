@@ -57,7 +57,7 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -209,7 +209,7 @@
     <Compile Include="Controllers\DatagridviewController.cs" />
     <Compile Include="Controllers\DropdownlistController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\NumericInputController.cs" />
+    <Compile Include="Controllers\NumericinputController.cs" />
     <Compile Include="Controllers\SliderController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -230,7 +230,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Datagridview\Index.cshtml" />
     <Content Include="Views\Slider\Index.cshtml" />
-    <Content Include="Views\NumericInput\Index.cshtml" />
+    <Content Include="Views\Numericinput\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.js.flow" />
