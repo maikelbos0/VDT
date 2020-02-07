@@ -7,7 +7,8 @@ namespace vdt.demo.App_Start {
                 "~/Scripts/jquery-3.3.1.min.js",
                 "~/../jquery-dropdownlist/Scripts/jquery-dropdownlist.js",
                 "~/../jquery-datagridview/Scripts/jquery-datagridview.js",
-                "~/../jquery-rangeslider/Scripts/jquery-rangeslider.js"));
+                "~/../jquery-rangeslider/Scripts/jquery-rangeslider.js",
+                "~/../jquery-numericinput/Scripts/jquery-numericinput.js"));
 
             bundles.Add(new ScriptBundle("~/Scripts/bootstrap").Include(
                 "~/Scripts/bootstrap.min.js"));
