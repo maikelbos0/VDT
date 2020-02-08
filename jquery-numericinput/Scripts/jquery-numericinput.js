@@ -38,6 +38,9 @@
         this.options = options;
 
         this.element.addClass('numericinput');
+
+        // Event handlers
+        this.element.on('change', this, eventHandlers.change);
     }
 
     // Remove the numeric input properties; resets the input element to its former state
@@ -47,6 +50,26 @@
 
     // Event handlers should not be accessible from the object itself
     let eventHandlers = {
+        change: function (e) {
+            let value = parseFloat(e.data.element.val());
+            let hasError = false;
+
+            if (isNaN(value)) {
+                hasError = true;
+                e.data.element.val("");
+            }
+            else {
+                e.data.element.val(value);
+            }
+
+            if (hasError) {
+                e.data.element.addClass("numericinput-error");
+
+                window.setTimeout(function () {
+                    e.data.element.removeClass("numericinput-error");
+                }, 200);
+            }
+        }
     };
 
 }(jQuery));

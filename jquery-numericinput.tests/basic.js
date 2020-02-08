@@ -19,4 +19,45 @@
 
         expect(input.hasClass('numericinput')).toEqual(false);
     });
+
+    it('validates valid input on change', function () {
+        var input = $('#basic-input-validates-valid');
+
+        input.numericinput();
+
+        input.val('001234.56');
+        input.change();
+
+        expect(input.val()).toEqual('1234.56');
+        expect(input.hasClass('numericinput-error')).toEqual(false);
+    });
+
+    it('validates invalid input on change', function () {
+        var input = $('#basic-input-validates-invalid');
+
+        input.numericinput();
+
+        input.val('a');
+        input.change();
+
+        expect(input.val()).toEqual('');
+        expect(input.hasClass('numericinput-error')).toEqual(true);
+    });
+
+    it('clears the error for invalid input', function () {
+        jasmine.clock().install();
+
+        var input = $('#basic-input-clears-invalid');
+
+        input.numericinput();
+
+        input.val('a');
+        input.change();
+
+        jasmine.clock().tick(500);
+
+        expect(input.hasClass('numericinput-error')).toEqual(false);
+
+        jasmine.clock().uninstall();
+    });
 });

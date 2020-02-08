@@ -4,5 +4,11 @@
     "inputFiles": [
       "Scripts/jquery-numericinput.js"
     ]
+  },
+  {
+    "outputFileName": "Content/jquery-numericinput.style.min.css",
+    "inputFiles": [
+      "Content/jquery-numericinput.style.css"
+    ]
   }
 ]
