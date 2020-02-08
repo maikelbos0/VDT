@@ -55,7 +55,7 @@
             let negativeSymbol = $(element).data('negative-symbol');
 
             if (!negativeSymbol) {
-                negativeSymbol = '.';
+                negativeSymbol = '-';
             }
 
             return negativeSymbol;
@@ -106,28 +106,81 @@
     // Remove the numeric input properties; resets the input element to its former state
     Numericinput.prototype.remove = function () {
         this.element.removeClass('numericinput');
+        this.element.off('change', eventHandlers.change);
+    }
+
+    // Get the value from the input and try to parse it as a number
+    Numericinput.prototype.parseValue = function () {
+        let stringValue = this.element.val()
+            .replace(this.groupSeparator, '')
+            .replace(this.negativeSymbol, '-')
+            .replace(this.decimalSeparator, '.');
+
+        return parseFloat(stringValue);
+    }
+
+    // Temporarily set the input to error state
+    Numericinput.prototype.error = function () {
+        let base = this;
+
+        this.element.addClass("numericinput-error");
+
+        window.setTimeout(function () {
+            base.element.removeClass("numericinput-error");
+        }, 200);
+    }
+
+    // Set the value in the input to a formatted number
+    Numericinput.prototype.setValue = function (value) {
+        let formattedValue = '';
+
+        if (!isNaN(value)) {
+            let isNegative = value < 0;
+            let absoluteValue = Math.abs(value);
+            let integerValue = Math.floor(absoluteValue).toString().split("");
+            let groupIndex = 0;
+            let groupSize = this.groupSizes[groupIndex];
+
+            while (integerValue.length > 0) {
+                if (groupSize == 0) {
+                    if (groupIndex < this.groupSizes.length - 1) {
+                        groupIndex++;
+                    }
+
+                    formattedValue = this.groupSeparator + formattedValue;
+                    groupSize = this.groupSizes[groupIndex];
+                }
+
+                formattedValue = integerValue.pop() + formattedValue;
+                groupSize--;
+            }
+
+            if (this.decimalDigits > 0) {
+                formattedValue += this.decimalSeparator + absoluteValue.toFixed(this.decimalDigits).substr(-this.decimalDigits);
+            }
+
+            if (isNegative) {
+                formattedValue = this.negativeSymbol + formattedValue;
+            }
+        }
+
+        this.element.val(formattedValue);
     }
 
     // Event handlers should not be accessible from the object itself
     let eventHandlers = {
         change: function (e) {
-            let value = parseFloat(e.data.element.val());
+            let value = e.data.parseValue();
             let hasError = false;
 
             if (isNaN(value)) {
                 hasError = true;
-                e.data.element.val("");
             }
-            else {
-                e.data.element.val(value);
-            }
+
+            e.data.setValue(value);
 
             if (hasError) {
-                e.data.element.addClass("numericinput-error");
-
-                window.setTimeout(function () {
-                    e.data.element.removeClass("numericinput-error");
-                }, 200);
+                e.data.error();
             }
         }
     };
