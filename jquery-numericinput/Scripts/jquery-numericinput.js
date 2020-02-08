@@ -30,12 +30,72 @@
 
     // Set defaults for extension
     $.fn.numericinput.defaults = {
+        // Defaults to the data-property decimal-separator with as fallback '.'
+        getDecimalSeparator: function (element) {
+            let decimalSeparator = $(element).data('decimal-separator');
+
+            if (!decimalSeparator) {
+                decimalSeparator = '.';
+            }
+
+            return decimalSeparator;
+        },
+        // Defaults to the data-property decimal-digits with as fallback 2
+        getDecimalDigits: function (element) {
+            let decimalDigits = parseInt($(element).data('decimal-digits'));
+
+            if (isNaN(decimalDigits) || decimalDigits < 0) {
+                decimalDigits = 2;
+            }
+
+            return decimalDigits;
+        },
+        // Defaults to the data-property negative-symbol with as fallback '-'
+        getNegativeSymbol: function (element) {
+            let negativeSymbol = $(element).data('negative-symbol');
+
+            if (!negativeSymbol) {
+                negativeSymbol = '.';
+            }
+
+            return negativeSymbol;
+        },
+        // Defaults to the data-property group-separator with as fallback ','
+        getGroupSeparator: function (element) {
+            let groupSeparator = $(element).data('group-separator');
+
+            if (!groupSeparator) {
+                groupSeparator = ',';
+            }
+
+            return groupSeparator;
+        },
+        // Defaults to the data-property group-sizes with as fallback [3]
+        getGroupSizes: function (element) {
+            let groupSizes = ($(element).data('group-sizes') || '').split(',').map(function (size) {
+                return parseInt(size);
+            }).filter(function (size) {
+                return !isNaN(size);
+            });
+
+            if (groupSizes.length == 0) {
+                groupSizes = [3];
+            }
+
+            return groupSizes;
+        },
     }
 
     // Numericinput implementation
     function Numericinput(element, options) {
         this.element = element;
         this.options = options;
+
+        this.decimalSeparator = options.getDecimalSeparator(this.element);
+        this.decimalDigits = options.getDecimalDigits(this.element);
+        this.negativeSymbol = options.getNegativeSymbol(this.element);
+        this.groupSeparator = options.getGroupSeparator(this.element);
+        this.groupSizes = options.getGroupSizes(this.element);
 
         this.element.addClass('numericinput');
 
