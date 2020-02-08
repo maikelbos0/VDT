@@ -36,10 +36,13 @@
     function Numericinput(element, options) {
         this.element = element;
         this.options = options;
+
+        this.element.addClass('numericinput');
     }
 
     // Remove the numeric input properties; resets the input element to its former state
     Numericinput.prototype.remove = function () {
+        this.element.removeClass('numericinput');
     }
 
     // Event handlers should not be accessible from the object itself
