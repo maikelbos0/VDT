@@ -25,10 +25,10 @@
 
         input.numericinput();
 
-        input.val('001234.56');
+        input.val('00234.56');
         input.change();
 
-        expect(input.val()).toEqual('1234.56');
+        expect(input.val()).toEqual('234.56');
         expect(input.hasClass('numericinput-error')).toEqual(false);
     });
 

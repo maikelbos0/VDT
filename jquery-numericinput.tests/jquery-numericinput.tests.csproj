@@ -64,6 +64,10 @@
   <ItemGroup>
     <Content Include="basic.html" />
     <Content Include="basic.js" />
+    <Content Include="format.html" />
+    <Content Include="format.js" />
+    <Content Include="options.html" />
+    <Content Include="options.js" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
