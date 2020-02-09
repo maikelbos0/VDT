@@ -6,7 +6,7 @@
         expect(function () {
             input.numericinput();
         }).not.toThrow();
-        expect(input.hasClass('numericinput')).toEqual(true);
+        expect(input.data('numericinput')).toBeTruthy();
     });
 
     it('can be removed', function () {
@@ -17,7 +17,8 @@
             this.remove();
         });
 
-        expect(input.hasClass('numericinput')).toEqual(false);
+        expect(input)
+        expect(input.data('numericinput')).toBeUndefined();
     });
 
     it('validates valid input on change', function () {

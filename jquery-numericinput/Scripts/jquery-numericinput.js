@@ -143,16 +143,14 @@
         this.hideError = options.hideError;
         this.errorDisplayDuration = options.getErrorDisplayDuration(this.element);
 
-        this.element.addClass('numericinput');
-
         // Event handlers
         this.element.on('change', this, eventHandlers.change);
     }
 
     // Remove the numeric input properties; resets the input element to its former state
     Numericinput.prototype.remove = function () {
-        this.element.removeClass('numericinput');
         this.element.off('change', eventHandlers.change);
+        this.element.removeData('numericinput');
     }
 
     // Get the value from the input and try to parse it as a number
