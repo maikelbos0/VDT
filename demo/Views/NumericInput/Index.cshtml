@@ -21,7 +21,7 @@
     <div class="col-3">
         <input id="numeric-2" type="text" class="form-control"
                data-decimal-separator="@CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator"
-               data-decimal-digits="4"
+               data-decimal-digits="1"
                data-group-separator="@CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator"
                data-group-sizes="@string.Join(",", CultureInfo.CurrentCulture.NumberFormat.NumberGroupSizes)"
                data-negative-sign=""
@@ -42,7 +42,14 @@
 
 <script type="text/javascript">
     $(function () {
-        $('#numeric-2').numericinput();
+        $('#numeric-2').numericinput({
+            showError: function (element) {
+                element.css("border-color", "#ffcc00");
+            },
+            hideError: function (element) {
+                element.css("border-color", "");
+            }
+        });
     }());
 
     let decimalSeparator = '@CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator';

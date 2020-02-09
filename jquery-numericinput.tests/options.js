@@ -97,16 +97,16 @@
         expect(minimumValue).toEqual(500);
     });
 
-    it('can be provided for getShowError', function () {
+    it('can be provided for showError', function () {
         var showError;
         var showErrorFunction = function (element) {
-            element.css("border-color", "red");
-        }
+            element.css("border-color", "blue");
+        };
 
         $('#input-options-error-show').numericinput({
-            getShowError: showErrorFunction
+            showError: showErrorFunction
         }, function () {
-                showError = this.showError;
+            showError = this.showError;
         });
 
         expect(showError).toEqual(showErrorFunction);
@@ -126,14 +126,14 @@
         expect(errorDisplayDuration).toEqual(500);
     });
 
-    it('can be provided for getHideError', function () {
+    it('can be provided for hideError', function () {
         var hideError;
         var hideErrorFunction = function (element) {
             element.css("border-color", "");
-        }
+        };
 
         $('#input-options-error-hide').numericinput({
-            getHideError: hideErrorFunction
+            hideError: hideErrorFunction
         }, function () {
             hideError = this.hideError;
         });

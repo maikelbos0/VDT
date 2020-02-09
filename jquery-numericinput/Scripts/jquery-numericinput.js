@@ -103,6 +103,27 @@
             }
 
             return minimumValue;
+        },
+        // The function that gets called to show the user an error status
+        // Defaults to a function that adds the class 'numericinput-error'
+        showError: function (element) {
+            element.addClass("numericinput-error");
+        },
+        // The function that gets called to remove the error status
+        // Defaults to a function that removes the class 'numericinput-error'
+        hideError: function (element) {
+            element.removeClass("numericinput-error");
+        },
+        // The duration in milliseconds between showing and hiding the error
+        // Defaults to the data-property error-display-duration with as fallback 200
+        getErrorDisplayDuration: function (element) {
+            let duration = parseInt($(element).data('error-display-duration'));
+
+            if (isNaN(duration)) {
+                duration = 200;
+            }
+
+            return duration;
         }
     }
 
@@ -118,6 +139,9 @@
         this.groupSizes = options.getGroupSizes(this.element);
         this.maximumValue = options.getMaximumValue(this.element);
         this.minimumValue = options.getMinimumValue(this.element);
+        this.showError = options.showError;
+        this.hideError = options.hideError;
+        this.errorDisplayDuration = options.getErrorDisplayDuration(this.element);
 
         this.element.addClass('numericinput');
 
@@ -145,11 +169,11 @@
     Numericinput.prototype.error = function () {
         let base = this;
 
-        this.element.addClass("numericinput-error");
+        this.showError(this.element);
 
         window.setTimeout(function () {
-            base.element.removeClass("numericinput-error");
-        }, 200);
+            base.hideError(base.element);
+        }, this.errorDisplayDuration);
     }
 
     // Set the value in the input to a formatted number
