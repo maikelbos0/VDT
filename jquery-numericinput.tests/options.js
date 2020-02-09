@@ -96,4 +96,48 @@
 
         expect(minimumValue).toEqual(500);
     });
+
+    it('can be provided for getShowError', function () {
+        var showError;
+        var showErrorFunction = function (element) {
+            element.css("border-color", "red");
+        }
+
+        $('#input-options-error-show').numericinput({
+            getShowError: showErrorFunction
+        }, function () {
+                showError = this.showError;
+        });
+
+        expect(showError).toEqual(showErrorFunction);
+    });
+
+    it('can be provided for getErrorDisplayDuration', function () {
+        var errorDisplayDuration;
+
+        $('#input-options-error-duration').numericinput({
+            getErrorDisplayDuration: function (element) {
+                return 500;
+            }
+        }, function () {
+            errorDisplayDuration = this.errorDisplayDuration;
+        });
+
+        expect(errorDisplayDuration).toEqual(500);
+    });
+
+    it('can be provided for getHideError', function () {
+        var hideError;
+        var hideErrorFunction = function (element) {
+            element.css("border-color", "");
+        }
+
+        $('#input-options-error-hide').numericinput({
+            getHideError: hideErrorFunction
+        }, function () {
+            hideError = this.hideError;
+        });
+
+        expect(hideError).toEqual(hideErrorFunction);
+    });
 });

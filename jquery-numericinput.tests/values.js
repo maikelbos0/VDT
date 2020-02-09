@@ -42,4 +42,15 @@
 
         expect(input.val()).toEqual('0.00');
     });
+
+    it('for error display duration', function () {
+        var input = $('#input-error-display-duration');
+        var duration;
+
+        input.numericinput(function () {
+            duration = this.errorDisplayDuration;
+        });
+
+        expect(duration).toEqual(400);
+    });
 });
