@@ -7,7 +7,7 @@ namespace vdt.demo.Controllers {
         [Route]
         [Route("Index")]
         public ActionResult Index() {
-            CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("as-IN");
+            CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("nl-NL");
 
             return View();
         }

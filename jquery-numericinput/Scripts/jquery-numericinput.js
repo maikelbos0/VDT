@@ -72,7 +72,7 @@
         },
         // Defaults to the data-property group-sizes with as fallback [3]
         getGroupSizes: function (element) {
-            let groupSizes = ($(element).data('group-sizes') || '').split(',').map(function (size) {
+            let groupSizes = ($(element).data('group-sizes') || '').toString().split(',').map(function (size) {
                 return parseInt(size);
             }).filter(function (size) {
                 return !isNaN(size);
@@ -84,6 +84,26 @@
 
             return groupSizes;
         },
+        // Defaults to the data-property maximum-value
+        getMaximumValue: function (element) {
+            let maximumValue = parseInt($(element).data('maximum-value'));
+
+            if (isNaN(maximumValue)) {
+                maximumValue = null;
+            }
+
+            return maximumValue;
+        },
+        // Defaults to the data-property minimum-value
+        getMinimumValue: function (element) {
+            let minimumValue = parseInt($(element).data('minimum-value'));
+
+            if (isNaN(minimumValue)) {
+                minimumValue = null;
+            }
+
+            return minimumValue;
+        }
     }
 
     // Numericinput implementation
@@ -96,6 +116,8 @@
         this.negativeSymbol = options.getNegativeSymbol(this.element);
         this.groupSeparator = options.getGroupSeparator(this.element);
         this.groupSizes = options.getGroupSizes(this.element);
+        this.maximumValue = options.getMaximumValue(this.element);
+        this.minimumValue = options.getMinimumValue(this.element);
 
         this.element.addClass('numericinput');
 
@@ -174,6 +196,14 @@
             let hasError = false;
 
             if (isNaN(value)) {
+                hasError = true;
+            }
+            else if (e.data.maximumValue !== null && value > e.data.maximumValue) {
+                value = e.data.maximumValue;
+                hasError = true;
+            }
+            else if (e.data.minimumValue !== null && value < e.data.minimumValue) {
+                value = e.data.minimumValue;
                 hasError = true;
             }
 

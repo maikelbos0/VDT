@@ -1,7 +1,7 @@
 ﻿@using System.Globalization
 
 @{
-    ViewBag.Title = "NumericInput demo";
+    ViewBag.Title = "Numericinput demo";
 }
 
 <style type="text/css">
@@ -19,7 +19,14 @@
         <input id="numeric-1" type="text" class="form-control" />
     </div>
     <div class="col-3">
-        <input id="numeric-2" type="text" class="form-control" />
+        <input id="numeric-2" type="text" class="form-control"
+               data-decimal-separator="@CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator"
+               data-decimal-digits="4"
+               data-group-separator="@CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator"
+               data-group-sizes="@string.Join(",", CultureInfo.CurrentCulture.NumberFormat.NumberGroupSizes)"
+               data-negative-sign=""
+               data-maximum-value="10000"
+               data-minimum-value="-10000" />
     </div>
     <div class="col-3">
 

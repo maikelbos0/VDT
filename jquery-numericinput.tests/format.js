@@ -64,4 +64,15 @@
 
         expect(input.val()).toEqual('-1,23,41,234.57');
     });
+
+    it('for group sizes with one group works', function () {
+        var input = $('#input-format-single-group-size');
+
+        input.numericinput();
+
+        input.val('-12341234.5678');
+        input.change();
+
+        expect(input.val()).toEqual('-12,34,12,34.57');
+    });
 });

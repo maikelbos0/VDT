@@ -68,4 +68,32 @@
 
         expect(groupSizes).toEqual([4, 2, 3]);
     });
+
+    it('can be provided for getMaximumValue', function () {
+        var maximumValue;
+
+        $('#input-options-maximum-value').numericinput({
+            getMaximumValue: function (element) {
+                return 1500;
+            }
+        }, function () {
+            maximumValue = this.maximumValue;
+        });
+
+        expect(maximumValue).toEqual(1500);
+    });
+
+    it('can be provided for getMinimumValue', function () {
+        var minimumValue;
+
+        $('#input-options-minimum-value').numericinput({
+            getMinimumValue: function (element) {
+                return 500;
+            }
+        }, function () {
+            minimumValue = this.minimumValue;
+        });
+
+        expect(minimumValue).toEqual(500);
+    });
 });
