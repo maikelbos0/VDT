@@ -30,7 +30,7 @@
         input.change();
 
         expect(input.val()).toEqual('234.56');
-        expect(input.hasClass('numericinput-error')).toEqual(false);
+        expect(input.css('border-color')).toEqual('');
     });
 
     it('validates invalid input on change', function () {
@@ -42,7 +42,7 @@
         input.change();
 
         expect(input.val()).toEqual('');
-        expect(input.hasClass('numericinput-error')).toEqual(true);
+        expect(input.css('border-color')).toEqual('red');
     });
 
     it('clears the error for invalid input', function () {
@@ -57,7 +57,7 @@
 
         jasmine.clock().tick(500);
 
-        expect(input.hasClass('numericinput-error')).toEqual(false);
+        expect(input.css('border-color')).toEqual('');
 
         jasmine.clock().uninstall();
     });

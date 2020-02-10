@@ -29,7 +29,7 @@
                data-minimum-value="-10000" />
     </div>
     <div class="col-3">
-
+        <input id="numeric-3" type="text" class="form-control" />
     </div>
     <div class="col-3">
 
@@ -50,6 +50,8 @@
                 element.css("border-color", "");
             }
         });
+
+        $('#numeric-3').numericinput();
     }());
 
     let decimalSeparator = '@CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator';

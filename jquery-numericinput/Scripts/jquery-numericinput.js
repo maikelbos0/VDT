@@ -105,14 +105,14 @@
             return minimumValue;
         },
         // The function that gets called to show the user an error status
-        // Defaults to a function that adds the class 'numericinput-error'
+        // Defaults to a function that adds a red border
         showError: function (element) {
-            element.addClass("numericinput-error");
+            element.css('border-color', 'red');
         },
         // The function that gets called to remove the error status
-        // Defaults to a function that removes the class 'numericinput-error'
+        // Defaults to a function that removes the red border
         hideError: function (element) {
-            element.removeClass("numericinput-error");
+            element.css('border-color', '');
         },
         // The duration in milliseconds between showing and hiding the error
         // Defaults to the data-property error-display-duration with as fallback 200

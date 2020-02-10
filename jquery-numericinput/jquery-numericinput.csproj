@@ -57,10 +57,6 @@
   <ItemGroup>
     <None Include="bundleconfig.json" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Content\jquery-numericinput.style.css" />
-    <Content Include="Content\jquery-numericinput.style.min.css">
-      <DependentUpon>jquery-numericinput.style.css</DependentUpon>
-    </Content>
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
