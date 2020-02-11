@@ -165,6 +165,8 @@
         window.setTimeout(function () {
             base.hideError(base.element);
         }, this.errorDisplayDuration);
+
+        this.element.trigger('numericinput.error');
     }
 
     // Get the value from the input and try to parse it as a number
