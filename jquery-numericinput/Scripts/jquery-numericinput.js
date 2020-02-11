@@ -156,8 +156,19 @@
         this.element.removeData('numericinput');
     }
 
+    // Temporarily set the input to error state
+    Numericinput.prototype.error = function () {
+        let base = this;
+
+        this.showError(this.element);
+
+        window.setTimeout(function () {
+            base.hideError(base.element);
+        }, this.errorDisplayDuration);
+    }
+
     // Get the value from the input and try to parse it as a number
-    Numericinput.prototype.parseValue = function () {
+    Numericinput.prototype.getValue = function () {
         let stringValue = this.element.val()
             .replace(this.groupSeparator, '')
             .replace(this.negativeSymbol, '-')
@@ -169,17 +180,6 @@
         else {
             return parseFloat(stringValue);
         }
-    }
-
-    // Temporarily set the input to error state
-    Numericinput.prototype.error = function () {
-        let base = this;
-
-        this.showError(this.element);
-
-        window.setTimeout(function () {
-            base.hideError(base.element);
-        }, this.errorDisplayDuration);
     }
 
     // Set the value in the input to a formatted number
@@ -222,7 +222,7 @@
     // Event handlers should not be accessible from the object itself
     let eventHandlers = {
         change: function (e) {
-            let value = e.data.parseValue();
+            let value = e.data.getValue();
             let hasError = false;
 
             if (isNaN(value)) {
