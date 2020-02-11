@@ -61,4 +61,29 @@
 
         jasmine.clock().uninstall();
     });
+
+    it('leaves the initial empty value', function () {
+        var input = $('#basic-input-empty-initial-value');
+
+        input.numericinput();
+
+        expect(input.val()).toEqual('');
+    });
+
+    it('formats the initial valid value', function () {
+        var input = $('#basic-input-valid-initial-value');
+
+        input.numericinput();
+
+        expect(input.val()).toEqual('123.00');
+    });
+
+    it('clears the initial invalid value', function () {
+        var input = $('#basic-input-invalid-initial-value');
+
+        input.numericinput();
+
+        expect(input.val()).toEqual('');
+        expect(input.css('border-color')).toEqual('red');
+    });
 });

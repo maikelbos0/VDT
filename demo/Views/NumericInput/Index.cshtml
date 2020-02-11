@@ -32,7 +32,7 @@
         <input id="numeric-3" type="text" class="form-control" />
     </div>
     <div class="col-3">
-
+        <input id="numeric-4" type="text" class="form-control" value="123" />
     </div>
 </div>
 
@@ -51,7 +51,7 @@
             }
         });
 
-        $('#numeric-3').numericinput();
+        $('#numeric-3, #numeric-4').numericinput();
     }());
 
     let decimalSeparator = '@CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator';

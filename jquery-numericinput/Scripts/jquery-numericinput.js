@@ -145,6 +145,9 @@
 
         // Event handlers
         this.element.on('change', this, eventHandlers.change);
+
+        // Trigger change to validate the  value
+        this.element.trigger('change');
     }
 
     // Remove the numeric input properties; resets the input element to its former state
@@ -160,7 +163,12 @@
             .replace(this.negativeSymbol, '-')
             .replace(this.decimalSeparator, '.');
 
-        return parseFloat(stringValue);
+        if (stringValue == '') {
+            return null;
+        }
+        else {
+            return parseFloat(stringValue);
+        }
     }
 
     // Temporarily set the input to error state
@@ -178,7 +186,7 @@
     Numericinput.prototype.setValue = function (value) {
         let formattedValue = '';
 
-        if (!isNaN(value)) {
+        if (!isNaN(value) && value !== null) {
             let isNegative = value < 0;
             let absoluteValue = Math.abs(value);
             let integerValue = Math.floor(absoluteValue).toString().split("");
