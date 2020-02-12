@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>jQuery-numericinput</id>
+    <version>1.0.0</version>
+    <title>jQuery-numericinput</title>
+    <description>A jQuery plugin that transforms any text input into a numeric input with full localization support.</description>
+    <releaseNotes></releaseNotes>
+    <authors>Maikel Bos</authors>
+    <license type="expression">MIT</license>
+    <copyright>Copyright © 2019 Maikel Bos</copyright>
+    <tags>jQuery, plugin, number, numeric, digits, number input, numeric input, numericinput, input</tags>
+    <language>en-us</language>
+    <projectUrl>https://github.com/maikelbos0/VDT</projectUrl>
+    <dependencies>
+      <dependency id="jQuery" version="3.3.1" />
+    </dependencies>
+  </metadata>
+
+  <files>
+    <file src="README.md" />
+    <file src="LICENSE" />
+    <file src="Scripts\jquery-numericinput*.js" target="content\Scripts" />
+  </files>
+</package>
