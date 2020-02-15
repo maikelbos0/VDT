@@ -66,10 +66,12 @@
             this.remove();
         });
 
-        expect(slider.hasClass('.slider')).toEqual(false);
+        expect(slider.hasClass('rangeslider')).toEqual(false);
         expect(slider.find('div.rangeslider-track').length).toEqual(0);
         expect(slider.find('div.rangeslider-thumb').length).toEqual(0);
         expect(slider.find('input.rangeslider-input').length).toEqual(0);
+        expect(slider.data('rangeslider')).toBeUndefined();
+        expect($._data(slider[0]).events).toBeUndefined();
 
         var hiddenContent = slider.find('.test-hidden');
 

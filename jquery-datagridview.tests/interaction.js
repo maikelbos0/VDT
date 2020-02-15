@@ -76,7 +76,7 @@
             this.remove();
         });
 
-        expect(grid.hasClass('.datagridview')).toEqual(false);
+        expect(grid.hasClass('datagridview')).toEqual(false);
         expect(grid.find('.datagridview-header').length).toEqual(0);
         expect(grid.find('.datagridview-body').length).toEqual(0);
         expect(grid.find('.datagridview-footer').length).toEqual(0);

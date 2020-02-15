@@ -18,6 +18,7 @@
         });
 
         expect(input.data('numericinput')).toBeUndefined();
+        expect($._data(input[0]).events).toBeUndefined();
     });
 
     it('validates valid input on change', function () {
