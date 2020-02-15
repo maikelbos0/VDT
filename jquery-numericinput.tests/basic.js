@@ -17,7 +17,6 @@
             this.remove();
         });
 
-        expect(input)
         expect(input.data('numericinput')).toBeUndefined();
     });
 

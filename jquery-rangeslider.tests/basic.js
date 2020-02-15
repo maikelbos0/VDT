@@ -6,6 +6,7 @@
         expect(function () {
             slider.rangeslider();
         }).not.toThrow();
+        expect(slider.data('rangeslider')).toBeTruthy();
     });
 
     it('hides the already present content', function () {
