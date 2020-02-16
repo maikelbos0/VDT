@@ -395,7 +395,7 @@
             ]);
         });
 
-        grid.find('.datagridview-row:nth-child(2) input[type="checkbox"]').click();
+        grid.find('.datagridview-row:nth-child(2) input.select-checkbox').click();
 
         var rows = grid.find('.datagridview-row-selected');
 
@@ -418,7 +418,7 @@
             ]);
         });
 
-        expect(grid.find('.datagridview-row:nth-child(2) input[type="checkbox"]').length).toEqual(0);
+        expect(grid.find('.datagridview-row:nth-child(2) input.select-checkbox').length).toEqual(0);
     });
 
     it('all rows with header checkbox if multiselect and checkbox select are enabled', function () {
@@ -436,7 +436,7 @@
             ]);
         });
 
-        grid.find('.datagridview-header-cell input[type="checkbox"]').click();
+        grid.find('.datagridview-checkbox-header-cell input.select-checkbox').click();
 
         var rows = grid.find('.datagridview-row-selected');
 
@@ -463,7 +463,7 @@
             this.setSelectedRows('*');
         });
 
-        grid.find('.datagridview-row:nth-child(2) input[type="checkbox"]').click();
+        grid.find('.datagridview-row:nth-child(2) input.select-checkbox').click();
 
         var rows = grid.find('.datagridview-row-selected');
 

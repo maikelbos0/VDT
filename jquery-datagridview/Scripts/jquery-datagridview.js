@@ -280,7 +280,7 @@
         // Create checkbox column header
         if (this.hasMultiselectCheckboxes) {
             this.header.append(this.createElement('<div>', 'datagridview-checkbox-header-cell', base.options.getHeaderCellAttributes())
-                .append(this.createElement('<input>', null, { type: 'checkbox' })));
+                .append(this.createElement('<input>', 'select-checkbox', { type: 'checkbox' })));
         }
 
         // Create columns
@@ -345,6 +345,13 @@
             this.element.on('mouseenter', 'div.datagridview-row', this, eventHandlers.rowSelect);
             this.element.on('mouseup', 'div.datagridview-row', this, eventHandlers.rowSelectEnd);
         }
+
+        if (this.hasMultiselectCheckboxes) {
+            this.header.on('click', 'div.datagridview-checkbox-header-cell > input.select-checkbox', this, eventHandlers.headerCheckboxClick);
+            this.element.on('click', 'div.datagridview-checkbox-cell > input.select-checkbox', this, eventHandlers.rowCheckboxClick);
+            this.element.on('mousedown', 'div.datagridview-checkbox-cell', this, eventHandlers.checkboxCellMouseDown);
+            this.element.on('click', 'div.datagridview-checkbox-header-cell, div.datagridview-checkbox-cell', this, eventHandlers.checkboxCellClick);
+        }
     }
 
     // Set the column styles
@@ -376,7 +383,7 @@
 
             if (this.hasMultiselectCheckboxes) {
                 row.append(this.createElement('<div>', 'datagridview-checkbox-cell', this.options.getCellAttributes())
-                    .append(this.createElement('<input>', null, { type: 'checkbox' })));
+                    .append(this.createElement('<input>', 'select-checkbox', { type: 'checkbox' })));
             }
 
             for (let c = 0; c < this.options.columns.length; c++) {
@@ -555,6 +562,12 @@
         }
 
         if (selectionChanged) {
+            if (this.hasMultiselectCheckboxes) {
+                this.rows.filter('.datagridview-row-selected').find('input.select-checkbox:not(:checked)').prop('checked', true);
+                this.rows.filter(':not(.datagridview-row-selected)').find('input.select-checkbox:checked').prop('checked', false);
+                this.header.find('input.select-checkbox').prop('checked', this.rows.filter(':not(.datagridview-row-selected)').length === 0);
+            }
+
             this.element.trigger('datagridview.selectionChanged', [this.getSelectedData()]);
         }
     }
@@ -819,7 +832,6 @@
             e.data.headerResizeState.dragging = false;
         },
         rowSelectStart: function (e) {
-            e.data.test = 'rowSelectStart';
             e.data.selectState.selecting = true;
             e.data.selectState.dragElement = $(this);
             e.data.selectState.dragElement.addClass('datagridview-row-selecting');
@@ -871,6 +883,26 @@
             e.data.selectState.dragElement = null;
             e.data.selectState.selecting = false;
             e.data.selectState.dragging = false;
+        },
+        headerCheckboxClick: function (e) {
+            if ($(this).is(':checked')) {
+                e.data.setSelectedRows('*');
+            }
+            else {
+                e.data.setSelectedRows(false);
+            }
+
+            e.stopPropagation();
+        },
+        rowCheckboxClick: function (e) {
+            e.data.alterSelection($(this).closest('div.datagridview-row'), true, false);
+            e.stopPropagation();
+        },
+        checkboxCellMouseDown: function (e) {
+            e.stopPropagation();
+        },
+        checkboxCellClick: function(e) {
+            $(this).find('input.select-checkbox').click();
         }
     }
 
