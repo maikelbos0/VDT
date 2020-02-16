@@ -445,6 +445,15 @@
         this.contentContainer.remove();
         this.footer.remove();
         this.style.remove();
+        this.element.removeData('datagridview');
+
+        this.element.off('mousedown', 'div.datagridview-row', eventHandlers.rowSelectStart);
+        this.element.off('mouseenter', 'div.datagridview-row', eventHandlers.rowSelect);
+        this.element.off('mouseup', 'div.datagridview-row', eventHandlers.rowSelectEnd);
+
+        this.element.off('click', 'div.datagridview-checkbox-cell > input.select-checkbox', eventHandlers.rowCheckboxClick);
+        this.element.off('mousedown', 'div.datagridview-checkbox-cell', eventHandlers.checkboxCellMouseDown);
+        this.element.off('click', 'div.datagridview-checkbox-header-cell, div.datagridview-checkbox-cell', eventHandlers.checkboxCellClick);
     }
 
     // Get meta currently in use; these can be edited and passed back via populate

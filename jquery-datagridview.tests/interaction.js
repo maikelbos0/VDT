@@ -81,6 +81,9 @@
         expect(grid.find('.datagridview-body').length).toEqual(0);
         expect(grid.find('.datagridview-footer').length).toEqual(0);
         expect(grid.find('tr').length).toEqual(2);
+
+        expect(grid.data('datagridview')).toBeUndefined();
+        expect($._data(grid[0]).events).toBeUndefined();
     });
 
     it('can be used to get the meta data out', function () {
