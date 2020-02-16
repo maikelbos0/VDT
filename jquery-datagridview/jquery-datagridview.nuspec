@@ -2,11 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>jQuery-datagridview</id>
-    <version>1.0.2</version>
+    <version>1.1.0</version>
     <title>jQuery-datagridview</title>
     <description>A jQuery plugin that makes it easy to create a grid view for your tabular data. It allows you to create a table layout on
     the fly for an array of data-objects while leaving you in full control of where the data comes from.</description>
-    <releaseNotes>- Fixed bug in full page display footer</releaseNotes>
+    <releaseNotes>- Added support for a checkbox column
+- Added support for optional total row
+- Improved remove function</releaseNotes>
     <authors>Maikel Bos</authors>
     <license type="expression">MIT</license>
     <copyright>Copyright © 2019 Maikel Bos</copyright>
