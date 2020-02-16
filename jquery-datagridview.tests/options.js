@@ -104,6 +104,22 @@
         expect(isMultiselect).toEqual(true);
     });
 
+    it('can be provided for hasMultiselectCheckboxes', function () {
+        var grid = $('#datagridview-options-checkboxselect');
+        var hasMultiselectCheckboxes = false;
+
+        grid.datagridview({
+            columns: [],
+            hasMultiselectCheckboxes: function () {
+                return true;
+            }
+        }, function () {
+                hasMultiselectCheckboxes = this.hasMultiselectCheckboxes;
+        });
+
+        expect(hasMultiselectCheckboxes).toEqual(true);
+    });
+
     it('can be provided for getContentContainerAttributes', function () {
         var grid = $('#datagridview-options-content-container-attributes');
 

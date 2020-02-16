@@ -72,6 +72,10 @@
         isMultiselect: function (element) {
             return $(element).data('multiselect') !== undefined && $(element).data('multiselect') != false;
         },
+        // If multiselect is enabled, add checkboxes for selection
+        hasMultiselectCheckboxes: function (element) {
+            return $(element).data('multiselect-checkboxes') !== undefined && $(element).data('multiselect-checkboxes') != false;
+        },
         // Use below functions to add attributes to the different elements the datagridview creates
         // The content container is the scroll container for the header and body
         // It always gets at least the class 'datagridview-content-container' and in multiselect the class 'datagridview-container-multiselect'
@@ -246,6 +250,7 @@
         }
         this.allowSelect = this.options.allowSelect(this.element);
         this.isMultiselect = this.allowSelect && this.options.isMultiselect(this.element);
+        this.hasMultiselectCheckboxes = this.isMultiselect && this.options.hasMultiselectCheckboxes(this.element);
         this.selectState = {
             selecting: false,
             dragging: false
