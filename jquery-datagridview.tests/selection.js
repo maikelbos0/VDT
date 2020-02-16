@@ -379,4 +379,96 @@
         expect(data).not.toBeNull();
         expect(data.length).toEqual(4);
     });
+
+    it('with checkboxes if multiselect and checkbox select are enabled', function () {
+        var grid = $('#selection-multi-checkboxes');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, }
+            ]);
+        });
+
+        grid.find('.datagridview-row:nth-child(2) input[type="checkbox"]').click();
+
+        var rows = grid.find('.datagridview-row-selected');
+
+        expect(rows.length).toEqual(1);
+        expect(rows[0]).toEqual(grid.find('.datagridview-row')[1]);
+    });
+
+    it('but not with checkboxes if only checkbox select is enabled', function () {
+        var grid = $('#selection-multi-no-checkboxes');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, }
+            ]);
+        });
+
+        expect(grid.find('.datagridview-row:nth-child(2) input[type="checkbox"]').length).toEqual(0);
+    });
+
+    it('all rows with header checkbox if multiselect and checkbox select are enabled', function () {
+        var grid = $('#selection-multi-checkbox-all');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, }
+            ]);
+        });
+
+        grid.find('.datagridview-header-cell input[type="checkbox"]').click();
+
+        var rows = grid.find('.datagridview-row-selected');
+
+        expect(rows.length).toEqual(3);
+        expect(rows[0]).toEqual(grid.find('.datagridview-row')[0]);
+        expect(rows[1]).toEqual(grid.find('.datagridview-row')[1]);
+        expect(rows[2]).toEqual(grid.find('.datagridview-row')[2]);
+    });
+
+    it('or deselect with checkboxes in previous selection', function () {
+        var grid = $('#selection-multi-checkboxes-previous');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, }
+            ]);
+
+            this.setSelectedRows('*');
+        });
+
+        grid.find('.datagridview-row:nth-child(2) input[type="checkbox"]').click();
+
+        var rows = grid.find('.datagridview-row-selected');
+
+        expect(rows.length).toEqual(2);
+        expect(rows[0]).toEqual(grid.find('.datagridview-row')[0]);
+        expect(rows[1]).toEqual(grid.find('.datagridview-row')[2]);
+    });
 });
