@@ -277,6 +277,12 @@
         this.style = this.createElement('<style>', null, this.options.getStyleAttributes(), { type: 'text/css' });
         $('body').append(this.style);
 
+        // Create checkbox column header
+        if (this.hasMultiselectCheckboxes) {
+            this.header.append(this.createElement('<div>', 'datagridview-checkbox-header-cell', base.options.getHeaderCellAttributes())
+                .append(this.createElement('<input>', null, { type: 'checkbox' })));
+        }
+
         // Create columns
         this.options.columns.forEach(function (column) {
             // Define class
@@ -367,6 +373,11 @@
         for (let r = 0; r < data.length; r++) {
             let dataRow = data[r];
             let row = this.createElement('<div>', 'datagridview-row', this.options.getRowAttributes());
+
+            if (this.hasMultiselectCheckboxes) {
+                row.append(this.createElement('<div>', 'datagridview-checkbox-cell', this.options.getCellAttributes())
+                    .append(this.createElement('<input>', null, { type: 'checkbox' })));
+            }
 
             for (let c = 0; c < this.options.columns.length; c++) {
                 let column = this.options.columns[c];

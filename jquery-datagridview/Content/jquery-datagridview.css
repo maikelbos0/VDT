@@ -60,6 +60,10 @@
     cursor: col-resize;
 }
 
+.datagridview-checkbox-header-cell, .datagridview-row > div.datagridview-checkbox-cell {
+    flex-basis: 30px;
+}
+
 .datagridview-footer {
     justify-content: space-between;
 }
