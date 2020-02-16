@@ -16,7 +16,7 @@
                 return new DataGridViewMetaData('test', false, 0, 25, 0);
             }
         }, function () {
-                metaData = this.getMetaData();
+            metaData = this.getMetaData();
         });
 
         expect(metaData.sortColumn).toEqual('test');
@@ -71,7 +71,7 @@
 
         expect(allow).toEqual(true);
     });
-    
+
     it('can be provided for allowSelect', function () {
         var grid = $('#datagridview-options-allow-select');
         var allowSelect = false;
@@ -114,7 +114,7 @@
                 return true;
             }
         }, function () {
-                hasMultiselectCheckboxes = this.hasMultiselectCheckboxes;
+            hasMultiselectCheckboxes = this.hasMultiselectCheckboxes;
         });
 
         expect(hasMultiselectCheckboxes).toEqual(true);
@@ -325,6 +325,52 @@
         expect(cells.length).toBe(4);
         expect($(cells[0]).hasClass('test')).toEqual(true);
         expect($(cells[3]).hasClass('test')).toEqual(true);
+    });
+
+    it('can be provided for getTotalRowAttributes', function () {
+        var grid = $('#datagridview-options-total-row-attributes');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test1' },
+                { data: 'test2' }
+            ],
+            getTotalRowAttributes: function () {
+                return { class: 'test' };
+            }
+        }, function () {
+            this.populate(new DataGridViewMetaData(null, false, 25, 0, 2), [
+                { test1: 'test', test2: 'test' },
+                { test1: 'test', test2: 'test' }
+            ], { test1: 'test', test2: 'test' })
+        });
+
+        expect(grid.find('.datagridview-total-row').hasClass('test')).toEqual(true);
+    });
+
+    it('can be provided for getTotalCellAttributes', function () {
+        var grid = $('#datagridview-options-total-cell-attributes');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test1' },
+                { data: 'test2' }
+            ],
+            getTotalCellAttributes: function () {
+                return { class: 'test' };
+            }
+        }, function () {
+            this.populate(new DataGridViewMetaData(null, false, 25, 0, 2), [
+                { test1: 'test', test2: 'test' },
+                { test1: 'test', test2: 'test' }
+            ], { test1: 'test', test2: 'test' })
+        });
+
+        var cells = grid.find('.datagridview-total-row > div');
+
+        expect(cells.length).toBe(2);
+        expect($(cells[0]).hasClass('test')).toEqual(true);
+        expect($(cells[1]).hasClass('test')).toEqual(true);
     });
 
     it('can be provided for getFooterAttributes', function () {

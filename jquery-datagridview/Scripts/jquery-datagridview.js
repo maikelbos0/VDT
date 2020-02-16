@@ -127,6 +127,16 @@
         getCellAttributes: function () {
             return {};
         },
+        // The total row is the row that gets added if there is total data
+        // It always gets at least the class 'datagridview-total-row'
+        getTotalRowAttributes: function () {
+            return {};
+        },
+        // The total cells are the data cells inside the total row
+        // They always get at least a column-specific class
+        getTotalCellAttributes: function () {
+            return {};
+        },
         // The footer is the container for the footer (paging) elements
         // It always gets at least the class 'datagridview-footer'
         getFooterAttributes: function () {
@@ -374,7 +384,7 @@
     }
 
     // Fill the grid with the data
-    DataGridView.prototype.populate = function (metaData, data) {
+    DataGridView.prototype.populate = function (metaData, data, totals) {
         let newBody = this.createElement('<div>', 'datagridview-body', this.options.getBodyAttributes());
 
         for (let r = 0; r < data.length; r++) {
@@ -406,6 +416,34 @@
 
             newBody.append(row);
         };
+        
+        if (totals) {
+            let totalRow = this.createElement('<div>', 'datagridview-total-row', this.options.getTotalRowAttributes());
+
+            if (this.hasMultiselectCheckboxes) {
+                totalRow.append(this.createElement('<div>', 'datagridview-checkbox-cell', this.options.getTotalCellAttributes()));
+            }
+
+            for (let c = 0; c < this.options.columns.length; c++) {
+                let column = this.options.columns[c];
+                let cell = this.createElement('<div>', column.columnClass, this.options.getTotalCellAttributes());
+
+                if (column.class) {
+                    cell.addClass(column.class);
+                }
+
+                if (column.renderer) {
+                    column.renderer(cell, totals[column.data], totals);
+                }
+                else {
+                    cell.text(totals[column.data] || "").attr('title', totals[column.data] || "");
+                }
+
+                totalRow.append(cell);
+            }
+
+            newBody.append(totalRow);
+        }
 
         this.body.replaceWith(newBody);
         this.body = newBody;

@@ -124,4 +124,41 @@
         expect(grid.find('.datagridview-body > .datagridview-row:first-child > div').text()).toEqual('Test 1');
         expect(grid.find('.datagridview-body > .datagridview-row:nth-child(2) > div').text()).toEqual('Test 2');
     });
+
+    it('will add totals when provided', function () {
+        var grid = $('#basic-datagridview-totals');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' },
+                { data: 'value' }
+            ]
+        }, function () {
+            this.populate(null, [
+                { test: 'Test 1', value: 1 },
+                { test: 'Test 2', value: 2 },
+            ], { test: 'Test', value: 3 });
+        });
+
+        expect(grid.find('.datagridview-body > .datagridview-total-row > div:first-child').text()).toEqual('Test');
+        expect(grid.find('.datagridview-body > .datagridview-total-row > div:nth-child(2)').text()).toEqual('3');
+    });
+
+    it('will omit total row when not provided', function () {
+        var grid = $('#basic-datagridview-no-totals');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' },
+                { data: 'value' }
+            ]
+        }, function () {
+            this.populate(null, [
+                { test: 'Test 1', value: 1 },
+                { test: 'Test 2', value: 2 },
+            ]);
+        });
+
+        expect(grid.find('.datagridview-body > .datagridview-total-row').length).toEqual(0);
+    });
 });

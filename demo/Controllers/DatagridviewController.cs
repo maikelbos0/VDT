@@ -17,6 +17,10 @@ namespace vdt.demo.Controllers {
         public JsonResult GetInvoiceGridItems(DataGridViewMetaData metaData) {
             var totalItems = 1254; // Random total count
             var items = GenerateInvoiceGridItems().Take(totalItems);
+            var totals = new InvoiceGridItemViewModel() {
+                InvoiceAmount = items.Sum(i => i.InvoiceAmount),
+                InvoiceOpenAmount = items.Sum(i => i.InvoiceOpenAmount)
+            };
 
             if (metaData == null || metaData.rowsPerPage == 0) {
                 metaData = new DataGridViewMetaData() {
@@ -47,7 +51,8 @@ namespace vdt.demo.Controllers {
 
             return Json(new {
                 metaData = metaData,
-                data = items
+                data = items,
+                totals = totals
             });
         }
 

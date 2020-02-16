@@ -34,13 +34,13 @@
     user-select: none;
 }
 
-.datagridview-header, .datagridview-row, .datagridview-footer {
+.datagridview-header, .datagridview-row, .datagridview-total-row, .datagridview-footer {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
 }
 
-.datagridview-header-cell, .datagridview-row > div {
+.datagridview-header-cell, .datagridview-row > div, .datagridview-total-row > div {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -60,7 +60,7 @@
     cursor: col-resize;
 }
 
-.datagridview-checkbox-header-cell, .datagridview-row > div.datagridview-checkbox-cell {
+.datagridview-checkbox-header-cell, .datagridview-row > div.datagridview-checkbox-cell, .datagridview-total-row > div.datagridview-checkbox-cell {
     flex-basis: 30px;
 }
 

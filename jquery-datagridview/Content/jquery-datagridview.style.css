@@ -4,7 +4,7 @@
     border: 1px solid #999999;
 }
 
-.datagridview-header, .datagridview-footer {
+.datagridview-header, .datagridview-footer, .datagridview-total-row {
     background: #eeeeee;
 }
 
@@ -52,7 +52,7 @@
     background-color: #cccccc;
 }
 
-.datagridview-row > div, .datagridview-header-cell, .datagridview-checkbox-header-cell {
+.datagridview-row > div, .datagridview-total-row > div, .datagridview-header-cell, .datagridview-checkbox-header-cell {
     border-bottom: 1px solid #999999;
     padding-left: 0.2rem;
     padding-right: calc(0.2rem + 5px);

@@ -6,9 +6,9 @@ namespace vdt.demo.Models {
         public string DebtorName { get; set; }
         public string InvoiceNumber { get; set; }
         public DateTime InvoiceDate { get; set; }
-        public string InvoiceDateString { get { return InvoiceDate.ToShortDateString(); } }
+        public string InvoiceDateString { get { return InvoiceDate == DateTime.MinValue ? string.Empty : InvoiceDate.ToShortDateString(); } }
         public DateTime DueDate { get; set; }
-        public string DueDateString { get { return DueDate.ToShortDateString(); } }
+        public string DueDateString { get { return DueDate == DateTime.MinValue ? string.Empty : DueDate.ToShortDateString(); } }
         public string Currency { get; set; }
         public decimal InvoiceAmount { get; set; }
         public string InvoiceAmountString { get { return InvoiceAmount.ToString("N2"); } }

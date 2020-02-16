@@ -61,7 +61,7 @@
                     data: metaData,
                     success: function (d) {
                         $('#datagrid-1').datagridview(function () {
-                            this.populate(d.metaData, d.data);
+                            this.populate(d.metaData, d.data, d.totals);
                         });
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
