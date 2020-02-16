@@ -8,6 +8,7 @@
                 columns: []
             });
         }).not.toThrow();
+        expect(grid.data('datagridview')).toBeTruthy();
     });
 
     it('hides the already present content', function () {
