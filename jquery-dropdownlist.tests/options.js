@@ -251,4 +251,19 @@
 
         expect(dropdownlist.closest('.dropdownlist').hasClass('dropdownlist-disabled')).toEqual(true);
     });
+
+    it('can be provided for hasDynamicPositioning', function () {
+        var dropdownlist = $('#dropdown-options-dynamic-positioning');
+        var isDynamic;
+
+        dropdownlist.dropdownlist({
+            hasDynamicPositioning: function (element) {
+                return true;
+            }
+        }, function () {
+            isDynamic = this.hasDynamicPositioning;
+        });
+
+        expect(isDynamic).toEqual(true);
+    });
 });

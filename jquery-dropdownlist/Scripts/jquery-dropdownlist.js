@@ -91,6 +91,11 @@
         itemMatchesTextSearch: function (item, searchText) {
             return $(item).text().toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1;
         },
+        // If dynamic positioning is enabled, the dropdown will drop up or adjust height, otherwise it will always drop down
+        // Defaults to false
+        hasDynamicPositioning: function (element) {
+            return $(element).data('dynamic-positioning') !== undefined && $(element).data('dynamic-positioning') != false;
+        },
         // Use below functions to add attributes to the different elements the dropdownlist creates
         // The container is the top-level element 
         // It always gets at least the class 'dropdownlist'
@@ -144,6 +149,7 @@
         this.items = this.options.getItems(this.element).not(this.selectAllItem);
         this.textSearch = $();
         this.isTextSearchInsideSelector = false;
+        this.hasDynamicPositioning = this.options.hasDynamicPositioning(this.element);
         this.emptyText = this.options.getEmptyText(this.element);
         this.container = this.createElement('<div>', 'dropdownlist', this.options.getContainerAttributes());
 
@@ -269,6 +275,12 @@
         this.list.hide();
         this.allItems.removeClass('dropdownlist-list-item-active');
 
+        if (this.hasDynamicPositioning) {
+            this.list.css('max-height', '');
+            this.list.css('bottom', '');
+            this.list.removeClass('dropdownlist-list-up');
+        }
+
         if (this.textSearch.length > 0) {
             if (this.textSearch.filter(document.activeElement).length > 0) {
                 this.selector.focus();
@@ -299,6 +311,23 @@
         // If it's disabled, don't show
         if (this.isDisabled) {
             return;
+        }
+
+        if (this.hasDynamicPositioning) {
+            let availableSpace = $(document).height() - this.selector.offset().top - this.selector.outerHeight();
+            let height = this.list.outerHeight();
+
+            if (height > availableSpace) {
+                let availableSpaceUp = this.selector.offset().top;
+
+                if (height > availableSpaceUp) {
+                    this.list.css('max-height', (availableSpace - (height - this.list.height())) + 'px');
+                }
+                else {
+                    this.list.addClass('dropdownlist-list-up');
+                    this.list.css('bottom', this.selector.outerHeight() + 'px');
+                }
+            }
         }
 
         this.list.show();

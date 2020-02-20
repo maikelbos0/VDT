@@ -147,10 +147,10 @@
         </div>
     </div>
 </div>
-
+    
 <div class="row site-spaced">
     <div class="col-3">
-        <div id="speed-dropdown-1" class="my-dropdown">
+        <div id="speed-dropdown-1" class="my-dropdown" data-dynamic-positioning="true">
             @foreach (var item in Model.DemoProperty3.Items) {
                 <div data-value="@item.Value">@item.Text</div>
             }

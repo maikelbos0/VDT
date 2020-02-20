@@ -55,6 +55,7 @@ to create your own style. The various css classes the dropdownlist uses are:
 - `.dropdownlist-selector-toggle` is the toggle arrow in the default style
 - `.dropdownlist-search` is the search/autocomplete input
 - `.dropdownlist-list` is the list that gets displayed/hidden and includes the original element
+- `.dropdownlist-list-up` is applied to the dropdownlist when it opens upwards instead of downwards in dynamic mode
 - `.dropdownlist-field` are the input fields; checkboxes are displayed in multiselect
 
 ## Documentation

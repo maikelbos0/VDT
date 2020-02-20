@@ -37,11 +37,15 @@
     width: 100%;
     max-height: 15em;
     overflow-y: auto;
-    z-index: 1;
     background-color: #ffffff;
     border-left: 1px solid #888888;
     border-bottom: 1px solid #888888;
     border-right: 1px solid #888888;
+}
+
+.dropdownlist-list.dropdownlist-list-up {
+    border-top: 1px solid #888888;
+    border-bottom: 0;
 }
 
 .dropdownlist-list-item-active {
