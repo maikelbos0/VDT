@@ -66,9 +66,10 @@
             return $(item).text();
         },
         // The text to display when no items are selected
+        // Defaults to the data-property empty-text with '(Select...)' as fallback
         // Override this implementation to set the text or provide multi-language support
-        getEmptyText: function () {
-            return '(Select...)';
+        getEmptyText: function (element) {
+            return $(element).data('empty-text') || '(Select...)';
         },
         // Multiselect dropdowns use checkboxes, single select uses an invisible radio button
         // Defaults to false except when the data-property multiselect is provided
@@ -143,7 +144,7 @@
         this.items = this.options.getItems(this.element).not(this.selectAllItem);
         this.textSearch = $();
         this.isTextSearchInsideSelector = false;
-        this.emptyText = this.options.getEmptyText();
+        this.emptyText = this.options.getEmptyText(this.element);
         this.container = this.createElement('<div>', 'dropdownlist', this.options.getContainerAttributes());
 
         // Add container early so can move the element after without issues

@@ -22,7 +22,7 @@
     it('of a multiselect dropdown without a default selection should be initialized with the empty text', function () {
         $('#dropdown-selector-multiselect-empty').dropdownlist();
 
-        expect($('#dropdown-selector-multiselect-empty').closest('.dropdownlist').find('.dropdownlist-selector-text').text()).toEqual('(Select...)');
+        expect($('#dropdown-selector-multiselect-empty').closest('.dropdownlist').find('.dropdownlist-selector-text').text()).toEqual('(Select an option)');
     });
 
     it('of a multiselect dropdown should be initialized with the text of the selected options', function () {
