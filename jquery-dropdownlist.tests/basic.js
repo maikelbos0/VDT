@@ -7,6 +7,7 @@
             dropdown.dropdownlist();
         }).not.toThrow();
         expect(dropdown.closest('.dropdownlist').length).toEqual(1);
+        expect(dropdown.data('dropdownlist')).toBeTruthy();
     });
 
     it('creates fields with the correct name', function () {
