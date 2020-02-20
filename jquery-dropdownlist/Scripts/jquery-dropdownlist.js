@@ -345,6 +345,11 @@
         this.selectAllItem.find('input.dropdownlist-field').remove();
         this.selectAllItem.removeClass('dropdownlist-list-item-active');
 
+        // Remove events
+        this.element.off('change', 'input.dropdownlist-field', eventHandlers.inputChange);
+        this.element.off('mouseover', '*', eventHandlers.allItemsMouseover);
+        this.element.off('mouseout', '*', eventHandlers.allItemsMouseout);
+
         // Remove object from data
         this.element.removeData('dropdownlist');
     }

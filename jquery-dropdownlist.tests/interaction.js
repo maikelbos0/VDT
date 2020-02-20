@@ -66,6 +66,7 @@
 
         expect(dropdown.closest('.dropdownlist').length).toEqual(0);
         expect(dropdown.data('dropdownlist')).toEqual(undefined);
+        expect($._data(dropdown[0]).events).toBeUndefined();
     });
 
     it('can be used to get the selected item', function () {
