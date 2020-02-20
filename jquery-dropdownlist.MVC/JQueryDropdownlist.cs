@@ -41,5 +41,13 @@ namespace vdt.jquerydropdownlist.MVC {
         /// and <see cref="HasSelectAll">HasSelectAll</see> are set to true.
         /// </summary>
         public Func<string> GetSelectAllText { get; set; } = () => "Select all";
+        /// <summary>
+        /// Gets or sets the function that returns the empty text. This only applies if <see cref="IsMultiselect">IsMultiselect</see> is set to true.
+        /// </summary>
+        public Func<string> GetEmptyText { get; set; }
+        /// <summary>
+        /// Gets or sets whether or not dynamic positioning of the expanded dropdownlist is enabled.
+        /// </summary>
+        public bool HasDynamicPositioning { get; set; }
     }
 }

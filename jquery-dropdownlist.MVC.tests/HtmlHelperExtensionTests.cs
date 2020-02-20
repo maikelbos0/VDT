@@ -327,6 +327,48 @@ namespace vdt.jquerydropdownlist.MVC.test {
         }
 
         [TestMethod]
+        public void JQueryDropdownlistFor_OmitsEmptyTextAttributeForNullFunction() {
+            var viewModel = CreateViewModel();
+            var viewData = new ViewDataDictionary<TestViewModel>() { Model = viewModel };
+            var htmlHelper = CreateHtmlHelper<TestViewModel>(viewData);
+
+            var html = htmlHelper.JQueryDropdownlistFor(model => model.TestProperty);
+            var xml = XElement.Parse($"<list>{html}</list>");
+
+            xml.Element("div").Attribute("data-empty-text").Should().BeNull();
+        }
+
+        [TestMethod]
+        public void JQueryDropdownlistFor_GeneratesEmptyTextAttribute() {
+            var viewModel = CreateViewModel();
+            var viewData = new ViewDataDictionary<TestViewModel>() { Model = viewModel };
+            var htmlHelper = CreateHtmlHelper<TestViewModel>(viewData);
+
+            viewModel.TestProperty.GetEmptyText = () => "Nothing is selected";
+
+            var html = htmlHelper.JQueryDropdownlistFor(model => model.TestProperty);
+            var xml = XElement.Parse($"<list>{html}</list>");
+
+            xml.Element("div").Attribute("data-empty-text").Should().NotBeNull();
+            xml.Element("div").Attribute("data-empty-text").Value.Should().Be("Nothing is selected");
+        }
+
+        [TestMethod]
+        public void JQueryDropdownlistFor_GeneratesDynamicPositioningAttribute() {
+            var viewModel = CreateViewModel();
+            var viewData = new ViewDataDictionary<TestViewModel>() { Model = viewModel };
+            var htmlHelper = CreateHtmlHelper<TestViewModel>(viewData);
+
+            viewModel.TestProperty.HasDynamicPositioning = true;
+
+            var html = htmlHelper.JQueryDropdownlistFor(model => model.TestProperty);
+            var xml = XElement.Parse($"<list>{html}</list>");
+
+            xml.Element("div").Attribute("data-dynamic-positioning").Should().NotBeNull();
+            xml.Element("div").Attribute("data-dynamic-positioning").Value.Should().Be("true");
+        }
+
+        [TestMethod]
         public void JQueryDropdownlistFor_GeneratesHtmlAttributesFromObject() {
             var viewModel = CreateViewModel();
             var viewData = new ViewDataDictionary<TestViewModel>() { Model = viewModel };

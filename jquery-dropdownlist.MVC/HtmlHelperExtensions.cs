@@ -65,6 +65,17 @@ namespace vdt.jquerydropdownlist.MVC {
 
             if (list.IsMultiselect) {
                 listBuilder.MergeAttribute("data-multiselect", "true");
+
+                if (list.HasSelectAll) {
+                    var itemBuilder = new TagBuilder("div");
+                    itemBuilder.MergeAttribute("data-select-all", "true");
+
+                    if (list.GetSelectAllText != null) {
+                        itemBuilder.SetInnerText(list.GetSelectAllText());
+                    }
+
+                    listItemsBuilder.AppendLine(itemBuilder.ToString());
+                }
             }
 
             if (list.HasTextSearch) {
@@ -75,15 +86,12 @@ namespace vdt.jquerydropdownlist.MVC {
                 }
             }
 
-            if (list.IsMultiselect && list.HasSelectAll) {
-                var itemBuilder = new TagBuilder("div");
-                itemBuilder.MergeAttribute("data-select-all", "true");
+            if (list.GetEmptyText != null) {
+                listBuilder.MergeAttribute("data-empty-text", list.GetEmptyText());
+            }
 
-                if (list.GetSelectAllText != null) {
-                    itemBuilder.SetInnerText(list.GetSelectAllText());
-                }
-
-                listItemsBuilder.AppendLine(itemBuilder.ToString());
+            if (list.HasDynamicPositioning) {
+                listBuilder.MergeAttribute("data-dynamic-positioning", "true");
             }
 
             if (list.Items != null) {

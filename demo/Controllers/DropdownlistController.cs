@@ -21,7 +21,9 @@ namespace vdt.demo.Controllers {
                     IsMultiselect = true,
                     HasTextSearch = true,
                     HasSelectAll = true,
-                    GetSelectAllText = () => "Select all items"
+                    GetSelectAllText = () => "Select all items",
+                    GetEmptyText = () => "(Make a choice)",
+                    HasDynamicPositioning = true
                 },
                 DemoProperty2 = new JQueryDropdownlist() {
                     Items = new[] {
