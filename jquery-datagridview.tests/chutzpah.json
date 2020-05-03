@@ -2,7 +2,7 @@
   "Framework": "jasmine",
   "Engine": "JSDom",
   "References": [
-    { "Path": "../jquery-datagridview/Scripts/jquery-3.3.1.min.js" },
+    { "Path": "../jquery-datagridview/Scripts/jquery-3.5.0.min.js" },
     { "Path": "../jquery-datagridview/Scripts/jquery-datagridview.min.js" },
     { "Includes": [ "*.html" ] }
   ],
