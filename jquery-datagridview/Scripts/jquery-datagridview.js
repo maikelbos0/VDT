@@ -198,6 +198,7 @@
 
                 $(footerElement).append($('<button>')
                     .addClass('datagridview-paging-page')
+                    .toggleClass('datagridview-paging-page-active', page == metaData.page)
                     .text(currentPage + 1)
                     .click(function () { datagridview.initiatePaging(currentPage, metaData.rowsPerPage); })
                     .prop('disabled', metaData.page === currentPage));

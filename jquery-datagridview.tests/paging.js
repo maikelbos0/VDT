@@ -576,6 +576,32 @@
         expect(mData.page).toEqual(5);
     });
 
+    it('prev-next button for only active page has active class', function () {
+        var grid = $('#paging-prev-next-active');
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 156, 25, 2);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.prevNext
+                ];
+            }
+        });
+
+        var buttons = grid.find('.datagridview-footer-element button.datagridview-paging-page');
+
+        expect($(buttons[0]).hasClass('datagridview-paging-page-active')).toEqual(false);
+        expect($(buttons[1]).hasClass('datagridview-paging-page-active')).toEqual(false);
+        expect($(buttons[2]).hasClass('datagridview-paging-page-active')).toEqual(true);
+        expect($(buttons[3]).hasClass('datagridview-paging-page-active')).toEqual(false);
+        expect($(buttons[4]).hasClass('datagridview-paging-page-active')).toEqual(false);
+        expect($(buttons[5]).hasClass('datagridview-paging-page-active')).toEqual(false);
+        expect($(buttons[6]).hasClass('datagridview-paging-page-active')).toEqual(false);
+    });
+
     it('page input contains the right elements', function () {
         var grid = $('#paging-page');
 
