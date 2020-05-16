@@ -183,6 +183,15 @@
 
             $(footerElement).append(first, prev);
 
+            if (metaData.page > 4) {
+                let minus5 = $('<button>')
+                    .addClass('datagridview-paging-minus-5')
+                    .text('...')
+                    .click(function () { datagridview.initiatePaging(metaData.page - 5, metaData.rowsPerPage); });
+
+                $(footerElement).append(minus5);
+            }
+
             for (let page = Math.max(0, metaData.page - 4); page < Math.min(metaData.totalPages, metaData.page + 5); page++) {
                 // Using an iterator in an anonymous function does not work as expected cross-browser
                 let currentPage = page;
@@ -192,6 +201,15 @@
                     .text(currentPage + 1)
                     .click(function () { datagridview.initiatePaging(currentPage, metaData.rowsPerPage); })
                     .prop('disabled', metaData.page === currentPage));
+            }
+
+            if (metaData.page < metaData.totalPages - 5) {
+                let plus5 = $('<button>')
+                    .addClass('datagridview-paging-plus-5')
+                    .text('...')
+                    .click(function () { datagridview.initiatePaging(metaData.page + 5, metaData.rowsPerPage); });
+
+                $(footerElement).append(plus5);
             }
 
             let next = $('<button>')

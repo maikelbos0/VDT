@@ -452,6 +452,130 @@
         expect(mData.rowsPerPage).toEqual(25);
     });
 
+    it('prev-next contains button for plus 5 when needed', function () {
+        var grid = $('#paging-prev-next-plus-5');
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 126, 25, 0);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.prevNext
+                ];
+            }
+        });
+
+        expect(grid.find('.datagridview-footer-element button.datagridview-paging-plus-5').length).toEqual(1);
+    });
+
+    it('prev-next contains button for minus 5 when needed', function () {
+        var grid = $('#paging-prev-next-minus-5');
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 126, 25, 5);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.prevNext
+                ];
+            }
+        });
+
+        expect(grid.find('.datagridview-footer-element button.datagridview-paging-minus-5').length).toEqual(1);
+    });
+
+    it('prev-next button for plus 5 is removed when not needed', function () {
+        var grid = $('#paging-prev-next-plus-5-invisible');
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 125, 25, 0);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.prevNext
+                ];
+            }
+        });
+
+        expect(grid.find('.datagridview-footer-element button.datagridview-paging-plus-5').length).toEqual(0);
+    });
+
+    it('prev-next button for minus 5 is removed when not needed', function () {
+        var grid = $('#paging-prev-next-minus-5-invisible');
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 125, 25, 4);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.prevNext
+                ];
+            }
+        });
+
+        expect(grid.find('.datagridview-footer-element button.datagridview-paging-minus-5').length).toEqual(0);
+    });
+
+    it('prev-next button for plus 5 from page 1 triggers request for page 6', function () {
+        var grid = $('#paging-prev-next-plus-5-request');
+        var mData = null;
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 156, 25, 0);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.prevNext
+                ];
+            }
+        });
+
+        grid.on('datagridview.paged', function (e, metaData) {
+            mData = metaData;
+        });
+
+        $(grid.find('.datagridview-footer-element .datagridview-paging-plus-5')).click();
+
+        expect(mData).not.toEqual(null);
+        expect(mData.page).toEqual(5);
+    });
+
+    it('prev-next button for minus 5 from page 11 triggers request for page 6', function () {
+        var grid = $('#paging-prev-next-minus-5-request');
+        var mData = null;
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 256, 25, 10);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.prevNext
+                ];
+            }
+        });
+
+        grid.on('datagridview.paged', function (e, metaData) {
+            mData = metaData;
+        });
+
+        $(grid.find('.datagridview-footer-element .datagridview-paging-minus-5')).click();
+
+        expect(mData).not.toEqual(null);
+        expect(mData.page).toEqual(5);
+    });
+
     it('page input contains the right elements', function () {
         var grid = $('#paging-page');
 
