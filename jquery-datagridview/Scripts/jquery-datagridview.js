@@ -533,6 +533,8 @@
         let base = this;
         let header = this.headerCells.filter(function () { return $(this).data('sort-column') === base.metaData.sortColumn });
 
+        this.headerCells.not(header).removeClass('datagridview-header-cell-sorted');
+
         if (header.length > 0) {
             if (this.metaData.sortDescending) {
                 this.sortToggle.removeClass('datagridview-sort-toggle-ascending').addClass('datagridview-sort-toggle-descending');
@@ -541,8 +543,12 @@
                 this.sortToggle.removeClass('datagridview-sort-toggle-descending').addClass('datagridview-sort-toggle-ascending');
             }
 
+            header.addClass('datagridview-header-cell-sorted');
             header.append(this.sortToggle);
             this.sortToggle.show();
+
+            this.body.find('.datagridview-row > div:nth-child(' + (header.index() + 1) + ')').addClass('datagridview-cell-sorted');
+            this.body.find('.datagridview-total-row > div:nth-child(' + (header.index() + 1) + ')').addClass('datagridview-cell-sorted');
         }
         else {
             this.sortToggle.hide();

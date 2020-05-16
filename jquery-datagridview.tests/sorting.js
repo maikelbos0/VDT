@@ -40,7 +40,7 @@
         grid.on('datagridview.sorted', function (event, mData) {
             metaData = mData;
         });
-        
+
         triggerMouseup(grid.find('.datagridview-header-cell-sortable')[0]);
 
         expect(metaData.sortColumn).toEqual('column');
@@ -188,5 +188,89 @@
         expect(toggle.length).toEqual(1);
         expect(toggle.hasClass('datagridview-sort-toggle-descending')).toEqual(true);
         expect(toggle.hasClass('datagridview-sort-toggle-ascending')).toEqual(false);
+    });
+
+    it('adds a marker class to the sorted column header', function () {
+        var grid = $('#sorting-header-class');
+
+        grid.datagridview({
+            columns: [
+                { data: 'column' },
+                { data: 'test' }
+            ]
+        });
+
+        grid.on('datagridview.sorted', function (event, mData) {
+            $(this).datagridview(function () {
+                this.populate(mData, []);
+            });
+        });
+
+        triggerMouseup(grid.find('.datagridview-header-cell-sortable')[0]);
+        triggerMouseup(grid.find('.datagridview-header-cell-sortable')[1]);
+
+        var headers = grid.find('.datagridview-header-cell-sortable');
+
+        expect($(headers[0]).hasClass('datagridview-header-cell-sorted')).toEqual(false);
+        expect($(headers[1]).hasClass('datagridview-header-cell-sorted')).toEqual(true);
+    });
+
+    it('adds a marker class to the sorted column cells', function () {
+        var grid = $('#sorting-column-class');
+
+        grid.datagridview({
+            columns: [
+                { data: 'column' },
+                { data: 'test' }
+            ]
+        });
+
+        grid.on('datagridview.sorted', function (event, mData) {
+            $(this).datagridview(function () {
+                this.populate(mData, [
+                    { column: 'value', test: 'another' },
+                    { column: 'value', test: 'another' }
+                ]);
+            });
+        });
+
+        triggerMouseup(grid.find('.datagridview-header-cell-sortable')[0]);
+        triggerMouseup(grid.find('.datagridview-header-cell-sortable')[1]);
+
+        var cells = grid.find('.datagridview-row > div');
+
+        expect($(cells[0]).hasClass('datagridview-cell-sorted')).toEqual(false);
+        expect($(cells[1]).hasClass('datagridview-cell-sorted')).toEqual(true);
+        expect($(cells[2]).hasClass('datagridview-cell-sorted')).toEqual(false);
+        expect($(cells[3]).hasClass('datagridview-cell-sorted')).toEqual(true);
+    });
+
+    it('adds a marker class to the sorted column totals cell', function () {
+        var grid = $('#sorting-totals-column-class');
+
+        grid.datagridview({
+            columns: [
+                { data: 'column' },
+                { data: 'test' }
+            ]
+        });
+
+        grid.on('datagridview.sorted', function (event, mData) {
+            $(this).datagridview(function () {
+                this.populate(mData, [
+                    { column: 'value', test: 'another' },
+                    { column: 'value', test: 'another' }
+                ],
+                { column: 'value', test: 'another' });
+            });
+        });
+
+        triggerMouseup(grid.find('.datagridview-header-cell-sortable')[0]);
+        triggerMouseup(grid.find('.datagridview-header-cell-sortable')[1]);
+
+        var cells = grid.find('.datagridview-total-row > div');
+
+        expect($(cells[0]).hasClass('datagridview-cell-sorted')).toEqual(false);
+        expect($(cells[1]).hasClass('datagridview-cell-sorted')).toEqual(true);
     });
 });
