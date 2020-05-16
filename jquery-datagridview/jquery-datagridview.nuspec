@@ -2,16 +2,11 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>jQuery-datagridview</id>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
     <title>jQuery-datagridview</title>
     <description>A jQuery plugin that makes it easy to create a grid view for your tabular data. It allows you to create a table layout on
     the fly for an array of data-objects while leaving you in full control of where the data comes from.</description>
-    <releaseNotes>- Added marker classes for active sort column header and cells
-- Added marker class for active page
-- Improved support for context menu by reworking selection on right-click
-- Added additional navigation on prev-next pager
-- Added support for page on enter for page size and page inputs
-- Added cross-browser support for user-select: none</releaseNotes>
+    <releaseNotes>- Updated README.md</releaseNotes>
     <authors>Maikel Bos</authors>
     <license type="expression">MIT</license>
     <copyright>Copyright © 2019 Maikel Bos</copyright>

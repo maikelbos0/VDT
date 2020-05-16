@@ -59,6 +59,7 @@ to create your own style. The various css classes the data grid uses are:
 * `.datagridview-header` is the container for the header cells
 * `.datagridview-header-cell` are the individual column headers within the header
 * `.datagridview-header-cell-sortable` are only the sortable column headers
+* `.datagridview-header-cell-sorted` is the header cell that's currently sorted
 * `.datagridview-header-drag` are the elements to hold to drag to change column size
 * `.datagridview-header-move-title` element contains the header title of the header that's being dragged to move a column and is attached to the mouse position
 * `.datagridview-header-move-indicator` is the arrow pointing at the new column position while dragging a header to move a column
@@ -70,6 +71,8 @@ to create your own style. The various css classes the data grid uses are:
 * `.datagridview-row-selecting` gets added to rows when a user is selecting (with mouse down)
 * `.datagridview-row-selected` gets added to rows that are currently selected
 * `.datagridview-row > div` can be used to access cells in the data rows
+* `.datagridview-cell-sorted` are the cells in the column that's currently sorted
+* `.datagridview-total-row` is the totals row inside the body
 * `.datagridview-footer` is the container for the footer (paging) elements
 * `.datagridview-footer-element` are the containers for each separate footer (paging) plugin
 
