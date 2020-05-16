@@ -936,26 +936,26 @@
                 return;
             }
 
-            var keepSelection = e.data.isMultiselect && (e.ctrlKey || (e.which === 3 && e.data.getSelectedRows().is(this)));
-            
+            var resetSelection = !e.data.isMultiselect || (!e.ctrlKey && (e.which !== 3 || !e.data.getSelectedRows().is(this)));
+
             if (e.data.isMultiselect && e.data.selectState.dragging && e.data.selectState.dragElement) {
                 let firstIndex = e.data.rows.index(e.data.selectState.dragElement);
                 let secondIndex = e.data.rows.index(this);
 
-                e.data.alterSelection(e.data.rows.slice(Math.min(firstIndex, secondIndex), Math.max(firstIndex, secondIndex) + 1), false, !keepSelection);
+                e.data.alterSelection(e.data.rows.slice(Math.min(firstIndex, secondIndex), Math.max(firstIndex, secondIndex) + 1), false, resetSelection);
             }
             else if (e.data.isMultiselect && e.shiftKey && e.data.selectState.extendElement) {
                 let firstIndex = e.data.rows.index(e.data.selectState.extendElement);
                 let secondIndex = e.data.rows.index(this);
 
-                e.data.alterSelection(e.data.rows.slice(Math.min(firstIndex, secondIndex), Math.max(firstIndex, secondIndex) + 1), false, !keepSelection);
+                e.data.alterSelection(e.data.rows.slice(Math.min(firstIndex, secondIndex), Math.max(firstIndex, secondIndex) + 1), false, resetSelection);
             }
             else if (e.data.isMultiselect && e.ctrlKey) {
-                e.data.alterSelection($(this), true, !keepSelection);
+                e.data.alterSelection($(this), true, resetSelection);
                 e.data.selectState.extendElement = $(this);
             }
             else {
-                e.data.alterSelection($(this), false, !keepSelection);
+                e.data.alterSelection($(this), false, resetSelection);
                 e.data.selectState.extendElement = $(this);
             }
 
