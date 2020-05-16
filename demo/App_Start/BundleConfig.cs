@@ -4,7 +4,7 @@ namespace vdt.demo.App_Start {
     public class BundleConfig {
         public static void RegisterBundles(BundleCollection bundles) {
             bundles.Add(new ScriptBundle("~/Scripts/jquery").Include(
-                "~/Scripts/jquery-3.3.1.min.js",
+                "~/Scripts/jquery-3.5.0.min.js",
                 "~/../jquery-dropdownlist/Scripts/jquery-dropdownlist.js",
                 "~/../jquery-datagridview/Scripts/jquery-datagridview.js",
                 "~/../jquery-rangeslider/Scripts/jquery-rangeslider.js",
