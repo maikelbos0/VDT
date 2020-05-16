@@ -9,6 +9,16 @@
         ];
     }
 
+    function triggerKeyboardEvent(element, eventType, key) {
+        var event = jQuery.Event(eventType);
+        event.which = key;
+        element.trigger(event);
+    }
+
+    let keyCodes = {
+        ENTER: 13
+    };
+
     it('elements get added', function () {
         var grid = $('#paging-element');
 
@@ -489,6 +499,33 @@
         expect(mData.page).toEqual(2);
     });
 
+    it('page input triggers on enter', function () {
+        var grid = $('#paging-page-enter');
+        var mData = null;
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 156, 25, 0);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.pageInput
+                ];
+            }
+        });
+
+        grid.on('datagridview.paged', function (e, metaData) {
+            mData = metaData;
+        });
+
+        grid.find('.datagridview-footer-element input.datagridview-paging-page').val(3);
+        triggerKeyboardEvent(grid.find('.datagridview-footer-element input.datagridview-paging-page'), 'keydown', keyCodes.ENTER);
+
+        expect(mData).not.toEqual(null);
+        expect(mData.page).toEqual(2);
+    })
+
     it('page size input contains the right elements', function () {
         var grid = $('#paging-page-size');
 
@@ -536,4 +573,32 @@
         expect(mData.page).toEqual(0);
         expect(mData.rowsPerPage).toEqual(50);
     });
+
+    it('page size triggers on enter', function () {
+        var grid = $('#paging-page-size-enter');
+        var mData = null;
+
+        grid.datagridview({
+            columns: [],
+            getMetaData: function () {
+                return new DataGridViewMetaData(null, false, 156, 25, 0);
+            },
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.pageSizeInput
+                ];
+            }
+        });
+
+        grid.on('datagridview.paged', function (e, metaData) {
+            mData = metaData;
+        });
+
+        grid.find('.datagridview-footer-element input.datagridview-paging-page-size').val(50);
+        triggerKeyboardEvent(grid.find('.datagridview-footer-element input.datagridview-paging-page-size'), 'keydown', keyCodes.ENTER);
+
+        expect(mData).not.toEqual(null);
+        expect(mData.page).toEqual(0);
+        expect(mData.rowsPerPage).toEqual(50);
+    })
 });

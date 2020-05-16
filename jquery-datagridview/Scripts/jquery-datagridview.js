@@ -211,10 +211,15 @@
         pageInput: function (footerElement, metaData, datagridview) {
             let page = $('<input>', { type: 'text' })
                 .addClass('datagridview-paging-page')
-                .val(metaData.page + 1);
+                .val(metaData.page + 1)
+                .keydown(function (event) {
+                    if (event.which === keyCodes.ENTER) {
+                        datagridview.initiatePaging(page.val() - 1, metaData.rowsPerPage);
+                    }
+                });
             let label = $('<span>')
                 .addClass('datagridview-paging-page-label')
-                .text('Page: ')
+                .text('Page: ');
             let go = $('<button>')
                 .addClass('datagridview-paging-go')
                 .text('Go')
@@ -227,10 +232,15 @@
         pageSizeInput: function (footerElement, metaData, datagridview) {
             let pageSize = $('<input>', { type: 'text' })
                 .addClass('datagridview-paging-page-size')
-                .val(metaData.rowsPerPage);
+                .val(metaData.rowsPerPage)
+                .keydown(function (event) {
+                    if (event.which === keyCodes.ENTER) {
+                        datagridview.initiatePaging(metaData.page, pageSize.val());
+                    }
+                });
             let label = $('<span>')
                 .addClass('datagridview-paging-page-size-label')
-                .text('Page size: ')
+                .text('Page size: ');
             let go = $('<button>')
                 .addClass('datagridview-paging-go')
                 .text('Go')
@@ -953,6 +963,10 @@
         }
     }
 
+    // Key codes for keyboard navigation
+    let keyCodes = {
+        ENTER: 13
+    };
 }(jQuery));
 
 // Datagridview meta data
