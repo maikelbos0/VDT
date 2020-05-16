@@ -1,7 +1,7 @@
 ﻿describe('in a datagridview a user can select', function () {
-    function triggerMouseEvent(element, eventType, ctrlKey, shiftKey) {
+    function triggerMouseEvent(element, eventType, ctrlKey, shiftKey, which) {
         var event = jQuery.Event(eventType);
-        event.which = 1;
+        event.which = which || 1;
         event.ctrlKey = !!ctrlKey;
         event.shiftKey = !!shiftKey;
 
@@ -185,7 +185,7 @@
                 { test: 2, },
                 { test: 3, },
                 { test: 4, },
-                { test: 5, } 
+                { test: 5, }
             ]);
         });
 
@@ -375,7 +375,7 @@
         triggerMouseEvent(grid.find('.datagridview-row:nth-child(4)'), 'mousedown', true);
         triggerMouseEvent(grid.find('.datagridview-row:nth-child(5)'), 'mouseenter', true);
         triggerMouseEvent(grid.find('.datagridview-row:nth-child(5)'), 'mouseup', true);
-        
+
         expect(data).not.toBeNull();
         expect(data.length).toEqual(4);
     });
@@ -470,5 +470,73 @@
         expect(rows.length).toEqual(2);
         expect(rows[0]).toEqual(grid.find('.datagridview-row')[0]);
         expect(rows[1]).toEqual(grid.find('.datagridview-row')[2]);
+    });
+
+    it('nothing when middle-clicking', function () {
+        var grid = $('#selection-middle-click');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, }
+            ]);
+        });
+
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mousedown', false, false, 2);
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mouseup', false, false, 2);
+
+        expect(grid.find('.datagridview-row-selected').length).toEqual(0);
+    });
+
+    it('without resetting when right-clicking a selected row', function () {
+        var grid = $('#selection-right-click-selected');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, }
+            ]);
+
+            this.setSelectedRows('*');
+        });
+
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mousedown', false, false, 3);
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mouseup', false, false, 3);
+
+        expect(grid.find('.datagridview-row-selected').length).toEqual(3);
+    });
+
+    it('with resetting when right-clicking a deselected row', function () {
+        var grid = $('#selection-right-click-deselected');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(this.getMetaData(), [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, }
+            ]);
+        });
+
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mousedown', false, false, 3);
+        triggerMouseEvent(grid.find('.datagridview-row:nth-child(2)'), 'mouseup', false, false, 3);
+
+        var rows = grid.find('.datagridview-row-selected');
+
+        expect(rows.length).toEqual(1);
+        expect(rows[0]).toEqual(grid.find('.datagridview-row')[1]);
     });
 });

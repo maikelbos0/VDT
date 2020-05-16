@@ -907,12 +907,16 @@
             e.data.headerResizeState.dragging = false;
         },
         rowSelectStart: function (e) {
+            if (e.which === 2) {
+                return;
+            }
+
             e.data.selectState.selecting = true;
             e.data.selectState.dragElement = $(this);
             e.data.selectState.dragElement.addClass('datagridview-row-selecting');
         },
         rowSelect: function (e) {
-            if (!e.data.selectState.selecting) {
+            if (e.which === 2 || !e.data.selectState.selecting) {
                 return;
             }
 
@@ -928,28 +932,30 @@
             dragSelection.addClass('datagridview-row-selecting');
         },
         rowSelectEnd: function (e) {
-            if (!e.data.selectState.selecting) {
+            if (e.which === 2 || !e.data.selectState.selecting) {
                 return;
             }
 
+            var keepSelection = e.data.isMultiselect && (e.ctrlKey || (e.which === 3 && e.data.getSelectedRows().is(this)));
+            
             if (e.data.isMultiselect && e.data.selectState.dragging && e.data.selectState.dragElement) {
                 let firstIndex = e.data.rows.index(e.data.selectState.dragElement);
                 let secondIndex = e.data.rows.index(this);
 
-                e.data.alterSelection(e.data.rows.slice(Math.min(firstIndex, secondIndex), Math.max(firstIndex, secondIndex) + 1), false, !e.ctrlKey);
+                e.data.alterSelection(e.data.rows.slice(Math.min(firstIndex, secondIndex), Math.max(firstIndex, secondIndex) + 1), false, !keepSelection);
             }
             else if (e.data.isMultiselect && e.shiftKey && e.data.selectState.extendElement) {
                 let firstIndex = e.data.rows.index(e.data.selectState.extendElement);
                 let secondIndex = e.data.rows.index(this);
 
-                e.data.alterSelection(e.data.rows.slice(Math.min(firstIndex, secondIndex), Math.max(firstIndex, secondIndex) + 1), false, !e.ctrlKey);
+                e.data.alterSelection(e.data.rows.slice(Math.min(firstIndex, secondIndex), Math.max(firstIndex, secondIndex) + 1), false, !keepSelection);
             }
             else if (e.data.isMultiselect && e.ctrlKey) {
-                e.data.alterSelection($(this), true, false);
+                e.data.alterSelection($(this), true, !keepSelection);
                 e.data.selectState.extendElement = $(this);
             }
             else {
-                e.data.alterSelection($(this), false, true);
+                e.data.alterSelection($(this), false, !keepSelection);
                 e.data.selectState.extendElement = $(this);
             }
 
