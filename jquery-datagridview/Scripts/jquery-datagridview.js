@@ -894,7 +894,7 @@
             e.data.headerResizeState.position = e.pageX;
         },
         columnResizeEnd: function (e) {
-            if (e.which !== 1) {
+            if (!e.data.headerResizeState.dragging) {
                 return;
             }
             
