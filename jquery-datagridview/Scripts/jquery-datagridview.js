@@ -437,7 +437,7 @@
                     column.renderer(cell, dataRow[column.data], dataRow);
                 }
                 else {
-                    cell.text(dataRow[column.data] || "").attr('title', dataRow[column.data] || "");
+                    cell.text(dataRow[column.data]).attr('title', dataRow[column.data]);
                 }
 
                 row.append(cell);
@@ -465,7 +465,7 @@
                     column.renderer(cell, totals[column.data], totals);
                 }
                 else {
-                    cell.text(totals[column.data] || "").attr('title', totals[column.data] || "");
+                    cell.text(totals[column.data]).attr('title', totals[column.data]);
                 }
 
                 totalRow.append(cell);
