@@ -43,5 +43,7 @@
 
         expect(grid.find('.datagridview-body > .datagridview-row:first-child > div').text()).toEqual('0');
         expect(grid.find('.datagridview-body > .datagridview-row:nth-child(2) > div').text()).toEqual('0');
+        expect(grid.find('.datagridview-body > .datagridview-row:first-child > div').attr('title')).toEqual('0');
+        expect(grid.find('.datagridview-body > .datagridview-row:nth-child(2) > div').attr('title')).toEqual('0');
     });
 });
