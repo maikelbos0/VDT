@@ -478,6 +478,7 @@
         this.body = newBody;
         this.rows = newBody.children('.datagridview-row');
         this.data = data;
+        this.header.find('input.select-checkbox').prop('checked', false);
 
         // Use the new meta data if present to display appropriate sorting and paging
         if (metaData instanceof DataGridViewMetaData) {
