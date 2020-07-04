@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>jQuery-datagridview</id>
-    <version>1.2.2</version>
+    <version>1.2.3</version>
     <title>jQuery-datagridview</title>
     <description>A jQuery plugin that makes it easy to create a grid view for your tabular data. It allows you to create a table layout on
     the fly for an array of data-objects while leaving you in full control of where the data comes from.</description>
-    <releaseNotes>- Fixed a bug where the sorting marker class got added to the wrong cells because of dragged column
-- Fixed a bug where column resized event got triggered by column move</releaseNotes>
+    <releaseNotes>- Fixed a big where data values of 0 get rendered as an empty string in rows and total row
+- Fixed a bug where the select all checkbox in the header remained checked after repopulating</releaseNotes>
     <authors>Maikel Bos</authors>
     <license type="expression">MIT</license>
     <copyright>Copyright © 2019 Maikel Bos</copyright>
