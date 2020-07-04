@@ -83,6 +83,8 @@
     <Content Include="options.js" />
     <Content Include="paging.html" />
     <Content Include="paging.js" />
+    <Content Include="populating.html" />
+    <Content Include="populating.js" />
     <Content Include="selection.html" />
     <Content Include="selection.js" />
     <Content Include="sorting.html" />
