@@ -46,4 +46,24 @@
         expect(grid.find('.datagridview-body > .datagridview-row:first-child > div').attr('title')).toEqual('0');
         expect(grid.find('.datagridview-body > .datagridview-row:nth-child(2) > div').attr('title')).toEqual('0');
     });
+
+    it('renders zeroes correctly in totals', function () {
+        var grid = $('#populating-datagridview-zero-totals');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(null, [
+                { test: '0' },
+                { test: 0 },
+            ], {
+                test: 0
+            });
+        });
+
+        expect(grid.find('.datagridview-body > .datagridview-totals-row > div').text()).toEqual('0');
+        expect(grid.find('.datagridview-body > .datagridview-totals-row > div').attr('title')).toEqual('0');
+    });
 });
