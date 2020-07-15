@@ -68,6 +68,30 @@
     });
 
     it('empties the grid when populating with nothing', function () {
-        fail();
+        var grid = $('#populating-datagridview-null');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(null, null, null);
+        });
+
+        expect(grid.find('.datagridview-body > .datagridview-row').length).toEqual(0);
+    });
+
+    it('adds no totals when populating with nothing', function () {
+        var grid = $('#populating-datagridview-null-totals');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(null, null, { test: 6 });
+        });
+
+        expect(grid.find('.datagridview-body > .datagridview-total-row').length).toEqual(0);
     });
 });

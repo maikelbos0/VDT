@@ -587,26 +587,118 @@
     });
 
     it('can give the current data', function () {
-        fail();
+        var grid = $('#datagridview-interaction-data');
+        var data;
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(null, [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, }
+            ]);
+
+            data = this.getData();
+        });
+
+        expect(data).toEqual([
+            { test: 1, },
+            { test: 2, },
+            { test: 3, }
+        ]);
     });
 
     it('can give the current total data', function () {
-        fail();
+        var grid = $('#datagridview-interaction-total-data');
+        var totals;
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(null, [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, }
+            ], { test: 6 });
+
+            totals = this.getTotals();
+        });
+
+        expect(totals).toEqual({ test: 6 });
     });
 
     it('returns no total data if there is no data', function () {
-        fail();
+        var grid = $('#datagridview-interaction-total-data-null');
+        var totals;
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(null, null, { test: 6 });
+
+            totals = this.getTotals();
+        });
+
+        expect(totals).toEqual(null);
     });
 
     it('can give the current populated status for an uninitialized grid', function () {
-        fail();
+        var grid = $('#datagridview-interaction-is-populated-initial');
+        var isPopulated;
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            isPopulated = this.isPopulated();
+        });
+
+        expect(isPopulated).toEqual(false);
     });
 
     it('can give the current populated status for a populated grid', function () {
-        fail();
+        var grid = $('#datagridview-interaction-is-populated-populated');
+        var isPopulated;
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(null, [
+                { test: 1, },
+                { test: 2, },
+                { test: 3, }
+            ]);
+
+            isPopulated = this.isPopulated();
+        });
+
+        expect(isPopulated).toEqual(true);
     });
 
     it('can give the current populated status for an unpopulated grid', function () {
-        fail();
+        var grid = $('#datagridview-interaction-is-populated-unpopulated');
+        var isPopulated;
+
+        grid.datagridview({
+            columns: [
+                { data: 'test' }
+            ]
+        }, function () {
+            this.populate(null, null, null);
+
+            isPopulated = this.isPopulated();
+        });
+
+        expect(isPopulated).toEqual(false);
     });
 });
