@@ -66,4 +66,8 @@
         expect(grid.find('.datagridview-body > .datagridview-total-row > div').text()).toEqual('0');
         expect(grid.find('.datagridview-body > .datagridview-total-row > div').attr('title')).toEqual('0');
     });
+
+    it('empties the grid when populating with nothing', function () {
+        fail();
+    });
 });

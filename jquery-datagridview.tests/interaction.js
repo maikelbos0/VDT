@@ -585,4 +585,28 @@
         expect(columns[1].visible).toEqual(true);
         expect(columns[1].width).toEqual(50);
     });
+
+    it('can give the current data', function () {
+        fail();
+    });
+
+    it('can give the current total data', function () {
+        fail();
+    });
+
+    it('returns no total data if there is no data', function () {
+        fail();
+    });
+
+    it('can give the current populated status for an uninitialized grid', function () {
+        fail();
+    });
+
+    it('can give the current populated status for a populated grid', function () {
+        fail();
+    });
+
+    it('can give the current populated status for an unpopulated grid', function () {
+        fail();
+    });
 });
