@@ -155,6 +155,14 @@
         // Set resources to support internationalization
         // This can be extended in case you need to add more text for footer plugins
         resources: {
+            // Full text of basic footer paging display
+            getDisplayBasicText: function (datagridview, page, totalPages) {
+                return 'Page ' + page + ' of ' + totalPages;
+            },
+            // Full text of extended footer paging display
+            getDisplayFullText: function (datagridview, page, totalPages, startRow, endRow, totalRows) {
+                return 'Page ' + page + ' of ' + totalPages + ', rows ' + startRow + ' to ' + endRow + ' of ' + totalRows;
+            },
             // Label for page input footer
             getPageText: function (datagridview) {
                 return 'Page: ';
@@ -175,13 +183,13 @@
     // Please note that the page index is 0-based and needs to be corrected for display purposes
     $.fn.datagridview.footerPlugins = {
         displayBasic: function (footerElement, metaData, datagridview) {
-            $(footerElement).append($('<div>').text("Page " + (metaData.page + 1) + " of " + metaData.totalPages));
+            $(footerElement).append($('<div>').text(datagridview.options.resources.getDisplayBasicText(datagridview, metaData.page + 1, metaData.totalPages)));
         },
         displayFull: function (footerElement, metaData, datagridview) {
-            let rowStart = metaData.page * metaData.rowsPerPage + 1;
-            let rowEnd = Math.min((metaData.page + 1) * metaData.rowsPerPage, metaData.totalRows);
+            let startRow = metaData.page * metaData.rowsPerPage + 1;
+            let endRow = Math.min((metaData.page + 1) * metaData.rowsPerPage, metaData.totalRows);
 
-            $(footerElement).append($('<div>').text("Page " + (metaData.page + 1) + " of " + metaData.totalPages + ", rows " + rowStart + " to " + rowEnd + " of " + metaData.totalRows));
+            $(footerElement).append($('<div>').text(datagridview.options.resources.getDisplayFullText(datagridview, metaData.page + 1, metaData.totalPages, startRow, endRow, metaData.totalRows)));
         },
         prevNext: function (footerElement, metaData, datagridview) {
             // To disable any of these options, simply hide them in css for the all, or just the appropriate grids
