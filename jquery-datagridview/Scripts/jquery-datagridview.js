@@ -151,6 +151,22 @@
         // It always gets at least the type 'text/css'
         getStyleAttributes: function () {
             return {};
+        },
+        // Set resources to support internationalization
+        // This can be extended in case you need to add more text for footer plugins
+        resources: {
+            // Label for page input footer
+            getPageText: function (datagridview) {
+                return 'Page: ';
+            },
+            // Label for page size footer
+            getPageSizeText: function (datagridview) {
+                return 'Page size: ';
+            },
+            // Submit button text for page and page size navigation
+            getGoText: function (datagridview) {
+                return 'Go';
+            }
         }
     }
 
@@ -238,10 +254,10 @@
                 });
             let label = $('<span>')
                 .addClass('datagridview-paging-page-label')
-                .text('Page: ');
+                .text(datagridview.options.resources.getPageText(datagridview));
             let go = $('<button>')
                 .addClass('datagridview-paging-go')
-                .text('Go')
+                .text(datagridview.options.resources.getGoText(datagridview))
                 .click(function () {
                     datagridview.initiatePaging(page.val() - 1, metaData.rowsPerPage);
                 });
@@ -259,10 +275,10 @@
                 });
             let label = $('<span>')
                 .addClass('datagridview-paging-page-size-label')
-                .text('Page size: ');
+                .text(datagridview.options.resources.getPageSizeText(datagridview));
             let go = $('<button>')
                 .addClass('datagridview-paging-go')
-                .text('Go')
+                .text(datagridview.options.resources.getGoText(datagridview))
                 .click(function () {
                     datagridview.initiatePaging(metaData.page, pageSize.val());
                 });
