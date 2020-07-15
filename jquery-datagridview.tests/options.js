@@ -268,7 +268,7 @@
                 return { class: 'test' };
             }
         }, function () {
-            this.populate(new DataGridViewMetaData(null, false, 25, 0, 2), [
+            this.populate(new DataGridViewMetaData(null, false, 2, 25, 0), [
                 { test1: 'test', test2: 'test' },
                 { test1: 'test', test2: 'test' }
             ])
@@ -289,7 +289,7 @@
                 return { class: 'test' };
             }
         }, function () {
-            this.populate(new DataGridViewMetaData(null, false, 25, 0, 2), [
+            this.populate(new DataGridViewMetaData(null, false, 2, 25, 0), [
                 { test1: 'test', test2: 'test' },
                 { test1: 'test', test2: 'test' }
             ])
@@ -314,7 +314,7 @@
                 return { class: 'test' };
             }
         }, function () {
-            this.populate(new DataGridViewMetaData(null, false, 25, 0, 2), [
+            this.populate(new DataGridViewMetaData(null, false, 2, 25, 0), [
                 { test1: 'test', test2: 'test' },
                 { test1: 'test', test2: 'test' }
             ])
@@ -339,7 +339,7 @@
                 return { class: 'test' };
             }
         }, function () {
-            this.populate(new DataGridViewMetaData(null, false, 25, 0, 2), [
+            this.populate(new DataGridViewMetaData(null, false, 2, 25, 0), [
                 { test1: 'test', test2: 'test' },
                 { test1: 'test', test2: 'test' }
             ], { test1: 'test', test2: 'test' })
@@ -360,7 +360,7 @@
                 return { class: 'test' };
             }
         }, function () {
-            this.populate(new DataGridViewMetaData(null, false, 25, 0, 2), [
+            this.populate(new DataGridViewMetaData(null, false, 2, 25, 0), [
                 { test1: 'test', test2: 'test' },
                 { test1: 'test', test2: 'test' }
             ], { test1: 'test', test2: 'test' })
@@ -385,7 +385,7 @@
                 return { class: 'test' };
             }
         }, function () {
-            this.populate(new DataGridViewMetaData(null, false, 25, 0, 2), [
+            this.populate(new DataGridViewMetaData(null, false, 2, 25, 0), [
                 { test1: 'test', test2: 'test' },
                 { test1: 'test', test2: 'test' }
             ])
@@ -406,7 +406,7 @@
                 return { class: 'test' };
             }
         }, function () {
-            this.populate(new DataGridViewMetaData(null, false, 25, 0, 2), [
+            this.populate(new DataGridViewMetaData(null, false, 2, 25, 0), [
                 { test1: 'test', test2: 'test' },
                 { test1: 'test', test2: 'test' }
             ])
@@ -432,7 +432,7 @@
                 return { class: 'test' };
             }
         }, function () {
-            this.populate(new DataGridViewMetaData(null, false, 25, 0, 2), [
+            this.populate(new DataGridViewMetaData(null, false, 2, 25, 0), [
                 { test1: 'test', test2: 'test' },
                 { test1: 'test', test2: 'test' }
             ]);
@@ -442,5 +442,179 @@
 
         expect(style).not.toBeNull();
         expect(style.hasClass('test')).toEqual(true);
+    });
+
+    it('can be provided for the text of the basic display footer', function () {
+        var grid = $('#datagridview-options-resources-basic');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test1' },
+                { data: 'test2' }
+            ],
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.displayBasic
+                ]
+            },
+            resources: {
+                getDisplayBasicText: function (datagridview, page, totalPages) {
+                    return 'Pagina ' + page + ' van ' + totalPages;
+                }
+            }
+        }, function () {
+            this.populate(new DataGridViewMetaData(null, false, 3, 2, 0), [
+                { test1: 'test', test2: 'test' },
+                { test1: 'test', test2: 'test' },
+                { test1: 'test', test2: 'test' }
+            ]);
+        });
+
+        expect(grid.find('.datagridview-footer-element div').text()).toEqual('Pagina 1 van 2');
+    });
+
+    it('can be provided for the text of the full display footer', function () {
+        var grid = $('#datagridview-options-resources-full');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test1' },
+                { data: 'test2' }
+            ],
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.displayFull
+                ]
+            },
+            resources: {
+                getDisplayFullText: function (datagridview, page, totalPages, startRow, endRow, totalRows) {
+                    return 'Rijen ' + startRow + ' tot ' + endRow + ' van ' + totalRows + ', pagina ' + page + ' van ' + totalPages;
+                }
+            }
+        }, function () {
+            this.populate(new DataGridViewMetaData(null, false, 3, 2, 0), [
+                { test1: 'test', test2: 'test' },
+                { test1: 'test', test2: 'test' },
+                { test1: 'test', test2: 'test' }
+            ]);
+        });
+
+        expect(grid.find('.datagridview-footer-element div').text()).toEqual('Rijen 1 tot 2 van 3, pagina 1 van 2');
+    });
+
+    it('can be provided for the label text of the page input footer', function () {
+        var grid = $('#datagridview-options-resources-page');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test1' },
+                { data: 'test2' }
+            ],
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.pageInput
+                ]
+            },
+            resources: {
+                getPageText: function (datagridview) {
+                    return 'Pagina: ';
+                }
+            }
+        }, function () {
+            this.populate(new DataGridViewMetaData(null, false, 3, 2, 0), [
+                { test1: 'test', test2: 'test' },
+                { test1: 'test', test2: 'test' },
+                { test1: 'test', test2: 'test' }
+            ]);
+        });
+
+        expect(grid.find('.datagridview-footer-element span').text()).toEqual('Pagina: ');
+    });
+
+    it('can be provided for the label text of the page size input footer', function () {
+        var grid = $('#datagridview-options-resources-page-size');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test1' },
+                { data: 'test2' }
+            ],
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.pageSizeInput
+                ]
+            },
+            resources: {
+                getPageSizeText: function (datagridview) {
+                    return 'Paginagrootte: ';
+                }
+            }
+        }, function () {
+            this.populate(new DataGridViewMetaData(null, false, 3, 2, 0), [
+                { test1: 'test', test2: 'test' },
+                { test1: 'test', test2: 'test' },
+                { test1: 'test', test2: 'test' }
+            ]);
+        });
+
+        expect(grid.find('.datagridview-footer-element span').text()).toEqual('Paginagrootte: ');
+    });
+
+    it('can be provided for the button text of the page input footers', function () {
+        var grid = $('#datagridview-options-resources-go-page');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test1' },
+                { data: 'test2' }
+            ],
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.pageInput
+                ]
+            },
+            resources: {
+                getGoText: function (datagridview) {
+                    return 'Navigeer!';
+                }
+            }
+        }, function () {
+            this.populate(new DataGridViewMetaData(null, false, 3, 2, 0), [
+                { test1: 'test', test2: 'test' },
+                { test1: 'test', test2: 'test' },
+                { test1: 'test', test2: 'test' }
+            ]);
+        });
+
+        expect(grid.find('.datagridview-footer-element button').text()).toEqual('Navigeer!');
+    });
+
+    it('can be provided for the button text of the size input footers', function () {
+        var grid = $('#datagridview-options-resources-go-page-size');
+
+        grid.datagridview({
+            columns: [
+                { data: 'test1' },
+                { data: 'test2' }
+            ],
+            getFooterPlugins: function () {
+                return [
+                    $.fn.datagridview.footerPlugins.pageSizeInput
+                ]
+            },
+            resources: {
+                getGoText: function (datagridview) {
+                    return 'Navigeer!';
+                }
+            }
+        }, function () {
+            this.populate(new DataGridViewMetaData(null, false, 3, 2, 0), [
+                { test1: 'test', test2: 'test' },
+                { test1: 'test', test2: 'test' },
+                { test1: 'test', test2: 'test' }
+            ]);
+        });
+
+        expect(grid.find('.datagridview-footer-element button').text()).toEqual('Navigeer!');
     });
 });
