@@ -278,7 +278,8 @@
 
         this.element = element;
         this.options = options;
-        this.data = [];
+        this.data = null;
+        this.totals = null;
         this.allowColumnResize = this.options.allowColumnResize(this.element);
         this.headerResizeState = {
             dragging: false
@@ -416,69 +417,74 @@
     DataGridView.prototype.populate = function (metaData, data, totals) {
         let newBody = this.createElement('<div>', 'datagridview-body', this.options.getBodyAttributes());
 
-        for (let r = 0; r < data.length; r++) {
-            let dataRow = data[r];
-            let row = this.createElement('<div>', 'datagridview-row', this.options.getRowAttributes());
+        if (data) {
+            for (let r = 0; r < data.length; r++) {
+                let dataRow = data[r];
+                let row = this.createElement('<div>', 'datagridview-row', this.options.getRowAttributes());
 
-            if (this.hasMultiselectCheckboxes) {
-                row.append(this.createElement('<div>', 'datagridview-checkbox-cell', this.options.getCellAttributes())
-                    .append(this.createElement('<input>', 'select-checkbox', { type: 'checkbox' })));
+                if (this.hasMultiselectCheckboxes) {
+                    row.append(this.createElement('<div>', 'datagridview-checkbox-cell', this.options.getCellAttributes())
+                        .append(this.createElement('<input>', 'select-checkbox', { type: 'checkbox' })));
+                }
+
+                for (let c = 0; c < this.options.columns.length; c++) {
+                    let column = this.options.columns[c];
+                    let cell = this.createElement('<div>', column.columnClass, this.options.getCellAttributes());
+
+                    if (column.class) {
+                        cell.addClass(column.class);
+                    }
+
+                    if (column.renderer) {
+                        column.renderer(cell, dataRow[column.data], dataRow);
+                    }
+                    else {
+                        cell.text(dataRow[column.data]).attr('title', dataRow[column.data]);
+                    }
+
+                    row.append(cell);
+                }
+
+                newBody.append(row);
+            };
+
+            if (totals) {
+                let totalRow = this.createElement('<div>', 'datagridview-total-row', this.options.getTotalRowAttributes());
+
+                if (this.hasMultiselectCheckboxes) {
+                    totalRow.append(this.createElement('<div>', 'datagridview-checkbox-cell', this.options.getTotalCellAttributes()));
+                }
+
+                for (let c = 0; c < this.options.columns.length; c++) {
+                    let column = this.options.columns[c];
+                    let cell = this.createElement('<div>', column.columnClass, this.options.getTotalCellAttributes());
+
+                    if (column.class) {
+                        cell.addClass(column.class);
+                    }
+
+                    if (column.renderer) {
+                        column.renderer(cell, totals[column.data], totals);
+                    }
+                    else {
+                        cell.text(totals[column.data]).attr('title', totals[column.data]);
+                    }
+
+                    totalRow.append(cell);
+                }
+
+                newBody.append(totalRow);
             }
-
-            for (let c = 0; c < this.options.columns.length; c++) {
-                let column = this.options.columns[c];
-                let cell = this.createElement('<div>', column.columnClass, this.options.getCellAttributes());
-                
-                if (column.class) {
-                    cell.addClass(column.class);
-                }
-
-                if (column.renderer) {
-                    column.renderer(cell, dataRow[column.data], dataRow);
-                }
-                else {
-                    cell.text(dataRow[column.data]).attr('title', dataRow[column.data]);
-                }
-
-                row.append(cell);
-            }
-
-            newBody.append(row);
-        };
-        
-        if (totals) {
-            let totalRow = this.createElement('<div>', 'datagridview-total-row', this.options.getTotalRowAttributes());
-
-            if (this.hasMultiselectCheckboxes) {
-                totalRow.append(this.createElement('<div>', 'datagridview-checkbox-cell', this.options.getTotalCellAttributes()));
-            }
-
-            for (let c = 0; c < this.options.columns.length; c++) {
-                let column = this.options.columns[c];
-                let cell = this.createElement('<div>', column.columnClass, this.options.getTotalCellAttributes());
-
-                if (column.class) {
-                    cell.addClass(column.class);
-                }
-
-                if (column.renderer) {
-                    column.renderer(cell, totals[column.data], totals);
-                }
-                else {
-                    cell.text(totals[column.data]).attr('title', totals[column.data]);
-                }
-
-                totalRow.append(cell);
-            }
-
-            newBody.append(totalRow);
         }
 
         this.body.replaceWith(newBody);
         this.body = newBody;
         this.rows = newBody.children('.datagridview-row');
-        this.data = data;
         this.header.find('input.select-checkbox').prop('checked', false);
+
+        // Save the new data
+        this.data = data || null;
+        this.totals = data ? totals || null : null;
 
         // Use the new meta data if present to display appropriate sorting and paging
         if (metaData instanceof DataGridViewMetaData) {
@@ -486,11 +492,15 @@
         }
         // Try to resolve the meta data as far as we can
         else if (metaData) {
-            this.metaData = new DataGridViewMetaData(metaData.sortColumn, metaData.sortDescending, metaData.totalRows || this.data.length, metaData.rowsPerPage || this.data.length, metaData.page || 0);
+            this.metaData = new DataGridViewMetaData(metaData.sortColumn, metaData.sortDescending, metaData.totalRows, metaData.rowsPerPage, metaData.page);
+        }
+        // Try to use data if present
+        else if (this.data) {
+            this.metaData = new DataGridViewMetaData(this.metaData.sortColumn, this.metaData.sortDescending, this.data.length, this.data.length, 0);
         }
         // Default
         else {
-            this.metaData = new DataGridViewMetaData(this.metaData.sortColumn, this.metaData.sortDescending, this.data.length, this.data.length, 0);
+            this.metaData = new DataGridViewMetaData(this.metaData.sortColumn, this.metaData.sortDescending, 0, 1, 0);
         }
 
         this.displaySortOrder();
@@ -533,7 +543,7 @@
     DataGridView.prototype.displaySortOrder = function () {
         let base = this;
         let header = this.headerCells.filter(function () { return $(this).data('sort-column') === base.metaData.sortColumn });
-        
+
         this.headerCells.not(header).removeClass('datagridview-header-cell-sorted');
 
         if (header.length > 0) {
@@ -545,7 +555,7 @@
             else {
                 this.sortToggle.removeClass('datagridview-sort-toggle-descending').addClass('datagridview-sort-toggle-ascending');
             }
-            
+
             header.addClass('datagridview-header-cell-sorted');
             header.append(this.sortToggle);
             this.sortToggle.show();
@@ -898,7 +908,7 @@
             if (!e.data.headerResizeState.dragging) {
                 return;
             }
-            
+
             let invisibleColumns = e.data.options.columns.filter(function (c) { return c.width <= 0; });
 
             // If we've made any columns 0 width, then make them invisible
@@ -992,7 +1002,7 @@
         checkboxCellMouseDown: function (e) {
             e.stopPropagation();
         },
-        checkboxCellClick: function(e) {
+        checkboxCellClick: function (e) {
             $(this).find('input.select-checkbox').click();
         }
     }
