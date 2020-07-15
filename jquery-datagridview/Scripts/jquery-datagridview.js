@@ -604,6 +604,21 @@
         });
     }
 
+    // Get data currently in use
+    DataGridView.prototype.getData = function () {
+        return this.data;
+    }
+
+    // Get totals currently in use
+    DataGridView.prototype.getTotals = function () {
+        return this.totals;
+    }
+
+    // Determine whether the datagridview has been populated with data or not
+    DataGridView.prototype.isPopulated = function () {
+        return !!this.data;
+    }
+
     // Get selected rows
     DataGridView.prototype.getSelectedRows = function () {
         return this.body.find('.datagridview-row-selected');
