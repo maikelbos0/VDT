@@ -26,7 +26,7 @@
                 }
 
                 // Create object
-                let options = $.extend({}, $.fn.datagridview.defaults, settings);
+                let options = $.extend(true, {}, $.fn.datagridview.defaults, settings);
                 datagridview = new DataGridView($(this), options);
 
                 // Add object to data
