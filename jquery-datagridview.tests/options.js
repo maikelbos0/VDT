@@ -560,7 +560,7 @@
         expect(grid.find('.datagridview-footer-element span').text()).toEqual('Paginagrootte: ');
     });
 
-    it('can be provided for the button text of the page input footers', function () {
+    it('can be provided for the button text of the page input footer', function () {
         var grid = $('#datagridview-options-resources-go-page');
 
         grid.datagridview({
@@ -589,7 +589,7 @@
         expect(grid.find('.datagridview-footer-element button').text()).toEqual('Navigeer!');
     });
 
-    it('can be provided for the button text of the size input footers', function () {
+    it('can be provided for the button text of the size input footer', function () {
         var grid = $('#datagridview-options-resources-go-page-size');
 
         grid.datagridview({
