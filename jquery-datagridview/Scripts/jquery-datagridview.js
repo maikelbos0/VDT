@@ -26,7 +26,7 @@
                 }
 
                 // Create object
-                let options = $.extend({}, $.fn.datagridview.defaults, settings);
+                let options = $.extend(true, {}, $.fn.datagridview.defaults, settings);
                 datagridview = new DataGridView($(this), options);
 
                 // Add object to data
@@ -151,6 +151,30 @@
         // It always gets at least the type 'text/css'
         getStyleAttributes: function () {
             return {};
+        },
+        // Set resources to support internationalization
+        // This can be extended in case you need to add more text for footer plugins
+        resources: {
+            // Full text of basic footer paging display
+            getDisplayBasicText: function (datagridview, page, totalPages) {
+                return 'Page ' + page + ' of ' + totalPages;
+            },
+            // Full text of extended footer paging display
+            getDisplayFullText: function (datagridview, page, totalPages, startRow, endRow, totalRows) {
+                return 'Page ' + page + ' of ' + totalPages + ', rows ' + startRow + ' to ' + endRow + ' of ' + totalRows;
+            },
+            // Label for page input footer
+            getPageText: function (datagridview) {
+                return 'Page: ';
+            },
+            // Label for page size footer
+            getPageSizeText: function (datagridview) {
+                return 'Page size: ';
+            },
+            // Submit button text for page and page size navigation
+            getGoText: function (datagridview) {
+                return 'Go';
+            }
         }
     }
 
@@ -159,13 +183,13 @@
     // Please note that the page index is 0-based and needs to be corrected for display purposes
     $.fn.datagridview.footerPlugins = {
         displayBasic: function (footerElement, metaData, datagridview) {
-            $(footerElement).append($('<div>').text("Page " + (metaData.page + 1) + " of " + metaData.totalPages));
+            $(footerElement).append($('<div>').text(datagridview.options.resources.getDisplayBasicText(datagridview, metaData.page + 1, metaData.totalPages)));
         },
         displayFull: function (footerElement, metaData, datagridview) {
-            let rowStart = metaData.page * metaData.rowsPerPage + 1;
-            let rowEnd = Math.min((metaData.page + 1) * metaData.rowsPerPage, metaData.totalRows);
+            let startRow = metaData.page * metaData.rowsPerPage + 1;
+            let endRow = Math.min((metaData.page + 1) * metaData.rowsPerPage, metaData.totalRows);
 
-            $(footerElement).append($('<div>').text("Page " + (metaData.page + 1) + " of " + metaData.totalPages + ", rows " + rowStart + " to " + rowEnd + " of " + metaData.totalRows));
+            $(footerElement).append($('<div>').text(datagridview.options.resources.getDisplayFullText(datagridview, metaData.page + 1, metaData.totalPages, startRow, endRow, metaData.totalRows)));
         },
         prevNext: function (footerElement, metaData, datagridview) {
             // To disable any of these options, simply hide them in css for the all, or just the appropriate grids
@@ -238,10 +262,10 @@
                 });
             let label = $('<span>')
                 .addClass('datagridview-paging-page-label')
-                .text('Page: ');
+                .text(datagridview.options.resources.getPageText(datagridview));
             let go = $('<button>')
                 .addClass('datagridview-paging-go')
-                .text('Go')
+                .text(datagridview.options.resources.getGoText(datagridview))
                 .click(function () {
                     datagridview.initiatePaging(page.val() - 1, metaData.rowsPerPage);
                 });
@@ -259,10 +283,10 @@
                 });
             let label = $('<span>')
                 .addClass('datagridview-paging-page-size-label')
-                .text('Page size: ');
+                .text(datagridview.options.resources.getPageSizeText(datagridview));
             let go = $('<button>')
                 .addClass('datagridview-paging-go')
-                .text('Go')
+                .text(datagridview.options.resources.getGoText(datagridview))
                 .click(function () {
                     datagridview.initiatePaging(metaData.page, pageSize.val());
                 });
