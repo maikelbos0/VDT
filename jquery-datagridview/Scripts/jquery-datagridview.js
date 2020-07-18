@@ -197,13 +197,15 @@
                 .addClass('datagridview-paging-first')
                 .text('|<')
                 .click(function () { datagridview.initiatePaging(0, metaData.rowsPerPage); })
-                .prop('disabled', metaData.page <= 0);
+                .prop('disabled', metaData.page <= 0)
+                .prop('type', 'button');
 
             let prev = $('<button>')
                 .addClass('datagridview-paging-prev')
                 .text('<')
                 .click(function () { datagridview.initiatePaging(metaData.page - 1, metaData.rowsPerPage); })
-                .prop('disabled', metaData.page <= 0);
+                .prop('disabled', metaData.page <= 0)
+                .prop('type', 'button');
 
             $(footerElement).append(first, prev);
 
@@ -211,7 +213,8 @@
                 let minus5 = $('<button>')
                     .addClass('datagridview-paging-minus-5')
                     .text('...')
-                    .click(function () { datagridview.initiatePaging(metaData.page - 5, metaData.rowsPerPage); });
+                    .click(function () { datagridview.initiatePaging(metaData.page - 5, metaData.rowsPerPage); })
+                    .prop('type', 'button');
 
                 $(footerElement).append(minus5);
             }
@@ -225,14 +228,16 @@
                     .toggleClass('datagridview-paging-page-active', page == metaData.page)
                     .text(currentPage + 1)
                     .click(function () { datagridview.initiatePaging(currentPage, metaData.rowsPerPage); })
-                    .prop('disabled', metaData.page === currentPage));
+                    .prop('disabled', metaData.page === currentPage))
+                    .prop('type', 'button');
             }
 
             if (metaData.page < metaData.totalPages - 5) {
                 let plus5 = $('<button>')
                     .addClass('datagridview-paging-plus-5')
                     .text('...')
-                    .click(function () { datagridview.initiatePaging(metaData.page + 5, metaData.rowsPerPage); });
+                    .click(function () { datagridview.initiatePaging(metaData.page + 5, metaData.rowsPerPage); })
+                    .prop('type', 'button');
 
                 $(footerElement).append(plus5);
             }
@@ -241,13 +246,15 @@
                 .addClass('datagridview-paging-next')
                 .text('>')
                 .click(function () { datagridview.initiatePaging(metaData.page + 1, metaData.rowsPerPage); })
-                .prop('disabled', metaData.page >= metaData.totalPages - 1);
+                .prop('disabled', metaData.page >= metaData.totalPages - 1)
+                .prop('type', 'button');
 
             let last = $('<button>')
                 .addClass('datagridview-paging-last')
                 .text('>|')
                 .click(function () { datagridview.initiatePaging(metaData.totalPages - 1, metaData.rowsPerPage); })
-                .prop('disabled', metaData.page >= metaData.totalPages - 1);
+                .prop('disabled', metaData.page >= metaData.totalPages - 1)
+                .prop('type', 'button');
 
             $(footerElement).append(next, last);
         },
@@ -259,13 +266,18 @@
                     if (event.which === keyCodes.ENTER) {
                         datagridview.initiatePaging(page.val() - 1, metaData.rowsPerPage);
                     }
+                })
+                .on("keypress keydown keyup", function (event) {
+                    if (event.which === keyCodes.ENTER) {
+                        event.preventDefault();
+                    }
                 });
             let label = $('<span>')
                 .addClass('datagridview-paging-page-label')
                 .text(datagridview.options.resources.getPageText(datagridview));
             let go = $('<button>')
                 .addClass('datagridview-paging-go')
-                .attr('type', 'button')
+                .prop('type', 'button')
                 .text(datagridview.options.resources.getGoText(datagridview))
                 .click(function () {
                     datagridview.initiatePaging(page.val() - 1, metaData.rowsPerPage);
@@ -281,13 +293,18 @@
                     if (event.which === keyCodes.ENTER) {
                         datagridview.initiatePaging(metaData.page, pageSize.val());
                     }
+                })
+                .on("keypress keydown keyup", function (event) {
+                    if (event.which === keyCodes.ENTER) {
+                        event.preventDefault();
+                    }
                 });
             let label = $('<span>')
                 .addClass('datagridview-paging-page-size-label')
                 .text(datagridview.options.resources.getPageSizeText(datagridview));
             let go = $('<button>')
                 .addClass('datagridview-paging-go')
-                .attr('type', 'button')
+                .prop('type', 'button')
                 .text(datagridview.options.resources.getGoText(datagridview))
                 .click(function () {
                     datagridview.initiatePaging(metaData.page, pageSize.val());
@@ -367,7 +384,7 @@
                 .addClass(column.columnClass)
                 .toggleClass('datagridview-header-cell-sortable', column.sortable !== false)
                 .text(column.header || column.data)
-                .attr('title', column.header || column.data)
+                .prop('title', column.header || column.data)
                 .data('id', column.id)
                 .data('column', column.data)
                 .data('sort-column', column.sortData || column.data);
@@ -465,7 +482,7 @@
                         column.renderer(cell, dataRow[column.data], dataRow);
                     }
                     else {
-                        cell.text(dataRow[column.data]).attr('title', dataRow[column.data]);
+                        cell.text(dataRow[column.data]).prop('title', dataRow[column.data]);
                     }
 
                     row.append(cell);
@@ -493,7 +510,7 @@
                         column.renderer(cell, totals[column.data], totals);
                     }
                     else {
-                        cell.text(totals[column.data]).attr('title', totals[column.data]);
+                        cell.text(totals[column.data]).prop('title', totals[column.data]);
                     }
 
                     totalRow.append(cell);
