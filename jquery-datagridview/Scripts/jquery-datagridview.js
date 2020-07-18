@@ -265,6 +265,7 @@
                 .text(datagridview.options.resources.getPageText(datagridview));
             let go = $('<button>')
                 .addClass('datagridview-paging-go')
+                .attr('type', 'button')
                 .text(datagridview.options.resources.getGoText(datagridview))
                 .click(function () {
                     datagridview.initiatePaging(page.val() - 1, metaData.rowsPerPage);
@@ -286,6 +287,7 @@
                 .text(datagridview.options.resources.getPageSizeText(datagridview));
             let go = $('<button>')
                 .addClass('datagridview-paging-go')
+                .attr('type', 'button')
                 .text(datagridview.options.resources.getGoText(datagridview))
                 .click(function () {
                     datagridview.initiatePaging(metaData.page, pageSize.val());
