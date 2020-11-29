@@ -122,10 +122,24 @@
         padding-left: 1.5em;
         margin-left: 0;
         background-color: rgba(255, 255, 0, 0.2);
+        position: relative;
     }
 
     .treeview-list li {
         background-color: rgba(255, 0, 255, 0.2);
+        position: relative;
+    }
+
+    .treeview-list li::after {
+        content: " ";
+        height: 2em;
+        width: 2em;
+        border-left: 1px solid black;
+        border-bottom: 1px solid black;
+        position: absolute;
+        left: -2em;
+        top: -1em;
+        background: transparent;
     }
 
     .treeview-toggler {
