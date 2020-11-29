@@ -63,11 +63,30 @@
     var root = $('<ul>');
     container.append(root);
 
+    function HandleSelection(e) {
+        var checked = $(e.target).is(':checked');
+        var node = $(e.target).closest('li');
+
+        node.find('input:checkbox').prop('checked', checked);
+
+        if (checked) {
+            node.parents('li').children('input:checkbox').prop('checked', function () {
+                return $(this).closest('li').find('input:checkbox').not(this).not(':checked').length == 0;
+            });
+        }
+        else {
+            node.parents('li').children('input:checkbox').prop('checked', false);
+        }
+    }
+
     function CreateNode(list, nodeData) {
         var nodeId = Math.random().toString().replace('.', '');
         var node = $('<li>');
-        node.append($('<input>', { type: 'checkbox', value: nodeData.value, id: nodeId }));
+        var checkbox = $('<input>', { type: 'checkbox', value: nodeData.value, id: nodeId });
+        checkbox.change(HandleSelection);
+        node.append(checkbox);
         node.append($('<label>', { for: nodeId }).text(nodeData.text));
+        node.data('node-data', nodeData);
         list.append(node);
 
         if (nodeData.children) {
