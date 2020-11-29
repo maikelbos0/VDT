@@ -60,7 +60,7 @@
         }
     ];
 
-    var root = $('<ul>', { class: 'treeview-root' });
+    var root = $('<ul>', { class: 'treeview-list' });
     container.append(root);
 
     function HandleSelection(e) {
@@ -98,7 +98,7 @@
         list.append(node);
 
         if (nodeData.children) {
-            var childList = $('<ul>');
+            var childList = $('<ul>', { class: 'treeview-list' });
             var toggler = $('<div>', { class: 'treeview-toggler treeview-toggler-open' });
             node.prepend(toggler);
             toggler.data('toggle-target', childList);
@@ -117,29 +117,48 @@
 </script>
 
 <style type="text/css">
-    .treeview-root, .treeview-root ul {
+    .treeview-list {
         list-style: none;
-        margin-left: 1.5em;
-        padding-left: 0;
+        padding-left: 1.5em;
+        margin-left: 0;
+        background-color: rgba(255, 255, 0, 0.2);
+    }
+
+    .treeview-list li {
+        background-color: rgba(255, 0, 255, 0.2);
     }
 
     .treeview-toggler {
         display: inline-block;
-        width: 1em;
-        height: 1em;
-        background-color: #ff0000;
+        width: .75em;
+        height: .75em;
+        position: relative;
+        border: 1px solid black;
     }
 
-    .treeview-toggler.treeview-toggler-open {
-        display: inline-block;
-        width: 1em;
-        height: 1em;
-        background-color: #00ff00;
+    .treeview-toggler:not(.treeview-toggler-open)::before {
+        content: " ";
+        background-color: #000000;
+        width: 2px;
+        height: .5em;
+        position: absolute;
+        top: calc(50% - .25em);
+        left: calc(50% - 1px);
+    }
+
+    .treeview-toggler::after {
+        content: " ";
+        background-color: #000000;
+        width: .5em;
+        height: 2px;
+        position: absolute;
+        top: calc(50% - 1px);
+        left: calc(50% - .25em);
     }
 
     input.treeview-selector {
         margin-right: 0.5em;
-        margin-left: 0.5em;
+        margin-left: 0.75em;
     }
 
     input.treeview-selector:first-child {
