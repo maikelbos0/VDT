@@ -80,7 +80,7 @@
     }
 
     function HandleToggle(e) {
-        $(e.target).toggleClass('treeview-toggler-open');
+        $(e.target).toggleClass('treeview-toggler-closed');
         $(e.target).data('toggle-target').toggle();
     }
 
@@ -98,7 +98,7 @@
 
         if (nodeData.children) {
             var childList = $('<ul>', { class: 'treeview-list' });
-            var toggler = $('<div>', { class: 'treeview-toggler treeview-toggler-open' });
+            var toggler = $('<div>', { class: 'treeview-toggler' });
             node.prepend(toggler);
             toggler.data('toggle-target', childList);
             toggler.click(HandleToggle);
@@ -134,7 +134,7 @@
     }
 
     .treeview-list li::after {
-        content: " ";
+        content: "";
         height: 1000em;
         width: 2.25em;
         border-left: 1px solid black;
@@ -155,8 +155,8 @@
         z-index: 1;
     }
 
-    .treeview-toggler:not(.treeview-toggler-open)::before {
-        content: " ";
+    .treeview-toggler-closed::before {
+        content: "";
         background-color: #000000;
         width: 2px;
         height: .5em;
@@ -166,7 +166,7 @@
     }
 
     .treeview-toggler::after {
-        content: " ";
+        content: "";
         background-color: #000000;
         width: .5em;
         height: 2px;
@@ -184,7 +184,7 @@
         margin-left: 1.25em;
     }
 
-    .treeview-selector, .treeview-selector-label{
+    .treeview-selector, .treeview-selector-label {
         position: relative;
         z-index: 11;
     }
