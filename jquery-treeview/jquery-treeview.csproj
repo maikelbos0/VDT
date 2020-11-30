@@ -57,11 +57,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="bundleconfig.json" />
     <None Include="Scripts\jquery-3.5.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.0.js" />
     <Content Include="Scripts\jquery-3.5.0.min.js" />
     <Content Include="Scripts\jquery-3.5.0.slim.js" />
     <Content Include="Scripts\jquery-3.5.0.slim.min.js" />
+    <Content Include="Scripts\jquery-treeview.js" />
+    <Content Include="Scripts\jquery-treeview.min.js">
+      <DependentUpon>jquery-treeview.js</DependentUpon>
+    </Content>
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
