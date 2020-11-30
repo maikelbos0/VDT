@@ -116,11 +116,6 @@
 </script>
 
 <style type="text/css">
-    #treeview-1 {
-        height: 200px;
-        overflow-y: auto;
-    }
-
     .treeview-list {
         list-style: none;
         padding-left: 2em;
@@ -130,8 +125,8 @@
     }
 
     .treeview-list .treeview-list {
-        padding-top: 1.5em;
-        margin-top: -1.5em;
+        padding-top: 1em;
+        margin-top: -1em;
     }
 
     .treeview-list li {
@@ -180,12 +175,17 @@
         left: calc(50% - .25em);
     }
 
-    input.treeview-selector {
+    .treeview-selector {
         margin-right: 0.5em;
-        margin-left: 0.75em;
+        margin-left: 0.5em;
     }
 
-    input.treeview-selector:first-child {
-        margin-left: 1.5em;
+    .treeview-selector:first-child {
+        margin-left: 1.25em;
+    }
+
+    .treeview-selector, .treeview-selector-label{
+        position: relative;
+        z-index: 11;
     }
 </style>
