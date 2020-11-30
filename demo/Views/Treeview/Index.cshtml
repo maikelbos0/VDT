@@ -88,12 +88,11 @@
         var nodeId = Math.random().toString().replace('.', '');
         var node = $('<li>');
 
-
         var checkbox = $('<input>', { class: 'treeview-selector', type: 'checkbox', value: nodeData.value, id: nodeId });
         checkbox.change(HandleSelection);
         node.append(checkbox);
 
-        node.append($('<label>', { for: nodeId }).text(nodeData.text));
+        node.append($('<label>', { for: nodeId, class: 'treeview-selector-label' }).text(nodeData.text));
         node.data('node-data', nodeData);
         list.append(node);
 
@@ -117,12 +116,17 @@
 </script>
 
 <style type="text/css">
+    #treeview-1 {
+        height: 200px;
+        overflow-y: auto;
+    }
+
     .treeview-list {
         list-style: none;
-        padding-left: 1.5em;
+        padding-left: 2em;
         margin-left: 0;
         position: relative;
-        overflow: hidden;        
+        overflow: hidden;
     }
 
     .treeview-list .treeview-list {
@@ -137,11 +141,11 @@
     .treeview-list li::after {
         content: " ";
         height: 1000em;
-        width: 1.75em;
+        width: 2.25em;
         border-left: 1px solid black;
         border-bottom: 1px solid black;
         position: absolute;
-        left: -1.125em;
+        left: -1.625em;
         top: -999.25em;
         background: transparent;
     }
