@@ -57,7 +57,6 @@
         this.textProperty = options.getTextProperty(this.element);
         this.childrenProperty = options.getChildrenProperty(this.element);
 
-        this.element.addClass('treeview');
         this.element.children().hide();
 
         this.list = this.createElement('<ul>', 'treeview-list');
@@ -68,8 +67,8 @@
         });
 
         // Event handlers
-        this.element.on('click', '.treeview-toggler', this, eventHandlers.togglerClick);
-        this.element.on('change', '.treeview-selector', this, eventHandlers.inputChange);
+        this.list.on('click', '.treeview-toggler', this, eventHandlers.togglerClick);
+        this.list.on('change', '.treeview-selector', this, eventHandlers.inputChange);
     }
 
     // Create an element and merge attribute objects to attributes
@@ -110,6 +109,13 @@
         if (data[this.childrenProperty]) {
             this.createList(node, data[this.childrenProperty]);
         }
+    }
+
+    // Remove the entire treeview; resets the base element to its former state
+    Treeview.prototype.remove = function () {
+        this.list.remove();
+        this.element.removeData('treeview');
+        this.element.children().show();
     }
 
     // Event handlers should not be accessible from the object itself
