@@ -83,8 +83,8 @@
     Treeview.prototype.createList = function (node, dataArray) {
         let base = this;
 
-        let list = $('<ul>', { class: 'treeview-list' });
-        let toggler = $('<div>', { class: 'treeview-toggler' });
+        let list = this.createElement('<ul>', 'treeview-list');
+        let toggler = this.createElement('<div>', 'treeview-toggler');
 
         toggler.data('toggle-target', list);
         node.prepend(toggler);
@@ -98,11 +98,11 @@
     // Create a node based on node data
     Treeview.prototype.createNode = function (list, data) {
         var nodeId = Math.random().toString().replace('.', '');
-        var node = $('<li>');
-        var checkbox = $('<input>', { class: 'treeview-selector', type: 'checkbox', value: data[this.valueProperty], id: nodeId });
+        var node = this.createElement('<li>');
+        var checkbox = this.createElement('<input>', 'treeview-selector', { type: 'checkbox', value: data[this.valueProperty], id: nodeId });
 
         node.append(checkbox);
-        node.append($('<label>', { for: nodeId, class: 'treeview-selector-label' }).text(data[this.textProperty]));
+        node.append(this.createElement('<label>', 'treeview-selector-label', { for: nodeId }).text(data[this.textProperty]));
         node.data('node-data', data);
         list.append(node);
 
