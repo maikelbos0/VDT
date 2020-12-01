@@ -4,5 +4,11 @@
     "inputFiles": [
       "Scripts/jquery-treeview.js"
     ]
+  },
+  {
+    "outputFileName": "Content/jquery-treeview.min.css",
+    "inputFiles": [
+      "Content/jquery-treeview.css"
+    ]
   }
 ]

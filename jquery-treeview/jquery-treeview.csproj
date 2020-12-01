@@ -59,6 +59,10 @@
   <ItemGroup>
     <None Include="bundleconfig.json" />
     <None Include="Scripts\jquery-3.5.0.intellisense.js" />
+    <Content Include="Content\jquery-treeview.css" />
+    <Content Include="Content\jquery-treeview.min.css">
+      <DependentUpon>jquery-treeview.css</DependentUpon>
+    </Content>
     <Content Include="Scripts\jquery-3.5.0.js" />
     <Content Include="Scripts\jquery-3.5.0.min.js" />
     <Content Include="Scripts\jquery-3.5.0.slim.js" />
