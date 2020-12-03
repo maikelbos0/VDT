@@ -56,6 +56,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="basic.html" />
+    <Content Include="basic.js" />
     <Content Include="element.html" />
     <Content Include="element.js" />
   </ItemGroup>
