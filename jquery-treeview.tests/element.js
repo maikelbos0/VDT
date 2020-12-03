@@ -3,7 +3,13 @@
         var tree = $('#element-succeeds');
         var element;
 
-        tree.treeview(function () {
+        tree.treeview({
+            data: [{
+                value: '1',
+                text: 'A value'
+            }]
+        },
+        function () {
             element = this.createElement('<div>', 'treeview');
         });
 
@@ -15,7 +21,13 @@
         var tree = $('#element-attributes');
         var element;
 
-        tree.treeview(function () {
+        tree.treeview({
+            data: [{
+                value: '1',
+                text: 'A value'
+            }]
+        },
+        function () {
             element = this.createElement('<div>', 'treeview', { id: 'test', value: 'value' });
         });
 
@@ -27,7 +39,13 @@
         var tree = $('#element-attributes-multiple');
         var element;
 
-        tree.treeview(function () {
+        tree.treeview({
+            data: [{
+                value: '1',
+                text: 'A value'
+            }]
+        },
+        function () {
             element = this.createElement('<div>', 'treeview', { id: 'test', value: 'value' }, { id: 'test2' });
         });
 
@@ -39,7 +57,13 @@
         var tree = $('#element-attributes-class');
         var element;
 
-        tree.treeview(function () {
+        tree.treeview({
+            data: [{
+                value: '1',
+                text: 'A value'
+            }]
+        },
+        function () {
             element = this.createElement('<div>', 'treeview', { class: 'form-control' });
         });
 
