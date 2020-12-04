@@ -13,6 +13,14 @@
             let treeview = $(this).data('treeview');
 
             if (!treeview) {
+                // Validate data
+                if (!settings || !settings.data) {
+                    throw 'treeview error: expected required option "data"';
+                }
+                else if (!$.isArray(settings.data)) {
+                    throw 'treeview error: expected option "data" to be an array';
+                }
+
                 // Create object
                 let options = $.extend({}, $.fn.treeview.defaults, settings);
                 treeview = new Treeview($(this), options);
