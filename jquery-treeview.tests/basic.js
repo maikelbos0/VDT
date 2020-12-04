@@ -57,19 +57,52 @@
                 text: 'A value'
             }]
         });
+
         expect(tree.children('ul.treeview-list').length).toEqual(1);
     });
 
     it('will add list items', function () {
         var tree = $('#basic-treeview-list-items');
 
-        fail();
+        tree.treeview({
+            data: [{
+                value: '1',
+                text: 'Foo'
+            },
+            {
+                value: '2',
+                text: 'Bar'
+            }]
+        });
+
+        expect(tree.find('ul.treeview-list > li').length).toEqual(2);
     });
 
     it('will add togglers for list items with children', function () {
         var tree = $('#basic-treeview-list-item-children-toggler');
 
-        fail();
+        tree.treeview({
+            data: [{
+                value: '1',
+                text: 'Foo'
+            },
+            {
+                value: '2',
+                text: 'Bar',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux'
+                    }
+                ]
+            }]
+        });
+
+        expect(tree.find('ul.treeview-list > li > .treeview-toggler').length).toEqual(1);
     });
 
     it('will add child lists', function () {
