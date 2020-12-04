@@ -33,13 +33,19 @@
     it('needs required option "data"', function () {
         var tree = $('#basic-treeview-data-required');
 
-        fail();
+        expect(function () {
+            tree.treeview();
+        }).toThrow('treeview error: expected required option "data"');
     });
 
     it('needs option "data" to be an array', function () {
         var tree = $('#basic-treeview-data-array');
 
-        fail();
+        expect(function () {
+            tree.treeview({
+                data: 5
+            });
+        }).toThrow('treeview error: expected option "data" to be an array');
     });
 
     it('will add a list', function () {
