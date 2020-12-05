@@ -87,4 +87,40 @@
         expect($(hiddenContent[0]).css('display')).not.toEqual('none');
         expect($(hiddenContent[1]).css('display')).not.toEqual('none');
     });
+
+    it('can be used to get selected values', function () {
+        var tree = $('#treeview-interaction-get-select-values');
+
+        fail();
+    });
+
+    it('can be used to get selected data', function () {
+        var tree = $('#treeview-interaction-get-select-data');
+
+        fail();
+    });
+
+    it('can be used to select values', function () {
+        var tree = $('#treeview-interaction-select-value');
+
+        fail();
+    });
+
+    it('can be used to deselect values', function () {
+        var tree = $('#treeview-interaction-select-value');
+
+        fail();
+    });
+
+    it('can be used to select data', function () {
+        var tree = $('#treeview-interaction-select-data');
+
+        fail();
+    });
+
+    it('can be used to deselect data', function () {
+        var tree = $('#treeview-interaction-select-data');
+
+        fail();
+    });
 });
