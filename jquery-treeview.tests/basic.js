@@ -103,13 +103,83 @@
     it('will add child lists', function () {
         var tree = $('#basic-treeview-child-list');
 
-        fail();
+        tree.treeview({
+            data: [{
+                value: '1',
+                text: 'Foo',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux'
+                    }
+                ]
+            },
+            {
+                value: '2',
+                text: 'Bar',
+                children: [
+                    {
+                        value: '5',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '6',
+                        text: 'Quux'
+                    }
+                ]
+            },
+            {
+                value: '7',
+                text: 'Baz'
+            }]
+        });
+
+        expect(tree.find('ul.treeview-list > li > ul.treeview-list').length).toEqual(2);
     });
 
     it('will add child list items', function () {
         var tree = $('#basic-treeview-child-list-items');
 
-        fail();
+        tree.treeview({
+            data: [{
+                value: '1',
+                text: 'Foo',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux'
+                    }
+                ]
+            },
+            {
+                value: '2',
+                text: 'Bar',
+                children: [
+                    {
+                        value: '5',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '6',
+                        text: 'Quux'
+                    }
+                ]
+            },
+            {
+                value: '7',
+                text: 'Baz'
+            }]
+        });
+
+        expect(tree.find('ul.treeview-list > li > ul.treeview-list > li').length).toEqual(4);
     });
 
     it('needs required option "data"', function () {
