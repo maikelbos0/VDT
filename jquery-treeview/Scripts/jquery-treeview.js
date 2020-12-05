@@ -66,6 +66,7 @@
         this.childrenProperty = options.getChildrenProperty(this.element);
 
         this.element.children().hide();
+        this.element.addClass('treeview');
 
         this.list = this.createElement('<ul>', 'treeview-list');
         this.element.append(this.list);
@@ -122,6 +123,7 @@
     // Remove the entire treeview; resets the base element to its former state
     Treeview.prototype.remove = function () {
         this.list.remove();
+        this.element.removeClass('treeview');
         this.element.removeData('treeview');
         this.element.children().show();
     }

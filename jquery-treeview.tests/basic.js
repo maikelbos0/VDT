@@ -30,22 +30,17 @@
         expect($(hiddenContent[1]).css('display')).toEqual('none');
     });
 
-    it('needs required option "data"', function () {
-        var tree = $('#basic-treeview-data-required');
+    it('will add a class', function () {
+        var tree = $('#basic-treeview-class');
 
-        expect(function () {
-            tree.treeview();
-        }).toThrow('treeview error: expected required option "data"');
-    });
+        tree.treeview({
+            data: [{
+                value: '1',
+                text: 'A value'
+            }]
+        });
 
-    it('needs option "data" to be an array', function () {
-        var tree = $('#basic-treeview-data-array');
-
-        expect(function () {
-            tree.treeview({
-                data: 5
-            });
-        }).toThrow('treeview error: expected option "data" to be an array');
+        expect(tree.hasClass('treeview')).toEqual(true);
     });
 
     it('will add a list', function () {
@@ -115,5 +110,23 @@
         var tree = $('#basic-treeview-child-list-items');
 
         fail();
+    });
+
+    it('needs required option "data"', function () {
+        var tree = $('#basic-treeview-data-required');
+
+        expect(function () {
+            tree.treeview();
+        }).toThrow('treeview error: expected required option "data"');
+    });
+
+    it('needs option "data" to be an array', function () {
+        var tree = $('#basic-treeview-data-array');
+
+        expect(function () {
+            tree.treeview({
+                data: 5
+            });
+        }).toThrow('treeview error: expected option "data" to be an array');
     });
 });
