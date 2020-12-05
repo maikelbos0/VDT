@@ -60,6 +60,8 @@
     <Content Include="basic.js" />
     <Content Include="element.html" />
     <Content Include="element.js" />
+    <Content Include="interaction.html" />
+    <Content Include="interaction.js" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
