@@ -73,6 +73,23 @@
         expect(tree.find('ul.treeview-list > li').length).toEqual(2);
     });
 
+    it('will add list item checkboxes', function () {
+        var tree = $('#basic-treeview-list-item-checkboxes');
+
+        tree.treeview({
+            data: [{
+                value: '1',
+                text: 'Foo'
+            },
+            {
+                value: '2',
+                text: 'Bar'
+            }]
+        });
+
+        expect(tree.find('ul.treeview-list > li > input:checkbox').length).toEqual(2);
+    });
+
     it('will add togglers for list items with children', function () {
         var tree = $('#basic-treeview-list-item-children-toggler');
 
@@ -180,6 +197,47 @@
         });
 
         expect(tree.find('ul.treeview-list > li > ul.treeview-list > li').length).toEqual(4);
+    });
+
+    it('will add child list item checkboxes', function () {
+        var tree = $('#basic-treeview-child-list-item-checkboxes');
+
+        tree.treeview({
+            data: [{
+                value: '1',
+                text: 'Foo',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux'
+                    }
+                ]
+            },
+            {
+                value: '2',
+                text: 'Bar',
+                children: [
+                    {
+                        value: '5',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '6',
+                        text: 'Quux'
+                    }
+                ]
+            },
+            {
+                value: '7',
+                text: 'Baz'
+            }]
+        });
+
+        expect(tree.find('ul.treeview-list > li > ul.treeview-list > li input:checkbox').length).toEqual(4);
     });
 
     it('needs required option "data"', function () {
