@@ -184,26 +184,90 @@
     });
 
     it('can be used to select values', function () {
-        var tree = $('#treeview-interaction-select-value');
+        var tree = $('#treeview-interaction-set-selected-values');
 
-        fail();
-    });
+        tree.treeview({
+            data: [{
+                value: '1',
+                text: 'Foo',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux'
+                    }
+                ]
+            },
+            {
+                value: '2',
+                text: 'Bar',
+                children: [
+                    {
+                        value: '5',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '6',
+                        text: 'Quux'
+                    }
+                ]
+            },
+            {
+                value: '7',
+                text: 'Baz',
+                selected: true
+            }]
+        }, function () {
+            this.setSelectedValues(['3', '4', '7']);
+        });
 
-    it('can be used to deselect values', function () {
-        var tree = $('#treeview-interaction-select-value');
-
-        fail();
+        expect(tree.find('input.treeview-selector:checked').map(function () { return $(this).val() }).get()).toEqual(['1', '3', '4', '7']);
     });
 
     it('can be used to select data', function () {
-        var tree = $('#treeview-interaction-select-data');
+        var tree = $('#treeview-interaction-set-selected-data');
 
-        fail();
-    });
+        tree.treeview({
+            data: [{
+                value: '1',
+                text: 'Foo',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux'
+                    }
+                ]
+            },
+            {
+                value: '2',
+                text: 'Bar',
+                children: [
+                    {
+                        value: '5',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '6',
+                        text: 'Quux'
+                    }
+                ]
+            },
+            {
+                value: '7',
+                text: 'Baz',
+                selected: true
+            }]
+        }, function () {
+            this.setSelectedData(function (value) { return value.text.indexOf('Ba') > -1 });
+        });
 
-    it('can be used to deselect data', function () {
-        var tree = $('#treeview-interaction-select-data');
-
-        fail();
+        expect(tree.find('input.treeview-selector:checked').map(function () { return $(this).val() }).get()).toEqual(['3', '5', '7']);
     });
 });
