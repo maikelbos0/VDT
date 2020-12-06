@@ -142,6 +142,22 @@
         this.element.children().show();
     }
 
+    // Get the selected values as an array
+    Treeview.prototype.getSelectedValues = function () {
+        let base = this;
+
+        return this.getSelectedData().map(function (value) {
+            return value[base.valueProperty];
+        });
+    }
+
+    // Get the selected data nodes as an array
+    Treeview.prototype.getSelectedData = function () {
+        return this.element.find('input.treeview-selector:checked').closest('li').map(function () {
+            return $(this).data('node-data');
+        }).get();
+    }
+
     // Event handlers should not be accessible from the object itself
     let eventHandlers = {
         togglerClick: function (e) {

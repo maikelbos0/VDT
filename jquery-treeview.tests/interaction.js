@@ -89,7 +89,7 @@
     });
 
     it('can be used to get selected values', function () {
-        var tree = $('#treeview-interaction-get-select-values');
+        var tree = $('#treeview-interaction-get-selected-values');
         var selectedValues;
 
         tree.treeview({
@@ -136,7 +136,8 @@
     });
 
     it('can be used to get selected data', function () {
-        var tree = $('#treeview-interaction-get-select-data');
+        var tree = $('#treeview-interaction-get-selected-data');
+        var selectedData;
         var data = [{
             value: '1',
             text: 'Foo',
@@ -173,15 +174,13 @@
             selected: true
         }];
 
-        var selectedData;
-
         tree.treeview({
             data: data
         }, function () {
             selectedData = this.getSelectedData();
         });
 
-        expect(selectedData).toEqual([data[0], data[0].children[0], data[0].children[1], data[3]]);
+        expect(selectedData).toEqual([data[0], data[0].children[0], data[0].children[1], data[2]]);
     });
 
     it('can be used to select values', function () {
