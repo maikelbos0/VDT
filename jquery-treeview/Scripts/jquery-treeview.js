@@ -48,6 +48,11 @@
         getTextProperty: function (element) {
             return $(element).data('text-property') || 'text';
         },
+        // The property in a data node object to determine select status
+        // Defaults to the data-property selected-property with as fallback 'selected'
+        getSelectedProperty: function (element) {
+            return $(element).data('selected-property') || 'selected';
+        },
         // The property in a data node object to use to find a node's child nodes
         // Defaults to the data-property children-property with as fallback 'children'
         getChildrenProperty: function (element) {
@@ -63,6 +68,7 @@
         this.options = options;
         this.valueProperty = options.getValueProperty(this.element);
         this.textProperty = options.getTextProperty(this.element);
+        this.selectedProperty = options.getSelectedProperty(this.element);
         this.childrenProperty = options.getChildrenProperty(this.element);
 
         this.element.children().hide();
@@ -117,6 +123,14 @@
 
         if (data[this.childrenProperty]) {
             this.createList(node, data[this.childrenProperty]);
+
+            // If we have children and all are selected, select this node as well
+            if (node.find('.treeview-list input:checked').length === node.find('.treeview-list input').length) {
+                checkbox.prop('checked', true);
+            }
+        }
+        else if (data[this.selectedProperty]) {
+            checkbox.prop('checked', true);
         }
     }
 

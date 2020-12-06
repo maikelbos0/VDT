@@ -257,4 +257,48 @@
             });
         }).toThrow('treeview error: expected option "data" to be an array');
     });
+
+    it('will check checkboxes for selected data nodes', function () {
+        var tree = $('#basic-treeview-select-checkboxes');
+
+        tree.treeview({
+            data: [{
+                value: '1',
+                text: 'Foo',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz',
+                        selected: true
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux',
+                        selected: true
+                    }
+                ]
+            },
+            {
+                value: '2',
+                text: 'Bar',
+                children: [
+                    {
+                        value: '5',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '6',
+                        text: 'Quux'
+                    }
+                ]
+            },
+            {
+                value: '7',
+                text: 'Baz',
+                selected: true
+            }]
+        });
+
+        expect(tree.find('input:checked').length).toEqual(4);
+    });
 });
