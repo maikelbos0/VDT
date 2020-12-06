@@ -90,14 +90,98 @@
 
     it('can be used to get selected values', function () {
         var tree = $('#treeview-interaction-get-select-values');
+        var selectedValues;
 
-        fail();
+        tree.treeview({
+            data: [{
+                value: '1',
+                text: 'Foo',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz',
+                        selected: true
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux',
+                        selected: true
+                    }
+                ]
+            },
+            {
+                value: '2',
+                text: 'Bar',
+                children: [
+                    {
+                        value: '5',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '6',
+                        text: 'Quux'
+                    }
+                ]
+            },
+            {
+                value: '7',
+                text: 'Baz',
+                selected: true
+            }]
+        }, function () {
+            selectedValues = this.getSelectedValues();
+        });
+
+        expect(selectedValues).toEqual(['1', '3', '4', '7']);
     });
 
     it('can be used to get selected data', function () {
         var tree = $('#treeview-interaction-get-select-data');
+        var data = [{
+            value: '1',
+            text: 'Foo',
+            children: [
+                {
+                    value: '3',
+                    text: 'Baz',
+                    selected: true
+                },
+                {
+                    value: '4',
+                    text: 'Quux',
+                    selected: true
+                }
+            ]
+        },
+        {
+            value: '2',
+            text: 'Bar',
+            children: [
+                {
+                    value: '5',
+                    text: 'Baz'
+                },
+                {
+                    value: '6',
+                    text: 'Quux'
+                }
+            ]
+        },
+        {
+            value: '7',
+            text: 'Baz',
+            selected: true
+        }];
 
-        fail();
+        var selectedData;
+
+        tree.treeview({
+            data: data
+        }, function () {
+            selectedData = this.getSelectedData();
+        });
+
+        expect(selectedData).toEqual([data[0], data[0].children[0], data[0].children[1], data[3]]);
     });
 
     it('can be used to select values', function () {
