@@ -153,9 +153,30 @@
 
     // Get the selected data nodes as an array
     Treeview.prototype.getSelectedData = function () {
-        return this.element.find('input.treeview-selector:checked').closest('li').map(function () {
+        return this.getSelectedNodes().map(function () {
             return $(this).data('node-data');
         }).get();
+    }
+
+    // Get the selected nodes
+    Treeview.prototype.getSelectedNodes = function () {
+        return this.element.find('input.treeview-selector:checked').closest('li');
+    }
+
+    // Set selected nodes by selector/selection/function/element
+    Treeview.prototype.setSelectedNodes = function () {
+
+    }
+
+    // Set the selected nodes based on a value array
+    Treeview.prototype.setSelectedValues = function () {
+
+    }
+
+    // Set selected node by filter function
+    // Filter function arguments are the standard array filter function arguments value, index, array
+    Treeview.prototype.setSelectedData = function () {
+
     }
 
     // Event handlers should not be accessible from the object itself

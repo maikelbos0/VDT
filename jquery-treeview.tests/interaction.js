@@ -183,6 +183,57 @@
         expect(selectedData).toEqual([data[0], data[0].children[0], data[0].children[1], data[2]]);
     });
 
+    it('can be used to get selected nodes', function () {
+        var tree = $('#treeview-interaction-get-selected-nodes');
+        var selectedNodes;
+
+        tree.treeview({
+            data: [{
+                value: '1',
+                text: 'Foo',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz',
+                        selected: true
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux',
+                        selected: true
+                    }
+                ]
+            },
+            {
+                value: '2',
+                text: 'Bar',
+                children: [
+                    {
+                        value: '5',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '6',
+                        text: 'Quux'
+                    }
+                ]
+            },
+            {
+                value: '7',
+                text: 'Baz',
+                selected: true
+            }]
+        }, function () {
+            selectedNodes = this.getSelectedNodes();
+        });
+
+        expect(selectedNodes.length).toEqual(4);
+        expect(selectedNodes[0]).toEqual(tree.find('li:nth-child(1)')[0]);
+        expect(selectedNodes[1]).toEqual(tree.find('li:nth-child(1) li:nth-child(1)')[0]);
+        expect(selectedNodes[2]).toEqual(tree.find('li:nth-child(1) li:nth-child(2)')[0]);
+        expect(selectedNodes[3]).toEqual(tree.find('li:nth-child(3)')[0]);
+    });
+
     it('can be used to select values', function () {
         var tree = $('#treeview-interaction-set-selected-values');
 
@@ -269,5 +320,49 @@
         });
 
         expect(tree.find('input.treeview-selector:checked').map(function () { return $(this).val() }).get()).toEqual(['3', '5', '7']);
+    });
+
+    it('can be used to select nodes', function () {
+        var tree = $('#treeview-interaction-set-selected-nodes');
+
+        tree.treeview({
+            data: [{
+                value: '1',
+                text: 'Foo',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux'
+                    }
+                ]
+            },
+            {
+                value: '2',
+                text: 'Bar',
+                children: [
+                    {
+                        value: '5',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '6',
+                        text: 'Quux'
+                    }
+                ]
+            },
+            {
+                value: '7',
+                text: 'Baz',
+                selected: true
+            }]
+        }, function () {
+            this.setSelectedNodes(tree.find('li:first-child li'));
+        });
+
+        expect(tree.find('input.treeview-selector:checked').map(function () { return $(this).val() }).get()).toEqual(['1', '3', '4']);
     });
 });
