@@ -164,8 +164,12 @@
     }
 
     // Set selected nodes by selector/selection/function/element
-    Treeview.prototype.setSelectedNodes = function () {
+    Treeview.prototype.setSelectedNodes = function (nodes) {
+        var actualNodes = $(nodes).not(':has(li)');
 
+        this.list.find('li').not(actualNodes).children('input.treeview-selector').prop('checked', false);
+        $(actualNodes).children('input.treeview-selector').prop('checked', true);
+        this.list.find('li:has(li):not(:has(li:not(:has(li)) input.treeview-selector:not(:checked)))').children('input.treeview-selector').prop('checked', true);
     }
 
     // Set the selected nodes based on a value array
