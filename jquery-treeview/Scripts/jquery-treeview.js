@@ -173,14 +173,22 @@
     }
 
     // Set the selected nodes based on a value array
-    Treeview.prototype.setSelectedValues = function () {
+    Treeview.prototype.setSelectedValues = function (values) {
+        let base = this;
 
+        this.setSelectedData(function (nodeData) {
+            return values.indexOf(nodeData[base.valueProperty]) > -1;
+        });
     }
 
     // Set selected node by filter function
-    // Filter function arguments are the standard array filter function arguments value, index, array
-    Treeview.prototype.setSelectedData = function () {
+    // Filter function argument is node data
+    Treeview.prototype.setSelectedData = function (filter) {
+        var nodes = this.list.find('li').filter(function () {
+            return filter($(this).data('node-data'));
+        });
 
+        this.setSelectedNodes(nodes);
     }
 
     // Event handlers should not be accessible from the object itself
