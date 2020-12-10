@@ -58,6 +58,8 @@
   <ItemGroup>
     <Content Include="basic.html" />
     <Content Include="basic.js" />
+    <Content Include="defaults.html" />
+    <Content Include="defaults.js" />
     <Content Include="element.html" />
     <Content Include="element.js" />
     <Content Include="events.html" />
