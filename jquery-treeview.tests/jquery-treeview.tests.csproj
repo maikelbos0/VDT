@@ -64,6 +64,8 @@
     <Content Include="interaction.html" />
     <Content Include="interaction.js" />
     <Content Include="events.js" />
+    <Content Include="options.html" />
+    <Content Include="options.js" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
