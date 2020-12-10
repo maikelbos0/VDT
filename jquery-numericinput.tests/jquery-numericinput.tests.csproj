@@ -59,6 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="chutzpah.json" />
+    <Content Include="defaults.html" />
+    <Content Include="defaults.js" />
     <Content Include="LICENSE" />
     <None Include="packages.config" />
   </ItemGroup>
