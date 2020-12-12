@@ -63,13 +63,62 @@
     it('checks a checkbox it checks all descendants', function () {
         var tree = $('#treeview-events-input-check-children');
 
-        fail();
+        tree.treeview({
+            data: [{
+                value: '1',
+                text: 'Foo'
+            },
+            {
+                value: '2',
+                text: 'Bar',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux'
+                    }
+                ]
+            }]
+        });
+
+        tree.find('li:nth-child(2):has(li) > input.treeview-selector').click();
+
+        expect(tree.find('input:checked').length).toEqual(3);
     });
 
     it('unchecks a checkbox it unchecks all descendants', function () {
         var tree = $('#treeview-events-input-uncheck-children');
 
-        fail();
+        tree.treeview({
+            data: [{
+                value: '1',
+                text: 'Foo'
+            },
+            {
+                value: '2',
+                text: 'Bar',
+                selected: true,
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz',
+                        selected: true
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux',
+                        selected: true
+                    }
+                ]
+            }]
+        });
+
+        tree.find('li:nth-child(2):has(li) > input.treeview-selector').click();
+
+        expect(tree.find('input:checked').length).toEqual(0);
     });
 
     it('checks a checkbox it checks ancestors as needed', function () {
