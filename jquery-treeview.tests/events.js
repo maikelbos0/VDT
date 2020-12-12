@@ -124,12 +124,61 @@
     it('checks a checkbox it checks ancestors as needed', function () {
         var tree = $('#treeview-events-input-check-parent');
 
-        fail();
+        tree.treeview({
+            data: [{
+                value: '1',
+                text: 'Foo'
+            },
+            {
+                value: '2',
+                text: 'Bar',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux',
+                        selected: true
+                    }
+                ]
+            }]
+        });
+
+        tree.find('li:nth-child(2) li:first-child > input.treeview-selector').click();
+
+        expect(tree.find('input:checked').length).toEqual(3);
     });
 
     it('unchecks a checkbox it unchecks all ancestors', function () {
         var tree = $('#treeview-events-input-uncheck-parent');
 
-        fail();
+        tree.treeview({
+            data: [{
+                value: '1',
+                text: 'Foo'
+            },
+            {
+                value: '2',
+                text: 'Bar',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz',
+                        selected: true
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux',
+                        selected: true
+                    }
+                ]
+            }]
+        });
+
+        tree.find('li:nth-child(2) li:first-child > input.treeview-selector').click();
+
+        expect(tree.find('input:checked').length).toEqual(1);
     });
 });
