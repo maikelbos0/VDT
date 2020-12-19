@@ -223,7 +223,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NumericinputController.cs" />
     <Compile Include="Controllers\SliderController.cs" />
-    <Compile Include="Controllers\TreeviewController.cs" />
+    <Compile Include="Controllers\DatatreeviewController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -254,7 +254,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Scripts\jquery-3.5.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.5.0.min.map" />
-    <Content Include="Views\Treeview\Index.cshtml" />
+    <Content Include="Views\Datatreeview\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
