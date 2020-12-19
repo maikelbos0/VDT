@@ -69,10 +69,13 @@
 
 .datatreeview-selector {
     margin-right: 0.5em;
+}
+
+.datatreeview-selector-label {
     margin-left: 0.5em;
 }
 
-.datatreeview-selector:first-child {
+.datatreeview-selector-label:first-child {
     margin-left: 1.25em;
 }
 

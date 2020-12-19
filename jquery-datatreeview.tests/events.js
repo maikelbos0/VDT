@@ -84,7 +84,7 @@
             }]
         });
 
-        tree.find('li:nth-child(2):has(li) > input.datatreeview-selector').click();
+        tree.find('li:nth-child(2):has(li) > label').click();
 
         expect(tree.find('input:checked').length).toEqual(3);
     });
@@ -116,7 +116,7 @@
             }]
         });
 
-        tree.find('li:nth-child(2):has(li) > input.datatreeview-selector').click();
+        tree.find('li:nth-child(2):has(li) > label').click();
 
         expect(tree.find('input:checked').length).toEqual(0);
     });
@@ -146,7 +146,7 @@
             }]
         });
 
-        tree.find('li:nth-child(2) li:first-child > input.datatreeview-selector').click();
+        tree.find('li:nth-child(2) li:first-child > label').click();
 
         expect(tree.find('input:checked').length).toEqual(3);
     });
@@ -177,7 +177,7 @@
             }]
         });
 
-        tree.find('li:nth-child(2) li:first-child > input.datatreeview-selector').click();
+        tree.find('li:nth-child(2) li:first-child > label').click();
 
         expect(tree.find('input:checked').length).toEqual(1);
     });

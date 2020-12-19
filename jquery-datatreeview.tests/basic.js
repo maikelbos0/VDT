@@ -87,7 +87,7 @@
             }]
         });
 
-        expect(tree.find('ul.datatreeview-list > li > input:checkbox').length).toEqual(2);
+        expect(tree.find('input:checkbox').length).toEqual(2);
     });
 
     it('will add togglers for list items with children', function () {
