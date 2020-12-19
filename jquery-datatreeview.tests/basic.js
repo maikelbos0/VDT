@@ -301,4 +301,17 @@
 
         expect(tree.find('input:checked').length).toEqual(4);
     });
+
+    it('will name the input', function () {
+        var tree = $('#basic-datatreeview-input');
+
+        tree.datatreeview({
+            data: [{
+                value: '7',
+                text: 'Baz'
+            }]
+        });
+
+        expect(tree.find('input').prop('name')).toEqual('test');
+    });
 });

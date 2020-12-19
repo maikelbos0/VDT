@@ -73,4 +73,20 @@
 
         expect(tree.find('li li').length).toEqual(2);
     });
+
+    it('can be provided for getFieldName', function () {
+        var tree = $('#datatreeview-options-field-name');
+
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Test'
+            }],
+            getFieldName: function () {
+                return 'field';
+            }
+        });
+
+        expect(tree.find('input').prop('name')).toEqual('field');
+    });
 });

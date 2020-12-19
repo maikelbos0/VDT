@@ -57,6 +57,11 @@
         // Defaults to the data-property children-property with as fallback 'children'
         getChildrenProperty: function (element) {
             return $(element).data('children-property') || 'children';
+        },
+        // The field name to use for the generated checkboxes
+        // Defaults to the data-property field-name
+        getFieldName: function (element) {
+            return $(element).data('field-name');
         }
     }
 
@@ -70,6 +75,7 @@
         this.textProperty = options.getTextProperty(this.element);
         this.selectedProperty = options.getSelectedProperty(this.element);
         this.childrenProperty = options.getChildrenProperty(this.element);
+        this.fieldName = options.getFieldName(this.element);
 
         this.element.children().hide();
         this.element.addClass('datatreeview');
@@ -114,7 +120,12 @@
     Datatreeview.prototype.createNode = function (list, data) {
         var nodeId = Math.random().toString().replace('.', '');
         var node = this.createElement('<li>');
-        var checkbox = this.createElement('<input>', 'datatreeview-selector', { type: 'checkbox', value: data[this.valueProperty], id: nodeId });
+        var checkbox = this.createElement('<input>', 'datatreeview-selector', {
+            type: 'checkbox',
+            name: this.fieldName,
+            value: data[this.valueProperty],
+            id: nodeId
+        });
 
         node.append(checkbox);
         node.append(this.createElement('<label>', 'datatreeview-selector-label', { for: nodeId }).text(data[this.textProperty]));
