@@ -56,17 +56,17 @@
   <ItemGroup>
     <None Include="bundleconfig.json" />
     <None Include="Scripts\jquery-3.5.0.intellisense.js" />
-    <Content Include="Content\jquery-treeview.css" />
-    <Content Include="Content\jquery-treeview.min.css">
-      <DependentUpon>jquery-treeview.css</DependentUpon>
+    <Content Include="Content\jquery-datatreeview.css" />
+    <Content Include="Content\jquery-datatreeview.min.css">
+      <DependentUpon>jquery-datatreeview.css</DependentUpon>
     </Content>
     <Content Include="Scripts\jquery-3.5.0.js" />
     <Content Include="Scripts\jquery-3.5.0.min.js" />
     <Content Include="Scripts\jquery-3.5.0.slim.js" />
     <Content Include="Scripts\jquery-3.5.0.slim.min.js" />
-    <Content Include="Scripts\jquery-treeview.js" />
-    <Content Include="Scripts\jquery-treeview.min.js">
-      <DependentUpon>jquery-treeview.js</DependentUpon>
+    <Content Include="Scripts\jquery-datatreeview.js" />
+    <Content Include="Scripts\jquery-datatreeview.min.js">
+      <DependentUpon>jquery-datatreeview.js</DependentUpon>
     </Content>
     <Content Include="Web.config" />
   </ItemGroup>

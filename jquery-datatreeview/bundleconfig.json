@@ -1,14 +1,14 @@
 [
   {
-    "outputFileName": "Scripts/jquery-treeview.min.js",
+    "outputFileName": "Content/jquery-datatreeview.min.css",
     "inputFiles": [
-      "Scripts/jquery-treeview.js"
+      "Content/jquery-datatreeview.css"
     ]
   },
   {
-    "outputFileName": "Content/jquery-treeview.min.css",
+    "outputFileName": "Scripts/jquery-datatreeview.min.js",
     "inputFiles": [
-      "Content/jquery-treeview.css"
+      "Scripts/jquery-datatreeview.js"
     ]
   }
 ]

@@ -3,7 +3,7 @@
   "Engine": "JSDom",
   "References": [
     { "Path": "../jquery-datatreeview/Scripts/jquery-3.5.0.min.js" },
-    { "Path": "../jquery-datatreeview/Scripts/jquery-treeview.min.js" },
+    { "Path": "../jquery-datatreeview/Scripts/jquery-datatreeview.min.js" },
     { "Includes": [ "*.html" ] }
   ],
   "Tests": [
