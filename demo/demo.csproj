@@ -222,7 +222,7 @@
     <Compile Include="Controllers\DropdownlistController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NumericinputController.cs" />
-    <Compile Include="Controllers\SliderController.cs" />
+    <Compile Include="Controllers\RangesliderController.cs" />
     <Compile Include="Controllers\DatatreeviewController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -240,7 +240,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Datagridview\Index.cshtml" />
-    <Content Include="Views\Slider\Index.cshtml" />
+    <Content Include="Views\Rangeslider\Index.cshtml" />
     <Content Include="Views\Numericinput\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />

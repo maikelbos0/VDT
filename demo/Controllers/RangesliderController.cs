@@ -1,8 +1,8 @@
 ﻿using System.Web.Mvc;
 
 namespace vdt.demo.Controllers {
-    [RoutePrefix("Slider")]
-    public class SliderController : Controller {
+    [RoutePrefix("Rangeslider")]
+    public class RangesliderController : Controller {
         [Route]
         [Route("Index")]
         public ActionResult Index() {
