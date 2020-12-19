@@ -1,34 +1,34 @@
-﻿describe('creating an element for treeview', function () {
+﻿describe('creating an element for datatreeview', function () {
     it('succeeds', function () {
         var tree = $('#element-succeeds');
         var element;
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'A value'
             }]
         },
         function () {
-            element = this.createElement('<div>', 'treeview');
+            element = this.createElement('<div>', 'datatreeview');
         });
 
         expect(element.prop('tagName')).toEqual('DIV');
-        expect(element.hasClass('treeview')).toEqual(true);
+        expect(element.hasClass('datatreeview')).toEqual(true);
     });
 
     it('succeeds with attributes', function () {
         var tree = $('#element-attributes');
         var element;
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'A value'
             }]
         },
         function () {
-            element = this.createElement('<div>', 'treeview', { id: 'test', value: 'value' });
+            element = this.createElement('<div>', 'datatreeview', { id: 'test', value: 'value' });
         });
 
         expect(element.attr('id')).toEqual('test');
@@ -39,14 +39,14 @@
         var tree = $('#element-attributes-multiple');
         var element;
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'A value'
             }]
         },
         function () {
-            element = this.createElement('<div>', 'treeview', { id: 'test', value: 'value' }, { id: 'test2' });
+            element = this.createElement('<div>', 'datatreeview', { id: 'test', value: 'value' }, { id: 'test2' });
         });
 
         expect(element.attr('id')).toEqual('test2');
@@ -57,17 +57,17 @@
         var tree = $('#element-attributes-class');
         var element;
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'A value'
             }]
         },
         function () {
-            element = this.createElement('<div>', 'treeview', { class: 'form-control' });
+            element = this.createElement('<div>', 'datatreeview', { class: 'form-control' });
         });
 
-        expect(element.hasClass('treeview')).toEqual(true);
+        expect(element.hasClass('datatreeview')).toEqual(true);
         expect(element.hasClass('form-control')).toEqual(true);
     });
 });

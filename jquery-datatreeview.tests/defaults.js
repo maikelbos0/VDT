@@ -1,12 +1,12 @@
-﻿describe('treeview defaults', function () {
-    $.fn.treeview.defaults.getTextProperty = function () {
+﻿describe('datatreeview defaults', function () {
+    $.fn.datatreeview.defaults.getTextProperty = function () {
         return 'content';
     };
 
     it('can be changed', function () {
-        var tree = $('#treeview-defaults');
+        var tree = $('#datatreeview-defaults');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Test',
@@ -18,9 +18,9 @@
     });
 
     it('can still be overridden in the options after being changed', function () {
-        var tree = $('#treeview-defaults-override');
+        var tree = $('#datatreeview-defaults-override');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Test',

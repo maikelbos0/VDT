@@ -1,23 +1,23 @@
-﻿describe('a basic treeview', function () {
+﻿describe('a basic datatreeview', function () {
     it('can be created', function () {
-        var tree = $('#basic-treeview-created');
+        var tree = $('#basic-datatreeview-created');
 
         expect(tree.length).toEqual(1);
         expect(function () {
-            tree.treeview({
+            tree.datatreeview({
                 data: [{
                     value: '1',
                     text: 'A value'
                 }]
             });
         }).not.toThrow();
-        expect(tree.data('treeview')).toBeTruthy();
+        expect(tree.data('datatreeview')).toBeTruthy();
     });
 
     it('hides the already present content', function () {
-        var tree = $('#basic-treeview-hides');
+        var tree = $('#basic-datatreeview-hides');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'A value'
@@ -31,35 +31,35 @@
     });
 
     it('will add a class', function () {
-        var tree = $('#basic-treeview-class');
+        var tree = $('#basic-datatreeview-class');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'A value'
             }]
         });
 
-        expect(tree.hasClass('treeview')).toEqual(true);
+        expect(tree.hasClass('datatreeview')).toEqual(true);
     });
 
     it('will add a list', function () {
-        var tree = $('#basic-treeview-list');
+        var tree = $('#basic-datatreeview-list');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'A value'
             }]
         });
 
-        expect(tree.children('ul.treeview-list').length).toEqual(1);
+        expect(tree.children('ul.datatreeview-list').length).toEqual(1);
     });
 
     it('will add list items', function () {
-        var tree = $('#basic-treeview-list-items');
+        var tree = $('#basic-datatreeview-list-items');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Foo'
@@ -70,13 +70,13 @@
             }]
         });
 
-        expect(tree.find('ul.treeview-list > li').length).toEqual(2);
+        expect(tree.find('ul.datatreeview-list > li').length).toEqual(2);
     });
 
     it('will add list item checkboxes', function () {
-        var tree = $('#basic-treeview-list-item-checkboxes');
+        var tree = $('#basic-datatreeview-list-item-checkboxes');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Foo'
@@ -87,13 +87,13 @@
             }]
         });
 
-        expect(tree.find('ul.treeview-list > li > input:checkbox').length).toEqual(2);
+        expect(tree.find('ul.datatreeview-list > li > input:checkbox').length).toEqual(2);
     });
 
     it('will add togglers for list items with children', function () {
-        var tree = $('#basic-treeview-list-item-children-toggler');
+        var tree = $('#basic-datatreeview-list-item-children-toggler');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Foo'
@@ -114,13 +114,13 @@
             }]
         });
 
-        expect(tree.find('ul.treeview-list > li > .treeview-toggler').length).toEqual(1);
+        expect(tree.find('ul.datatreeview-list > li > .datatreeview-toggler').length).toEqual(1);
     });
 
     it('will add child lists', function () {
-        var tree = $('#basic-treeview-child-list');
+        var tree = $('#basic-datatreeview-child-list');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Foo',
@@ -155,13 +155,13 @@
             }]
         });
 
-        expect(tree.find('ul.treeview-list > li > ul.treeview-list').length).toEqual(2);
+        expect(tree.find('ul.datatreeview-list > li > ul.datatreeview-list').length).toEqual(2);
     });
 
     it('will add child list items', function () {
-        var tree = $('#basic-treeview-child-list-items');
+        var tree = $('#basic-datatreeview-child-list-items');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Foo',
@@ -196,13 +196,13 @@
             }]
         });
 
-        expect(tree.find('ul.treeview-list > li > ul.treeview-list > li').length).toEqual(4);
+        expect(tree.find('ul.datatreeview-list > li > ul.datatreeview-list > li').length).toEqual(4);
     });
 
     it('will add child list item checkboxes', function () {
-        var tree = $('#basic-treeview-child-list-item-checkboxes');
+        var tree = $('#basic-datatreeview-child-list-item-checkboxes');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Foo',
@@ -237,31 +237,31 @@
             }]
         });
 
-        expect(tree.find('ul.treeview-list > li > ul.treeview-list > li input:checkbox').length).toEqual(4);
+        expect(tree.find('ul.datatreeview-list > li > ul.datatreeview-list > li input:checkbox').length).toEqual(4);
     });
 
     it('needs required option "data"', function () {
-        var tree = $('#basic-treeview-data-required');
+        var tree = $('#basic-datatreeview-data-required');
 
         expect(function () {
-            tree.treeview();
-        }).toThrow('treeview error: expected required option "data"');
+            tree.datatreeview();
+        }).toThrow('datatreeview error: expected required option "data"');
     });
 
     it('needs option "data" to be an array', function () {
-        var tree = $('#basic-treeview-data-array');
+        var tree = $('#basic-datatreeview-data-array');
 
         expect(function () {
-            tree.treeview({
+            tree.datatreeview({
                 data: 5
             });
-        }).toThrow('treeview error: expected option "data" to be an array');
+        }).toThrow('datatreeview error: expected option "data" to be an array');
     });
 
     it('will check checkboxes for selected data nodes', function () {
-        var tree = $('#basic-treeview-select-checkboxes');
+        var tree = $('#basic-datatreeview-select-checkboxes');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Foo',

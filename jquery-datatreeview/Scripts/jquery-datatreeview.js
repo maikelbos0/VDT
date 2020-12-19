@@ -1,7 +1,7 @@
 ﻿(function ($) {
 
-    // Extension for creating treeview; supports multiple creations in one call
-    $.fn.treeview = function (settings, callback) {
+    // Extension for creating datatreeview; supports multiple creations in one call
+    $.fn.datatreeview = function (settings, callback) {
         // Allow callback to be the only argument
         if ($.isFunction(settings)) {
             callback = settings;
@@ -10,34 +10,34 @@
 
         return $(this).each(function () {
             // Get object from data
-            let treeview = $(this).data('treeview');
+            let datatreeview = $(this).data('datatreeview');
 
-            if (!treeview) {
+            if (!datatreeview) {
                 // Validate data
                 if (!settings || !settings.data) {
-                    throw 'treeview error: expected required option "data"';
+                    throw 'datatreeview error: expected required option "data"';
                 }
                 else if (!$.isArray(settings.data)) {
-                    throw 'treeview error: expected option "data" to be an array';
+                    throw 'datatreeview error: expected option "data" to be an array';
                 }
 
                 // Create object
-                let options = $.extend({}, $.fn.treeview.defaults, settings);
-                treeview = new Treeview($(this), options);
+                let options = $.extend({}, $.fn.datatreeview.defaults, settings);
+                datatreeview = new Datatreeview($(this), options);
 
                 // Add object to data
-                $(this).data('treeview', treeview);
+                $(this).data('datatreeview', datatreeview);
             }
 
-            // Call the callback, bound to the treeview
+            // Call the callback, bound to the datatreeview
             if ($.isFunction(callback)) {
-                callback.bind(treeview)(treeview);
+                callback.bind(datatreeview)(datatreeview);
             }
         });
     }
 
     // Set defaults for extension
-    $.fn.treeview.defaults = {
+    $.fn.datatreeview.defaults = {
         // The property in a data node object to use as node value
         // Defaults to the data-property value-property with as fallback 'value'
         getValueProperty: function (element) {
@@ -60,8 +60,8 @@
         }
     }
 
-    // Treeview implementation
-    function Treeview(element, options) {
+    // Datatreeview implementation
+    function Datatreeview(element, options) {
         let base = this;
 
         this.element = element;
@@ -72,9 +72,9 @@
         this.childrenProperty = options.getChildrenProperty(this.element);
 
         this.element.children().hide();
-        this.element.addClass('treeview');
+        this.element.addClass('datatreeview');
 
-        this.list = this.createElement('<ul>', 'treeview-list');
+        this.list = this.createElement('<ul>', 'datatreeview-list');
         this.element.append(this.list);
 
         $.each(this.options.data, function (_, data) {
@@ -82,12 +82,12 @@
         });
 
         // Event handlers
-        this.list.on('click', '.treeview-toggler', this, eventHandlers.togglerClick);
-        this.list.on('change', '.treeview-selector', this, eventHandlers.inputChange);
+        this.list.on('click', '.datatreeview-toggler', this, eventHandlers.togglerClick);
+        this.list.on('change', '.datatreeview-selector', this, eventHandlers.inputChange);
     }
 
     // Create an element and merge attribute objects to attributes
-    Treeview.prototype.createElement = function (tagName, className) {
+    Datatreeview.prototype.createElement = function (tagName, className) {
         let attributes = $.extend.apply({}, Array.prototype.slice.call(arguments, 2));
         let element = $(tagName, attributes).addClass(className);
 
@@ -95,11 +95,11 @@
     }
 
     // Create a list based on an array of node data
-    Treeview.prototype.createList = function (node, dataArray) {
+    Datatreeview.prototype.createList = function (node, dataArray) {
         let base = this;
 
-        let list = this.createElement('<ul>', 'treeview-list');
-        let toggler = this.createElement('<div>', 'treeview-toggler');
+        let list = this.createElement('<ul>', 'datatreeview-list');
+        let toggler = this.createElement('<div>', 'datatreeview-toggler');
 
         toggler.data('toggle-target', list);
         node.prepend(toggler);
@@ -111,13 +111,13 @@
     }
 
     // Create a node based on node data
-    Treeview.prototype.createNode = function (list, data) {
+    Datatreeview.prototype.createNode = function (list, data) {
         var nodeId = Math.random().toString().replace('.', '');
         var node = this.createElement('<li>');
-        var checkbox = this.createElement('<input>', 'treeview-selector', { type: 'checkbox', value: data[this.valueProperty], id: nodeId });
+        var checkbox = this.createElement('<input>', 'datatreeview-selector', { type: 'checkbox', value: data[this.valueProperty], id: nodeId });
 
         node.append(checkbox);
-        node.append(this.createElement('<label>', 'treeview-selector-label', { for: nodeId }).text(data[this.textProperty]));
+        node.append(this.createElement('<label>', 'datatreeview-selector-label', { for: nodeId }).text(data[this.textProperty]));
         node.data('node-data', data);
         list.append(node);
 
@@ -125,7 +125,7 @@
             this.createList(node, data[this.childrenProperty]);
 
             // If we have children and all are selected, select this node as well
-            if (node.find('.treeview-list input:checked').length === node.find('.treeview-list input').length) {
+            if (node.find('.datatreeview-list input:checked').length === node.find('.datatreeview-list input').length) {
                 checkbox.prop('checked', true);
             }
         }
@@ -134,16 +134,16 @@
         }
     }
 
-    // Remove the entire treeview; resets the base element to its former state
-    Treeview.prototype.remove = function () {
+    // Remove the entire datatreeview; resets the base element to its former state
+    Datatreeview.prototype.remove = function () {
         this.list.remove();
-        this.element.removeClass('treeview');
-        this.element.removeData('treeview');
+        this.element.removeClass('datatreeview');
+        this.element.removeData('datatreeview');
         this.element.children().show();
     }
 
     // Get the selected values as an array
-    Treeview.prototype.getSelectedValues = function () {
+    Datatreeview.prototype.getSelectedValues = function () {
         let base = this;
 
         return this.getSelectedData().map(function (value) {
@@ -152,28 +152,28 @@
     }
 
     // Get the selected data nodes as an array
-    Treeview.prototype.getSelectedData = function () {
+    Datatreeview.prototype.getSelectedData = function () {
         return this.getSelectedNodes().map(function () {
             return $(this).data('node-data');
         }).get();
     }
 
     // Get the selected nodes
-    Treeview.prototype.getSelectedNodes = function () {
-        return this.element.find('input.treeview-selector:checked').closest('li');
+    Datatreeview.prototype.getSelectedNodes = function () {
+        return this.element.find('input.datatreeview-selector:checked').closest('li');
     }
 
     // Set selected nodes by selector/selection/function/element
-    Treeview.prototype.setSelectedNodes = function (nodes) {
+    Datatreeview.prototype.setSelectedNodes = function (nodes) {
         var actualNodes = $(nodes).not(':has(li)');
 
-        this.list.find('li').not(actualNodes).children('input.treeview-selector').prop('checked', false);
-        $(actualNodes).children('input.treeview-selector').prop('checked', true);
-        this.list.find('li:has(li):not(:has(li:not(:has(li)) input.treeview-selector:not(:checked)))').children('input.treeview-selector').prop('checked', true);
+        this.list.find('li').not(actualNodes).children('input.datatreeview-selector').prop('checked', false);
+        $(actualNodes).children('input.datatreeview-selector').prop('checked', true);
+        this.list.find('li:has(li):not(:has(li:not(:has(li)) input.datatreeview-selector:not(:checked)))').children('input.datatreeview-selector').prop('checked', true);
     }
 
     // Set the selected nodes based on a value array
-    Treeview.prototype.setSelectedValues = function (values) {
+    Datatreeview.prototype.setSelectedValues = function (values) {
         let base = this;
 
         this.setSelectedData(function (nodeData) {
@@ -183,7 +183,7 @@
 
     // Set selected node by filter function
     // Filter function argument is node data
-    Treeview.prototype.setSelectedData = function (filter) {
+    Datatreeview.prototype.setSelectedData = function (filter) {
         var nodes = this.list.find('li').filter(function () {
             return filter($(this).data('node-data'));
         });
@@ -194,22 +194,22 @@
     // Event handlers should not be accessible from the object itself
     let eventHandlers = {
         togglerClick: function (e) {
-            $(e.target).toggleClass('treeview-toggler-closed');
+            $(e.target).toggleClass('datatreeview-toggler-closed');
             $(e.target).data('toggle-target').toggle();
         },
         inputChange: function (e) {
             var checked = $(e.target).is(':checked');
             var node = $(e.target).closest('li');
 
-            node.find('input.treeview-selector').prop('checked', checked);
+            node.find('input.datatreeview-selector').prop('checked', checked);
 
             if (checked) {
-                node.parents('li').children('input.treeview-selector').prop('checked', function () {
-                    return $(this).closest('li').find('input.treeview-selector').not(this).not(':checked').length == 0;
+                node.parents('li').children('input.datatreeview-selector').prop('checked', function () {
+                    return $(this).closest('li').find('input.datatreeview-selector').not(this).not(':checked').length == 0;
                 });
             }
             else {
-                node.parents('li').children('input.treeview-selector').prop('checked', false);
+                node.parents('li').children('input.datatreeview-selector').prop('checked', false);
             }
         }
     };

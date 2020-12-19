@@ -1,8 +1,8 @@
-﻿describe('a treeview option', function () {
+﻿describe('a datatreeview option', function () {
     it('can be provided for getValueProperty', function () {
-        var tree = $('#treeview-options-value-property');
+        var tree = $('#datatreeview-options-value-property');
         
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 data: '2',
@@ -13,13 +13,13 @@
             }
         });
 
-        expect(tree.find('input.treeview-selector').val()).toEqual('2');
+        expect(tree.find('input.datatreeview-selector').val()).toEqual('2');
     });
 
     it('can be provided for getTextProperty', function () {
-        var tree = $('#treeview-options-text-property');
+        var tree = $('#datatreeview-options-text-property');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Test',
@@ -34,9 +34,9 @@
     });
 
     it('can be provided for getSelectedProperty', function () {
-        var tree = $('#treeview-options-selected-property');
+        var tree = $('#datatreeview-options-selected-property');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Test',
@@ -47,13 +47,13 @@
             }
         });
 
-        expect(tree.find('input.treeview-selector').is(':checked')).toEqual(true);
+        expect(tree.find('input.datatreeview-selector').is(':checked')).toEqual(true);
     });
 
     it('can be provided for getChildrenProperty', function () {
-        var tree = $('#treeview-options-children-property');
+        var tree = $('#datatreeview-options-children-property');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Test',

@@ -1,8 +1,8 @@
 ﻿describe('when a user', function () {
     it('clicks on a toggler it hides the child items and changes the class', function () {
-        var tree = $('#treeview-events-toggler-click');
+        var tree = $('#datatreeview-events-toggler-click');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Foo'
@@ -23,16 +23,16 @@
             }]
         });
 
-        tree.find('li:nth-child(2) > .treeview-toggler').click();
+        tree.find('li:nth-child(2) > .datatreeview-toggler').click();
 
-        expect(tree.find('li:nth-child(2) > .treeview-toggler').hasClass('treeview-toggler-closed')).toEqual(true);
+        expect(tree.find('li:nth-child(2) > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(true);
         expect(tree.find('li ul').css('display')).toEqual('none');
     });
 
     it('clicks on a closed toggler it shows the child items and changes the class', function () {
-        var tree = $('#treeview-events-toggler-click-open');
+        var tree = $('#datatreeview-events-toggler-click-open');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Foo'
@@ -53,17 +53,17 @@
             }]
         });
 
-        tree.find('li:nth-child(2) > .treeview-toggler').click();
-        tree.find('li:nth-child(2) > .treeview-toggler').click();
+        tree.find('li:nth-child(2) > .datatreeview-toggler').click();
+        tree.find('li:nth-child(2) > .datatreeview-toggler').click();
 
-        expect(tree.find('li:nth-child(2) > .treeview-toggler').hasClass('treeview-toggler-closed')).toEqual(false);
+        expect(tree.find('li:nth-child(2) > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(false);
         expect(tree.find('li ul').css('display')).not.toEqual('none');
     });
 
     it('checks a checkbox it checks all descendants', function () {
-        var tree = $('#treeview-events-input-check-children');
+        var tree = $('#datatreeview-events-input-check-children');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Foo'
@@ -84,15 +84,15 @@
             }]
         });
 
-        tree.find('li:nth-child(2):has(li) > input.treeview-selector').click();
+        tree.find('li:nth-child(2):has(li) > input.datatreeview-selector').click();
 
         expect(tree.find('input:checked').length).toEqual(3);
     });
 
     it('unchecks a checkbox it unchecks all descendants', function () {
-        var tree = $('#treeview-events-input-uncheck-children');
+        var tree = $('#datatreeview-events-input-uncheck-children');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Foo'
@@ -116,15 +116,15 @@
             }]
         });
 
-        tree.find('li:nth-child(2):has(li) > input.treeview-selector').click();
+        tree.find('li:nth-child(2):has(li) > input.datatreeview-selector').click();
 
         expect(tree.find('input:checked').length).toEqual(0);
     });
 
     it('checks a checkbox it checks ancestors as needed', function () {
-        var tree = $('#treeview-events-input-check-parent');
+        var tree = $('#datatreeview-events-input-check-parent');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Foo'
@@ -146,15 +146,15 @@
             }]
         });
 
-        tree.find('li:nth-child(2) li:first-child > input.treeview-selector').click();
+        tree.find('li:nth-child(2) li:first-child > input.datatreeview-selector').click();
 
         expect(tree.find('input:checked').length).toEqual(3);
     });
 
     it('unchecks a checkbox it unchecks all ancestors', function () {
-        var tree = $('#treeview-events-input-uncheck-parent');
+        var tree = $('#datatreeview-events-input-uncheck-parent');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Foo'
@@ -177,7 +177,7 @@
             }]
         });
 
-        tree.find('li:nth-child(2) li:first-child > input.treeview-selector').click();
+        tree.find('li:nth-child(2) li:first-child > input.datatreeview-selector').click();
 
         expect(tree.find('input:checked').length).toEqual(1);
     });

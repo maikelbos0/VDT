@@ -1,8 +1,8 @@
-﻿describe('a treeview object', function () {
+﻿describe('a datatreeview object', function () {
     it('callback is called', function () {
         var called = false;
 
-        $('#treeview-interaction-callback').treeview({
+        $('#datatreeview-interaction-callback').datatreeview({
             data: []
         }, function () {
             called = true;
@@ -11,10 +11,10 @@
         expect(called).toEqual(true);
     });
 
-    it('is the function scope in the callback when creating a treeview', function () {
+    it('is the function scope in the callback when creating a datatreeview', function () {
         var called = false;
 
-        $('#treeview-interaction-this').treeview({
+        $('#datatreeview-interaction-this').datatreeview({
             data: []
         }, function () {
             expect(typeof this.remove).toEqual('function');
@@ -24,14 +24,14 @@
         expect(called).toEqual(true);
     });
 
-    it('is the function scope in the callback when a treeview already exists', function () {
+    it('is the function scope in the callback when a datatreeview already exists', function () {
         var called = false;
 
-        $('#treeview-interaction-this-existing').treeview({
+        $('#datatreeview-interaction-this-existing').datatreeview({
             data: []
         });
 
-        $('#treeview-interaction-this-existing').treeview(null, function () {
+        $('#datatreeview-interaction-this-existing').datatreeview(null, function () {
             expect(typeof this.remove).toEqual('function');
             called = true;
         });
@@ -42,11 +42,11 @@
     it('callback is called if it\'s the first argument of the function after creating', function () {
         var called = false;
 
-        $('#treeview-interaction-callback-no-options').treeview({
+        $('#datatreeview-interaction-callback-no-options').datatreeview({
             data: []
         });
 
-        $('#treeview-interaction-callback-no-options').treeview(function () {
+        $('#datatreeview-interaction-callback-no-options').datatreeview(function () {
             called = true;
         });
 
@@ -56,7 +56,7 @@
     it('is the first parameter in the callback', function () {
         var called = false;
 
-        $('#treeview-interaction-first-parameter').treeview({
+        $('#datatreeview-interaction-first-parameter').datatreeview({
             data: []
         }, function (s) {
             expect(s).not.toBeNull();
@@ -70,17 +70,17 @@
     });
 
     it('can be removed', function () {
-        var tree = $('#treeview-interaction-remove');
+        var tree = $('#datatreeview-interaction-remove');
 
-        tree.treeview({
+        tree.datatreeview({
             data: []
         }, function () {
             this.remove();
         });
 
-        expect(tree.hasClass('treeview')).toEqual(false);
+        expect(tree.hasClass('datatreeview')).toEqual(false);
         expect(tree.find('ul').length).toEqual(0);
-        expect(tree.data('treeview')).toBeUndefined();
+        expect(tree.data('datatreeview')).toBeUndefined();
 
         var hiddenContent = tree.find('.test-hidden');
 
@@ -89,10 +89,10 @@
     });
 
     it('can be used to get selected values', function () {
-        var tree = $('#treeview-interaction-get-selected-values');
+        var tree = $('#datatreeview-interaction-get-selected-values');
         var selectedValues;
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Foo',
@@ -136,7 +136,7 @@
     });
 
     it('can be used to get selected data', function () {
-        var tree = $('#treeview-interaction-get-selected-data');
+        var tree = $('#datatreeview-interaction-get-selected-data');
         var selectedData;
         var data = [{
             value: '1',
@@ -174,7 +174,7 @@
             selected: true
         }];
 
-        tree.treeview({
+        tree.datatreeview({
             data: data
         }, function () {
             selectedData = this.getSelectedData();
@@ -184,10 +184,10 @@
     });
 
     it('can be used to get selected nodes', function () {
-        var tree = $('#treeview-interaction-get-selected-nodes');
+        var tree = $('#datatreeview-interaction-get-selected-nodes');
         var selectedNodes;
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Foo',
@@ -235,9 +235,9 @@
     });
 
     it('can be used to select values', function () {
-        var tree = $('#treeview-interaction-set-selected-values');
+        var tree = $('#datatreeview-interaction-set-selected-values');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Foo',
@@ -275,13 +275,13 @@
             this.setSelectedValues(['3', '4', '7']);
         });
 
-        expect(tree.find('input.treeview-selector:checked').map(function () { return $(this).val() }).get()).toEqual(['1', '3', '4', '7']);
+        expect(tree.find('input.datatreeview-selector:checked').map(function () { return $(this).val() }).get()).toEqual(['1', '3', '4', '7']);
     });
 
     it('can be used to select data', function () {
-        var tree = $('#treeview-interaction-set-selected-data');
+        var tree = $('#datatreeview-interaction-set-selected-data');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Foo',
@@ -319,13 +319,13 @@
             this.setSelectedData(function (value) { return value.text.indexOf('Ba') > -1 });
         });
 
-        expect(tree.find('input.treeview-selector:checked').map(function () { return $(this).val() }).get()).toEqual(['3', '5', '7']);
+        expect(tree.find('input.datatreeview-selector:checked').map(function () { return $(this).val() }).get()).toEqual(['3', '5', '7']);
     });
 
     it('can be used to select nodes', function () {
-        var tree = $('#treeview-interaction-set-selected-nodes');
+        var tree = $('#datatreeview-interaction-set-selected-nodes');
 
-        tree.treeview({
+        tree.datatreeview({
             data: [{
                 value: '1',
                 text: 'Foo',
@@ -363,6 +363,6 @@
             this.setSelectedNodes(tree.find('li:first-child li'));
         });
 
-        expect(tree.find('input.treeview-selector:checked').map(function () { return $(this).val() }).get()).toEqual(['1', '3', '4']);
+        expect(tree.find('input.datatreeview-selector:checked').map(function () { return $(this).val() }).get()).toEqual(['1', '3', '4']);
     });
 });
