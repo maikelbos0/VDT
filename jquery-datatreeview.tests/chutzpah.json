@@ -2,8 +2,8 @@
   "Framework": "jasmine",
   "Engine": "JSDom",
   "References": [
-    { "Path": "../jquery-treeview/Scripts/jquery-3.5.0.min.js" },
-    { "Path": "../jquery-treeview/Scripts/jquery-treeview.min.js" },
+    { "Path": "../jquery-datatreeview/Scripts/jquery-3.5.0.min.js" },
+    { "Path": "../jquery-datatreeview/Scripts/jquery-treeview.min.js" },
     { "Includes": [ "*.html" ] }
   ],
   "Tests": [

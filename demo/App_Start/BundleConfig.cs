@@ -9,7 +9,7 @@ namespace vdt.demo.App_Start {
                 "~/../jquery-datagridview/Scripts/jquery-datagridview.js",
                 "~/../jquery-rangeslider/Scripts/jquery-rangeslider.js",
                 "~/../jquery-numericinput/Scripts/jquery-numericinput.js",
-                "~/../jquery-treeview/Scripts/jquery-treeview.js"));
+                "~/../jquery-datatreeview/Scripts/jquery-treeview.js"));
 
             bundles.Add(new ScriptBundle("~/Scripts/bootstrap").Include(
                 "~/Scripts/bootstrap.min.js"));
@@ -24,7 +24,7 @@ namespace vdt.demo.App_Start {
                 "~/../jquery-rangeslider/Content/jquery-rangeslider.css",
                 "~/../jquery-rangeslider/Content/jquery-rangeslider.style.css",
                 "~/../jquery-numericinput/Content/jquery-numericinput.style.css",
-                "~/../jquery-treeview/Content/jquery-treeview.css"));
+                "~/../jquery-datatreeview/Content/jquery-treeview.css"));
         }
     }
 }

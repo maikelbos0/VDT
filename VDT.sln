@@ -33,9 +33,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jquery-numericinput", "jque
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jquery-numericinput.tests", "jquery-numericinput.tests\jquery-numericinput.tests.csproj", "{3E174A8B-6F09-4B2A-9EC3-4185D99A2068}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jquery-datatreeview", "jquery-treeview\jquery-datatreeview.csproj", "{B9A25AD8-2954-4F5A-9ACC-24A08DC7C2B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jquery-datatreeview", "jquery-datatreeview\jquery-datatreeview.csproj", "{B9A25AD8-2954-4F5A-9ACC-24A08DC7C2B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jquery-datatreeview.tests", "jquery-treeview.tests\jquery-datatreeview.tests.csproj", "{48A9ABA8-196F-4927-8C7B-E460554A09F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jquery-datatreeview.tests", "jquery-datatreeview.tests\jquery-datatreeview.tests.csproj", "{48A9ABA8-196F-4927-8C7B-E460554A09F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
