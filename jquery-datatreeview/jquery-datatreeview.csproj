@@ -56,9 +56,13 @@
   <ItemGroup>
     <None Include="bundleconfig.json" />
     <None Include="Scripts\jquery-3.5.0.intellisense.js" />
+    <Content Include="Content\jquery-datatreeview.style.css" />
     <Content Include="Content\jquery-datatreeview.css" />
     <Content Include="Content\jquery-datatreeview.min.css">
       <DependentUpon>jquery-datatreeview.css</DependentUpon>
+    </Content>
+    <Content Include="Content\jquery-datatreeview.style.min.css">
+      <DependentUpon>jquery-datatreeview.style.css</DependentUpon>
     </Content>
     <Content Include="Scripts\jquery-3.5.0.js" />
     <Content Include="Scripts\jquery-3.5.0.min.js" />

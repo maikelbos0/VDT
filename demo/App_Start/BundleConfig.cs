@@ -24,7 +24,8 @@ namespace vdt.demo.App_Start {
                 "~/../jquery-rangeslider/Content/jquery-rangeslider.css",
                 "~/../jquery-rangeslider/Content/jquery-rangeslider.style.css",
                 "~/../jquery-numericinput/Content/jquery-numericinput.style.css",
-                "~/../jquery-datatreeview/Content/jquery-datatreeview.css"));
+                "~/../jquery-datatreeview/Content/jquery-datatreeview.css",
+                "~/../jquery-datatreeview/Content/jquery-datatreeview.style.css"));
         }
     }
 }

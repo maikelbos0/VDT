@@ -10,5 +10,11 @@
     "inputFiles": [
       "Scripts/jquery-datatreeview.js"
     ]
+  },
+  {
+    "outputFileName": "Content/jquery-datatreeview.style.min.css",
+    "inputFiles": [
+      "Content/jquery-datatreeview.style.css"
+    ]
   }
 ]
