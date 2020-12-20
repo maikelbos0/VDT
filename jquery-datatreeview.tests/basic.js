@@ -70,7 +70,7 @@
             }]
         });
 
-        expect(tree.find('ul.datatreeview-list > li').length).toEqual(2);
+        expect(tree.find('li.datatreeview-node').length).toEqual(2);
     });
 
     it('will add list item checkboxes', function () {
@@ -87,7 +87,7 @@
             }]
         });
 
-        expect(tree.find('input:checkbox').length).toEqual(2);
+        expect(tree.find('input.datatreeview-field:checkbox').length).toEqual(2);
     });
 
     it('will add togglers for list items with children', function () {
@@ -114,7 +114,7 @@
             }]
         });
 
-        expect(tree.find('ul.datatreeview-list > li > .datatreeview-toggler').length).toEqual(1);
+        expect(tree.find('.datatreeview-toggler').length).toEqual(1);
     });
 
     it('will add child lists', function () {
@@ -155,7 +155,7 @@
             }]
         });
 
-        expect(tree.find('ul.datatreeview-list > li > ul.datatreeview-list').length).toEqual(2);
+        expect(tree.find('li.datatreeview-node > ul.datatreeview-list').length).toEqual(2);
     });
 
     it('will add child list items', function () {
@@ -196,48 +196,7 @@
             }]
         });
 
-        expect(tree.find('ul.datatreeview-list > li > ul.datatreeview-list > li').length).toEqual(4);
-    });
-
-    it('will add child list item checkboxes', function () {
-        var tree = $('#basic-datatreeview-child-list-item-checkboxes');
-
-        tree.datatreeview({
-            data: [{
-                value: '1',
-                text: 'Foo',
-                children: [
-                    {
-                        value: '3',
-                        text: 'Baz'
-                    },
-                    {
-                        value: '4',
-                        text: 'Quux'
-                    }
-                ]
-            },
-            {
-                value: '2',
-                text: 'Bar',
-                children: [
-                    {
-                        value: '5',
-                        text: 'Baz'
-                    },
-                    {
-                        value: '6',
-                        text: 'Quux'
-                    }
-                ]
-            },
-            {
-                value: '7',
-                text: 'Baz'
-            }]
-        });
-
-        expect(tree.find('ul.datatreeview-list > li > ul.datatreeview-list > li input:checkbox').length).toEqual(4);
+        expect(tree.find('li.datatreeview-node > ul.datatreeview-list > li.datatreeview-node').length).toEqual(4);
     });
 
     it('needs required option "data"', function () {
@@ -299,7 +258,7 @@
             }]
         });
 
-        expect(tree.find('input:checked').length).toEqual(4);
+        expect(tree.find('input.datatreeview-field:checked').length).toEqual(4);
     });
 
     it('will name the input', function () {
@@ -312,6 +271,6 @@
             }]
         });
 
-        expect(tree.find('input').prop('name')).toEqual('test');
+        expect(tree.find('input.datatreeview-field').prop('name')).toEqual('test');
     });
 });

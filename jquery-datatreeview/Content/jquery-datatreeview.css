@@ -16,16 +16,11 @@
     padding-left: 3em;
 }
 
-.datatreeview-list > li > .datatreeview-list {
-    padding-top: 1em;
-    margin-top: -1em;
-}
-
-.datatreeview-list > li {
+.datatreeview-node {
     position: relative;
 }
 
-.datatreeview-list > li::after {
+.datatreeview-node::after {
     content: "";
     height: 1000em;
     width: 2.25em;
@@ -34,6 +29,11 @@
     position: absolute;
     left: -1.625em;
     top: -999.25em;
+}
+
+.datatreeview-node > .datatreeview-list {
+    padding-top: 1em;
+    margin-top: -1em;
 }
 
 .datatreeview-toggler {
@@ -66,16 +66,16 @@
     left: calc(50% - 1px);
 }
 
-.datatreeview-list > li > label {
+.datatreeview-text {
     margin-left: 0.5em;
     position: relative;
     z-index: 1;
 }
 
-.datatreeview-list > li > label:first-child {
+.datatreeview-text:first-child {
     margin-left: 1.25em;
 }
 
-.datatreeview-list > li > label > input {
+.datatreeview-field {
     margin-right: 0.5em;
 }
