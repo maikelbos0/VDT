@@ -13,7 +13,7 @@
             }
         });
 
-        expect(tree.find('input.datatreeview-selector').val()).toEqual('2');
+        expect(tree.find('input').val()).toEqual('2');
     });
 
     it('can be provided for getTextProperty', function () {
@@ -47,7 +47,7 @@
             }
         });
 
-        expect(tree.find('input.datatreeview-selector').is(':checked')).toEqual(true);
+        expect(tree.find('input').is(':checked')).toEqual(true);
     });
 
     it('can be provided for getChildrenProperty', function () {

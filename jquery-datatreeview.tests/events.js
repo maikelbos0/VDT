@@ -23,10 +23,10 @@
             }]
         });
 
-        tree.find('li:nth-child(2) > .datatreeview-toggler').click();
+        tree.find('li > .datatreeview-toggler').click();
 
-        expect(tree.find('li:nth-child(2) > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(true);
-        expect(tree.find('li ul').css('display')).toEqual('none');
+        expect(tree.find('li > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(true);
+        expect(tree.find('li > ul').css('display')).toEqual('none');
     });
 
     it('clicks on a closed toggler it shows the child items and changes the class', function () {
@@ -53,11 +53,11 @@
             }]
         });
 
-        tree.find('li:nth-child(2) > .datatreeview-toggler').click();
-        tree.find('li:nth-child(2) > .datatreeview-toggler').click();
+        tree.find('li > .datatreeview-toggler').click();
+        tree.find('li > .datatreeview-toggler').click();
 
-        expect(tree.find('li:nth-child(2) > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(false);
-        expect(tree.find('li ul').css('display')).not.toEqual('none');
+        expect(tree.find('li > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(false);
+        expect(tree.find('li > ul').css('display')).not.toEqual('none');
     });
 
     it('checks a checkbox it checks all descendants', function () {
@@ -84,7 +84,7 @@
             }]
         });
 
-        tree.find('li:nth-child(2):has(li) > label').click();
+        tree.find('> ul > li:nth-child(2) > label').click();
 
         expect(tree.find('input:checked').length).toEqual(3);
     });
@@ -116,7 +116,7 @@
             }]
         });
 
-        tree.find('li:nth-child(2):has(li) > label').click();
+        tree.find('> ul > li:nth-child(2) > label').click();
 
         expect(tree.find('input:checked').length).toEqual(0);
     });
@@ -146,7 +146,7 @@
             }]
         });
 
-        tree.find('li:nth-child(2) li:first-child > label').click();
+        tree.find('> ul > li:nth-child(2) > label').click();
 
         expect(tree.find('input:checked').length).toEqual(3);
     });

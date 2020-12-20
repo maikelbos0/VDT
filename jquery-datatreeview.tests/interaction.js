@@ -275,7 +275,7 @@
             this.setSelectedValues(['3', '4', '7']);
         });
 
-        expect(tree.find('input.datatreeview-selector:checked').map(function () { return $(this).val() }).get()).toEqual(['1', '3', '4', '7']);
+        expect(tree.find('input:checked').map(function () { return $(this).val() }).get()).toEqual(['1', '3', '4', '7']);
     });
 
     it('can be used to select data', function () {
@@ -319,7 +319,7 @@
             this.setSelectedData(function (value) { return value.text.indexOf('Ba') > -1 });
         });
 
-        expect(tree.find('input.datatreeview-selector:checked').map(function () { return $(this).val() }).get()).toEqual(['3', '5', '7']);
+        expect(tree.find('input:checked').map(function () { return $(this).val() }).get()).toEqual(['3', '5', '7']);
     });
 
     it('can be used to select nodes', function () {
@@ -363,6 +363,6 @@
             this.setSelectedNodes(tree.find('li:first-child li'));
         });
 
-        expect(tree.find('input.datatreeview-selector:checked').map(function () { return $(this).val() }).get()).toEqual(['1', '3', '4']);
+        expect(tree.find('input:checked').map(function () { return $(this).val() }).get()).toEqual(['1', '3', '4']);
     });
 });
