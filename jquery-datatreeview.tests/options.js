@@ -89,4 +89,24 @@
 
         expect(tree.find('input').prop('name')).toEqual('field');
     });
+
+    it('can be provided for hasFreehandSelection', function () {
+        var tree = $('#datatreeview-options-freehand-selection');
+        var hasFreehandSelection;
+
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Test'
+            }],
+            hasFreehandSelection: function () {
+                return true;
+            }
+        },
+        function () {
+            hasFreehandSelection = this.hasFreehandSelection;
+        });
+
+        expect(hasFreehandSelection).toEqual(true);
+    });
 });

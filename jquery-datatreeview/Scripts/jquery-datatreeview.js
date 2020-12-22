@@ -62,6 +62,10 @@
         // Defaults to the data-property field-name
         getFieldName: function (element) {
             return $(element).data('field-name');
+        },
+        // Allow a freehand selection of nodes where selecting nodes does not affect child or parent nodes
+        hasFreehandSelection: function (element) {
+            return $(element).data('freehand-select') !== undefined && $(element).data('freehand-select') != false;
         }
     }
 
@@ -76,6 +80,7 @@
         this.selectedProperty = options.getSelectedProperty(this.element);
         this.childrenProperty = options.getChildrenProperty(this.element);
         this.fieldName = options.getFieldName(this.element);
+        this.hasFreehandSelection = options.hasFreehandSelection(this.element);
 
         this.element.children().hide();
         this.element.addClass('datatreeview');
