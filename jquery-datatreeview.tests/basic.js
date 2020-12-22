@@ -217,7 +217,7 @@
         }).toThrow('datatreeview error: expected option "data" to be an array');
     });
 
-    it('will check checkboxes for selected data nodes', function () {
+    it('will check checkboxes including ancestors as needed for selected data nodes', function () {
         var tree = $('#basic-datatreeview-select-checkboxes');
 
         tree.datatreeview({
@@ -240,6 +240,7 @@
             {
                 value: '2',
                 text: 'Bar',
+                selected: true,
                 children: [
                     {
                         value: '5',
@@ -258,7 +259,7 @@
             }]
         });
 
-        expect(tree.find('input.datatreeview-field:checked').length).toEqual(4);
+        expect(tree.find('input.datatreeview-field:checked').map(function () { return $(this).val(); }).get()).toEqual(['1', '3', '4', '7']);
     });
 
     it('will name the input', function () {
@@ -272,5 +273,50 @@
         });
 
         expect(tree.find('input.datatreeview-field').prop('name')).toEqual('test');
+    });
+
+    it('will check checkboxes for only selected data nodes in freehand mode', function () {
+        var tree = $('#basic-datatreeview-freehand-select');
+
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Foo',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz',
+                        selected: true
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux',
+                        selected: true
+                    }
+                ]
+            },
+            {
+                value: '2',
+                text: 'Bar',
+                selected: true,
+                children: [
+                    {
+                        value: '5',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '6',
+                        text: 'Quux'
+                    }
+                ]
+            },
+            {
+                value: '7',
+                text: 'Baz',
+                selected: true
+            }]
+        });
+
+        expect(tree.find('input.datatreeview-field:checked').map(function () { return $(this).val(); }).get()).toEqual(['3', '4', '2', '7']);
     });
 });

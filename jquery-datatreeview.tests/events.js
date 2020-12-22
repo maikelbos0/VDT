@@ -181,4 +181,127 @@
 
         expect(tree.find('input:checked').length).toEqual(1);
     });
+
+    it('checks a checkbox in freehand mode does not change descendants', function () {
+        var tree = $('#datatreeview-events-check-input-child-freehand');
+
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Foo'
+            },
+            {
+                value: '2',
+                text: 'Bar',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux'
+                    }
+                ]
+            }]
+        });
+
+        tree.find('> ul > li:nth-child(2) > label').click();
+
+        expect(tree.find('input:checked').length).toEqual(1);
+    });
+
+    it('unchecks a checkbox in freehand mode does not change descendants', function () {
+        var tree = $('#datatreeview-events-uncheck-input-child-freehand');
+
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Foo'
+            },
+            {
+                value: '2',
+                text: 'Bar',
+                selected: true,
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz',
+                        selected: true
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux',
+                        selected: true
+                    }
+                ]
+            }]
+        });
+
+        tree.find('> ul > li:nth-child(2) > label').click();
+
+        expect(tree.find('input:checked').length).toEqual(2);
+    });
+
+    it('checks a checkbox in freehand mode does not change ancestors', function () {
+        var tree = $('#datatreeview-events-check-input-parent-freehand');
+
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Foo'
+            },
+            {
+                value: '2',
+                text: 'Bar',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux',
+                        selected: true
+                    }
+                ]
+            }]
+        });
+
+        tree.find('> ul > li:nth-child(2) > label').click();
+
+        expect(tree.find('input:checked').length).toEqual(2);
+    });
+
+    it('unchecks a checkbox in freehand mode does not change ancestors', function () {
+        var tree = $('#datatreeview-events-uncheck-input-parent-freehand');
+
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Foo'
+            },
+            {
+                value: '2',
+                text: 'Bar',
+                selected: true,
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz',
+                        selected: true
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux',
+                        selected: true
+                    }
+                ]
+            }]
+        });
+
+        tree.find('li:nth-child(2) li:first-child > label').click();
+
+        expect(tree.find('input:checked').length).toEqual(2);
+    });
 });
