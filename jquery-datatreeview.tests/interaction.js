@@ -367,6 +367,46 @@
     });
 
     it('can be used to select nodes in freehand selection mode', function () {
-        fail();
+        var tree = $('#datatreeview-interaction-set-selected-nodes-freehand');
+
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Foo',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux'
+                    }
+                ]
+            },
+            {
+                value: '2',
+                text: 'Bar',
+                children: [
+                    {
+                        value: '5',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '6',
+                        text: 'Quux'
+                    }
+                ]
+            },
+            {
+                value: '7',
+                text: 'Baz',
+                selected: true
+            }]
+        }, function () {
+            this.setSelectedNodes(tree.find('li:first-child, li li:first-child'));
+        });
+
+        expect(tree.find('input:checked').map(function () { return $(this).val() }).get()).toEqual(['1', '3', '5']);
     });
 });
