@@ -365,4 +365,8 @@
 
         expect(tree.find('input:checked').map(function () { return $(this).val() }).get()).toEqual(['1', '3', '4']);
     });
+
+    it('can be used to select nodes in freehand selection mode', function () {
+        fail();
+    });
 });
