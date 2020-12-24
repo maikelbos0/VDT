@@ -334,7 +334,7 @@
 
         tree.on('datatreeview.selectionChanged', function (_, data, values) {
             selectedData = data;
-            selectedValues = value;
+            selectedValues = values;
         });
 
         tree.find('> ul > li:first-child > label').click();

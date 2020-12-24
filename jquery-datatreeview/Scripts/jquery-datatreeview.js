@@ -123,17 +123,17 @@
 
     // Create a node based on node data
     Datatreeview.prototype.createNode = function (list, data) {
-        var node = this.createElement('<li>', 'datatreeview-node');
-        var checkbox = this.createElement('<input>', 'datatreeview-field', {
+        let node = this.createElement('<li>', 'datatreeview-node');
+        let checkbox = this.createElement('<input>', 'datatreeview-field', {
             type: 'checkbox',
             name: this.fieldName,
             value: data[this.valueProperty]
         });
-        var label = this.createElement('<label>', 'datatreeview-text')
+        let label = this.createElement('<label>', 'datatreeview-text')
             .text(data[this.textProperty])
             .prepend(checkbox);
-        var hasChildren = data[this.childrenProperty] && data[this.childrenProperty].length > 0;
-        var useSelectedProperty = this.hasFreehandSelection || !hasChildren;
+        let hasChildren = data[this.childrenProperty] && data[this.childrenProperty].length > 0;
+        let useSelectedProperty = this.hasFreehandSelection || !hasChildren;
 
         node.append(label);
         node.data('node-data', data);
@@ -183,8 +183,8 @@
 
     // Set selected nodes by selector/selection/function/element
     Datatreeview.prototype.setSelectedNodes = function (nodes) {
-        var actualNodes = $(nodes);
-
+        let actualNodes = $(nodes);
+        
         if (!this.hasFreehandSelection) {
             actualNodes = actualNodes.not(':has(li)')
         }
@@ -193,14 +193,21 @@
         $(actualNodes).find('> label.datatreeview-text > input.datatreeview-field').prop('checked', true);
 
         if (!this.hasFreehandSelection) {
-            this.list.find('li.datatreeview-node:has(li.datatreeview-node):not(:has(li.datatreeview-node:not(:has(li.datatreeview-node)) input.datatreeview-field:not(:checked)))').find('> label.datatreeview-text > input.datatreeview-field').prop('checked', true);
+            this.list.find('li.datatreeview-node:has(li.datatreeview-node):not(:has(li.datatreeview-node:not(:has(li.datatreeview-node)) input.datatreeview-field:not(:checked)))').find('> label.datatreeview-text > input.datatreeview-field').prop('checked', true);            
         }
+
+        this.triggerSelectionChanged();
+    }
+
+    // Trigger the selection changed event after automated or manual changes
+    Datatreeview.prototype.triggerSelectionChanged = function () {
+        this.element.trigger('datatreeview.selectionChanged', [this.getSelectedData(), this.getSelectedValues()]);
     }
 
     // Set selected node by filter function
     // Filter function argument is node data
     Datatreeview.prototype.setSelectedData = function (filter) {
-        var nodes = this.list.find('li.datatreeview-node').filter(function () {
+        let nodes = this.list.find('li.datatreeview-node').filter(function () {
             return filter($(this).data('node-data'));
         });
 
@@ -223,23 +230,23 @@
             $(e.target).data('toggle-target').toggle();
         },
         inputChange: function (e) {
-            if (e.data.hasFreehandSelection) {
-                return;
+            if (!e.data.hasFreehandSelection) {
+                let checked = $(e.target).is(':checked');
+                let node = $(e.target).closest('li.datatreeview-node');
+
+                node.find('input.datatreeview-field').prop('checked', checked);
+
+                if (checked) {
+                    node.parents('li.datatreeview-node').find('> label.datatreeview-text > input.datatreeview-field').prop('checked', function () {
+                        return $(this).closest('li.datatreeview-node').find('input.datatreeview-field').not(this).not(':checked').length == 0;
+                    });
+                }
+                else {
+                    node.parents('li.datatreeview-node').find('> label.datatreeview-text > input.datatreeview-field').prop('checked', false);
+                }
             }
 
-            var checked = $(e.target).is(':checked');
-            var node = $(e.target).closest('li.datatreeview-node');
-
-            node.find('input.datatreeview-field').prop('checked', checked);
-
-            if (checked) {
-                node.parents('li.datatreeview-node').find('> label.datatreeview-text > input.datatreeview-field').prop('checked', function () {
-                    return $(this).closest('li.datatreeview-node').find('input.datatreeview-field').not(this).not(':checked').length == 0;
-                });
-            }
-            else {
-                node.parents('li.datatreeview-node').find('> label.datatreeview-text > input.datatreeview-field').prop('checked', false);
-            }
+            e.data.triggerSelectionChanged();
         }
     };
 
