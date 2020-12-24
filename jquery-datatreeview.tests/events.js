@@ -304,4 +304,118 @@
 
         expect(tree.find('input:checked').length).toEqual(2);
     });
+
+    it('changes the treeview selection it triggers the selection changed event', function () {
+        var tree = $('#datatreeview-events-selection-changed');
+        var selectedData;
+        var selectedValues;
+        var data = [{
+            value: '1',
+            text: 'Foo'
+        },
+        {
+            value: '2',
+            text: 'Bar',
+            children: [
+                {
+                    value: '3',
+                    text: 'Baz'
+                },
+                {
+                    value: '4',
+                    text: 'Quux'
+                }
+            ]
+        }];
+
+        tree.datatreeview({
+            data: data
+        });
+
+        tree.on('datatreeview.selectionChanged', function (_, data, values) {
+            selectedData = data;
+            selectedValues = value;
+        });
+
+        tree.find('> ul > li:first-child > label').click();
+
+        expect(selectedData).toEqual([data[0]]);
+        expect(selectedValues).toEqual(['1']);
+    });
+
+    it('toggles open a treeview node it triggers the toggled open event', function () {
+        var tree = $('#datatreeview-events-toggled-open');
+        var toggledNode;
+
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Foo'
+            },
+            {
+                value: '2',
+                text: 'Bar',
+                selected: true,
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz',
+                        selected: true
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux',
+                        selected: true
+                    }
+                ]
+            }]
+        });
+
+        tree.find('> ul > li:first-child > .datatreeview-toggler').click();
+
+        tree.on('datatreeview.toggledOpen', function (_, node) {
+            toggledNode = node;
+        });
+
+        tree.find('> ul > li:first-child > .datatreeview-toggler').click();
+
+        expect(toggledNode).toEqual(tree.find('> ul > li:first-child'));
+    });
+
+    it('toggles closed a treeview node it triggers the toggled closed event', function () {
+        var tree = $('#datatreeview-events-toggled-closed');
+        var toggledNode;
+
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Foo'
+            },
+            {
+                value: '2',
+                text: 'Bar',
+                selected: true,
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz',
+                        selected: true
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux',
+                        selected: true
+                    }
+                ]
+            }]
+        });
+
+        tree.on('datatreeview.toggledClosed', function (_, node) {
+            toggledNode = node;
+        });
+
+        tree.find('> ul > li:first-child > .datatreeview-toggler').click();
+
+        expect(toggledNode).toEqual(tree.find('> ul > li:first-child'));
+    });
 });
