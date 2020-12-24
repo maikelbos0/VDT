@@ -355,31 +355,28 @@
             {
                 value: '2',
                 text: 'Bar',
-                selected: true,
                 children: [
                     {
                         value: '3',
-                        text: 'Baz',
-                        selected: true
+                        text: 'Baz'
                     },
                     {
                         value: '4',
-                        text: 'Quux',
-                        selected: true
+                        text: 'Quux'
                     }
                 ]
             }]
         });
 
-        tree.find('> ul > li:first-child > .datatreeview-toggler').click();
+        tree.find('> ul > li:nth-child(2) > .datatreeview-toggler').click();
 
         tree.on('datatreeview.toggledOpen', function (_, node) {
             toggledNode = node;
         });
 
-        tree.find('> ul > li:first-child > .datatreeview-toggler').click();
+        tree.find('> ul > li:nth-child(2) > .datatreeview-toggler').click();
 
-        expect(toggledNode).toEqual(tree.find('> ul > li:first-child'));
+        expect(toggledNode.get()).toEqual(tree.find('> ul > li:nth-child(2)').get());
     });
 
     it('toggles closed a treeview node it triggers the toggled closed event', function () {
@@ -394,17 +391,14 @@
             {
                 value: '2',
                 text: 'Bar',
-                selected: true,
                 children: [
                     {
                         value: '3',
-                        text: 'Baz',
-                        selected: true
+                        text: 'Baz'
                     },
                     {
                         value: '4',
-                        text: 'Quux',
-                        selected: true
+                        text: 'Quux'
                     }
                 ]
             }]
@@ -414,8 +408,8 @@
             toggledNode = node;
         });
 
-        tree.find('> ul > li:first-child > .datatreeview-toggler').click();
-
-        expect(toggledNode).toEqual(tree.find('> ul > li:first-child'));
+        tree.find('> ul > li:nth-child(2) > .datatreeview-toggler').click();
+        
+        expect(toggledNode.get()).toEqual(tree.find('> ul > li:nth-child(2)').get());
     });
 });

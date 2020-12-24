@@ -184,7 +184,7 @@
     // Set selected nodes by selector/selection/function/element
     Datatreeview.prototype.setSelectedNodes = function (nodes) {
         let actualNodes = $(nodes);
-        
+
         if (!this.hasFreehandSelection) {
             actualNodes = actualNodes.not(':has(li)')
         }
@@ -193,7 +193,7 @@
         $(actualNodes).find('> label.datatreeview-text > input.datatreeview-field').prop('checked', true);
 
         if (!this.hasFreehandSelection) {
-            this.list.find('li.datatreeview-node:has(li.datatreeview-node):not(:has(li.datatreeview-node:not(:has(li.datatreeview-node)) input.datatreeview-field:not(:checked)))').find('> label.datatreeview-text > input.datatreeview-field').prop('checked', true);            
+            this.list.find('li.datatreeview-node:has(li.datatreeview-node):not(:has(li.datatreeview-node:not(:has(li.datatreeview-node)) input.datatreeview-field:not(:checked)))').find('> label.datatreeview-text > input.datatreeview-field').prop('checked', true);
         }
 
         this.triggerSelectionChanged();
@@ -226,8 +226,18 @@
     // Event handlers should not be accessible from the object itself
     let eventHandlers = {
         togglerClick: function (e) {
-            $(e.target).toggleClass('datatreeview-toggler-closed');
-            $(e.target).data('toggle-target').toggle();
+            let toggler = $(e.target);
+            let targetList = toggler.data('toggle-target');
+
+            toggler.toggleClass('datatreeview-toggler-closed');
+            targetList.toggle();
+
+            if (toggler.hasClass('datatreeview-toggler-closed')) {
+                e.data.element.trigger('datatreeview.toggledClosed', [targetList.parent('li')]);
+            }
+            else {
+                e.data.element.trigger('datatreeview.toggledOpen', [targetList.parent('li')]);
+            }
         },
         inputChange: function (e) {
             if (!e.data.hasFreehandSelection) {
