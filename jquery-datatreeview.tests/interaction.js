@@ -409,4 +409,16 @@
 
         expect(tree.find('input:checked').map(function () { return $(this).val() }).get()).toEqual(['1', '3', '5']);
     });
+
+    it('can be enabled', function () {
+        var tree = $('#datatreeview-interaction-enable');
+
+        fail();
+    });
+
+    it('can be disabled', function () {
+        var tree = $('#datatreeview-interaction-disable');
+
+        fail();
+    });
 });
