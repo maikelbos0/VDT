@@ -413,12 +413,51 @@
     it('can be enabled', function () {
         var tree = $('#datatreeview-interaction-enable');
 
-        fail();
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Foo',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux'
+                    }
+                ]
+            }]
+        }, function () {
+                this.disable();
+                this.enable();
+        });
+
+        expect(tree.find('input:checkbox:not(:disabled)').length).toEqual(3);
     });
 
     it('can be disabled', function () {
         var tree = $('#datatreeview-interaction-disable');
 
-        fail();
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Foo',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux'
+                    }
+                ]
+            }]
+        }, function () {
+            this.disable();
+        });
+
+        expect(tree.find('input:checkbox:disabled').length).toEqual(3);
     });
 });
