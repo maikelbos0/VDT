@@ -66,6 +66,11 @@
         // Allow a freehand selection of nodes where selecting nodes does not affect child or parent nodes
         hasFreehandSelection: function (element) {
             return $(element).data('freehand-select') !== undefined && $(element).data('freehand-select') != false;
+        },
+        // Initialize the treeview disabled or not
+        // Defaults to the data-property disabled
+        isDisabled: function (element) {
+            return $(element).data('disabled') !== undefined && $(element).data('disabled') != false;
         }
     }
 
@@ -81,6 +86,7 @@
         this.childrenProperty = options.getChildrenProperty(this.element);
         this.fieldName = options.getFieldName(this.element);
         this.hasFreehandSelection = options.hasFreehandSelection(this.element);
+        this.isDisabled = false;
 
         this.element.children().hide();
         this.element.addClass('datatreeview');
@@ -91,6 +97,11 @@
         $.each(this.options.data, function (_, data) {
             base.createNode(base.list, data);
         });
+
+        // Disable if needed
+        if (this.options.isDisabled(this.element)) {
+            this.disable();
+        }
 
         // Event handlers
         this.list.on('click', '.datatreeview-toggler', this, eventHandlers.togglerClick);
@@ -221,6 +232,28 @@
         this.setSelectedData(function (nodeData) {
             return values.indexOf(nodeData[base.valueProperty]) > -1;
         });
+    }
+
+    // Enable the treeview if it is disabled
+    Datatreeview.prototype.enable = function () {
+        if (!this.isDisabled) {
+            return;
+        }
+
+        this.isDisabled = false;
+        this.element.find('input.datatreeview-field').prop('disabled', this.isDisabled);
+        this.element.removeClass('datatreeview-disabled');
+    }
+
+    // Disable the treeview if it is enabled
+    Datatreeview.prototype.disable = function () {
+        if (this.isDisabled) {
+            return;
+        }
+
+        this.isDisabled = true;
+        this.element.find('input.datatreeview-field').prop('disabled', this.isDisabled);
+        this.element.addClass('datatreeview-disabled');
     }
 
     // Event handlers should not be accessible from the object itself

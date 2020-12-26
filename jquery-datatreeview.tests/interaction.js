@@ -429,8 +429,7 @@
                 ]
             }]
         }, function () {
-                this.disable();
-                this.enable();
+            this.enable();
         });
 
         expect(tree.find('input:checkbox:not(:disabled)').length).toEqual(3);
