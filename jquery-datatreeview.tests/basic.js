@@ -262,6 +262,30 @@
         expect(tree.find('input.datatreeview-field:checked').map(function () { return $(this).val(); }).get()).toEqual(['1', '3', '4', '7']);
     });
 
+    it('will get values from the supplied property', function () {
+        var tree = $('#basic-datatreeview-value');
+
+        fail();
+    });
+
+    it('will get text from the supplied property', function () {
+        var tree = $('#basic-datatreeview-text');
+
+        fail();
+    });
+
+    it('will get children from the supplied property', function () {
+        var tree = $('#basic-datatreeview-children');
+
+        fail();
+    });
+
+    it('will get selected status from the supplied property', function () {
+        var tree = $('#basic-datatreeview-selected');
+
+        fail();
+    });
+
     it('will name the input', function () {
         var tree = $('#basic-datatreeview-input');
 
@@ -318,5 +342,11 @@
         });
 
         expect(tree.find('input.datatreeview-field:checked').map(function () { return $(this).val(); }).get()).toEqual(['3', '4', '2', '7']);
+    });
+
+    it('is disabled if data-disabled is true', function () {
+        var tree = $('#basic-datatreeview-disabled');
+
+        fail();
     });
 });
