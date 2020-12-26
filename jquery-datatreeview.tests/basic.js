@@ -265,25 +265,95 @@
     it('will get values from the supplied property', function () {
         var tree = $('#basic-datatreeview-value');
 
-        fail();
+        tree.datatreeview({
+            data: [{
+                data: '1',
+                text: 'Foo',
+                children: [
+                    {
+                        data: '3',
+                        text: 'Baz'
+                    },
+                    {
+                        data: '4',
+                        text: 'Quux'
+                    }
+                ]
+            }]
+        });
+
+        expect(tree.find('input').map(function () { return $(this).val(); }).get()).toEqual(['1', '3', '4']);
     });
 
     it('will get text from the supplied property', function () {
         var tree = $('#basic-datatreeview-text');
 
-        fail();
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                description: 'Foo',
+                children: [
+                    {
+                        value: '3',
+                        description: 'Baz'
+                    },
+                    {
+                        value: '4',
+                        description: 'Quux'
+                    }
+                ]
+            }]
+        });
+
+        expect(tree.find('label').map(function () { return $(this).text(); }).get()).toEqual(['Foo', 'Baz', 'Quux']);
     });
 
     it('will get children from the supplied property', function () {
         var tree = $('#basic-datatreeview-children');
 
-        fail();
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Foo',
+                childNodes: [
+                    {
+                        value: '3',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux'
+                    }
+                ]
+            }]
+        });
+
+        expect(tree.find('li > ul > li').length).toEqual(2);
     });
 
     it('will get selected status from the supplied property', function () {
         var tree = $('#basic-datatreeview-selected');
 
-        fail();
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Foo',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz',
+                        checked: true
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux',
+                        checked: true
+                    }
+                ]
+            }]
+        });
+
+        expect(tree.find('input:checked').length).toEqual(3);
     });
 
     it('will name the input', function () {
@@ -347,6 +417,23 @@
     it('is disabled if data-disabled is true', function () {
         var tree = $('#basic-datatreeview-disabled');
 
-        fail();
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Foo',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux'
+                    }
+                ]
+            }]
+        });
+
+        expect(tree.find('input:checkbox:disabled').length).toEqual(3);
     });
 });
