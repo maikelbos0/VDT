@@ -24,8 +24,8 @@
     content: "";
     height: 1000em;
     width: 2.25em;
-    border-left: 1px dotted black;
-    border-bottom: 1px dotted black;
+    border-left: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
     position: absolute;
     left: -1.625em;
     top: -999.25em;

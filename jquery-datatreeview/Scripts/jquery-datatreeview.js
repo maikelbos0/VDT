@@ -71,6 +71,21 @@
         // Defaults to the data-property disabled
         isDisabled: function (element) {
             return $(element).data('disabled') !== undefined && $(element).data('disabled') != false;
+        },
+        // Get the options used for the node toggle event
+        // Looks to the data-properties toggle-duration and toggle-easing with no animation as default
+        getToggleOptions: function (element) {
+            var duration = parseInt($(element).data('toggle-duration'));
+            var easing = $(element).data('toggle-easing');
+
+            if (isNaN(duration) || duration < 0) {
+                duration = 0;
+            }
+
+            return {
+                duration: duration,
+                easing: easing
+            }
         }
     }
 
@@ -87,6 +102,7 @@
         this.fieldName = options.getFieldName(this.element);
         this.hasFreehandSelection = options.hasFreehandSelection(this.element);
         this.isDisabled = false;
+        this.toggleOptions = options.getToggleOptions(this.element);
 
         this.element.children().hide();
         this.element.addClass('datatreeview');
@@ -263,7 +279,7 @@
             let targetList = toggler.data('toggle-target');
 
             toggler.toggleClass('datatreeview-toggler-closed');
-            targetList.toggle();
+            targetList.slideToggle(e.data.toggleOptions);
 
             if (toggler.hasClass('datatreeview-toggler-closed')) {
                 e.data.element.trigger('datatreeview.toggledClosed', [targetList.parent('li')]);
