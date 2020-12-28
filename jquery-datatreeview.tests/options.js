@@ -109,4 +109,38 @@
 
         expect(hasFreehandSelection).toEqual(true);
     });
+
+    it('can be provided for getToggleOptions', function () {
+        var tree = $('#datatreeview-options-toggle');
+        var options;
+
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Test',
+                children: [
+                    { value: '2', text: 'Foo' },
+                    { value: '3', text: 'Bar' },
+                ]
+            }],
+            getToggleOptions: function () {
+                return {
+                    duration: 600,
+                    easing: 'linear'
+                };
+            }
+        },
+        function () {
+            options = this.toggleOptions;
+        });
+
+        expect(options).toEqual({
+            duration: 600,
+            easing: 'linear'
+        });
+
+        tree.find('.datatreeview-toggler').click();
+
+        expect(tree.find('li > ul').css('display')).not.toEqual('none');
+    });
 });
