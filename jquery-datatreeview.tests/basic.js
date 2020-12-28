@@ -436,4 +436,34 @@
 
         expect(tree.find('input:checkbox:disabled').length).toEqual(3);
     });
+
+    it('is created with the correct toggle options', function () {
+        var tree = $('#basic-datatreeview-toggle-options');
+        var options;
+
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Foo',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux'
+                    }
+                ]
+            }]
+        },
+        function () {
+            options = this.toggleOptions;
+        });
+
+        expect(options).toEqual({
+            duration: 300,
+            easing: 'linear'
+        });
+    });
 });
