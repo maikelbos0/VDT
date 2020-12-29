@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bundleconfig.json" />
+    <Content Include="README.md" />
     <None Include="Scripts\jquery-3.5.0.intellisense.js" />
     <Content Include="Content\jquery-datatreeview.style.css" />
     <Content Include="Content\jquery-datatreeview.css" />
