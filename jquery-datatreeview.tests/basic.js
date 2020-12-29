@@ -466,4 +466,28 @@
             easing: 'linear'
         });
     });
+
+    it('is collapsed if data-collapsed is true', function () {
+        var tree = $('#basic-datatreeview-collapsed');
+
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Foo',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux'
+                    }
+                ]
+            }]
+        });
+
+        expect(tree.find('li > ul').css('display')).toEqual('none');
+        expect(tree.find('li > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(true);
+    });
 });
