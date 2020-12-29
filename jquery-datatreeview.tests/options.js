@@ -143,4 +143,21 @@
 
         expect(tree.find('li > ul').css('display')).not.toEqual('none');
     });
+
+    it('can be provided for isCollapsed', function () {
+        var tree = $('#datatreeview-options-collapsed');
+
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Test'
+            }],
+            isCollapsed: function () {
+                return true;
+            }
+        });
+
+        expect(tree.find('li > ul').css('display')).toEqual('none');
+        expect(tree.find('li > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(true);
+    });
 });
