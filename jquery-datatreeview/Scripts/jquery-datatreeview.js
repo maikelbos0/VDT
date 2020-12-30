@@ -285,6 +285,16 @@
         this.element.addClass('datatreeview-disabled');
     }
 
+    // Collapse one or more nodes by selector/selection/function/element
+    Datatreeview.prototype.collapseNodes = function (nodes) {
+
+    }
+
+    // Expand one or more nodes
+    Datatreeview.prototype.expandNodes = function (nodes) {
+
+    }
+
     // Event handlers should not be accessible from the object itself
     let eventHandlers = {
         togglerClick: function (e) {
