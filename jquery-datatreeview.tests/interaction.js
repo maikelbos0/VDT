@@ -459,4 +459,16 @@
 
         expect(tree.find('input:checkbox:disabled').length).toEqual(3);
     });
+
+    it('node can be collapsed', function () {
+        var tree = $('#datatreeview-interaction-collapse');
+
+        fail();
+    });
+
+    it('node can be expanded', function () {
+        var tree = $('#datatreeview-interaction-expand');
+
+        fail();
+    });
 });
