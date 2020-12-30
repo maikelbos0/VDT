@@ -150,7 +150,11 @@
         tree.datatreeview({
             data: [{
                 value: '1',
-                text: 'Test'
+                text: 'Test',
+                children: [
+                    { value: '2', text: 'Foo' },
+                    { value: '3', text: 'Bar' },
+                ]
             }],
             isCollapsed: function () {
                 return true;

@@ -86,6 +86,11 @@
                 duration: duration,
                 easing: easing
             }
+        },
+        // Initialize the treeview collapsed or not
+        // Defaults to the data-property collapsed
+        isCollapsed: function (element) {
+            return $(element).data('collapsed') !== undefined && $(element).data('collapsed') != false;
         }
     }
 
@@ -110,8 +115,11 @@
         this.list = this.createElement('<ul>', 'datatreeview-list');
         this.element.append(this.list);
 
+        // Start collapsed if needed
+        let isCollapsed = options.isCollapsed(this.element);
+
         $.each(this.options.data, function (_, data) {
-            base.createNode(base.list, data);
+            base.createNode(base.list, data, isCollapsed);
         });
 
         // Disable if needed
@@ -133,23 +141,28 @@
     }
 
     // Create a list based on an array of node data
-    Datatreeview.prototype.createList = function (node, dataArray) {
+    Datatreeview.prototype.createList = function (node, dataArray, isCollapsed) {
         let base = this;
 
         let list = this.createElement('<ul>', 'datatreeview-list');
         let toggler = this.createElement('<div>', 'datatreeview-toggler');
+
+        if (isCollapsed) {
+            toggler.addClass('datatreeview-toggler-closed');
+            list.hide();
+        }
 
         toggler.data('toggle-target', list);
         node.prepend(toggler);
         node.append(list);
 
         $.each(dataArray, function (_, data) {
-            base.createNode(list, data);
+            base.createNode(list, data, isCollapsed);
         });
     }
 
     // Create a node based on node data
-    Datatreeview.prototype.createNode = function (list, data) {
+    Datatreeview.prototype.createNode = function (list, data, isCollapsed) {
         let node = this.createElement('<li>', 'datatreeview-node');
         let checkbox = this.createElement('<input>', 'datatreeview-field', {
             type: 'checkbox',
@@ -167,7 +180,7 @@
         list.append(node);
 
         if (hasChildren) {
-            this.createList(node, data[this.childrenProperty]);
+            this.createList(node, data[this.childrenProperty], isCollapsed);
         }
 
         if (useSelectedProperty && data[this.selectedProperty]) {
