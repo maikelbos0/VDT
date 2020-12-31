@@ -152,7 +152,6 @@
             list.hide();
         }
 
-        toggler.data('toggle-target', list);
         node.prepend(toggler);
         node.append(list);
 
@@ -297,7 +296,7 @@
         }
     }
 
-    // Expand one or more nodes
+    // Expand one or more nodes by selector/selection/function/element
     Datatreeview.prototype.expandNodes = function (nodes) {
         nodes = $(nodes).filter(':has(> .datatreeview-toggler-closed)');
 
@@ -313,16 +312,13 @@
     let eventHandlers = {
         togglerClick: function (e) {
             let toggler = $(e.target);
-            let targetList = toggler.data('toggle-target');
-
-            toggler.toggleClass('datatreeview-toggler-closed');
-            targetList.slideToggle(e.data.toggleOptions);
+            let node = $(e.target).parent('li');
 
             if (toggler.hasClass('datatreeview-toggler-closed')) {
-                e.data.element.trigger('datatreeview.toggledClosed', [targetList.parent('li')]);
+                e.data.expandNodes(node);
             }
             else {
-                e.data.element.trigger('datatreeview.toggledOpen', [targetList.parent('li')]);
+                e.data.collapseNodes(node);
             }
         },
         inputChange: function (e) {
