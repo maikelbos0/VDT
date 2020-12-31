@@ -287,12 +287,26 @@
 
     // Collapse one or more nodes by selector/selection/function/element
     Datatreeview.prototype.collapseNodes = function (nodes) {
+        nodes = $(nodes).filter(':has(> .datatreeview-toggler:not(.datatreeview-toggler-closed))');
 
+        if (nodes.length > 0) {
+            nodes.children('.datatreeview-toggler').addClass('datatreeview-toggler-closed');
+            nodes.children('ul').slideToggle(this.toggleOptions);
+
+            this.element.trigger('datatreeview.toggledClosed', [nodes]);
+        }
     }
 
     // Expand one or more nodes
     Datatreeview.prototype.expandNodes = function (nodes) {
+        nodes = $(nodes).filter(':has(> .datatreeview-toggler-closed)');
 
+        if (nodes.length > 0) {
+            $(nodes).children('.datatreeview-toggler').removeClass('datatreeview-toggler-closed');
+            nodes.children('ul').slideToggle(this.toggleOptions);
+
+            this.element.trigger('datatreeview.toggledOpen', [nodes]);
+        }
     }
 
     // Event handlers should not be accessible from the object itself
