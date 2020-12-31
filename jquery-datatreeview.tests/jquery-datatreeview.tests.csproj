@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="chutzpah.json" />
+    <Content Include="LICENSE" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
