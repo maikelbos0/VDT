@@ -463,12 +463,52 @@
     it('node can be collapsed', function () {
         var tree = $('#datatreeview-interaction-collapse');
 
-        fail();
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Foo',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux'
+                    }
+                ]
+            }]
+        }, function () {
+            this.collapseNodes(tree.find('> ul > li'));
+        });
+
+        expect(tree.find('li > ul').css('display')).toEqual('none');
+        expect(tree.find('li > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(true);
     });
 
     it('node can be expanded', function () {
         var tree = $('#datatreeview-interaction-expand');
 
-        fail();
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Foo',
+                children: [
+                    {
+                        value: '3',
+                        text: 'Baz'
+                    },
+                    {
+                        value: '4',
+                        text: 'Quux'
+                    }
+                ]
+            }]
+        }, function () {
+            this.expandNodes(tree.find('> ul > li'));
+        });
+        
+        expect(tree.find('li > ul').css('display')).not.toEqual('none');
+        expect(tree.find('li > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(false);
     });
 });
