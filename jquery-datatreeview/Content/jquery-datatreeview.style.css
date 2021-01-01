@@ -22,26 +22,18 @@
 
 .datatreeview-node::after {
     content: "";
-    height: 1000em;
+    height: 0.75em;
     width: 2.25em;
-    /*border-left: 1px solid #cccccc;*/
     border-bottom: 1px solid #cccccc;
     position: absolute;
     left: -1.625em;
-    top: -999.25em;
+    top: 0;
 }
-
-/* Ensure that the connecting lines go all the way to the next node 
-.datatreeview-node > .datatreeview-list {
-    padding-top: 1em;
-    margin-top: -1em;
-}
-*/
 
 .datatreeview-node-container::after {
-    content: "";    
+    content: "";
     width: 1em;
-    height: calc(100% - 1.5em);
+    height: calc(100% - 2em);
     border-left: 1px solid #cccccc;
     position: absolute;
     left: .375em;
