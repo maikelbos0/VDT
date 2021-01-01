@@ -137,7 +137,7 @@
         this.element.children().hide();
         this.element.addClass('datatreeview');
 
-        this.list = this.createElement('<ul>', 'datatreeview-list');
+        this.list = this.createElement('<ul>', 'datatreeview-list', this.options.getListAttributes());
         this.element.append(this.list);
 
         // Start collapsed if needed
@@ -169,8 +169,8 @@
     Datatreeview.prototype.createList = function (node, dataArray, isCollapsed) {
         let base = this;
 
-        let list = this.createElement('<ul>', 'datatreeview-list');
-        let toggler = this.createElement('<div>', 'datatreeview-toggler');
+        let list = this.createElement('<ul>', 'datatreeview-list', this.options.getListAttributes());
+        let toggler = this.createElement('<div>', 'datatreeview-toggler', this.options.getTogglerAttributes());
 
         if (isCollapsed) {
             toggler.addClass('datatreeview-toggler-closed');
@@ -187,13 +187,13 @@
 
     // Create a node based on node data
     Datatreeview.prototype.createNode = function (list, data, isCollapsed) {
-        let node = this.createElement('<li>', 'datatreeview-node');
+        let node = this.createElement('<li>', 'datatreeview-node', this.options.getNodeAttributes());
         let checkbox = this.createElement('<input>', 'datatreeview-field', {
             type: 'checkbox',
             name: this.fieldName,
             value: data[this.valueProperty]
-        });
-        let label = this.createElement('<label>', 'datatreeview-text')
+        }, this.options.getInputAttributes());
+        let label = this.createElement('<label>', 'datatreeview-text', this.options.getLabelAttributes())
             .text(data[this.textProperty])
             .prepend(checkbox);
         let hasChildren = data[this.childrenProperty] && data[this.childrenProperty].length > 0;
