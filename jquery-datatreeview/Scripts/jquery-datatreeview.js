@@ -92,12 +92,29 @@
         isCollapsed: function (element) {
             return $(element).data('collapsed') !== undefined && $(element).data('collapsed') != false;
         },
-
-        //Add attribute options for list, node, input, label, toggler
-
-        // The list is the container for the list items
-        // It always gets at least the class 'dropdownlist-list'
+        // Lists are containers for nodes
+        // They always gets at least the class 'datatreeview-list'
         getListAttributes: function () {
+            return {};
+        },
+        // Nodes are the visual representation of node data
+        // They always gets at least the class 'datatreeview-node'
+        getNodeAttributes: function () {
+            return {};
+        },
+        // Inputs are the checkboxes used to select nodes
+        // They always gets at least the class 'datatreeview-field'
+        getInputAttributes: function () {
+            return {};
+        },
+        // Labels are the text displays for nodes
+        // They always gets at least the class 'datatreeview-text'
+        getLabelAttributes: function () {
+            return {};
+        },
+        // Togglers are the elements used to collapse/expand node lists
+        // They always gets at least the class 'datatreeview-toggler'
+        getTogglerAttributes: function () {
             return {};
         }
     }
