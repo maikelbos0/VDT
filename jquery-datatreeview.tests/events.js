@@ -343,7 +343,7 @@
         expect(selectedValues).toEqual(['1']);
     });
 
-    it('toggles open a treeview node it triggers the toggled open event', function () {
+    it('toggles open a treeview node it triggers the nodes expanded event', function () {
         var tree = $('#datatreeview-events-toggled-open');
         var toggledNode;
 
@@ -370,7 +370,7 @@
 
         tree.find('> ul > li:nth-child(2) > .datatreeview-toggler').click();
 
-        tree.on('datatreeview.toggledOpen', function (_, node) {
+        tree.on('datatreeview.nodesExpanded', function (_, node) {
             toggledNode = node;
         });
 
@@ -379,7 +379,7 @@
         expect(toggledNode.get()).toEqual(tree.find('> ul > li:nth-child(2)').get());
     });
 
-    it('toggles closed a treeview node it triggers the toggled closed event', function () {
+    it('toggles closed a treeview node it triggers the nodes collapsed event', function () {
         var tree = $('#datatreeview-events-toggled-closed');
         var toggledNode;
 
@@ -404,7 +404,7 @@
             }]
         });
 
-        tree.on('datatreeview.toggledClosed', function (_, node) {
+        tree.on('datatreeview.nodesCollapsed', function (_, node) {
             toggledNode = node;
         });
 

@@ -292,7 +292,7 @@
             nodes.children('.datatreeview-toggler').addClass('datatreeview-toggler-closed');
             nodes.children('ul').slideToggle(this.toggleOptions);
 
-            this.element.trigger('datatreeview.toggledClosed', [nodes]);
+            this.element.trigger('datatreeview.nodesCollapsed', [nodes]);
         }
     }
 
@@ -304,7 +304,7 @@
             $(nodes).children('.datatreeview-toggler').removeClass('datatreeview-toggler-closed');
             nodes.children('ul').slideToggle(this.toggleOptions);
 
-            this.element.trigger('datatreeview.toggledOpen', [nodes]);
+            this.element.trigger('datatreeview.nodesExpanded', [nodes]);
         }
     }
 
