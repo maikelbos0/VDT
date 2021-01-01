@@ -168,30 +168,110 @@
     it('can be provided for getListAttributes', function () {
         var tree = $('#datatreeview-options-list-attributes');
 
-        fail();
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Test',
+                children: [
+                    { value: '2', text: 'Foo' },
+                    { value: '3', text: 'Bar' },
+                ]
+            }],
+            getListAttributes: function () {
+                return { class: 'test' };
+            }
+        });
+
+        tree.find('ul').each(function () {
+            expect($(this).hasClass('test')).toEqual(true);
+        });
     });
 
     it('can be provided for getNodeAttributes', function () {
         var tree = $('#datatreeview-options-node-attributes');
 
-        fail();
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Test',
+                children: [
+                    { value: '2', text: 'Foo' },
+                    { value: '3', text: 'Bar' },
+                ]
+            }],
+            getNodeAttributes: function () {
+                return { class: 'test' };
+            }
+        });
+
+        tree.find('li').each(function () {
+            expect($(this).hasClass('test')).toEqual(true);
+        });
     });
 
     it('can be provided for getInputAttributes', function () {
         var tree = $('#datatreeview-options-input-attributes');
 
-        fail();
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Test',
+                children: [
+                    { value: '2', text: 'Foo' },
+                    { value: '3', text: 'Bar' },
+                ]
+            }],
+            getInputAttributes: function () {
+                return { class: 'test' };
+            }
+        });
+
+        tree.find('input').each(function () {
+            expect($(this).hasClass('test')).toEqual(true);
+        });
     });
 
     it('can be provided for getLabelAttributes', function () {
         var tree = $('#datatreeview-options-label-attributes');
 
-        fail();
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Test',
+                children: [
+                    { value: '2', text: 'Foo' },
+                    { value: '3', text: 'Bar' },
+                ]
+            }],
+            getLabelAttributes: function () {
+                return { class: 'test' };
+            }
+        });
+
+        tree.find('label').each(function () {
+            expect($(this).hasClass('test')).toEqual(true);
+        });
     });
 
     it('can be provided for getTogglerAttributes', function () {
         var tree = $('#datatreeview-options-toggler-attributes');
 
-        fail();
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Test',
+                children: [
+                    { value: '2', text: 'Foo' },
+                    { value: '3', text: 'Bar' },
+                ]
+            }],
+            getTogglerAttributes: function () {
+                return { class: 'test' };
+            }
+        });
+
+        tree.find('.datatreeview-toggler').each(function () {
+            expect($(this).hasClass('test')).toEqual(true);
+        });
     });
 });

@@ -91,6 +91,14 @@
         // Defaults to the data-property collapsed
         isCollapsed: function (element) {
             return $(element).data('collapsed') !== undefined && $(element).data('collapsed') != false;
+        },
+
+        //Add attribute options for list, node, input, label, toggler
+
+        // The list is the container for the list items
+        // It always gets at least the class 'dropdownlist-list'
+        getListAttributes: function () {
+            return {};
         }
     }
 
