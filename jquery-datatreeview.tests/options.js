@@ -164,4 +164,34 @@
         expect(tree.find('li > ul').css('display')).toEqual('none');
         expect(tree.find('li > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(true);
     });
+
+    it('can be provided for getListAttributes', function () {
+        var tree = $('#datatreeview-options-list-attributes');
+
+        fail();
+    });
+
+    it('can be provided for getNodeAttributes', function () {
+        var tree = $('#datatreeview-options-node-attributes');
+
+        fail();
+    });
+
+    it('can be provided for getInputAttributes', function () {
+        var tree = $('#datatreeview-options-input-attributes');
+
+        fail();
+    });
+
+    it('can be provided for getLabelAttributes', function () {
+        var tree = $('#datatreeview-options-label-attributes');
+
+        fail();
+    });
+
+    it('can be provided for getTogglerAttributes', function () {
+        var tree = $('#datatreeview-options-toggler-attributes');
+
+        fail();
+    });
 });
