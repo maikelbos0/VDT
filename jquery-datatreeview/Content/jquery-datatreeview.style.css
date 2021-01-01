@@ -7,7 +7,6 @@
     list-style: none;
     padding-left: 2em;
     margin: 0;
-    position: relative;
 }
 
 .datatreeview > .datatreeview-list {
@@ -22,7 +21,7 @@
 .datatreeview-node::after {
     content: "";
     height: 0.75em;
-    width: 2.25em;
+    width: 1.625em;
     border-bottom: 1px dashed #999999;
     position: absolute;
     left: -1.625em;
@@ -42,18 +41,17 @@
 .datatreeview-node-container::after {
     content: "";
     width: 1em;
-    height: calc(100% - 2em);
+    height: calc(100% - 2.375em);
     border-left: 1px dashed #999999;
     position: absolute;
     left: .375em;
-    top: .75em;
+    top: 1.125em;
 }
 
 .datatreeview-toggler {
     width: .75em;
     height: .75em;
     position: relative;
-    z-index: 1;
     border: 1px solid black;
     background: #ffffff;
     margin-top: .375em;
@@ -82,7 +80,6 @@
 .datatreeview-text {
     margin-left: 0.5em;
     position: relative;
-    z-index: 1;
 }
 
 .datatreeview-text:first-child {
