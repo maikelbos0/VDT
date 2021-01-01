@@ -177,7 +177,7 @@
             list.hide();
         }
 
-        node.prepend(toggler);
+        node.find('.datatreeview-node-container').prepend(toggler);
         node.append(list);
 
         $.each(dataArray, function (_, data) {
@@ -188,6 +188,7 @@
     // Create a node based on node data
     Datatreeview.prototype.createNode = function (list, data, isCollapsed) {
         let node = this.createElement('<li>', 'datatreeview-node', this.options.getNodeAttributes());
+        let container = this.createElement('<div>', 'datatreeview-node-container');
         let checkbox = this.createElement('<input>', 'datatreeview-field', {
             type: 'checkbox',
             name: this.fieldName,
@@ -199,7 +200,8 @@
         let hasChildren = data[this.childrenProperty] && data[this.childrenProperty].length > 0;
         let useSelectedProperty = this.hasFreehandSelection || !hasChildren;
 
-        node.append(label);
+        container.append(label);
+        node.append(container);
         node.data('node-data', data);
         list.append(node);
 

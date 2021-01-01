@@ -1,6 +1,10 @@
-﻿
+﻿.datatreeview-node-container {
+    display: flex;
+}
+
 .datatreeview-toggler {
     display: inline-block;
+    flex-shrink: 0;
 }
 
 .datatreeview-toggler::after {
