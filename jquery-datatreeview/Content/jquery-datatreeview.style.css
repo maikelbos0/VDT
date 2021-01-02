@@ -38,7 +38,7 @@
     top: -1em;
 }
 
-.datatreeview-node-container::after {
+.datatreeview-node-content::after {
     content: "";
     width: 1em;
     height: calc(100% - 2.375em);

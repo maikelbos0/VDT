@@ -1,1 +1,1 @@
-.datatreeview-node-container{display:flex}.datatreeview-toggler{display:inline-block;flex-shrink:0}.datatreeview-toggler::after{content:"-"}.datatreeview-toggler-closed::after{content:"+"}
+.datatreeview-node-content{display:flex}.datatreeview-toggler{display:inline-block;flex-shrink:0}.datatreeview-toggler::after{content:"-"}.datatreeview-toggler-closed::after{content:"+"}
