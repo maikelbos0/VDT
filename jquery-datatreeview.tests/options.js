@@ -162,7 +162,7 @@
         });
 
         expect(tree.find('li > ul').css('display')).toEqual('none');
-        expect(tree.find('li > .datatreeview-node-content > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(true);
+        expect(tree.find('li').hasClass('datatreeview-node-collapsed')).toEqual(true);
     });
 
     it('can be provided for getListAttributes', function () {
