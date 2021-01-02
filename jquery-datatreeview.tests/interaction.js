@@ -483,7 +483,7 @@
         });
 
         expect(tree.find('li > ul').css('display')).toEqual('none');
-        expect(tree.find('li > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(true);
+        expect(tree.find('li > .datatreeview-node-content > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(true);
     });
 
     it('node can be expanded', function () {
@@ -509,6 +509,6 @@
         });
         
         expect(tree.find('li > ul').css('display')).not.toEqual('none');
-        expect(tree.find('li > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(false);
+        expect(tree.find('li > .datatreeview-node-content > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(false);
     });
 });

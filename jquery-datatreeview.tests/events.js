@@ -23,9 +23,9 @@
             }]
         });
 
-        tree.find('li > .datatreeview-toggler').click();
+        tree.find('li > .datatreeview-node-content > .datatreeview-toggler').click();
 
-        expect(tree.find('li > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(true);
+        expect(tree.find('li > .datatreeview-node-content > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(true);
         expect(tree.find('li > ul').css('display')).toEqual('none');
     });
 
@@ -53,10 +53,10 @@
             }]
         });
 
-        tree.find('li > .datatreeview-toggler').click();
-        tree.find('li > .datatreeview-toggler').click();
+        tree.find('li > .datatreeview-node-content > .datatreeview-toggler').click();
+        tree.find('li > .datatreeview-node-content > .datatreeview-toggler').click();
 
-        expect(tree.find('li > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(false);
+        expect(tree.find('li > .datatreeview-node-content > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(false);
         expect(tree.find('li > ul').css('display')).not.toEqual('none');
     });
 
@@ -368,13 +368,13 @@
             }]
         });
 
-        tree.find('> ul > li:nth-child(2) > .datatreeview-toggler').click();
+        tree.find('> ul > li:nth-child(2) > .datatreeview-node-content > .datatreeview-toggler').click();
 
         tree.on('datatreeview.nodesExpanded', function (_, node) {
             toggledNode = node;
         });
 
-        tree.find('> ul > li:nth-child(2) > .datatreeview-toggler').click();
+        tree.find('> ul > li:nth-child(2) > .datatreeview-node-content > .datatreeview-toggler').click();
 
         expect(toggledNode.get()).toEqual(tree.find('> ul > li:nth-child(2)').get());
     });
@@ -408,7 +408,7 @@
             toggledNode = node;
         });
 
-        tree.find('> ul > li:nth-child(2) > .datatreeview-toggler').click();
+        tree.find('> ul > li:nth-child(2) > .datatreeview-node-content > .datatreeview-toggler').click();
         
         expect(toggledNode.get()).toEqual(tree.find('> ul > li:nth-child(2)').get());
     });

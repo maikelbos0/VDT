@@ -488,6 +488,6 @@
         });
 
         expect(tree.find('li > ul').css('display')).toEqual('none');
-        expect(tree.find('li > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(true);
+        expect(tree.find('li > .datatreeview-node-content > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(true);
     });
 });

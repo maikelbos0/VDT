@@ -313,11 +313,11 @@
 
     // Collapse one or more nodes by selector/selection/function/element
     Datatreeview.prototype.collapseNodes = function (nodes) {
-        nodes = $(nodes).filter(':has(> .datatreeview-toggler:not(.datatreeview-toggler-closed))');
-
+        nodes = $(nodes).filter(':has(> .datatreeview-node-content > .datatreeview-toggler:not(.datatreeview-toggler-closed))');
+        
         if (nodes.length > 0) {
-            nodes.children('.datatreeview-toggler').addClass('datatreeview-toggler-closed');
-            nodes.children('ul').slideToggle(this.toggleOptions);
+            nodes.find('> .datatreeview-node-content > .datatreeview-toggler').addClass('datatreeview-toggler-closed');
+            nodes.children('.datatreeview-list').slideToggle(this.toggleOptions);
 
             this.element.trigger('datatreeview.nodesCollapsed', [nodes]);
         }
@@ -325,11 +325,11 @@
 
     // Expand one or more nodes by selector/selection/function/element
     Datatreeview.prototype.expandNodes = function (nodes) {
-        nodes = $(nodes).filter(':has(> .datatreeview-toggler-closed)');
+        nodes = $(nodes).filter(':has(> .datatreeview-node-content > .datatreeview-toggler-closed)');
 
         if (nodes.length > 0) {
-            $(nodes).children('.datatreeview-toggler').removeClass('datatreeview-toggler-closed');
-            nodes.children('ul').slideToggle(this.toggleOptions);
+            nodes.find('> .datatreeview-node-content > .datatreeview-toggler').removeClass('datatreeview-toggler-closed');
+            nodes.children('.datatreeview-list').slideToggle(this.toggleOptions);
 
             this.element.trigger('datatreeview.nodesExpanded', [nodes]);
         }
@@ -339,7 +339,7 @@
     let eventHandlers = {
         togglerClick: function (e) {
             let toggler = $(e.target);
-            let node = $(e.target).parent('li');
+            let node = $(e.target).closest('li');
 
             if (toggler.hasClass('datatreeview-toggler-closed')) {
                 e.data.expandNodes(node);
