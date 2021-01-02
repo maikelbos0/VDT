@@ -255,11 +255,11 @@
             actualNodes = actualNodes.not(':has(li)')
         }
 
-        this.list.find('li.datatreeview-node').not(actualNodes).find('> label.datatreeview-text > input.datatreeview-field').prop('checked', false);
-        $(actualNodes).find('> label.datatreeview-text > input.datatreeview-field').prop('checked', true);
+        this.list.find('li.datatreeview-node').not(actualNodes).find('> .datatreeview-node-content > label.datatreeview-text > input.datatreeview-field').prop('checked', false);
+        $(actualNodes).find('> .datatreeview-node-content > label.datatreeview-text > input.datatreeview-field').prop('checked', true);
 
         if (!this.hasFreehandSelection) {
-            this.list.find('li.datatreeview-node:has(li.datatreeview-node):not(:has(li.datatreeview-node:not(:has(li.datatreeview-node)) input.datatreeview-field:not(:checked)))').find('> label.datatreeview-text > input.datatreeview-field').prop('checked', true);
+            this.list.find('li.datatreeview-node:has(li.datatreeview-node):not(:has(li.datatreeview-node:not(:has(li.datatreeview-node)) input.datatreeview-field:not(:checked)))').find('> .datatreeview-node-content > label.datatreeview-text > input.datatreeview-field').prop('checked', true);
         }
 
         this.triggerSelectionChanged();
