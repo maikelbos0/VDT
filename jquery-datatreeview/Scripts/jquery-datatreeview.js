@@ -133,7 +133,7 @@
         this.hasFreehandSelection = options.hasFreehandSelection(this.element);
         this.isDisabled = false;
         this.toggleOptions = options.getToggleOptions(this.element);
-
+        
         this.element.children().hide();
         this.element.addClass('datatreeview');
 
@@ -173,7 +173,7 @@
         let toggler = this.createElement('<div>', 'datatreeview-toggler', this.options.getTogglerAttributes());
 
         if (isCollapsed) {
-            toggler.addClass('datatreeview-toggler-closed');
+            node.addClass('datatreeview-node-collapsed');
             list.hide();
         }
 
@@ -313,10 +313,10 @@
 
     // Collapse one or more nodes by selector/selection/function/element
     Datatreeview.prototype.collapseNodes = function (nodes) {
-        nodes = $(nodes).filter(':has(> .datatreeview-node-content > .datatreeview-toggler:not(.datatreeview-toggler-closed))');
+        nodes = $(nodes).not('.datatreeview-node-collapsed');
         
         if (nodes.length > 0) {
-            nodes.find('> .datatreeview-node-content > .datatreeview-toggler').addClass('datatreeview-toggler-closed');
+            nodes.addClass('datatreeview-node-collapsed');
             nodes.children('.datatreeview-list').slideToggle(this.toggleOptions);
 
             this.element.trigger('datatreeview.nodesCollapsed', [nodes]);
@@ -325,10 +325,10 @@
 
     // Expand one or more nodes by selector/selection/function/element
     Datatreeview.prototype.expandNodes = function (nodes) {
-        nodes = $(nodes).filter(':has(> .datatreeview-node-content > .datatreeview-toggler-closed)');
+        nodes = $(nodes).filter('.datatreeview-node-collapsed');
 
         if (nodes.length > 0) {
-            nodes.find('> .datatreeview-node-content > .datatreeview-toggler').removeClass('datatreeview-toggler-closed');
+            nodes.removeClass('datatreeview-node-collapsed');
             nodes.children('.datatreeview-list').slideToggle(this.toggleOptions);
 
             this.element.trigger('datatreeview.nodesExpanded', [nodes]);
@@ -338,10 +338,9 @@
     // Event handlers should not be accessible from the object itself
     let eventHandlers = {
         togglerClick: function (e) {
-            let toggler = $(e.target);
             let node = $(e.target).closest('li');
 
-            if (toggler.hasClass('datatreeview-toggler-closed')) {
+            if (node.hasClass('datatreeview-node-collapsed')) {
                 e.data.expandNodes(node);
             }
             else {

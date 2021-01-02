@@ -67,7 +67,7 @@
     left: calc(50% - .25em);
 }
 
-.datatreeview-toggler-closed::before {
+.datatreeview-node-collapsed > .datatreeview-node-content > .datatreeview-toggler::before {
     content: "";
     background-color: #000000;
     width: 2px;
@@ -80,6 +80,9 @@
 .datatreeview-text {
     margin-left: 0.5em;
     position: relative;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
 }
 
 .datatreeview-text:first-child {
