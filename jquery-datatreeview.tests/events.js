@@ -84,7 +84,7 @@
             }]
         });
 
-        tree.find('> ul > li:nth-child(2) > label').click();
+        tree.find('> ul > li:nth-child(2) > .datatreeview-node-content > label').click();
 
         expect(tree.find('input:checked').length).toEqual(3);
     });
@@ -116,7 +116,7 @@
             }]
         });
 
-        tree.find('> ul > li:nth-child(2) > label').click();
+        tree.find('> ul > li:nth-child(2) > .datatreeview-node-content > label').click();
 
         expect(tree.find('input:checked').length).toEqual(0);
     });
@@ -146,7 +146,7 @@
             }]
         });
 
-        tree.find('> ul > li:nth-child(2) > label').click();
+        tree.find('li:nth-child(2) li:first-child > .datatreeview-node-content > label').click();
 
         expect(tree.find('input:checked').length).toEqual(3);
     });
@@ -177,7 +177,7 @@
             }]
         });
 
-        tree.find('li:nth-child(2) li:first-child > label').click();
+        tree.find('li:nth-child(2) li:first-child > .datatreeview-node-content > label').click();
 
         expect(tree.find('input:checked').length).toEqual(1);
     });
@@ -206,7 +206,7 @@
             }]
         });
 
-        tree.find('> ul > li:nth-child(2) > label').click();
+        tree.find('> ul > li:nth-child(2) > .datatreeview-node-content > label').click();
 
         expect(tree.find('input:checked').length).toEqual(1);
     });
@@ -238,7 +238,7 @@
             }]
         });
 
-        tree.find('> ul > li:nth-child(2) > label').click();
+        tree.find('> ul > li:nth-child(2) > .datatreeview-node-content > label').click();
 
         expect(tree.find('input:checked').length).toEqual(2);
     });
@@ -268,7 +268,7 @@
             }]
         });
 
-        tree.find('> ul > li:nth-child(2) > label').click();
+        tree.find('> ul > li:nth-child(2) > .datatreeview-node-content > label').click();
 
         expect(tree.find('input:checked').length).toEqual(2);
     });
@@ -300,7 +300,7 @@
             }]
         });
 
-        tree.find('li:nth-child(2) li:first-child > label').click();
+        tree.find('li:nth-child(2) li:first-child > .datatreeview-node-content > label').click();
 
         expect(tree.find('input:checked').length).toEqual(2);
     });
@@ -337,7 +337,7 @@
             selectedValues = values;
         });
 
-        tree.find('> ul > li:first-child > label').click();
+        tree.find('> ul > li:first-child > .datatreeview-node-content > label').click();
 
         expect(selectedData).toEqual([data[0]]);
         expect(selectedValues).toEqual(['1']);

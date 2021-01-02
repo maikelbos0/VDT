@@ -356,12 +356,12 @@
                 node.find('input.datatreeview-field').prop('checked', checked);
 
                 if (checked) {
-                    node.parents('li.datatreeview-node').find('> label.datatreeview-text > input.datatreeview-field').prop('checked', function () {
+                    node.parents('li.datatreeview-node').find('> .datatreeview-node-content > label.datatreeview-text > input.datatreeview-field').prop('checked', function () {
                         return $(this).closest('li.datatreeview-node').find('input.datatreeview-field').not(this).not(':checked').length == 0;
                     });
                 }
                 else {
-                    node.parents('li.datatreeview-node').find('> label.datatreeview-text > input.datatreeview-field').prop('checked', false);
+                    node.parents('li.datatreeview-node').find('> .datatreeview-node-content> label.datatreeview-text > input.datatreeview-field').prop('checked', false);
                 }
             }
 
