@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>jQuery-datatreeview</id>
+    <version>1.0.0</version>
+    <title>jQuery-datatreeview</title>
+    <description>A jQuery plugin that makes it easy to create a tree view for your tree-like data. It allows you to create a tree view
+on the fly for a tree of data-objects while leaving you in full control of where the data comes from.</description>
+    <releaseNotes></releaseNotes>
+    <authors>Maikel Bos</authors>
+    <license type="expression">MIT</license>
+    <copyright>Copyright © 2020 Maikel Bos</copyright>
+    <tags>jQuery, plugin, tree, treeview, datatree</tags>
+    <language>en-us</language>
+    <projectUrl>https://github.com/maikelbos0/VDT</projectUrl>
+    <dependencies>
+      <dependency id="jQuery" version="3.3.1" />
+    </dependencies>
+  </metadata>
+
+  <files>
+    <file src="README.md" />
+    <file src="LICENSE" />
+    <file src="Scripts\jquery-datatreeview*.js" target="content\Scripts" />
+    <file src="Content\jquery-datatreeview*.css" target="content\Content" />
+  </files>
+</package>

@@ -57,6 +57,7 @@
     <None Include="bundleconfig.json" />
     <Content Include="README.md" />
     <Content Include="LICENSE" />
+    <Content Include="jquery-datatreeview.nuspec" />
     <None Include="Scripts\jquery-3.5.0.intellisense.js" />
     <Content Include="Content\jquery-datatreeview.style.css" />
     <Content Include="Content\jquery-datatreeview.css" />
