@@ -209,6 +209,28 @@
         });
     });
 
+    it('can be provided for getNodeContentAttributes', function () {
+        var tree = $('#datatreeview-options-node-content-attributes');
+
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Test',
+                children: [
+                    { value: '2', text: 'Foo' },
+                    { value: '3', text: 'Bar' },
+                ]
+            }],
+            getNodeContentAttributes: function () {
+                return { class: 'test' };
+            }
+        });
+
+        tree.find('.datatreeview-node-content').each(function () {
+            expect($(this).hasClass('test')).toEqual(true);
+        });
+    });
+
     it('can be provided for getInputAttributes', function () {
         var tree = $('#datatreeview-options-input-attributes');
 
