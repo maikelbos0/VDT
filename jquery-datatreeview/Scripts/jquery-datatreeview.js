@@ -254,14 +254,14 @@
 
     // Set selected nodes by selector/selection/function/element
     Datatreeview.prototype.setSelectedNodes = function (nodes) {
-        let actualNodes = $(nodes);
+        nodes = $(nodes);
 
         if (!this.hasFreehandSelection) {
-            actualNodes = actualNodes.not(':has(li)')
+            nodes = nodes.not(':has(li)')
         }
 
-        this.list.find('li.datatreeview-node').not(actualNodes).find('> .datatreeview-node-content > label.datatreeview-text > input.datatreeview-field').prop('checked', false);
-        $(actualNodes).find('> .datatreeview-node-content > label.datatreeview-text > input.datatreeview-field').prop('checked', true);
+        this.list.find('li.datatreeview-node').not(nodes).find('> .datatreeview-node-content > label.datatreeview-text > input.datatreeview-field').prop('checked', false);
+        $(nodes).find('> .datatreeview-node-content > label.datatreeview-text > input.datatreeview-field').prop('checked', true);
 
         if (!this.hasFreehandSelection) {
             this.list.find('li.datatreeview-node:has(li.datatreeview-node):not(:has(li.datatreeview-node:not(:has(li.datatreeview-node)) input.datatreeview-field:not(:checked)))').find('> .datatreeview-node-content > label.datatreeview-text > input.datatreeview-field').prop('checked', true);
