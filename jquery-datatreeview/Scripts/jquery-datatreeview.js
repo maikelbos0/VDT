@@ -102,6 +102,11 @@
         getNodeAttributes: function () {
             return {};
         },
+        // Node content is the content of the node (the toggler, checkbox and label) excluding child nodes
+        // It always gets at least the class 'datatreeview-node-content'
+        getNodeContentAttributes: function () {
+            return {};
+        },
         // Inputs are the checkboxes used to select nodes
         // They always gets at least the class 'datatreeview-field'
         getInputAttributes: function () {
@@ -188,7 +193,7 @@
     // Create a node based on node data
     Datatreeview.prototype.createNode = function (list, data, isCollapsed) {
         let node = this.createElement('<li>', 'datatreeview-node', this.options.getNodeAttributes());
-        let content = this.createElement('<div>', 'datatreeview-node-content');
+        let content = this.createElement('<div>', 'datatreeview-node-content', this.options.getNodeContentAttributes());
         let checkbox = this.createElement('<input>', 'datatreeview-field', {
             type: 'checkbox',
             name: this.fieldName,
