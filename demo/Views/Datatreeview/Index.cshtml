@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-6 offset-3">
-        <div id="treeview-1" data-toggle-duration="200">
+        <div id="treeview-1" data-toggle-duration="800">
         </div>
     </div>
 </div>
@@ -30,11 +30,16 @@
                 },
                 {
                     value: 4,
-                    text: 'Child with children',
+                    text: 'Child with children is very very long and causes problems in the layout',
                     children: [
                         {
                             value: 8,
                             text: 'Quux',
+                            selected: true
+                        },
+                        {
+                            value: 9,
+                            text: 'Quuux is a grandchild that is also very long and causes problems in the layout',
                             selected: true
                         }
                     ]
@@ -56,6 +61,11 @@
                 {
                     value: 7,
                     text: 'Baz',
+                    selected: true
+                },
+                {
+                    value: 10,
+                    text: 'Foo',
                     selected: true
                 }
             ]

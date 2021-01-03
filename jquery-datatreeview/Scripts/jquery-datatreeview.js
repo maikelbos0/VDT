@@ -102,6 +102,11 @@
         getNodeAttributes: function () {
             return {};
         },
+        // Node content is the content of the node (the toggler, checkbox and label) excluding child nodes
+        // It always gets at least the class 'datatreeview-node-content'
+        getNodeContentAttributes: function () {
+            return {};
+        },
         // Inputs are the checkboxes used to select nodes
         // They always gets at least the class 'datatreeview-field'
         getInputAttributes: function () {
@@ -133,7 +138,7 @@
         this.hasFreehandSelection = options.hasFreehandSelection(this.element);
         this.isDisabled = false;
         this.toggleOptions = options.getToggleOptions(this.element);
-
+        
         this.element.children().hide();
         this.element.addClass('datatreeview');
 
@@ -173,11 +178,11 @@
         let toggler = this.createElement('<div>', 'datatreeview-toggler', this.options.getTogglerAttributes());
 
         if (isCollapsed) {
-            toggler.addClass('datatreeview-toggler-closed');
+            node.addClass('datatreeview-node-collapsed');
             list.hide();
         }
 
-        node.prepend(toggler);
+        node.find('.datatreeview-node-content').prepend(toggler);
         node.append(list);
 
         $.each(dataArray, function (_, data) {
@@ -188,6 +193,7 @@
     // Create a node based on node data
     Datatreeview.prototype.createNode = function (list, data, isCollapsed) {
         let node = this.createElement('<li>', 'datatreeview-node', this.options.getNodeAttributes());
+        let content = this.createElement('<div>', 'datatreeview-node-content', this.options.getNodeContentAttributes());
         let checkbox = this.createElement('<input>', 'datatreeview-field', {
             type: 'checkbox',
             name: this.fieldName,
@@ -199,7 +205,8 @@
         let hasChildren = data[this.childrenProperty] && data[this.childrenProperty].length > 0;
         let useSelectedProperty = this.hasFreehandSelection || !hasChildren;
 
-        node.append(label);
+        content.append(label);
+        node.append(content);
         node.data('node-data', data);
         list.append(node);
 
@@ -253,11 +260,11 @@
             actualNodes = actualNodes.not(':has(li)')
         }
 
-        this.list.find('li.datatreeview-node').not(actualNodes).find('> label.datatreeview-text > input.datatreeview-field').prop('checked', false);
-        $(actualNodes).find('> label.datatreeview-text > input.datatreeview-field').prop('checked', true);
+        this.list.find('li.datatreeview-node').not(actualNodes).find('> .datatreeview-node-content > label.datatreeview-text > input.datatreeview-field').prop('checked', false);
+        $(actualNodes).find('> .datatreeview-node-content > label.datatreeview-text > input.datatreeview-field').prop('checked', true);
 
         if (!this.hasFreehandSelection) {
-            this.list.find('li.datatreeview-node:has(li.datatreeview-node):not(:has(li.datatreeview-node:not(:has(li.datatreeview-node)) input.datatreeview-field:not(:checked)))').find('> label.datatreeview-text > input.datatreeview-field').prop('checked', true);
+            this.list.find('li.datatreeview-node:has(li.datatreeview-node):not(:has(li.datatreeview-node:not(:has(li.datatreeview-node)) input.datatreeview-field:not(:checked)))').find('> .datatreeview-node-content > label.datatreeview-text > input.datatreeview-field').prop('checked', true);
         }
 
         this.triggerSelectionChanged();
@@ -311,11 +318,11 @@
 
     // Collapse one or more nodes by selector/selection/function/element
     Datatreeview.prototype.collapseNodes = function (nodes) {
-        nodes = $(nodes).filter(':has(> .datatreeview-toggler:not(.datatreeview-toggler-closed))');
-
+        nodes = $(nodes).not('.datatreeview-node-collapsed');
+        
         if (nodes.length > 0) {
-            nodes.children('.datatreeview-toggler').addClass('datatreeview-toggler-closed');
-            nodes.children('ul').slideToggle(this.toggleOptions);
+            nodes.addClass('datatreeview-node-collapsed');
+            nodes.children('.datatreeview-list').slideToggle(this.toggleOptions);
 
             this.element.trigger('datatreeview.nodesCollapsed', [nodes]);
         }
@@ -323,11 +330,11 @@
 
     // Expand one or more nodes by selector/selection/function/element
     Datatreeview.prototype.expandNodes = function (nodes) {
-        nodes = $(nodes).filter(':has(> .datatreeview-toggler-closed)');
+        nodes = $(nodes).filter('.datatreeview-node-collapsed');
 
         if (nodes.length > 0) {
-            $(nodes).children('.datatreeview-toggler').removeClass('datatreeview-toggler-closed');
-            nodes.children('ul').slideToggle(this.toggleOptions);
+            nodes.removeClass('datatreeview-node-collapsed');
+            nodes.children('.datatreeview-list').slideToggle(this.toggleOptions);
 
             this.element.trigger('datatreeview.nodesExpanded', [nodes]);
         }
@@ -336,10 +343,9 @@
     // Event handlers should not be accessible from the object itself
     let eventHandlers = {
         togglerClick: function (e) {
-            let toggler = $(e.target);
-            let node = $(e.target).parent('li');
+            let node = $(e.target).closest('li');
 
-            if (toggler.hasClass('datatreeview-toggler-closed')) {
+            if (node.hasClass('datatreeview-node-collapsed')) {
                 e.data.expandNodes(node);
             }
             else {
@@ -354,12 +360,12 @@
                 node.find('input.datatreeview-field').prop('checked', checked);
 
                 if (checked) {
-                    node.parents('li.datatreeview-node').find('> label.datatreeview-text > input.datatreeview-field').prop('checked', function () {
+                    node.parents('li.datatreeview-node').find('> .datatreeview-node-content > label.datatreeview-text > input.datatreeview-field').prop('checked', function () {
                         return $(this).closest('li.datatreeview-node').find('input.datatreeview-field').not(this).not(':checked').length == 0;
                     });
                 }
                 else {
-                    node.parents('li.datatreeview-node').find('> label.datatreeview-text > input.datatreeview-field').prop('checked', false);
+                    node.parents('li.datatreeview-node').find('> .datatreeview-node-content> label.datatreeview-text > input.datatreeview-field').prop('checked', false);
                 }
             }
 

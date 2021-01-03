@@ -162,7 +162,7 @@
         });
 
         expect(tree.find('li > ul').css('display')).toEqual('none');
-        expect(tree.find('li > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(true);
+        expect(tree.find('li').hasClass('datatreeview-node-collapsed')).toEqual(true);
     });
 
     it('can be provided for getListAttributes', function () {
@@ -205,6 +205,28 @@
         });
 
         tree.find('li').each(function () {
+            expect($(this).hasClass('test')).toEqual(true);
+        });
+    });
+
+    it('can be provided for getNodeContentAttributes', function () {
+        var tree = $('#datatreeview-options-node-content-attributes');
+
+        tree.datatreeview({
+            data: [{
+                value: '1',
+                text: 'Test',
+                children: [
+                    { value: '2', text: 'Foo' },
+                    { value: '3', text: 'Bar' },
+                ]
+            }],
+            getNodeContentAttributes: function () {
+                return { class: 'test' };
+            }
+        });
+
+        tree.find('.datatreeview-node-content').each(function () {
             expect($(this).hasClass('test')).toEqual(true);
         });
     });

@@ -23,9 +23,9 @@
             }]
         });
 
-        tree.find('li > .datatreeview-toggler').click();
+        tree.find('li > .datatreeview-node-content > .datatreeview-toggler').click();
 
-        expect(tree.find('li > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(true);
+        expect(tree.find('li').hasClass('datatreeview-node-collapsed')).toEqual(true);
         expect(tree.find('li > ul').css('display')).toEqual('none');
     });
 
@@ -53,10 +53,10 @@
             }]
         });
 
-        tree.find('li > .datatreeview-toggler').click();
-        tree.find('li > .datatreeview-toggler').click();
+        tree.find('li > .datatreeview-node-content > .datatreeview-toggler').click();
+        tree.find('li > .datatreeview-node-content > .datatreeview-toggler').click();
 
-        expect(tree.find('li > .datatreeview-toggler').hasClass('datatreeview-toggler-closed')).toEqual(false);
+        expect(tree.find('li').hasClass('datatreeview-node-collapsed')).toEqual(false);
         expect(tree.find('li > ul').css('display')).not.toEqual('none');
     });
 
@@ -84,7 +84,7 @@
             }]
         });
 
-        tree.find('> ul > li:nth-child(2) > label').click();
+        tree.find('> ul > li:nth-child(2) > .datatreeview-node-content > label').click();
 
         expect(tree.find('input:checked').length).toEqual(3);
     });
@@ -116,7 +116,7 @@
             }]
         });
 
-        tree.find('> ul > li:nth-child(2) > label').click();
+        tree.find('> ul > li:nth-child(2) > .datatreeview-node-content > label').click();
 
         expect(tree.find('input:checked').length).toEqual(0);
     });
@@ -146,7 +146,7 @@
             }]
         });
 
-        tree.find('> ul > li:nth-child(2) > label').click();
+        tree.find('li:nth-child(2) li:first-child > .datatreeview-node-content > label').click();
 
         expect(tree.find('input:checked').length).toEqual(3);
     });
@@ -177,7 +177,7 @@
             }]
         });
 
-        tree.find('li:nth-child(2) li:first-child > label').click();
+        tree.find('li:nth-child(2) li:first-child > .datatreeview-node-content > label').click();
 
         expect(tree.find('input:checked').length).toEqual(1);
     });
@@ -206,7 +206,7 @@
             }]
         });
 
-        tree.find('> ul > li:nth-child(2) > label').click();
+        tree.find('> ul > li:nth-child(2) > .datatreeview-node-content > label').click();
 
         expect(tree.find('input:checked').length).toEqual(1);
     });
@@ -238,7 +238,7 @@
             }]
         });
 
-        tree.find('> ul > li:nth-child(2) > label').click();
+        tree.find('> ul > li:nth-child(2) > .datatreeview-node-content > label').click();
 
         expect(tree.find('input:checked').length).toEqual(2);
     });
@@ -268,7 +268,7 @@
             }]
         });
 
-        tree.find('> ul > li:nth-child(2) > label').click();
+        tree.find('> ul > li:nth-child(2) > .datatreeview-node-content > label').click();
 
         expect(tree.find('input:checked').length).toEqual(2);
     });
@@ -300,7 +300,7 @@
             }]
         });
 
-        tree.find('li:nth-child(2) li:first-child > label').click();
+        tree.find('li:nth-child(2) li:first-child > .datatreeview-node-content > label').click();
 
         expect(tree.find('input:checked').length).toEqual(2);
     });
@@ -337,7 +337,7 @@
             selectedValues = values;
         });
 
-        tree.find('> ul > li:first-child > label').click();
+        tree.find('> ul > li:first-child > .datatreeview-node-content > label').click();
 
         expect(selectedData).toEqual([data[0]]);
         expect(selectedValues).toEqual(['1']);
@@ -368,13 +368,13 @@
             }]
         });
 
-        tree.find('> ul > li:nth-child(2) > .datatreeview-toggler').click();
+        tree.find('> ul > li:nth-child(2) > .datatreeview-node-content > .datatreeview-toggler').click();
 
         tree.on('datatreeview.nodesExpanded', function (_, node) {
             toggledNode = node;
         });
 
-        tree.find('> ul > li:nth-child(2) > .datatreeview-toggler').click();
+        tree.find('> ul > li:nth-child(2) > .datatreeview-node-content > .datatreeview-toggler').click();
 
         expect(toggledNode.get()).toEqual(tree.find('> ul > li:nth-child(2)').get());
     });
@@ -408,7 +408,7 @@
             toggledNode = node;
         });
 
-        tree.find('> ul > li:nth-child(2) > .datatreeview-toggler').click();
+        tree.find('> ul > li:nth-child(2) > .datatreeview-node-content > .datatreeview-toggler').click();
         
         expect(toggledNode.get()).toEqual(tree.find('> ul > li:nth-child(2)').get());
     });

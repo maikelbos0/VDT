@@ -55,8 +55,9 @@ The datatreeview only provides basic styling in the provided style sheet `jquery
 * `.datatreeview` is the original element and the main container of the datatreeview
 * `.datatreeview-list` is any list of treeview nodes
 * `.datatreeview-node` is a treeview node
+* `.datatreeview-node-collapsed` is a treeview node in collapsed state
+* `.datatreeview-node-content` is the content of a treeview node (the toggler, checkbox and label) excluding child nodes
 * `.datatreeview-toggler` is the toggler to open/close child node lists
-* `.datatreeview-toggler-closed` the toggler in closed state
 * `.datatreeview-text` is the node text label
 * `.datatreeview-field` is the input checkbox used to select/deselect nodes
 
