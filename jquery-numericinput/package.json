@@ -1,0 +1,36 @@
+{
+  "name": "@vdt-jquery/jquery-numericinput",
+  "version": "1.0.0",
+  "description": "A jQuery plugin that transforms any text input into a numeric input with full localization support.",
+  "main": "Scripts/jquery-numericinput.js",
+  "files": [
+    "Scripts/jquery-numericinput.js",
+    "Scripts/jquery-numericinput.min.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maikelbos0/VDT.git"
+  },
+  "dependencies": {
+    "jquery": ">=3.3.1"
+  },
+  "keywords": [
+    "jQuery",
+    "plugin",
+    "number",
+    "numeric",
+    "digits",
+    "number",
+    "input",
+    "numeric",
+    "input",
+    "numericinput",
+    "input"
+  ],
+  "author": "Maikel Bos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maikelbos0/VDT/issues"
+  },
+  "homepage": "https://github.com/maikelbos0/VDT#readme"
+}

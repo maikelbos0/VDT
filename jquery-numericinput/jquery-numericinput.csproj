@@ -58,6 +58,7 @@
     <Content Include="LICENSE" />
     <Content Include="README.md" />
     <Content Include="jquery-numericinput.nuspec" />
+    <Content Include="package.json" />
     <None Include="Scripts\jquery-3.5.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.0.js" />
     <Content Include="Scripts\jquery-3.5.0.min.js" />
