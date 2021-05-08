@@ -66,6 +66,7 @@
     <Content Include="Content\jquery-rangeslider.style.min.css">
       <DependentUpon>jquery-rangeslider.style.css</DependentUpon>
     </Content>
+    <Content Include="package.json" />
     <None Include="Scripts\jquery-3.5.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.0.js" />
     <Content Include="Scripts\jquery-3.5.0.min.js" />
