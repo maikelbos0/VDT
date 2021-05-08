@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>jQuery-rangeslider</id>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <title>jQuery-rangeslider</title>
     <description>A jQuery plugin that makes it easy to transform any html-element into a range slider with definable range that is consistent across browsers.</description>
     <releaseNotes>- Improved cleanup when removing a slider</releaseNotes>

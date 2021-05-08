@@ -1,0 +1,34 @@
+{
+  "name": "jquery-rangeslider",
+  "version": "1.0.2",
+  "description": "A jQuery plugin that makes it easy to transform any html-element into a range slider with definable range that is consistent across browsers.",
+  "main": "Scripts/jquery-rangeslider.js",
+  "files": [
+    "Scripts/jquery-rangeslider.js",
+    "Scripts/jquery-rangeslider.min.js",
+    "Content/jquery-rangeslider.css",
+    "Content/jquery-rangeslider.min.css",
+    "Content/jquery-rangeslider.style.css",
+    "Content/jquery-rangeslider.style.min.css"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maikelbos0/VDT.git"
+  },
+  "dependencies": {
+    "jquery": ">=3.5.0"
+  },
+  "keywords": [
+    "jQuery",
+    "plugin",
+    "tree",
+    "treeview",
+    "datatree"
+  ],
+  "author": "Maikel Bos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maikelbos0/VDT/issues"
+  },
+  "homepage": "https://github.com/maikelbos0/VDT#readme"
+}
