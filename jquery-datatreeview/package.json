@@ -1,0 +1,34 @@
+{
+  "name": "@vdt-jquery/jquery-datatreeview",
+  "version": "1.0.0",
+  "description": "A jQuery plugin that makes it easy to create a tree view for your tree-like data. It allows you to create a tree view on the fly for a tree of data-objects while leaving you in full control of where the data comes from.",
+  "main": "Scripts/jquery-datatreeview.js",
+  "files": [
+    "Scripts/jquery-datatreeview.js",
+    "Scripts/jquery-datatreeview.min.js",
+    "Content/jquery-datatreeview.css",
+    "Content/jquery-datatreeview.min.css",
+    "Content/jquery-datatreeview.style.css",
+    "Content/jquery-datatreeview.style.min.css"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maikelbos0/VDT.git"
+  },
+  "dependencies": {
+    "jquery": ">=3.3.1"
+  },
+  "keywords": [
+    "jQuery",
+    "plugin",
+    "tree",
+    "treeview",
+    "datatree"
+  ],
+  "author": "Maikel Bos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maikelbos0/VDT/issues"
+  },
+  "homepage": "https://github.com/maikelbos0/VDT#readme"
+}
