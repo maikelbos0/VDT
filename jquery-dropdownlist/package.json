@@ -1,0 +1,35 @@
+{
+  "name": "@vdt-jquery/jquery-dropdownlist",
+  "version": "1.3.1",
+  "description": "A jQuery plugin that makes it easy to transform any html-element with children into a dropdownlist.",
+  "main": "Scripts/jquery-dropdownlist.js",
+  "files": [
+    "Scripts/jquery-dropdownlist.js",
+    "Scripts/jquery-dropdownlist.min.js",
+    "Content/jquery-dropdownlist.css",
+    "Content/jquery-dropdownlist.min.css",
+    "Content/jquery-dropdownlist.style.css",
+    "Content/jquery-dropdownlist.style.min.css"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maikelbos0/VDT.git"
+  },
+  "dependencies": {
+    "jquery": ">=3.3.1"
+  },
+  "keywords": [
+    "jQuery",
+    "plugin",
+    "dropdownlist",
+    "list",
+    "dropdown",
+    "checkboxlist"
+  ],
+  "author": "Maikel Bos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maikelbos0/VDT/issues"
+  },
+  "homepage": "https://github.com/maikelbos0/VDT#readme"
+}
