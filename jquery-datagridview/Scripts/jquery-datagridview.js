@@ -864,7 +864,7 @@
             let header = null;
             let position = e.pageX - e.data.element.offset().left + e.data.contentContainer.scrollLeft();
 
-            // Figure out where the column needs to move to by finding the header which it will replac
+            // Figure out where the column needs to move to by finding the header which it will replace
             // First look to the left
             if (position < e.data.headerMoveState.header.position().left) {
                 for (let i = e.data.headerMoveState.column.index; i >= 0; i--) {
