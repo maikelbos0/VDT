@@ -170,21 +170,23 @@
         expect($(fields[2]).prop('disabled')).toEqual(true);
 
         expect(dropdown.closest('.dropdownlist').hasClass('dropdownlist-disabled')).toEqual(true);
+        expect(dropdown.closest('.dropdownlist').find('.dropdownlist-selector').prop('tabindex')).toEqual(-1);
     });
 
     it('can be enabled', function () {
-        var dropdown = $('#dropdown-interaction-enabled');
+        var dropdown = $('#dropdown-interaction-enable');
 
         dropdown.dropdownlist(function () {
-            this.disable();
+            this.enable();
         });
 
         var fields = dropdown.find('input.dropdownlist-field');
 
-        expect($(fields[0]).prop('disabled')).toEqual(undefined);
-        expect($(fields[1]).prop('disabled')).toEqual(undefined);
-        expect($(fields[2]).prop('disabled')).toEqual(undefined);
+        expect($(fields[0]).prop('disabled')).toEqual(false);
+        expect($(fields[1]).prop('disabled')).toEqual(false);
+        expect($(fields[2]).prop('disabled')).toEqual(false);
 
         expect(dropdown.closest('.dropdownlist').hasClass('dropdownlist-disabled')).toEqual(false);
+        expect(dropdown.closest('.dropdownlist').find('.dropdownlist-selector').prop('tabindex')).toEqual(0);
     });
 });

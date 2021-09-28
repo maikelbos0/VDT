@@ -8,6 +8,7 @@
         }).not.toThrow();
         expect(dropdown.closest('.dropdownlist').length).toEqual(1);
         expect(dropdown.data('dropdownlist')).toBeTruthy();
+        expect(dropdown.closest('.dropdownlist').find('.dropdownlist-selector').prop('tabindex')).toEqual(0);
     });
 
     it('creates fields with the correct name', function () {
