@@ -454,6 +454,7 @@
         this.isDisabled = false;
         this.allItems.find('input.dropdownlist-field').prop('disabled', this.isDisabled);
         this.container.removeClass('dropdownlist-disabled');
+        this.selector.prop('tabindex', 0);
     }
 
     // Disable the dropdown if it is enabled
@@ -465,6 +466,7 @@
         this.isDisabled = true;
         this.allItems.find('input.dropdownlist-field').prop('disabled', this.isDisabled);
         this.container.addClass('dropdownlist-disabled');
+        this.selector.prop('tabindex', -1)
     }
 
     // Event handlers should not be accessible from the object itself
